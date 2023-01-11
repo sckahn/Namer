@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3957077196821797142}
   - component: {fileID: 3931789045059646992}
   - component: {fileID: 3942879095562040224}
+  - component: {fileID: 2688431129639352977}
   m_Layer: 0
   m_Name: GlassTile
   m_TagString: Untagged
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2688431129639352977
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3955055573827756382}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.98, y: 0.98, z: 0.98}
+  m_Center: {x: -0.000000074505806, y: 0.50000024, z: -0.00000031292439}
