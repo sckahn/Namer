@@ -18,7 +18,12 @@ public class PlayerMovement : MonoBehaviour
         Vector3 pVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         rb.velocity = moveSpeed * pVelocity;
 
-        if(rb.velocity.magnitude > 2f)
+        if (pVelocity != Vector3.zero)
+        {
+            rb.rotation = Quaternion.Slerp(rb.rotation, Quaternion.LookRotation(pVelocity), Time.deltaTime * 10f);
+        }
+
+        if (rb.velocity.magnitude > 0f)
         {
             myanimator.SetBool("isRun", true);
         }
