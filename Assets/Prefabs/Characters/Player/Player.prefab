@@ -2091,9 +2091,10 @@ GameObject:
   - component: {fileID: 8960856560092998566}
   - component: {fileID: 8960856560092998567}
   - component: {fileID: 8960856560092998560}
+  - component: {fileID: 1816381900}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2180,6 +2181,25 @@ MonoBehaviour:
   rb: {fileID: 8960856560092998566}
   currentSpeed: 0
   myanimator: {fileID: 0}
+--- !u!114 &1816381900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8113852935009391315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47ea5ca7185d5453ab3805f7ec51d235, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isInteraction: 0
+  myRb: {fileID: 0}
+  TileBound: {x: 0, y: 0}
+  curPlayerDir: 0
+  forwardObjectInfo: {fileID: 0}
+  curObjectInfo: {fileID: 0}
+  padding: 0.2
 --- !u!1 &8203952614901920763
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        //TODO 중력가속도 개선 
+
         Vector3 pVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         rb.velocity = moveSpeed * pVelocity;
 
