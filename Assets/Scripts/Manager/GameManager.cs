@@ -21,7 +21,6 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        ChangeGameState(GameStates.Lobby);        
     }
 
     public void UpdateGameState()

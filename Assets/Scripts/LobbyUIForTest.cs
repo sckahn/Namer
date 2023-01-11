@@ -8,4 +8,6 @@ public class LobbyUIForTest : MonoBehaviour
    {
       GameManager.GetInstance.ChangeGameState(GameStates.InGame);
    }
+
+   public void OnResetButton() => GameManager.GetInstance.Reset();
 }
