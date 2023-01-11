@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameStates
 {
@@ -12,18 +13,11 @@ public enum GameStates
 }
 
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    private static GameManager Instance;
-    public static GameManager getGameManager { get { return Instance; } }
     private GameStates state;
 
     public static event Action<GameStates> OnGameStateChanged; 
-    private void Awake()
-    {
-        Instance = this;
-        DontDestroyOnLoad(this);
-    }
 
     private void Start()
     {
@@ -73,8 +67,9 @@ public class GameManager : MonoBehaviour
 
     private void HandleInGame()
     {
-        SceneBehaviorManager.GetSceneBehaviorManagerInstance.LoadScene(Scenes.InGame);
+        
         //load new scene 
+        LoadScene(Scenes.InGame,LoadSceneMode.Single);
         //instantiate player
         //instantiate objects
         //instantiate cards
@@ -89,8 +84,12 @@ public class GameManager : MonoBehaviour
     public void Reset()
     {
         if (state == GameStates.Lobby) return;
-        SceneBehaviorManager.GetSceneBehaviorManagerInstance.ResetScene();
+        SceneBehaviorManager.ResetScene();
     }
 
+    public void LoadScene(Scenes scenes, LoadSceneMode loadSceneMode)
+    {
+        SceneBehaviorManager.LoadScene(scenes,loadSceneMode);
+    }
   
 }

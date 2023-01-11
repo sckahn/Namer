@@ -6,6 +6,6 @@ public class LobbyUIForTest : MonoBehaviour
 {
    public void OnGameStartButton()
    {
-      GameManager.getGameManager.ChangeGameState(GameStates.InGame);
+      GameManager.GetInstance.ChangeGameState(GameStates.InGame);
    }
 }
