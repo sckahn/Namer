@@ -41,28 +41,24 @@ public class PlayerInteraction : MonoBehaviour
             if (curObjectInfo.GetComponent<BoxCollider>().bounds.center.x - IORay.transform.position.x == -1 &&
                 curObjectInfo.GetComponent<BoxCollider>().bounds.center.z - IORay.transform.position.z == 0)
             {
-                Debug.Log("Right");
                 forwardObjectInfo = IORay.transform.gameObject;
             }
 
             else if (curObjectInfo.GetComponent<BoxCollider>().bounds.center.x - IORay.transform.position.x == 0 &&
                 curObjectInfo.GetComponent<BoxCollider>().bounds.center.z - IORay.transform.position.z == 1)
             {
-                Debug.Log("Bottom");
                 forwardObjectInfo = IORay.transform.gameObject;
             }
 
             else if (curObjectInfo.GetComponent<BoxCollider>().bounds.center.x - IORay.transform.position.x == 1 &&
                 curObjectInfo.GetComponent<BoxCollider>().bounds.center.z - IORay.transform.position.z == 0)
             {
-                Debug.Log("Left");
                 forwardObjectInfo = IORay.transform.gameObject;
             }
 
             else if (curObjectInfo.GetComponent<BoxCollider>().bounds.center.x - IORay.transform.position.x == 0 &&
                 curObjectInfo.GetComponent<BoxCollider>().bounds.center.z - IORay.transform.position.z == -1)
             {
-                Debug.Log("Top");
                 forwardObjectInfo = IORay.transform.gameObject;
             }
         }
@@ -132,10 +128,6 @@ public class PlayerInteraction : MonoBehaviour
     {
         CheckCurrentTile();
         CheckForwardObj();
-
-        Debug.Log(curObjectInfo);
-        Debug.Log(forwardObjectInfo);
-
 
         if (Input.GetKeyDown(KeyCode.B))
         {
