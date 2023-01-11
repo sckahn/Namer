@@ -905,7 +905,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5873986731690432293, guid: 6d3ad17bf82d34839881a7c542c9dd5b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: 0.94207394
       objectReference: {fileID: 0}
     - target: {fileID: 5873986731690432293, guid: 6d3ad17bf82d34839881a7c542c9dd5b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -913,7 +913,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5873986731690432293, guid: 6d3ad17bf82d34839881a7c542c9dd5b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.06790662
       objectReference: {fileID: 0}
     - target: {fileID: 5873986731690432293, guid: 6d3ad17bf82d34839881a7c542c9dd5b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -943,10 +943,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6105790410502346911, guid: 6d3ad17bf82d34839881a7c542c9dd5b, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d3ad17bf82d34839881a7c542c9dd5b, type: 3}
 --- !u!4 &793404440 stripped
@@ -964,10 +960,6 @@ PrefabInstance:
     - target: {fileID: 1526646866334644, guid: a68d651cb81757343abbe1d39205eb96, type: 3}
       propertyPath: m_Name
       value: Cube_Rock
-      objectReference: {fileID: 0}
-    - target: {fileID: 1526646866334644, guid: a68d651cb81757343abbe1d39205eb96, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4715146648889416, guid: a68d651cb81757343abbe1d39205eb96, type: 3}
       propertyPath: m_RootOrder
@@ -1125,10 +1117,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5873986731690432293, guid: 6d3ad17bf82d34839881a7c542c9dd5b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6105790410502346911, guid: 6d3ad17bf82d34839881a7c542c9dd5b, type: 3}
-      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2559,10 +2547,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 166502732}
     m_Modifications:
-    - target: {fileID: 711758208534137408, guid: 2cee9ff2dad2948cab5e18c085247a82, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3576685673916640452, guid: 2cee9ff2dad2948cab5e18c085247a82, type: 3}
       propertyPath: m_RootOrder
       value: 3
