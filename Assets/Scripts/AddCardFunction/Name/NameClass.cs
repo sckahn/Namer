@@ -35,3 +35,8 @@ public class Balloon : NameClass
 {
     public Balloon() : base("Balloon", new IAdjective[]{new LightAdj(), new FlyAdj()}){}
 }
+
+public class GoalPoint : NameClass
+{
+    public GoalPoint() : base("GoalPoint", new IAdjective[]{}){}
+}

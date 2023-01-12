@@ -6,12 +6,19 @@ using UnityEngine;
 
 public class ObjectClass : MonoBehaviour
 {
-    // private string name;
+    [SerializeField] private string objectName;
+    [SerializeField] private bool[] checkSpec = new bool[10];
+    [SerializeField] private int[] countSpec = new int[10];
+    
     private List<NameClass> words = new List<NameClass>();
     private IAdjective[] specificities = new IAdjective[10];
     public IAdjective[] Specificities {get{return  specificities;}}
-    [SerializeField] private bool[] checkSpec = new bool[10];
-    [SerializeField] private int[] countSpec = new int[10];
+
+    private void OnEnable()
+    {
+        Debug.Log(objectName);
+        SetObject(objectName);
+    }
 
     public void SetObject(string objectName)
     {
@@ -36,7 +43,7 @@ public class ObjectClass : MonoBehaviour
     
     private void SetInit(IAdjective adjective)
     {
-        int specIdx = (int)Enum.Parse(typeof(Specificity), adjective.GetName());
+        int specIdx = (int)Enum.Parse(typeof(Adjective), adjective.GetName());
         specificities[specIdx] = adjective;
         checkSpec[specIdx] = true;
 
