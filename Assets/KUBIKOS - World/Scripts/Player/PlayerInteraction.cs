@@ -13,6 +13,17 @@ public class PlayerInteraction : MonoBehaviour
 
     public float padding = 0.2f;
 
+    public enum PlayerDir
+    {
+        Top = 0,
+        Bottom,
+        Left,
+        Right,
+        Null
+    }
+
+    public PlayerDir mydir;
+
     public struct FieldBounds
     {
         public Vector2 TopLeft;
@@ -42,30 +53,35 @@ public class PlayerInteraction : MonoBehaviour
                 curObjectInfo.GetComponent<BoxCollider>().bounds.center.z - IORay.transform.position.z == 0)
             {
                 forwardObjectInfo = IORay.transform.gameObject;
+                mydir = PlayerDir.Right;
             }
 
             else if (curObjectInfo.GetComponent<BoxCollider>().bounds.center.x - IORay.transform.position.x == 0 &&
                 curObjectInfo.GetComponent<BoxCollider>().bounds.center.z - IORay.transform.position.z == 1)
             {
                 forwardObjectInfo = IORay.transform.gameObject;
+                mydir = PlayerDir.Bottom;
             }
 
             else if (curObjectInfo.GetComponent<BoxCollider>().bounds.center.x - IORay.transform.position.x == 1 &&
                 curObjectInfo.GetComponent<BoxCollider>().bounds.center.z - IORay.transform.position.z == 0)
             {
                 forwardObjectInfo = IORay.transform.gameObject;
+                mydir = PlayerDir.Left;
             }
 
             else if (curObjectInfo.GetComponent<BoxCollider>().bounds.center.x - IORay.transform.position.x == 0 &&
                 curObjectInfo.GetComponent<BoxCollider>().bounds.center.z - IORay.transform.position.z == -1)
             {
                 forwardObjectInfo = IORay.transform.gameObject;
+                mydir = PlayerDir.Top;
             }
         }
 
         else
         {
             forwardObjectInfo = null;
+            mydir = PlayerDir.Null;
         }
     }
 
@@ -129,9 +145,6 @@ public class PlayerInteraction : MonoBehaviour
         CheckCurrentTile();
         CheckForwardObj();
 
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            isInteraction = true;
-        }
+
     }
 }
