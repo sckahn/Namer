@@ -2181,6 +2181,7 @@ MonoBehaviour:
   rb: {fileID: 8960856560092998566}
   currentSpeed: 0
   myanimator: {fileID: 0}
+  isInteraction: 0
 --- !u!114 &1816381900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2196,10 +2197,10 @@ MonoBehaviour:
   isInteraction: 0
   myRb: {fileID: 0}
   TileBound: {x: 0, y: 0}
-  curPlayerDir: 0
   forwardObjectInfo: {fileID: 0}
   curObjectInfo: {fileID: 0}
   padding: 0.2
+  mydir: 0
 --- !u!1 &8203952614901920763
 GameObject:
   m_ObjectHideFlags: 0
