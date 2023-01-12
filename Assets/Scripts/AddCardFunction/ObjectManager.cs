@@ -24,11 +24,31 @@ public enum Specificity
 public class ObjectManager : MonoBehaviour
 {
     private string selectCard;
-    [SerializeField]private GameObject target;
-    private void OnEnable()
+    [SerializeField] private GameObject target;
+    [SerializeField] private PlayerInteraction pi;
+
+    private void Start()
     {
-        string[] targetName = target.name.Split().ToArray();
-        target.AddComponent<ObjectClass>();
-        target.GetComponent<ObjectClass>().SetObject(targetName[0]);
+        GameObject.FindGameObjectWithTag("Player").TryGetComponent<PlayerInteraction>(out pi);
+    }
+
+    private void Update()
+    {
+        target = pi.forwardObjectInfo;
+
+        if (target)
+        {
+            string[] targetName = target.name.Split().ToArray();
+
+            if (!target.TryGetComponent<ObjectClass>(out var targetComponent))
+            {
+                target.AddComponent<ObjectClass>();
+            }
+
+            else
+            {
+                targetComponent.SetObject(targetName[0]);
+            }
+        }
     }
 }

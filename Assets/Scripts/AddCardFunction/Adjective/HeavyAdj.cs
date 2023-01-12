@@ -24,18 +24,18 @@ public class HeavyAdj : IAdjective
     
     public void Function(ObjectClass thisObject)
     {
-        Debug.Log("this is Heavy");
+        //Debug.Log("this is Heavy");
     }
 
     public void Function(ObjectClass thisObject, GameObject player, bool isAffect)
     {
         if (isAffect)
         {
-            Debug.Log("Heavy : this Object > Player");
+            //Debug.Log("Heavy : this Object > Player");
         }
         else if (!isAffect)
         {
-            Debug.Log("Heavy : this Object < Player");
+            //Debug.Log("Heavy : this Object < Player");
         }
     }
     
@@ -43,11 +43,11 @@ public class HeavyAdj : IAdjective
     {
         if (isAffect)
         {
-            Debug.Log("Heavy : this Object > other Object");
+            //Debug.Log("Heavy : this Object > other Object");
         }
         else if (!isAffect)
         {
-            Debug.Log("Heavy : this Object < other Object");
+            //Debug.Log("Heavy : this Object < other Object");
         }
     }
 }

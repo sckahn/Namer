@@ -24,7 +24,7 @@ public class PushAdj : IAdjective
     
     public void Function(ObjectClass thisObject)
     {
-        Debug.Log("this is Push");
+        //Debug.Log("this is Push");
     }
     
     public void Function(ObjectClass thisObject, GameObject player, bool isAffect)
@@ -56,11 +56,11 @@ public class PushAdj : IAdjective
     {
         if (isAffect)
         {
-            Debug.Log("Push : this Object > other Object");
+            //Debug.Log("Push : this Object > other Object");
         }
         else if (!isAffect)
         {
-            Debug.Log("Push : this Object < other Object");
+            //Debug.Log("Push : this Object < other Object");
         }
     }
 }

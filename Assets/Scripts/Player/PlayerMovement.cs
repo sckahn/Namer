@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -7,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float currentSpeed;
     public Animator myanimator;
     public bool isInteraction = false;
+    public GameObject interactobj;
 
     private void Start()
     {
@@ -59,6 +62,8 @@ public class PlayerMovement : MonoBehaviour
 
                 else if (pi.forwardObjectInfo.tag == "InteractObj")
                 {
+                    pi.forwardObjectInfo.GetComponent<ObjectClass>().Interact(this.gameObject);
+                    interactobj = pi.forwardObjectInfo;
                     myanimator.SetBool("InteractObj", true);
 
                 }
@@ -89,6 +94,21 @@ public class PlayerMovement : MonoBehaviour
     myanimator.GetCurrentAnimatorStateInfo(0).IsName("push") |
     myanimator.GetCurrentAnimatorStateInfo(0).IsName("victory") &&
     myanimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1 ? true : false;
+    }
+
+    public void PlayPushAnimation()
+    {
+        StartCoroutine(AnimationPlay());    
+    }
+
+    IEnumerator AnimationPlay()
+    {
+        while(interactobj.transform)
+        {
+
+
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }
 

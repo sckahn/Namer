@@ -56,6 +56,7 @@ public class ObjectClass : MonoBehaviour
                 }
             }
         }
+
         else if (go.tag == "Object")
         {
             // isAffect -> Set to ISpecificity
@@ -71,7 +72,7 @@ public class ObjectClass : MonoBehaviour
     
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.transform.name);
-        Interact(collision.gameObject);
+        //Debug.Log(collision.transform.name);
+        //Interact(collision.gameObject);
     }
 }

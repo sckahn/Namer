@@ -752,7 +752,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3576685673916640455, guid: 2cee9ff2dad2948cab5e18c085247a82, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cee9ff2dad2948cab5e18c085247a82, type: 3}
@@ -2303,6 +2303,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RockObj
       objectReference: {fileID: 0}
+    - target: {fileID: 5873986731690432292, guid: 6d3ad17bf82d34839881a7c542c9dd5b, type: 3}
+      propertyPath: m_TagString
+      value: Object
+      objectReference: {fileID: 0}
     - target: {fileID: 5873986731690432293, guid: 6d3ad17bf82d34839881a7c542c9dd5b, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2496,6 +2500,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.98, y: 0.98, z: 0.98}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &2093379858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093379855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d005b7b0cfcf4bb7aee368750181c67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2107306462 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8080661086940691767, guid: 65ef400e7f24d4b5797ef372639a1895, type: 3}
