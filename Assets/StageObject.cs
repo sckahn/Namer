@@ -61,11 +61,11 @@ public struct NewAdjective
 
 public class StageObject : MonoBehaviour
 {
-    private string name;
-    public string Name
+    private string sname;
+    public string Sname
     {
-        get { return name; }
-        set { if (value == "") return; name = value; }
+        get { return sname; }
+        set { if (value == "") return; sname = value; }
     }
     [SerializeField] private bool[] specificity;
 
@@ -76,7 +76,7 @@ public class StageObject : MonoBehaviour
 
     public void SetObject(string name, NewAdjective[] adjectives)
     {
-        this.name = name;
+        this.sname = name;
         SetSpeficity(adjectives);
     }
 

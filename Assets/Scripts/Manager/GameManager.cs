@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager>
     {
     }
 
-    public void UpdateGameState()
+    private void UpdateGameState()
     {
         
         switch (state)
@@ -53,12 +53,14 @@ public class GameManager : Singleton<GameManager>
 
     private void HandleLost()
     {
+        Debug.Log("You Lost");
         //menu for reset
         throw new NotImplementedException();
     }
 
     private void HandleVictory()
     {
+        Debug.Log("You win");
         // show viectory ui
         // menu for next lever or quit
         throw new NotImplementedException();
@@ -89,6 +91,16 @@ public class GameManager : Singleton<GameManager>
     public void LoadScene(Scenes scenes, LoadSceneMode loadSceneMode)
     {
         SceneBehaviorManager.LoadScene(scenes,loadSceneMode);
+    }
+    [ContextMenu("CallWin")]
+    public void Win()
+    {
+        ChangeGameState(GameStates.Victory);
+    }
+
+    public void Lost()
+    {
+        ChangeGameState(GameStates.Lose);
     }
   
 }

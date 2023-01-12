@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87ed0abb8b95a4b2492727dfdb634fdf, type: 3}
+  m_Name: Word Data 1
+  m_EditorClassIdentifier: 
+  wordText: "\uD130\uC9C0\uAE30 \uC26C\uC6B4"
+  abjFunc: Burst
+  cardType: 1
