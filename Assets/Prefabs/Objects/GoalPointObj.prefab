@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3927566648822034865}
   - component: {fileID: 3927566648822034864}
+  - component: {fileID: 8034846003047480118}
   m_Layer: 0
   m_Name: GoalPointObj
   m_TagString: InteractObj
@@ -46,6 +47,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.98, y: 0.98, z: 0.98}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &8034846003047480118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3927566648822034878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c399dfa194be4474091b52a796d29cad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectName: GoalPoint
+  checkSpec: 00000000000000000000
+  countSpec: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!1001 &3927566647982094664
 PrefabInstance:
   m_ObjectHideFlags: 0
