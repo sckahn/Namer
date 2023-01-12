@@ -10,10 +10,33 @@ public class CardManager : Singleton<CardManager>
     [SerializeField] Transform cardHolderLeft;
     [SerializeField] Transform cardHolderRight;
     [SerializeField] List<CardController> myCards;
+    [SerializeField] GameObject[] startCards;
+
+    private void Start()
+    {
+        CardStart();
+    }
+
+    void CardStart()
+    {
+        StartCoroutine(DealCard());
+    }
+
+    //시작 카드를 딜링해주는 메서
+    IEnumerator DealCard()
+    {
+        yield return new WaitForSeconds(2f);
+        for (int i = 0; i < startCards.Length; i++)
+        {
+            AddCard(startCards[i]);
+            yield return new WaitForSeconds(1.5f);
+        }
+
+    }
 
     //카드를 생성하는 메서드 
     [ContextMenu("AddCard")]
-    void AddCard()
+    void AddCard(GameObject cardPrefab)
     {
         var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position, Quaternion.identity);
         var card = cardObject.GetComponent<CardController>();
@@ -25,14 +48,14 @@ public class CardManager : Singleton<CardManager>
     void CardAlignment()
     {
         List<PRS> originCardPRSs = new List<PRS>();
-        originCardPRSs = RoundAlignment(cardHolderLeft, cardHolderRight, myCards.Count, 0.5f, new Vector3(0.4f, 0.6f, 0.01f));
+        originCardPRSs = RoundAlignment(cardHolderLeft, cardHolderRight, myCards.Count, 0.5f, new Vector3(1f, 1f, 1f));
 
         for (int i = 0; i < myCards.Count; i++)
         {
             var targetCard = myCards[i];
 
             targetCard.originPRS = originCardPRSs[i];
-            Debug.Log(cardHolderPoint.position);
+            targetCard.originPRS.rot = cardHolderPoint.transform.rotation;
             targetCard.MoveTransform(targetCard.originPRS, true, 2f);
         }
     }
