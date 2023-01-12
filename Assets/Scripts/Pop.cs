@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -72,6 +73,12 @@ public class Pop : MonoBehaviour
       }
       // print(isContact);
    }
+
+   private void FixedUpdate()
+   {
+      PopObject();
+   }
+
 
    public void MakeItPopable()
    {
