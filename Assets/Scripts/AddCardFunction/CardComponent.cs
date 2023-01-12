@@ -11,11 +11,11 @@ public class CardComponent : MonoBehaviour
     {
         if (cardWord.CardType == CardType.Word)
         {
-            target.GetComponent<ObjectClass>().SetObject(cardWord.SpecFunc);
+            target.GetComponent<ObjectClass>().SetObject(cardWord.AbjFunc);
         }
         else if (cardWord.CardType == CardType.Specificity)
         {
-            target.GetComponent<ObjectClass>().SetSpecificity(cardWord.SpecFunc);
+            target.GetComponent<ObjectClass>().SetSpecificity(cardWord.AbjFunc);
         }
     }
 

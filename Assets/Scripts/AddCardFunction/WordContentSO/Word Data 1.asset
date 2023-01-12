@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Word Data 1
   m_EditorClassIdentifier: 
   wordText: "\uD130\uC9C0\uAE30 \uC26C\uC6B4"
-  specFucn: Burst
+  abjFunc: Burst
   cardType: 1

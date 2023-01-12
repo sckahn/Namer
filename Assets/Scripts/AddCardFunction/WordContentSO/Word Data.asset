@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Word Data
   m_EditorClassIdentifier: 
   wordText: "\uACF5"
-  specFucn: Ball
+  abjFunc: Ball
   cardType: 0

@@ -8,8 +8,8 @@ public class CardWord : ScriptableObject
 {
     [SerializeField] private string wordText;
     public string WordText {get {return wordText;}}
-    [SerializeField] private string specFucn;
-    public string SpecFunc{get {return specFucn;}}
+    [SerializeField] private string abjFunc;
+    public string AbjFunc{get {return abjFunc;}}
     [SerializeField] private CardType cardType;
     public CardType CardType { get {return cardType;}}
 }
