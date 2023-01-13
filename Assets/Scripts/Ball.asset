@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Ball
   isAdjective: 0
-  adjectivesOrders: 02000000
+  adjectivesOrders: 07000000
