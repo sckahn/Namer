@@ -7,12 +7,21 @@ public class Pop : MonoBehaviour
 {
    public bool isPopAble { get; private set; }
    private bool isContact;
+   private Rigidbody rb;
+   private void Start()
+   {
+      if (!gameObject.TryGetComponent<Rigidbody>(out rb) == false)
+         gameObject.AddComponent<Rigidbody>();
+      rb = GetComponent<Rigidbody>();
+      rb.isKinematic = true;
+      rb.useGravity = false;
+   }
 
    [ContextMenu("PopObj")]
    public void PopObject()
    {
       // print("here?");
-      LookForPointy();
+      LookUpPointy();
       if (isContact)
       {
          // print(isContact);
@@ -23,55 +32,41 @@ public class Pop : MonoBehaviour
 
    
    [ContextMenu("Test")]
-   public void LookForPointy()
+   public void LookUpPointy()
    {
-      var centerPos = gameObject.GetComponent<Collider>().bounds.center;
-      var extensPos = gameObject.GetComponent<Collider>().bounds.extents;
-      
       RaycastHit hit;
-      Ray front = new Ray(centerPos, Vector3.forward);
-      Ray back = new Ray(centerPos, Vector3.back);
-      Ray left = new Ray(centerPos, Vector3.left);
-      Ray right = new Ray(centerPos, Vector3.right);
-
-      if (Physics.Raycast(front, out hit, Mathf.Infinity))
+      if (rb.SweepTest(Vector3.forward,out hit, 1f))
       {
-         if (hit.distance<(centerPos.z+extensPos.z)+.5f&& hit.transform.gameObject.name =="Cactus")
+         if (hit.collider.name == "Cactus")
          {
-            // print("front check");
             isContact = true;
             return;
          }
       }
-      if (Physics.Raycast(back, out hit, Mathf.Infinity))
+      if (rb.SweepTest(Vector3.back,out hit, 1f))
       {
-         if (hit.distance < (centerPos.z + extensPos.z) + .5f&& hit.transform.gameObject.name =="Cactus")
+         if (hit.collider.name == "Cactus")
          {
-            // print("back check");
             isContact = true;
             return;
          }
       }
-
-      if (Physics.Raycast(left, out hit, Mathf.Infinity))
+      if (rb.SweepTest(Vector3.left,out hit, 1f))
       {
-         if (hit.distance < (centerPos.x + extensPos.x) + .5f && hit.transform.gameObject.name =="Cactus")
+         if (hit.collider.name == "Cactus")
          {
-            // print("left check");
             isContact = true;
             return;
          }
       }
-      if (Physics.Raycast(right, out hit, Mathf.Infinity))
+      if (rb.SweepTest(Vector3.right,out hit, 1f))
       {
-         if (hit.distance < (centerPos.x + extensPos.x) + .5f && hit.transform.gameObject.name =="Cactus")
+         if (hit.collider.name == "Cactus")
          {
-            // print("right check");
             isContact = true;
             return;
          }
       }
-      // print(isContact);
    }
 
    private void FixedUpdate()
