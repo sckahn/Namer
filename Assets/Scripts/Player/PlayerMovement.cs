@@ -47,7 +47,14 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        
+        if (TryGetComponent<PlayerInteraction>(out PlayerInteraction pi) &&
+            pi.forwardObjectInfo  &&
+            pi.forwardObjectInfo.name == "GoalPointObj")
+        {
+            Debug.Log("h");
+            myanimator.SetBool("isInteraction", true);
+            myanimator.SetBool("isVictory", true);
+        }
 
         if (Input.GetKeyDown(KeyCode.B))
         {
