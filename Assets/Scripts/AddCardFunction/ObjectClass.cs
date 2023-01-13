@@ -16,7 +16,7 @@ public class ObjectClass : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log(objectName);
+        //Debug.Log(objectName);
         SetObject(objectName);
     }
 

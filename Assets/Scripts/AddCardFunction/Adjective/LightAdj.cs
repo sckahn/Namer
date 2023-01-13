@@ -24,18 +24,18 @@ public class LightAdj : IAdjective
     
     public void Function(ObjectClass thisObject)
     {
-        Debug.Log("this is Light");
+        //Debug.Log("this is Light");
     }
 
     public void Function(ObjectClass thisObject, GameObject player, bool isAffect)
     {
         if (isAffect)
         {
-            Debug.Log("Light : this Object > Player");
+            //Debug.Log("Light : this Object > Player");
         }
         else if (!isAffect)
         {
-            Debug.Log("Light : this Object < Player");
+            //Debug.Log("Light : this Object < Player");
         }
     }
     
@@ -43,11 +43,11 @@ public class LightAdj : IAdjective
     {
         if (isAffect)
         {
-            Debug.Log("Light : this Object > other Object");
+            //Debug.Log("Light : this Object > other Object");
         }
         else if (!isAffect)
         {
-            Debug.Log("Light : this Object < other Object");
+            //Debug.Log("Light : this Object < other Object");
         }
     }
 }

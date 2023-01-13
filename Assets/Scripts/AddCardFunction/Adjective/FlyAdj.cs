@@ -24,18 +24,18 @@ public class FlyAdj : IAdjective
     
     public void Function(ObjectClass thisObject)
     {
-        Debug.Log("this is Fly");
+       // Debug.Log("this is Fly");
     }
     
     public void Function(ObjectClass thisObject, GameObject player, bool isAffect)
     {
         if (isAffect)
         {
-            Debug.Log("Fly : this Object > Player");
+           // Debug.Log("Fly : this Object > Player");
         }
         else if (!isAffect)
         {
-            Debug.Log("Fly : this Object < Player");
+            //Debug.Log("Fly : this Object < Player");
         }
     }
     
@@ -43,11 +43,11 @@ public class FlyAdj : IAdjective
     {
         if (isAffect)
         {
-            Debug.Log("Fly : this Object > other Object");
+            //Debug.Log("Fly : this Object > other Object");
         }
         else if (!isAffect)
         {
-            Debug.Log("Fly : this Object < other Object");
+            //Debug.Log("Fly : this Object < other Object");
         }
     }
 }

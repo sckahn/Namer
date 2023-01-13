@@ -24,18 +24,18 @@ public class BurstAdj : IAdjective
     
     public void Function(ObjectClass thisObject)
     {
-        Debug.Log("this is Burst");
+        //Debug.Log("this is Burst");
     }
     
     public void Function(ObjectClass thisObject, GameObject player, bool isAffect)
     {
         if (isAffect)
         {
-            Debug.Log("Burst : this Object > Player");
+            //Debug.Log("Burst : this Object > Player");
         }
         else if (!isAffect)
         {
-            Debug.Log("Burst : this Object < Player");
+            //Debug.Log("Burst : this Object < Player");
         }
     }
     
@@ -43,11 +43,11 @@ public class BurstAdj : IAdjective
     {
         if (isAffect)
         {
-            Debug.Log("Burst : this Object > other Object");
+            //Debug.Log("Burst : this Object > other Object");
         }
         else if (!isAffect)
         {
-            Debug.Log("Burst : this Object < other Object");
+            //Debug.Log("Burst : this Object < other Object");
         }
     }
 }

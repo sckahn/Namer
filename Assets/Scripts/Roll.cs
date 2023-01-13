@@ -72,7 +72,7 @@ public class Roll : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log(collision.gameObject.name);
+            //Debug.Log(collision.gameObject.name);
             RollToward(this.transform.position - collision.transform.position);
             StartCoroutine(RollStop());
         }

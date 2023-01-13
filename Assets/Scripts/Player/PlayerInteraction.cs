@@ -45,7 +45,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         RaycastHit IORay;
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
-        Debug.DrawRay(transform.position, fwd, Color.green);
+        //Debug.DrawRay(transform.position, fwd, Color.green);
 
         if (Physics.Raycast(new Vector3(this.transform.position.x, this.transform.position.y + 0.5f, this.transform.position.z), fwd, out IORay, 0.5f))
         {
@@ -121,22 +121,22 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (this.transform.position.z > fieldBounds.TopLeft.y - padding)
         {
-            Debug.Log("UP");
+            //Debug.Log("UP");
         }
 
         else if (this.transform.position.x > fieldBounds.TopRight.x - padding)
         {
-            Debug.Log("Right");
+            //Debug.Log("Right");
         }
 
         else if (this.transform.position.x < fieldBounds.TopLeft.x + padding)
         {
-            Debug.Log("Left");
+            //Debug.Log("Left");
         }
 
         else if (this.transform.position.z < fieldBounds.BottomLeft.y + padding)
         {
-            Debug.Log("BUTTOM");
+            //Debug.Log("BUTTOM");
         }
     }
 

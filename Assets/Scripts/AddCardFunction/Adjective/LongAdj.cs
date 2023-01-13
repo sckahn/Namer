@@ -24,18 +24,18 @@ public class LongAdj : IAdjective
     
     public void Function(ObjectClass thisObject)
     {
-        Debug.Log("this is Long");
+        //Debug.Log("this is Long");
     }
     
     public void Function(ObjectClass thisObject, GameObject player, bool isAffect)
     {
         if (isAffect)
         {
-            Debug.Log("Long : this Object > Player");
+            //Debug.Log("Long : this Object > Player");
         }
         else if (!isAffect)
         {
-            Debug.Log("Long : this Object < Player");
+            //Debug.Log("Long : this Object < Player");
         }
     }
     
@@ -43,11 +43,11 @@ public class LongAdj : IAdjective
     {
         if (isAffect)
         {
-            Debug.Log("Long : this Object > other Object");
+            //Debug.Log("Long : this Object > other Object");
         }
         else if (!isAffect)
         {
-            Debug.Log("Long : this Object < other Object");
+            //Debug.Log("Long : this Object < other Object");
         }
     }
 }

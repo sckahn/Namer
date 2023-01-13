@@ -24,18 +24,18 @@ public class PullAdj : IAdjective
     
     public void Function(ObjectClass thisObject)
     {
-        Debug.Log("this is Pull");
+        //Debug.Log("this is Pull");
     }
     
     public void Function(ObjectClass thisObject, GameObject player, bool isAffect)
     {
         if (isAffect)
         {
-            Debug.Log("Pull : this Object > Player");
+           // Debug.Log("Pull : this Object > Player");
         }
         else if (!isAffect)
         {
-            Debug.Log("Pull : this Object < Player");
+           // Debug.Log("Pull : this Object < Player");
         }
     }
     
@@ -43,11 +43,11 @@ public class PullAdj : IAdjective
     {
         if (isAffect)
         {
-            Debug.Log("Pull : this Object > other Object");
+           // Debug.Log("Pull : this Object > other Object");
         }
         else if (!isAffect)
         {
-            Debug.Log("Pull : this Object < other Object");
+           // Debug.Log("Pull : this Object < other Object");
         }
     }
 }
