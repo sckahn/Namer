@@ -10,13 +10,14 @@ public enum CardType
 
 public enum Adjective
 {
-    Heavy,
+    Heavy = 0,
     Light,
     Push,
     Pull,
     Burst,
     Fly,
-    Long
+    Long,
+    Pushed
 }
 
 public class EnumCollection
