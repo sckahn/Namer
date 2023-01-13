@@ -51,28 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.B))
         {
-            myanimator.SetBool("isInteraction", true);
-
-            if (TryGetComponent<PlayerInteraction>(out PlayerInteraction pi) && pi.forwardObjectInfo)
-            {
-                if (pi.forwardObjectInfo.tag == "Item")
-                {
-                    myanimator.SetBool("TakeItem", true);
-                }
-
-                else if (pi.forwardObjectInfo.tag == "InteractObj")
-                {
-                    pi.forwardObjectInfo.GetComponent<ObjectClass>().Interact(this.gameObject);
-                    interactobj = pi.forwardObjectInfo;
-                    myanimator.SetBool("InteractObj", true);
-
-                }
-
-                else if (pi.forwardObjectInfo.name == "Goal")
-                {
-                    myanimator.SetBool("isVictory", true);
-                }
-            }
+            PlayPushAnimation();
         }
 
         isInteraction = myanimator.GetCurrentAnimatorStateInfo(0).IsName("takeitem") |
@@ -82,33 +61,100 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if(other.transform.name == "Goal")
-        {
-            myanimator.SetBool("isInteraction", true);
-            myanimator.SetBool("isVictory", true);
-        }
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    if(other.transform.name == "Goal")
+    //    {
+    //        myanimator.SetBool("isInteraction", true);
+    //        myanimator.SetBool("isVictory", true);
+    //    }
 
-        isInteraction = myanimator.GetCurrentAnimatorStateInfo(0).IsName("takeitem") |
-    myanimator.GetCurrentAnimatorStateInfo(0).IsName("push") |
-    myanimator.GetCurrentAnimatorStateInfo(0).IsName("victory") &&
-    myanimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1 ? true : false;
-    }
+    //    isInteraction = myanimator.GetCurrentAnimatorStateInfo(0).IsName("takeitem") |
+    //myanimator.GetCurrentAnimatorStateInfo(0).IsName("push") |
+    //myanimator.GetCurrentAnimatorStateInfo(0).IsName("victory") &&
+    //myanimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1 ? true : false;
+    //}
 
-    public void PlayPushAnimation()
+    public void PlayPushAnimation1()
     {
         StartCoroutine(AnimationPlay());    
     }
 
+    public void PlayPushAnimation()
+    {
+        myanimator.SetBool("isInteraction", true);
+
+        if (TryGetComponent<PlayerInteraction>(out PlayerInteraction pi) && pi.forwardObjectInfo)
+        {
+            if (pi.forwardObjectInfo.tag == "Item")
+            {
+                myanimator.SetBool("TakeItem", true);
+            }
+
+            else if (pi.forwardObjectInfo.tag == "InteractObj")
+            {
+                interactobj = pi.forwardObjectInfo;
+                myanimator.SetBool("InteractObj", true);
+                pi.forwardObjectInfo.GetComponent<ObjectClass>().Interact(this.gameObject);
+            }
+
+            else if (pi.forwardObjectInfo.name == "Goal")
+            {
+                myanimator.SetBool("isVictory", true);
+            }
+        }
+    }
+
+    Vector3 CalculateTargetPos()
+    {
+        PlayerInteraction pi = GetComponent<PlayerInteraction>();
+
+        Vector3 targetPos = new Vector3();
+
+        if ((int)pi.mydir == 0)
+        {
+            targetPos += Vector3.forward;
+        }
+
+        else if ((int)pi.mydir == 3)
+        {
+            targetPos += Vector3.right;
+        }
+
+        else if ((int)pi.mydir == 1)
+        {
+            targetPos += Vector3.back;
+        }
+
+        else if ((int)pi.mydir == 2)
+        {
+            targetPos += Vector3.left;
+        }
+
+        return targetPos;
+    }
+
     IEnumerator AnimationPlay()
     {
-        while(interactobj.transform)
+        Vector3 targetPos = CalculateTargetPos();
+        float padding = 0.005f;
+        Vector3 temp = targetPos + interactobj.transform.position;
+
+        while ((interactobj.transform.position - temp).magnitude > 0.01f)
         {
+            interactobj.transform.position = new Vector3(targetPos.x * padding + interactobj.transform.position.x,
+                interactobj.transform.position.y,
+                targetPos.z * padding + interactobj.transform.position.z);
 
+            this.transform.position = new Vector3(targetPos.x * padding + this.transform.position.x,
+             this.transform.position.y,
+             targetPos.z * padding + this.transform.position.z);
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.01f);
         }
+        //TODO 포지션 맞춰주기
+
+        interactobj.transform.position = new Vector3(Mathf.Round(interactobj.transform.position.x), Mathf.Round(interactobj.transform.position.y), Mathf.Round(interactobj.transform.position.z));
     }
 }
 
