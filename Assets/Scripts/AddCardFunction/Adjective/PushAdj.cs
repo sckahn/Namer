@@ -29,27 +29,30 @@ public class PushAdj : IAdjective
     
     public void Function(ObjectClass thisObject, GameObject player, bool isAffect)
     {
-        Vector3 direction = (thisObject.transform.position - player.transform.position);
-        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z) && direction.x > 0)
-        { 
-            thisObject.transform.position += Vector3.right;
-            return;
-        }
-        else if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z) && direction.x < 0)
-        {
-            thisObject.transform.position += Vector3.left;
-            return;
-        }
-        else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.z) && direction.z>0)
-        {
-            thisObject.transform.position += Vector3.forward;
-            return;
-        }
-        else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.z) && direction.z<0)
-        {
-            thisObject.transform.position += Vector3.back;
-            return;
-        }
+        player.GetComponent<PlayerMovement>().PlayPushAnimation1();
+
+
+        //Vector3 direction = (thisObject.transform.position - player.transform.position);
+        //if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z) && direction.x > 0)
+        //{ 
+        //    thisObject.transform.position += Vector3.right;
+        //    return;
+        //}
+        //else if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z) && direction.x < 0)
+        //{
+        //    thisObject.transform.position += Vector3.left;
+        //    return;
+        //}
+        //else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.z) && direction.z>0)
+        //{
+        //    thisObject.transform.position += Vector3.forward;
+        //    return;
+        //}
+        //else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.z) && direction.z<0)
+        //{
+        //    thisObject.transform.position += Vector3.back;
+        //    return;
+        //}
     }
     
     public void Function(ObjectClass thisObject, ObjectClass otherObject, bool isAffect)

@@ -302,14 +302,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea7c804840f1455eac6e1c4ac07ac1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  growScale: 2
-  shrinkScale: 0.5
-  goalScale: 0
-  currentHeight: 0
-  ScalingSpeed: 1
-  currentTime: 0
-  targetScale: {x: 0, y: 0, z: 0}
-  forTest: {x: 0, y: 0, z: 0}
 --- !u!65 &151944660
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -381,7 +373,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 151944658}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: 0}
+  m_LocalPosition: {x: -1, y: -3.82, z: -0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -555,14 +547,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea7c804840f1455eac6e1c4ac07ac1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  growScale: 2
-  shrinkScale: 0.5
-  goalScale: 0
-  currentHeight: 0
-  ScalingSpeed: 1
-  currentTime: 0
-  targetScale: {x: 0, y: 0, z: 0}
-  forTest: {x: 0, y: 0, z: 0}
 --- !u!65 &290580793
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -634,7 +618,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 290580791}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 0, y: -3.33, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2310,14 +2294,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea7c804840f1455eac6e1c4ac07ac1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  growScale: 2
-  shrinkScale: 0.5
-  goalScale: 0
-  currentHeight: 0
-  ScalingSpeed: 1
-  currentTime: 0
-  targetScale: {x: 0, y: 0, z: 0}
-  forTest: {x: 0, y: 0, z: 0}
 --- !u!65 &1731999408
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2389,8 +2365,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1731999406}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -2596,14 +2572,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea7c804840f1455eac6e1c4ac07ac1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  growScale: 2
-  shrinkScale: 0.5
-  goalScale: 0
-  currentHeight: 0
-  ScalingSpeed: 1
-  currentTime: 0
-  targetScale: {x: 0, y: 0, z: 0}
-  forTest: {x: 0, y: 0, z: 0}
 --- !u!65 &1939692833
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2675,7 +2643,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1939692831}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 4.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2714,14 +2682,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea7c804840f1455eac6e1c4ac07ac1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  growScale: 2
-  shrinkScale: 0.5
-  goalScale: 0
-  currentHeight: 0
-  ScalingSpeed: 1
-  currentTime: 0
-  targetScale: {x: 0, y: 0, z: 0}
-  forTest: {x: 0, y: 0, z: 0}
 --- !u!65 &1946155566
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2793,7 +2753,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1946155564}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: -4.69, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -47,7 +47,7 @@ public class PlayerInteraction : MonoBehaviour
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
         Debug.DrawRay(transform.position, fwd, Color.green);
 
-        if (Physics.Raycast(new Vector3(this.transform.position.x, this.transform.position.y + 0.2f, this.transform.position.z), fwd, out IORay, 0.2f))
+        if (Physics.Raycast(new Vector3(this.transform.position.x, this.transform.position.y + 0.5f, this.transform.position.z), fwd, out IORay, 0.5f))
         {
             if (curObjectInfo.GetComponent<BoxCollider>().bounds.center.x - IORay.transform.position.x == -1 &&
                 curObjectInfo.GetComponent<BoxCollider>().bounds.center.z - IORay.transform.position.z == 0)
