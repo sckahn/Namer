@@ -5,9 +5,6 @@ using DG.Tweening;
 
 public class CardController : MonoBehaviour
 {
-    [SerializeField] GameObject backCover;
-    [SerializeField] GameObject frontCover;
-
     public PRS originPRS;
 
     public void MoveTransform(PRS prs, bool useDotween, float dotweenTime = 0)
