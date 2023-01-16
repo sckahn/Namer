@@ -9,6 +9,7 @@ public class ObjectClass : MonoBehaviour
     [SerializeField] private string objectName;
     [SerializeField] private bool[] checkSpec = new bool[10];
     [SerializeField] private int[] countSpec = new int[10];
+    [SerializeField] GameObject popUpName;
     
     private List<NameClass> words = new List<NameClass>();
     private IAdjective[] specificities = new IAdjective[10];
@@ -83,18 +84,29 @@ public class ObjectClass : MonoBehaviour
         //Interact(collision.gameObject);
     }
 
-    //카드를 선택한 상태에서 오브젝트를 호버링하면 카드의 타겟으로 설정 
+    //카드를 선택한 상태에서 오브젝트를 호버링하면 카드의 타겟으로 설정
+    //오브젝트의 이름을 화면에 띄움
     private void OnMouseOver()
     {
         if (this.gameObject.CompareTag("InteractObj") && CardManager.GetInstance.isPickCard)
         {
             CardManager.GetInstance.target = this.gameObject;
         }
+        if (this.gameObject.CompareTag("InteractObj"))
+        {
+            popUpName.SetActive(true);
+        }
     }
 
-    //마우스가 떠나면 카드의 타겟은 다시 널로 설정
+    //마우스가 떠나면 카드의 타겟은 다시 null로 설정
+    //오브젝트의 이름을 화면에서 가림 
     private void OnMouseExit()
     {
         CardManager.GetInstance.target = null;
+        popUpName.SetActive(false);
+        if (this.gameObject.CompareTag("InteractObj"))
+        {
+            popUpName.SetActive(false);
+        }
     }
 }
