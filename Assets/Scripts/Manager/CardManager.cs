@@ -12,6 +12,12 @@ public class CardManager : Singleton<CardManager>
     [SerializeField] List<CardController> myCards;
     [SerializeField] GameObject[] startCards;
 
+    //타겟 상호작용 오브젝트 
+    //[HideInInspector]
+    public GameObject target;
+
+    public bool isPickCard = false;
+
     private void Start()
     {
         CardStart();

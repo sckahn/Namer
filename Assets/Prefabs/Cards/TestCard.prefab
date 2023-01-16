@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8390414494258579863}
   - component: {fileID: 1712746236343687948}
-  - component: {fileID: 453746082420174526}
+  - component: {fileID: 884279093280446211}
   m_Layer: 0
   m_Name: TestCard
   m_TagString: Card
@@ -46,7 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e8cc538b00e4479865b8e759be81d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &453746082420174526
+  frontCover: {fileID: 6958935435607920343}
+  bc: {fileID: 884279093280446211}
+--- !u!65 &884279093280446211
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,7 +59,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.666, z: 0.1}
+  m_Size: {x: 0.4635068, y: 0.666, z: 0.060031325}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1280225036708927070
 PrefabInstance:
@@ -135,5 +137,10 @@ PrefabInstance:
 --- !u!4 &4644672556372226665 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5886614794521977911, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
+  m_PrefabInstance: {fileID: 1280225036708927070}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6958935435607920343 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8167100953595549833, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
   m_PrefabInstance: {fileID: 1280225036708927070}
   m_PrefabAsset: {fileID: 0}

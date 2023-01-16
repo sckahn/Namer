@@ -199,6 +199,7 @@ GameObject:
   - component: {fileID: 13797635}
   - component: {fileID: 13797639}
   - component: {fileID: 13797640}
+  - component: {fileID: 13797641}
   m_Layer: 0
   m_Name: CardHolder
   m_TagString: Untagged
@@ -215,7 +216,7 @@ MeshCollider:
   m_GameObject: {fileID: 13797634}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
@@ -227,7 +228,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 13797634}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -278,7 +279,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 13797634}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.033, y: -0.555, z: 1.496}
+  m_LocalPosition: {x: 0, y: -0.5, z: 1.496}
   m_LocalScale: {x: 3.1, y: 0.65, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -321,6 +322,20 @@ MonoBehaviour:
   - {fileID: 7743834699422014335, guid: 44cdfb3f486154f63b9a250620d75fd0, type: 3}
   - {fileID: 7743834699422014335, guid: 6ff7a3738d3084802a521aacc6d1d29b, type: 3}
   - {fileID: 7743834699422014335, guid: bcf9a9013e6e04ecea01a3cda08cf8d8, type: 3}
+  target: {fileID: 0}
+  isPickCard: 0
+--- !u!114 &13797641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 13797634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66df00523c6284e46b4689a0bed21237, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &40694503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -897,6 +912,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 6830195839683541667, guid: c934639d86a5f47dfab1745378c755d0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6830195839683541679, guid: c934639d86a5f47dfab1745378c755d0, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -907,7 +926,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6830195839683541679, guid: c934639d86a5f47dfab1745378c755d0, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6830195839683541679, guid: c934639d86a5f47dfab1745378c755d0, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3813,6 +3832,7 @@ GameObject:
   - component: {fileID: 2044421414}
   - component: {fileID: 2044421413}
   - component: {fileID: 2044421412}
+  - component: {fileID: 2044421415}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -3867,8 +3887,21 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2044421415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044421411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1001 &2059109940
 PrefabInstance:
   m_ObjectHideFlags: 0

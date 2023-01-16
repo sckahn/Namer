@@ -15,7 +15,10 @@ public class CardComponent : MonoBehaviour
 
     private void Update()
     {
-        target = pi.forwardObjectInfo;
+        if (CardManager.GetInstance.target != null)
+        {
+            target = CardManager.GetInstance.target;
+        }
     }
 
     public void AddCard()

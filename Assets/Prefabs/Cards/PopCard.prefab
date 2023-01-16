@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8390414494258579863}
   - component: {fileID: 1712746236343687948}
-  - component: {fileID: 562986328360318595}
+  - component: {fileID: 2721935581099869929}
+  - component: {fileID: 4896508340662502927}
+  - component: {fileID: -1313255419992942935}
   m_Layer: 0
   m_Name: PopCard
   m_TagString: Card
@@ -46,7 +48,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e8cc538b00e4479865b8e759be81d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &562986328360318595
+  cardHolder: {fileID: 0}
+  frontCover: {fileID: 7865115808221761892}
+  bc: {fileID: 2721935581099869929}
+  highlight: {fileID: 8686928968484850008}
+--- !u!65 &2721935581099869929
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,8 +63,40 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.666, z: 0.1}
+  m_Size: {x: 0.4635068, y: 0.666, z: 0.060031325}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4896508340662502927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7743834699422014335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4041fc45323b0406c826e804504ceb23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardWord: {fileID: 11400000, guid: ab512257141ec4a5bb352079f8346e53, type: 2}
+  target: {fileID: 0}
+  pi: {fileID: 0}
+--- !u!114 &-1313255419992942935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7743834699422014335}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0997f38b6b864203bbea986960bd11e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maskNumber: 1
+  rotationSpeedH: 0.8
+  rotationSpeedV: 0.6
+  angleH: 5
+  angleV: 0
 --- !u!1001 &2049663550649993709
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -144,6 +182,16 @@ Transform:
 --- !u!4 &5602665765175406042 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5886614794521977911, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
+  m_PrefabInstance: {fileID: 2049663550649993709}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7865115808221761892 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8167100953595549833, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
+  m_PrefabInstance: {fileID: 2049663550649993709}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8686928968484850008 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7277805989260689589, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
   m_PrefabInstance: {fileID: 2049663550649993709}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3282789727148995976

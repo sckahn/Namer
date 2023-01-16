@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8390414494258579863}
   - component: {fileID: 1712746236343687948}
   - component: {fileID: 453746082420174526}
+  - component: {fileID: 6447473925214891298}
+  - component: {fileID: 9179835326793320750}
   m_Layer: 0
   m_Name: BallCard
   m_TagString: Card
@@ -46,6 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e8cc538b00e4479865b8e759be81d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardHolder: {fileID: 0}
+  frontCover: {fileID: 4230330137778533953}
+  bc: {fileID: 453746082420174526}
+  highlight: {fileID: 3395023830973034109}
 --- !u!65 &453746082420174526
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -57,8 +63,40 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.666, z: 0.1}
+  m_Size: {x: 0.4635068, y: 0.666, z: 0.060031325}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6447473925214891298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7743834699422014335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4041fc45323b0406c826e804504ceb23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardWord: {fileID: 11400000, guid: 24ef513d74b0c40458bce480c9a54627, type: 2}
+  target: {fileID: 0}
+  pi: {fileID: 0}
+--- !u!114 &9179835326793320750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7743834699422014335}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0997f38b6b864203bbea986960bd11e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maskNumber: 1
+  rotationSpeedH: 0.8
+  rotationSpeedV: 0.6
+  angleH: 5
+  angleV: 0
 --- !u!1001 &5468066845115952840
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -126,11 +164,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: FrontCover
       objectReference: {fileID: 0}
+    - target: {fileID: 8167100953595549833, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
 --- !u!4 &1896874318909967103 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5886614794521977911, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
+  m_PrefabInstance: {fileID: 5468066845115952840}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3395023830973034109 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7277805989260689589, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
+  m_PrefabInstance: {fileID: 5468066845115952840}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4230330137778533953 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8167100953595549833, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
   m_PrefabInstance: {fileID: 5468066845115952840}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &5164094454729132055 stripped
