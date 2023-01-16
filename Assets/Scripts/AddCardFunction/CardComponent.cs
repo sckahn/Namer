@@ -15,23 +15,20 @@ public class CardComponent : MonoBehaviour
 
     private void Update()
     {
-        if (CardManager.GetInstance.target != null)
-        {
-            target = CardManager.GetInstance.target;
-        }
+        target = pi.forwardObjectInfo;
     }
 
     public void AddCard()
     {
         if (target)
         {
-            if (cardWord.CardType == CardType.Word)
+            if (cardWord.CardType == eCardType.Name)
             {
-                target.GetComponent<ObjectClass>().SetObject(cardWord.AbjFunc);
+                target.GetComponent<ObjectClass>().AddName(cardWord.AddWordClass);
             }
-            else if (cardWord.CardType == CardType.Specificity)
+            else if (cardWord.CardType == eCardType.Adjective)
             {
-                target.GetComponent<ObjectClass>().SetSpecificity(cardWord.AbjFunc);
+                target.GetComponent<ObjectClass>().AddAdjective(cardWord.AddWordClass);
             }
         }
 

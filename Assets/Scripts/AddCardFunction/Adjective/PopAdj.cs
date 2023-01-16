@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LongAdj : IAdjective
+public class PopAdj : IAdjective
 {
-    private string name = "Long";
+    private string name = "Pop";
     private int count = 0;
-    
+
     public string GetName()
     {
         return name;
@@ -24,20 +24,19 @@ public class LongAdj : IAdjective
     
     public void Execute(ObjectClass thisObject)
     {
-        //Debug.Log("this is Long");
-        thisObject.gameObject.AddComponent<Longer>();
-        thisObject.gameObject.GetComponent<Longer>().ObjectScaling();
+        Debug.Log("this is Pop");
+        thisObject.gameObject.AddComponent<Pop>();
     }
-    
+
     public void Execute(ObjectClass thisObject, GameObject player, bool isAffect)
     {
         if (isAffect)
         {
-            //Debug.Log("Long : this Object > Player");
+            //Debug.Log("Pop : this Object > Player");
         }
         else if (!isAffect)
         {
-            //Debug.Log("Long : this Object < Player");
+            //Debug.Log("Pop : this Object < Player");
         }
     }
     
@@ -45,11 +44,11 @@ public class LongAdj : IAdjective
     {
         if (isAffect)
         {
-            //Debug.Log("Long : this Object > other Object");
+            //Debug.Log("Pop : this Object > other Object");
         }
         else if (!isAffect)
         {
-            //Debug.Log("Long : this Object < other Object");
+            //Debug.Log("Pop : this Object < other Object");
         }
     }
 }

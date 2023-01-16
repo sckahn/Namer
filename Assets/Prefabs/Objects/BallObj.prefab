@@ -59,9 +59,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c399dfa194be4474091b52a796d29cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectName: Ball
-  checkSpec: 00000000000000000000
-  countSpec: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  setInit: 0
+  objectName: 2
+  checkAdj: 00000000000000000000
 --- !u!1 &3576685674537200849
 GameObject:
   m_ObjectHideFlags: 0

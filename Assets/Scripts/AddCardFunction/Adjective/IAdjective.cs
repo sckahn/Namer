@@ -9,13 +9,13 @@ public interface IAdjective
     public void SetCount(int addCount);
     
     // affect to this.Object 
-    public void Function(ObjectClass thisObject);
+    public void Execute(ObjectClass thisObject);
 
     // isAffect == true : this.Object -> player
     // isAffect == false : this.Object <- player
-    public void Function(ObjectClass thisObject, GameObject player, bool isAffect);
+    public void Execute(ObjectClass thisObject, GameObject player, bool isAffect);
     
     // isAffect == true : this.Object -> other.Object
     // isAffect == false : this.Object <- other.Object
-    public void Function(ObjectClass thisObject, ObjectClass otherObject, bool isAffect);
+    public void Execute(ObjectClass thisObject, ObjectClass otherObject, bool isAffect);
 }

@@ -5,35 +5,30 @@ using UnityEngine;
 public class NameClass
 {
     private string name;
-    public string Name { get {return name;}}
-    private IAdjective[] specificities;
-    public IAdjective[] Specificities { get {return specificities;} }
+    public string Name { get { return name; } }
+    private IAdjective[] adjectives;
+    public IAdjective[] Adjectives { get { return adjectives; } }
 
-    public NameClass(string name, IAdjective[] specificities)
+    public NameClass(string name, IAdjective[] adjectives)
     {
         this.name = name;
-        this.specificities = specificities;
+        this.adjectives = adjectives;
     }
 }
 
 public class Rock : NameClass
 {
-    public Rock() : base("Rock", new IAdjective[] { new HeavyAdj() }) { }
-}
-
-public class Ball : NameClass
-{
-    public Ball() : base("Ball", new IAdjective[]{new PushAdj(), new BurstAdj()}){}
+    public Rock() : base("Rock", new IAdjective[] { new HeavyAdj()}) { }
 }
 
 public class Cactus : NameClass
 {
-    public Cactus() : base("Cactus", new IAdjective[]{}){}
+    public Cactus() : base("Cactus", new IAdjective[]{new SpikyAdj()}){}
 }
 
-public class Balloon : NameClass
+public class Ball : NameClass
 {
-    public Balloon() : base("Balloon", new IAdjective[]{new LightAdj(), new FlyAdj()}){}
+    public Ball() : base("Ball", new IAdjective[]{new PushAdj()}){}
 }
 
 public class GoalPoint : NameClass

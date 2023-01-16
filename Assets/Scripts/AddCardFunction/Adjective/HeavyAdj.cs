@@ -22,12 +22,12 @@ public class HeavyAdj : IAdjective
         this.count += addCount;
     }
     
-    public void Function(ObjectClass thisObject)
+    public void Execute(ObjectClass thisObject)
     {
         //Debug.Log("this is Heavy");
     }
 
-    public void Function(ObjectClass thisObject, GameObject player, bool isAffect)
+    public void Execute(ObjectClass thisObject, GameObject player, bool isAffect)
     {
         if (isAffect)
         {
@@ -39,7 +39,7 @@ public class HeavyAdj : IAdjective
         }
     }
     
-    public void Function(ObjectClass thisObject, ObjectClass otherObject, bool isAffect)
+    public void Execute(ObjectClass thisObject, ObjectClass otherObject, bool isAffect)
     {
         if (isAffect)
         {
