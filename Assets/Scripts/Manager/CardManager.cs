@@ -17,6 +17,7 @@ public class CardManager : Singleton<CardManager>
     public GameObject target;
 
     public bool isPickCard = false;
+    public bool ableCardCtr = true;
 
     private void Start()
     {
