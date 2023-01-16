@@ -89,15 +89,12 @@ public class ObjectClass : MonoBehaviour
         if (this.gameObject.CompareTag("InteractObj") && CardManager.GetInstance.isPickCard)
         {
             CardManager.GetInstance.target = this.gameObject;
-        Debug.Log(this.gameObject.tag);
         }
-        Debug.Log(CardManager.GetInstance.target);
     }
 
     //마우스가 떠나면 카드의 타겟은 다시 널로 설정
     private void OnMouseExit()
     {
         CardManager.GetInstance.target = null;
-        Debug.Log("Exit");
     }
 }
