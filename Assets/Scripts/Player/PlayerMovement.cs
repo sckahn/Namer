@@ -4,83 +4,107 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed;
-    public Rigidbody rb;
-    public float currentSpeed;
-    public Animator myanimator;
+    #region components
+    private Rigidbody rb;
+    private Animator myanimator;
+    private PlayerEntity playerEntity;
+    #endregion
+
     public bool isInteraction = false;
     public GameObject interactobj;
+
+    public float moveSpeed;
+    public int rotateSpeed;
+    //private float curVelocityY;
+
+    public bool _canPlayerInput = true;
+
+    // TODO KeyMapping
 
     private void Start()
     {
         myanimator = GetComponentInChildren<Animator>();
+        rb = GetComponent<Rigidbody>();
+        playerEntity = GetComponent<PlayerEntity>();
     }
 
-    void Update()
+    private void PlayerMove(Vector3 inputVec)
     {
-        //TODO 중력가속도 개선 
-        if (!isInteraction)
-        {
-            myanimator.SetBool("isInteraction", false);
-            Vector3 pVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            rb.velocity = moveSpeed * pVelocity;
+        //Player Move
+        float gravity = rb.velocity.y; 
 
-            if (pVelocity != Vector3.zero)
-            {
-                rb.rotation = Quaternion.Slerp(rb.rotation, Quaternion.LookRotation(pVelocity), Time.deltaTime * 10f);
-            }
+        Vector3 velocity = moveSpeed * new Vector3(inputVec.x, 0, inputVec.z);
+        velocity.y = gravity;
+        rb.velocity = velocity;
 
-            if (rb.velocity.magnitude > 0f)
-            {
-                myanimator.SetBool("isRun", true);
-                myanimator.SetBool("TakeItem", false);
-                myanimator.SetBool("InteractObj", false);
-                myanimator.SetBool("isVictory", false);
-            }
-
-            else
-            {
-                myanimator.SetBool("isRun", false);
-                myanimator.SetBool("TakeItem", false);
-                myanimator.SetBool("InteractObj", false);
-                myanimator.SetBool("isVictory", false);
-            }
-        }
-
-        if (TryGetComponent<PlayerInteraction>(out PlayerInteraction pi) &&
-            pi.forwardObjectInfo  &&
-            pi.forwardObjectInfo.name == "GoalPointObj")
-        {
-            Debug.Log("h");
-            myanimator.SetBool("isInteraction", true);
-            myanimator.SetBool("isVictory", true);
-        }
-
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            PlayPushAnimation();
-        }
-
-        isInteraction = myanimator.GetCurrentAnimatorStateInfo(0).IsName("takeitem") |
-            myanimator.GetCurrentAnimatorStateInfo(0).IsName("push") |
-            myanimator.GetCurrentAnimatorStateInfo(0).IsName("victory") &&
-            myanimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1 ? true : false;
-
+        //Player Rotation
+        rb.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(velocity), Time.deltaTime * rotateSpeed);
+    }
+        
+    private Vector3 PlayerInput()
+    {
+        return new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
     }
 
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if(other.transform.name == "Goal")
-    //    {
-    //        myanimator.SetBool("isInteraction", true);
-    //        myanimator.SetBool("isVictory", true);
-    //    }
+    private void Update()
+    {
+        // TODO GameManager한테 인풋 받을 수 있는 변수 가져오기
+        if (_canPlayerInput && !playerEntity.doInteraction)
+        {
+            // 이동 함수 + 인터렉션
+            PlayerMove(PlayerInput());
 
-    //    isInteraction = myanimator.GetCurrentAnimatorStateInfo(0).IsName("takeitem") |
-    //myanimator.GetCurrentAnimatorStateInfo(0).IsName("push") |
-    //myanimator.GetCurrentAnimatorStateInfo(0).IsName("victory") &&
-    //myanimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1 ? true : false;
-    //}
+            if (Input.GetKeyDown(playerEntity.interactionKey))
+            {
+                if (TryGetComponent<PlayerInteraction>(out PlayerInteraction pi1) && pi1.forwardObjectInfo)
+                {
+                    if (pi1.forwardObjectInfo.tag == "InteractObj")
+                    {
+                        interactobj = pi1.forwardObjectInfo;
+                        playerEntity.ChangeState(PlayerStates.Push);
+                        pi1.forwardObjectInfo.GetComponent<ObjectClass>().Interact(this.gameObject);
+                    }
+                }
+            }
+        }
+
+        //if (TryGetComponent<PlayerInteraction>(out PlayerInteraction pi) &&
+        //    pi.forwardObjectInfo &&
+        //    pi.forwardObjectInfo.name == "GoalPointObj")
+        //{
+        //    //myanimator.SetBool("isInteraction", true);
+        //    //myanimator.SetBool("isVictory", true);
+        //}
+
+        //if (!isInteraction)
+        //{
+        //    myanimator.SetBool("isInteraction", false);
+
+        //    if (rb.velocity.magnitude > 0f)
+        //    {
+        //        myanimator.SetBool("TakeItem", false);
+        //        myanimator.SetBool("InteractObj", false);
+        //        myanimator.SetBool("isVictory", false);
+        //    }
+
+        //    else
+        //    {
+        //        myanimator.SetBool("isRun", false);
+        //        myanimator.SetBool("TakeItem", false);
+        //        myanimator.SetBool("InteractObj", false);
+        //        myanimator.SetBool("isVictory", false);
+        //    }
+        //}
+
+
+
+
+        //isInteraction = myanimator.GetCurrentAnimatorStateInfo(0).IsName("takeitem") |
+        //    myanimator.GetCurrentAnimatorStateInfo(0).IsName("push") |
+        //    myanimator.GetCurrentAnimatorStateInfo(0).IsName("victory") &&
+        //    myanimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1 ? true : false;
+
+    }
 
     public void PlayPushAnimation1()
     {
@@ -89,25 +113,14 @@ public class PlayerMovement : MonoBehaviour
 
     public void PlayPushAnimation()
     {
-        myanimator.SetBool("isInteraction", true);
 
         if (TryGetComponent<PlayerInteraction>(out PlayerInteraction pi) && pi.forwardObjectInfo)
         {
-            if (pi.forwardObjectInfo.tag == "Item")
-            {
-                myanimator.SetBool("TakeItem", true);
-            }
-
-            else if (pi.forwardObjectInfo.tag == "InteractObj")
+            if (pi.forwardObjectInfo.tag == "InteractObj")
             {
                 interactobj = pi.forwardObjectInfo;
-                myanimator.SetBool("InteractObj", true);
+                playerEntity.ChangeState(PlayerStates.Push);
                 pi.forwardObjectInfo.GetComponent<ObjectClass>().Interact(this.gameObject);
-            }
-
-            else if (pi.forwardObjectInfo.name == "Goal")
-            {
-                myanimator.SetBool("isVictory", true);
             }
         }
     }

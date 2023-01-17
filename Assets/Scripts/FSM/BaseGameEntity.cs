@@ -2,27 +2,17 @@ using UnityEngine;
 
 public abstract class BaseGameEntity : MonoBehaviour
 {
-	private static int m_iNextValidID = 0;
-	private	int	id;
+    public virtual void Start()
+    {
+        Setup();
+    }
 
-	public	int	ID
+    public virtual void Setup()
 	{
-		set
-		{
-			id = value;
-			m_iNextValidID ++;
-		}
-		get => id;
-	}
+        // TODO 리플렉션을 이용하여 클래스 동적 할당 생각해보기
+    }
 
-	private	string entityName;
+    public abstract void Updated();
 
-	public virtual void Setup(string name)
-	{
-		ID = m_iNextValidID;
-		entityName = name;
-	}
-
-	public abstract void Updated();
 }
 

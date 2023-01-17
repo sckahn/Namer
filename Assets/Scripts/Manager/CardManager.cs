@@ -26,7 +26,7 @@ public class CardManager : Singleton<CardManager>
 
     void CardStart()
     {
-        StartCoroutine(DealCard());
+        //StartCoroutine(DealCard());
     }
 
     //시작 카드를 딜링해주는 메서
