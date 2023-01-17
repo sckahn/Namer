@@ -27,9 +27,10 @@ namespace PlayerOwnedStates
 
         public void Execute(PlayerEntity entity)
 		{
-		}
+            entity.doInteraction = false;
+        }
 
-		public void Exit(PlayerEntity entity)
+        public void Exit(PlayerEntity entity)
 		{
             entity.myAnimator.SetBool("isRun", false);
         }
@@ -45,6 +46,11 @@ namespace PlayerOwnedStates
 
         public void Execute(PlayerEntity entity)
         {
+            if (entity.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Push") &&
+                entity.myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            {
+                entity.RevertToPreviousState();
+            }
         }
 
         public void Exit(PlayerEntity entity)

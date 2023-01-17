@@ -49,5 +49,10 @@ public class PlayerEntity : BaseGameEntity
 	{
 		stateMachine.ChangeState(states[newState]);
 	}
+
+	public void RevertToPreviousState()
+	{
+		stateMachine.RevertToPreviousState();
+	}
 }
 
