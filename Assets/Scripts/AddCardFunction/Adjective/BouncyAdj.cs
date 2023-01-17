@@ -32,7 +32,7 @@ public class BouncyAdj : IAdjective
         //Debug.Log("Bouncy : this Object -> Player");
     }
     
-    public void Execute(InteractiveObject thisObject, InteractiveObject otherInteractiveObjec)
+    public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
         //Debug.Log("Bouncy : this Object -> other Object");
     }

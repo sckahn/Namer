@@ -32,7 +32,7 @@ public class WinAdj : IAdjective
         //Debug.Log("Win : this Object -> Player");
     }
     
-    public void Execute(InteractiveObject thisObject, InteractiveObject otherInteractiveObjec)
+    public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
         //Debug.Log("Win : this Object -> other Object");
     }

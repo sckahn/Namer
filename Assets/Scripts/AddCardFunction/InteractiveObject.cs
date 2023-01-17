@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Palmmedia.ReportGenerator.Core.Reporting.Builders.Rendering;
-using Unity.Collections;
 using UnityEngine;
 
 public class InteractiveObject : MonoBehaviour

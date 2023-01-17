@@ -24,11 +24,11 @@ public class FlammableAdj : IAdjective
     
     public void Execute(InteractiveObject thisObject)
     {
-        Debug.Log("this is Flammable");
+        // Debug.Log("this is Flammable");
 
-        if (!thisObject.gameObject.AddComponent<Pop>())
+        if (!thisObject.gameObject.AddComponent<Flameable>())
         {
-            thisObject.gameObject.AddComponent<Pop>();
+            thisObject.gameObject.AddComponent<Flameable>();
         }
     }
 
@@ -37,7 +37,7 @@ public class FlammableAdj : IAdjective
         //Debug.Log("Flammable : this Object -> Player");
     }
     
-    public void Execute(InteractiveObject thisObject, InteractiveObject otherInteractiveObject)
+    public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
         //Debug.Log("Flammable : this Object -> other Object");
     }

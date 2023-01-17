@@ -26,7 +26,7 @@ public class MovableAdj : IAdjective
     {
         //Debug.Log("this is Movable");
     }
-    
+
     public void Execute(InteractiveObject thisObject, GameObject player)
     {
         player.GetComponent<PlayerMovement>().PlayPushAnimation1();
@@ -55,7 +55,7 @@ public class MovableAdj : IAdjective
         //}
     }
     
-    public void Execute(InteractiveObject thisObject, InteractiveObject otherInteractiveObject)
+    public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
         //Debug.Log("Movable : this Object -> other Object");
     }

@@ -31,13 +31,13 @@ public class LongAdj : IAdjective
         
         thisObject.gameObject.GetComponent<Longer>().ObjectScaling();
     }
-    
+
     public void Execute(InteractiveObject thisObject, GameObject player)
     {
         //Debug.Log("Long : this Object -> Player");
     }
     
-    public void Execute(InteractiveObject thisObject, InteractiveObject otherInteractiveObject)
+    public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
         //Debug.Log("Long : this Object -> other Object");
     }

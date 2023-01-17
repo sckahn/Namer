@@ -32,7 +32,7 @@ public class ObtainableAdj : IAdjective
         //Debug.Log("Obtainable : this Object -> Player");
     }
     
-    public void Execute(InteractiveObject thisObject, InteractiveObject otherInteractiveObjec)
+    public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
         //Debug.Log("Obtainable : this Object -> other Object");
     }

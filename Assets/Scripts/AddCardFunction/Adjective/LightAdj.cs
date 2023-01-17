@@ -32,7 +32,7 @@ public class LightAdj : IAdjective
         //Debug.Log("Light : this Object -> Player");
     }
     
-    public void Execute(InteractiveObject thisObject, InteractiveObject otherInteractiveObjec)
+    public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
         //Debug.Log("Light : this Object -> other Object");
     }

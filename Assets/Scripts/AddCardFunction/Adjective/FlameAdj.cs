@@ -32,7 +32,7 @@ public class FlameAdj : IAdjective
         //Debug.Log("Flame : this Object -> Player");
     }
     
-    public void Execute(InteractiveObject thisObject, InteractiveObject otherInteractiveObjec)
+    public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
         //Debug.Log("Flame : this Object -> other Object");
     }

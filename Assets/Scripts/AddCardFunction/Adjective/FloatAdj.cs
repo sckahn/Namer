@@ -32,7 +32,7 @@ public class FloatAdj : IAdjective
         //Debug.Log("Float : this Object -> Player");
     }
     
-    public void Execute(InteractiveObject thisObject, InteractiveObject otherInteractiveObjec)
+    public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
         //Debug.Log("Float : this Object -> other Object");
     }

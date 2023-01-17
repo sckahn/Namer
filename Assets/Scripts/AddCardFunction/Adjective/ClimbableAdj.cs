@@ -32,7 +32,7 @@ public class ClimbableAdj : IAdjective
         //Debug.Log("Climbable : this Object -> Player");
     }
     
-    public void Execute(InteractiveObject thisObject, InteractiveObject otherInteractiveObjec)
+    public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
         //Debug.Log("Climbable : this Object -> other Object");
     }
