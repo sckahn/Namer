@@ -40,6 +40,7 @@ public class GameManager : Singleton<GameManager>
     {
         if(Input.GetKey(KeyCode.R))
             Reset();
+        TapKeyCheck();
     }
 
     private void UpdateGameState()
@@ -120,5 +121,18 @@ public class GameManager : Singleton<GameManager>
     {
         ChangeGameState(GameStates.Lose);
     }
-  
+
+    //탭 키를 누르면 이름 팝업 토글을 위한 isTapDown의 불값 변경 
+    void TapKeyCheck()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            isTapDown = true;
+        }
+        if (Input.GetKeyUp(KeyCode.Tab))
+        {
+            isTapDown = false;
+        }
+    }
+
 }
