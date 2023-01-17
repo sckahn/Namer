@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Pop
   m_EditorClassIdentifier: 
   cardType: 1
-  uiWordText: "\uD130\uC9C0\uAE30 \uC26C\uC6B4"
-  addWordClass: Pop
+  uiText: "\uD130\uC9C0\uAE30 \uC26C\uC6B4"
+  addedName: 0
+  addedAdjectives: 03000000

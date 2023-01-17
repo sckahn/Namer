@@ -60,10 +60,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c399dfa194be4474091b52a796d29cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectName: Rock
-  checkSpec: 00000000000000000000
-  countSpec: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
-  popUpName: {fileID: 8476662968685624558}
+  setInit: 0
+  objectName: 3
+  checkAdj: 0000000000000000000000000000000000000000
+  countAdj: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!1001 &3703895033343061277
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -184,11 +184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &8476662968685624558 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5099703050391114227, guid: a04da139b729947c8b466ba34c3ddff7, type: 3}
-  m_PrefabInstance: {fileID: 3703895033343061277}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8687991085136483197 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5473862790532644448, guid: a04da139b729947c8b466ba34c3ddff7, type: 3}

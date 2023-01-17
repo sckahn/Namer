@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PushAdj : IAdjective
+public class MovableAdj : IAdjective
 {
-    private string name = "Push";
+    private Adjective name = Adjective.Movable;
     private int count = 0;
     
-    public string GetName()
+    public Adjective GetName()
     {
         return name;
     }
@@ -22,12 +22,12 @@ public class PushAdj : IAdjective
         this.count += addCount;
     }
     
-    public void Execute(ObjectClass thisObject)
+    public void Execute(InteractiveObject thisObject)
     {
-        //Debug.Log("this is Push");
+        //Debug.Log("this is Movable");
     }
     
-    public void Execute(ObjectClass thisObject, GameObject player, bool isAffect)
+    public void Execute(InteractiveObject thisObject, GameObject player)
     {
         player.GetComponent<PlayerMovement>().PlayPushAnimation1();
 
@@ -55,16 +55,9 @@ public class PushAdj : IAdjective
         //}
     }
     
-    public void Execute(ObjectClass thisObject, ObjectClass otherObject, bool isAffect)
+    public void Execute(InteractiveObject thisObject, InteractiveObject otherInteractiveObject)
     {
-        if (isAffect)
-        {
-            //Debug.Log("Push : this Object > other Object");
-        }
-        else if (!isAffect)
-        {
-            //Debug.Log("Push : this Object < other Object");
-        }
+        //Debug.Log("Movable : this Object -> other Object");
     }
 }
 

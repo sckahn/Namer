@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LongAdj : IAdjective
+public class FlammableAdj : IAdjective
 {
-    private Adjective name = Adjective.Long;
+    private Adjective name = Adjective.Flammable;
     private int count = 0;
-    
+
     public Adjective GetName()
     {
         return name;
@@ -24,22 +24,21 @@ public class LongAdj : IAdjective
     
     public void Execute(InteractiveObject thisObject)
     {
-        //Debug.Log("this is Long");
+        Debug.Log("this is Flammable");
 
-        if (!thisObject.gameObject.GetComponent<Longer>())
+        if (!thisObject.gameObject.AddComponent<Pop>())
         {
-            thisObject.gameObject.AddComponent<Longer>();
+            thisObject.gameObject.AddComponent<Pop>();
         }
-        thisObject.gameObject.GetComponent<Longer>().ObjectScaling();
     }
-    
+
     public void Execute(InteractiveObject thisObject, GameObject player)
     {
-        //Debug.Log("Long : this Object -> Player");
+        //Debug.Log("Flammable : this Object -> Player");
     }
     
     public void Execute(InteractiveObject thisObject, InteractiveObject otherInteractiveObject)
     {
-        //Debug.Log("Long : this Object -> other Object");
+        //Debug.Log("Flammable : this Object -> other Object");
     }
 }

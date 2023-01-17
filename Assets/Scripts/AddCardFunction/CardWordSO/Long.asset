@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Long
   m_EditorClassIdentifier: 
   cardType: 1
-  uiWordText: "\uAE34"
-  addWordClass: Long
+  uiText: "\uAE34"
+  addedName: 0
+  addedAdjectives: 02000000

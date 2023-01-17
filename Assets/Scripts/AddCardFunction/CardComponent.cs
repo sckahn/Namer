@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CardComponent : MonoBehaviour
 {
-    [SerializeField] private CardWord cardWord;
+    [SerializeField] private CardData cardData;
     [SerializeField] private GameObject target;
     [SerializeField] private PlayerInteraction pi;
  
@@ -22,16 +22,16 @@ public class CardComponent : MonoBehaviour
     {
         if (target)
         {
-            if (cardWord.CardType == eCardType.Name)
+            if (cardData.cardType == CardType.Name)
             {
-                target.GetComponent<ObjectClass>().AddName(cardWord.AddWordClass);
+                target.GetComponent<InteractiveObject>().AddName(cardData.addedName, cardData.uiText);
             }
-            else if (cardWord.CardType == eCardType.Adjective)
+            else if (cardData.cardType == CardType.Adjective)
             {
-                target.GetComponent<ObjectClass>().AddAdjective(cardWord.AddWordClass);
+                target.GetComponent<InteractiveObject>().AddAdjective(cardData.addedAdjectives, cardData.uiText);
             }
         }
-
+    
     }
 
 }

@@ -1,4 +1,4 @@
-public enum eCardType
+public enum CardType
 {
     Name,
     Adjective
@@ -6,19 +6,30 @@ public enum eCardType
 
 public enum Name
 {
-    Rock,
-    Cactus,
+    NullObject,
+    NameStone,
     Ball,
-    GoalPoint
+    Rock,
+    BonFire,
+    Tree,
+    Water,
+    Sun,
+    Balloon,
+    Crystal,
+    Card,
 }
 
-public enum eAdjective
+public enum Adjective
 {
-    Push,
-    Spiky,
+    Win,
+    Flammable,
+    Flame, 
+    Movable, 
+    Climbable,
     Long,
-    Pop,
-    Burn,
-    Heavy,
+    Float,
+    Bouncy,
+    Light,
+    Obtainable,
 }
 

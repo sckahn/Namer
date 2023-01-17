@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractiveObject : MonoBehaviour
+public class InteractiveObject1 : MonoBehaviour
 {
     [SerializeField] private Name nameType;
     
@@ -11,21 +11,21 @@ public class InteractiveObject : MonoBehaviour
     private void OnEnable()
     {
         CardFactory cardFactory = null;
-        switch (nameType)
-        {
-            case Name.Rock :
-                cardFactory = new RockFactory();
-                break;
-            case Name.Cactus :
-                cardFactory = new CactusFactory();
-                break;
-            case Name.Ball :
-                cardFactory = new BallFactory();
-                break;
-            case Name.GoalPoint :
-                cardFactory = new GoalPointFactory();
-                break;
-        }
+        // switch (nameType)
+        // {
+        //     case Name.Rock :
+        //         cardFactory = new RockFactory();
+        //         break;
+        //     case Name.Cactus :
+        //         cardFactory = new CactusFactory();
+        //         break;
+        //     case Name.Ball :
+        //         cardFactory = new BallFactory();
+        //         break;
+        //     case Name.GoalPoint :
+        //         cardFactory = new GoalPointFactory();
+        //         break;
+        // }
 
         if (cardFactory != null)
         {
@@ -36,7 +36,7 @@ public class InteractiveObject : MonoBehaviour
 
 public class Card
 {
-    public NameClass name { get; set; }
+    public NameData name { get; set; }
     public IAdjective[] adjectives { get; set; }
 }
 
@@ -49,73 +49,73 @@ public abstract class CardFactory
         return card;
     }
 
-    public abstract NameClass CreateName();
+    public abstract NameData CreateName();
     public abstract IAdjective[] CreateAdjectives();
 }
-
-public class RockFactory : CardFactory
-{
-    public override NameClass CreateName()
-    {
-        NameClass name = new Rock();
-        return name;
-    }
-
-    public override IAdjective[] CreateAdjectives()
-    {
-        IAdjective[] adjectives = new IAdjective[10];
-        adjectives[(int)eAdjective.Heavy] = new HeavyAdj();
-        
-        return adjectives;
-    }
-}
-
-public class CactusFactory : CardFactory
-{
-    public override NameClass CreateName()
-    {
-        NameClass name = new Cactus();
-        return name;
-    }
-
-    public override IAdjective[] CreateAdjectives()
-    {
-        IAdjective[] adjectives = new IAdjective[10];
-        adjectives[(int)eAdjective.Spiky] = new SpikyAdj();
-        
-        return adjectives;
-    }
-}
-
-public class BallFactory : CardFactory
-{
-    public override NameClass CreateName()
-    {
-        NameClass name = new Ball();
-        return name;
-    }
-
-    public override IAdjective[] CreateAdjectives()
-    {
-        IAdjective[] adjectives = new IAdjective[10];
-        adjectives[(int)eAdjective.Push] = new PushAdj();
-        adjectives[(int)eAdjective.Pop] = new PopAdj();
-        
-        return adjectives;
-    }
-}
-
-public class GoalPointFactory : CardFactory
-{
-    public override NameClass CreateName()
-    {
-        NameClass name = new GoalPoint();
-        return name;
-    }
-
-    public override IAdjective[] CreateAdjectives()
-    {
-        IAdjective[] adjectives = new IAdjective[10];
-        return adjectives;
-    }
-}
+//
+// public class RockFactory : CardFactory
+// {
+//     public override NameData CreateName()
+//     {
+//         NameData name = new Rock();
+//         return name;
+//     }
+//
+//     public override IAdjective[] CreateAdjectives()
+//     {
+//         IAdjective[] adjectives = new IAdjective[10];
+//         adjectives[(int)Adjective.Heavy] = new HeavyAdj();
+//         
+//         return adjectives;
+//     }
+// }
+//
+// public class CactusFactory : CardFactory
+// {
+//     public override NameData CreateName()
+//     {
+//         NameData name = new Cactus();
+//         return name;
+//     }
+//
+//     public override IAdjective[] CreateAdjectives()
+//     {
+//         IAdjective[] adjectives = new IAdjective[10];
+//         adjectives[(int)Adjective.Spiky] = new SpikyAdj();
+//         
+//         return adjectives;
+//     }
+// }
+//
+// public class BallFactory : CardFactory
+// {
+//     public override NameData CreateName()
+//     {
+//         NameData name = new Ball();
+//         return name;
+//     }
+//
+//     public override IAdjective[] CreateAdjectives()
+//     {
+//         IAdjective[] adjectives = new IAdjective[10];
+//         adjectives[(int)Adjective.Push] = new PushAdj();
+//         adjectives[(int)Adjective.Pop] = new PopAdj();
+//         
+//         return adjectives;
+//     }
+// }
+//
+// public class GoalPointFactory : CardFactory
+// {
+//     public override NameData CreateName()
+//     {
+//         NameData name = new GoalPoint();
+//         return name;
+//     }
+//
+//     public override IAdjective[] CreateAdjectives()
+//     {
+//         IAdjective[] adjectives = new IAdjective[10];
+//         return adjectives;
+//     }
+// }

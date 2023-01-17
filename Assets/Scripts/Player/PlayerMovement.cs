@@ -102,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 interactobj = pi.forwardObjectInfo;
                 myanimator.SetBool("InteractObj", true);
-                pi.forwardObjectInfo.GetComponent<ObjectClass>().Interact(this.gameObject);
+                pi.forwardObjectInfo.GetComponent<InteractiveObject>().Interact(this.gameObject);
             }
 
             else if (pi.forwardObjectInfo.name == "Goal")

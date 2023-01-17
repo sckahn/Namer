@@ -4,18 +4,11 @@ using UnityEngine;
 
 public interface IAdjective
 {
-    public string GetName(); 
+    public Adjective GetName(); 
     public int GetCount();
     public void SetCount(int addCount);
     
-    // affect to this.Object 
-    public void Execute(ObjectClass thisObject);
-
-    // isAffect == true : this.Object -> player
-    // isAffect == false : this.Object <- player
-    public void Execute(ObjectClass thisObject, GameObject player, bool isAffect);
-    
-    // isAffect == true : this.Object -> other.Object
-    // isAffect == false : this.Object <- other.Object
-    public void Execute(ObjectClass thisObject, ObjectClass otherObject, bool isAffect);
+    public void Execute(InteractiveObject thisObject);
+    public void Execute(InteractiveObject thisObject, GameObject player);
+    public void Execute(InteractiveObject thisObject, InteractiveObject otherInteractiveObject);
 }
