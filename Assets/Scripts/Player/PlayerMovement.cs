@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
                 if (interactobj.tag == "InteractObj")
                 {
                     playerEntity.ChangeState(PlayerStates.Push);
-                    interactobj.GetComponent<ObjectClass>().Interact(this.gameObject);
+                    interactobj.GetComponent<InteractiveObject>().Interact(this.gameObject);
                 }
             }
         }
