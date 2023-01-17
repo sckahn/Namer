@@ -16,9 +16,23 @@ public enum GameStates
 public class GameManager : Singleton<GameManager>
 {
     private GameStates state;
+    public bool isTapDown = false;
+    private CheckSurrounding checkSurrounding;
 
-    public static event Action<GameStates> OnGameStateChanged;
-    public bool isTapDown;
+    public CheckSurrounding GetCheckSurrounding
+    {
+        get
+        {
+            if (gameObject.GetComponent<CheckSurrounding>() == null)
+            {
+                gameObject.AddComponent<CheckSurrounding>();
+                checkSurrounding = gameObject.GetComponent<CheckSurrounding>();
+            }
+            return checkSurrounding;
+        }
+    }
+
+    public static event Action<GameStates> OnGameStateChanged; 
 
     private void Start()
     {
@@ -26,7 +40,8 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        TapKeyCheck();
+        if(Input.GetKey(KeyCode.R))
+            Reset();
     }
 
     private void UpdateGameState()
@@ -55,6 +70,7 @@ public class GameManager : Singleton<GameManager>
         state = newState;
         UpdateGameState();
     }
+
 
     private void HandleLost()
     {
@@ -90,14 +106,14 @@ public class GameManager : Singleton<GameManager>
     public void Reset()
     {
         if (state == GameStates.Lobby) return;
-        SceneBehaviorManager.ResetScene();
+            SceneBehaviorManager.ResetScene();
     }
 
     public void LoadScene(Scenes scenes, LoadSceneMode loadSceneMode)
     {
         SceneBehaviorManager.LoadScene(scenes,loadSceneMode);
     }
-    [ContextMenu("CallWin")]
+    
     public void Win()
     {
         ChangeGameState(GameStates.Victory);
@@ -106,18 +122,6 @@ public class GameManager : Singleton<GameManager>
     public void Lost()
     {
         ChangeGameState(GameStates.Lose);
-    }
-
-    void TapKeyCheck()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            isTapDown = true;
-        }
-        if (Input.GetKeyUp(KeyCode.Tab))
-        {
-            isTapDown = false;
-        }
     }
   
 }
