@@ -5,20 +5,14 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
-public class Pop : MonoBehaviour
+public class Flameable : MonoBehaviour
 {
-   public bool isPopAble { get; private set; }
    private bool isContact;
-   private void Start()
-   {
-      
-   }
 
-   [ContextMenu("PopObj")]
-   public void PopObject()
+   public void ObjectOnFire()
    {
-      LookUpPointy();
-      if (isContact)
+      LookUpFlame();
+      if (isContact )
       {
          // print(isContact);
          isContact = false;
@@ -27,8 +21,7 @@ public class Pop : MonoBehaviour
    }
 
 
-
-   public void LookUpPointy()
+   private void LookUpFlame()
    {
       var neighbors = GameManager.GetInstance.GetCheckSurrounding.CheckNeighborsWithCollider(gameObject);
 
@@ -47,15 +40,5 @@ public class Pop : MonoBehaviour
             }
          }
       }
-   }
-
-   public void MakeItPopable()
-   {
-      isPopAble = true;
-   }
-
-   bool CheckPopAble()
-   {
-      return isPopAble;
    }
 }
