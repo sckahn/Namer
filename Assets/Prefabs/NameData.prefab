@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1751252824412745799
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1751252824412745797}
+  - component: {fileID: 1751252824412745798}
+  m_Layer: 0
+  m_Name: NameData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1751252824412745797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751252824412745799}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1751252824412745798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751252824412745799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69e3fccd3db3c4883b206b04b20643ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameInfos:
+  - uiText: ???
+    name: 0
+    adjectives: 
+    contentText: 
+  - uiText: "\uB124\uC784 \uC2A4\uD1A4"
+    name: 1
+    adjectives: 00000000
+    contentText: 
+  - uiText: "\uACF5"
+    name: 2
+    adjectives: 03000000
+    contentText: 
+  - uiText: "\uBC14\uC704"
+    name: 3
+    adjectives: 
+    contentText: 
+  - uiText: "\uBAA8\uB2E5\uBD88"
+    name: 4
+    adjectives: 02000000
+    contentText: 
+  - uiText: "\uB098\uBB34"
+    name: 5
+    adjectives: 0100000005000000
+    contentText: 
+  - uiText: "\uBB3C"
+    name: 6
+    adjectives: 
+    contentText: 
+  - uiText: "\uD0DC\uC591"
+    name: 7
+    adjectives: 02000000060000000600000008000000
+    contentText: 
+  - uiText: "\uD48D\uC120"
+    name: 8
+    adjectives: 0600000001000000
+    contentText: 
+  - uiText: "\uD06C\uB9AC\uC2A4\uD0C8"
+    name: 9
+    adjectives: 
+    contentText: 
+  - uiText: "\uCE74\uB4DC"
+    name: 10
+    adjectives: 09000000
+    contentText: 
