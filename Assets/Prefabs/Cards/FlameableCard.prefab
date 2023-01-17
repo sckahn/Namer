@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4896508340662502927}
   - component: {fileID: -1313255419992942935}
   m_Layer: 0
-  m_Name: CombustibleCard
+  m_Name: FlameableCard
   m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

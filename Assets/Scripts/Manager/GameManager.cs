@@ -16,11 +16,31 @@ public enum GameStates
 public class GameManager : Singleton<GameManager>
 {
     private GameStates state;
+    public bool isTapDown = false;
+    private CheckSurrounding checkSurrounding;
 
-    public static event Action<GameStates> OnGameStateChanged; 
+    public CheckSurrounding GetCheckSurrounding
+    {
+        get
+        {
+            if (gameObject.GetComponent<CheckSurrounding>() == null)
+            {
+                gameObject.AddComponent<CheckSurrounding>();
+                checkSurrounding = gameObject.GetComponent<CheckSurrounding>();
+            }
+            return checkSurrounding;
+        }
+    }
 
     private void Start()
     {
+    }
+
+    private void Update()
+    {
+        if(Input.GetKey(KeyCode.R))
+            Reset();
+        TapKeyCheck();
     }
 
     private void UpdateGameState()
@@ -42,7 +62,6 @@ public class GameManager : Singleton<GameManager>
                 break;
             
         }
-        OnGameStateChanged?.Invoke(state);
     }
     public void ChangeGameState(GameStates newState)
     {
@@ -85,14 +104,14 @@ public class GameManager : Singleton<GameManager>
     public void Reset()
     {
         if (state == GameStates.Lobby) return;
-        SceneBehaviorManager.ResetScene();
+            SceneBehaviorManager.ResetScene();
     }
 
     public void LoadScene(Scenes scenes, LoadSceneMode loadSceneMode)
     {
         SceneBehaviorManager.LoadScene(scenes,loadSceneMode);
     }
-    [ContextMenu("CallWin")]
+    
     public void Win()
     {
         ChangeGameState(GameStates.Victory);
@@ -102,5 +121,18 @@ public class GameManager : Singleton<GameManager>
     {
         ChangeGameState(GameStates.Lose);
     }
-  
+
+    //탭 키를 누르면 이름 팝업 토글을 위한 isTapDown의 불값 변경 
+    void TapKeyCheck()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            isTapDown = true;
+        }
+        if (Input.GetKeyUp(KeyCode.Tab))
+        {
+            isTapDown = false;
+        }
+    }
+
 }
