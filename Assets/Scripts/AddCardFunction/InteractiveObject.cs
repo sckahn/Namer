@@ -187,7 +187,7 @@ public class InteractiveObject : MonoBehaviour
         return currentObjectName;
     }
 
-    public void AddName(Name addedName, string uiText = null)
+    public void AddName(Name? addedName, string uiText = null)
     {
         // Check Error
         if (addedName == null || nameData.NameInfos[(int)addedName].name != addedName)
