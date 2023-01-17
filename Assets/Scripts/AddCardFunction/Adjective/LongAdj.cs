@@ -24,12 +24,11 @@ public class LongAdj : IAdjective
     
     public void Execute(InteractiveObject thisObject)
     {
-        //Debug.Log("this is Long");
-
         if (!thisObject.gameObject.GetComponent<Longer>())
         {
             thisObject.gameObject.AddComponent<Longer>();
         }
+        
         thisObject.gameObject.GetComponent<Longer>().ObjectScaling();
     }
     

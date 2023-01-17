@@ -8,7 +8,7 @@ public interface IAdjective
     public int GetCount();
     public void SetCount(int addCount);
     
-    public void Execute(InteractiveObject thisObject);
-    public void Execute(InteractiveObject thisObject, GameObject player);
-    public void Execute(InteractiveObject thisObject, InteractiveObject otherInteractiveObject);
+    public void Execute(ObjectClass thisObject);
+    public void Execute(ObjectClass thisObject, GameObject player);
+    public void Execute(ObjectClass thisObject, ObjectClass otherObject);
 }
