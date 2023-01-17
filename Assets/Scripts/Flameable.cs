@@ -8,29 +8,34 @@ using UnityEngine;
 public class Flameable : MonoBehaviour
 {
    private bool isContact;
+   [Range(0,1)]public float sweepDistance = .5f;
+
+   private void FixedUpdate()
+   {
+      ObjectOnFire();
+   }
 
    public void ObjectOnFire()
    {
       LookUpFlame();
       if (isContact )
       {
-         // print(isContact);
          isContact = false;
          gameObject.SetActive(false);
+         // print("Boom");
       }
    }
 
 
    private void LookUpFlame()
    {
-      var neighbors = GameManager.GetInstance.GetCheckSurrounding.CheckNeighborsWithCollider(gameObject);
+      var neighbors = GameManager.GetInstance.GetCheckSurrounding.CheckNeighboursObjectsUsingSweepTest(gameObject,sweepDistance);
 
       for (int i = 0; i < neighbors.Count; i++)
       {
-         if ((ObjDirection)i != ObjDirection.Up && (ObjDirection)i != ObjDirection.Down)
+         if ((Dir)i != Dir.up && (Dir)i != Dir.down)
          {
-            print((ObjDirection)i);
-            foreach (var item in neighbors[(ObjDirection)i])
+            foreach (var item in neighbors[(Dir)i])
             {
                if (item.gameObject.name == "Cactus")
                {

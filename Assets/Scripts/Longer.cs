@@ -19,7 +19,6 @@ public class Longer : MonoBehaviour
     public void ObjectScaling()
     {
         bool flag = CheckGrowable();
-        print(flag);
         if (flag)
         {
             StartCoroutine(WrapperCoroutine(flag));
@@ -44,16 +43,11 @@ public class Longer : MonoBehaviour
     }
 
   
-    public bool CheckGrowable()
+    private bool CheckGrowable()
     {
-        var neighbors = GameManager.GetInstance.GetCheckSurrounding.CheckNeighborsWithCollider(gameObject);
-        print(neighbors.Count);
-        foreach (var tt in neighbors)
-        {
-            print(tt.Value.Count);
-        }
-        var gameObjects = neighbors[ObjDirection.Up];
-        print(gameObjects.Count);
+        var neighbors = GameManager.GetInstance.GetCheckSurrounding.CheckNeighboursObjectsUsingSweepTest(gameObject, 1f);
+       
+        var gameObjects = neighbors[Dir.up];
         foreach (var neighborObj in gameObjects)
         {
             if (neighborObj.tag == "InteractObj")
@@ -64,6 +58,19 @@ public class Longer : MonoBehaviour
         
         return true;
     }
+
+    
+    
+    // 호성님 껄로 체크하는 메소드 내일 오면 물어보기
+    // private bool CheckGrowable()
+    // {
+    //     print(GameManager.GetInstance.GetCheckSurrounding.name);
+    //     var gameObjects = GameManager.GetInstance.GetCheckSurrounding.GetTransformsAtDirOrNull(Dir.up);
+    //     print(gameObjects.Count);
+    //     if (gameObjects.Count == 0)
+    //         return false;
+    //     return true;
+    // }
 
 
 

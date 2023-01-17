@@ -32,8 +32,6 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    public static event Action<GameStates> OnGameStateChanged; 
-
     private void Start()
     {
     }
@@ -64,7 +62,6 @@ public class GameManager : Singleton<GameManager>
                 break;
             
         }
-        OnGameStateChanged?.Invoke(state);
     }
     public void ChangeGameState(GameStates newState)
     {
