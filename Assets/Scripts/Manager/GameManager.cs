@@ -31,10 +31,13 @@ public class GameManager : Singleton<GameManager>
             return checkSurrounding;
         }
     }
-
+    
     private void Start()
     {
         this.gameObject.AddComponent<StateMachineRunner>();
+        
+        GameObject nameData = Resources.Load("NameData") as GameObject;
+        Instantiate(nameData, Vector3.zero, Quaternion.identity);
     }
 
     private void Update()

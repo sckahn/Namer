@@ -35,11 +35,7 @@ public class InteractiveObject : MonoBehaviour
         currentMaterial = gameObject.GetComponentInChildren<MeshRenderer>().material;
         
         nameData = FindObjectOfType<NameData>();
-        if (nameData.NameInfos.Length == 0)
-        {
-            Debug.Log("NameData의 정보를 확인해주세요!");
-        }
-        
+
         if (!gameObject.CompareTag("InteractObj"))
         {
             Debug.Log("태그를 InteractObj로 설정해주세요!");
@@ -49,12 +45,20 @@ public class InteractiveObject : MonoBehaviour
         checkName = objectName;
         checkAdjCount = checkAdj.Count(a => a);
         addNameText = currentObjectName;
-        
-        Init();
+
+        if (nameData != null)
+        {
+            Init();
+        }
     }
 
     private void Init()
     {
+        if (nameData == null)
+        {
+            return;
+        }
+        
         objectName = initName;
         
         if (objectName == checkName)
@@ -68,8 +72,14 @@ public class InteractiveObject : MonoBehaviour
     }
 
 #region Run When Inspector Data Change & Test
-    private void FixedUpdate()
+    private void Update()
     {
+        if (nameData == null)
+        {
+            nameData = FindObjectOfType<NameData>();
+            Init();
+        }
+
         // set init
         if (setInit)
         {
@@ -153,6 +163,11 @@ public class InteractiveObject : MonoBehaviour
     
     public string GetCurrentName()
     {
+        if (nameData == null)
+        {
+            return currentObjectName;
+        }
+        
         currentObjectName = null;
         int currentCheckAdj = checkAdj.Count(a => a);
 
