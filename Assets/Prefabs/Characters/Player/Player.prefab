@@ -2091,7 +2091,7 @@ GameObject:
   - component: {fileID: 8960856560092998566}
   - component: {fileID: 8960856560092998567}
   - component: {fileID: 8960856560092998560}
-  - component: {fileID: 1816381900}
+  - component: {fileID: 692613590}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2177,12 +2177,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5c51ff3ddace4f08b6a34df6090c8b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactobj: {fileID: 0}
   moveSpeed: 3
-  rb: {fileID: 8960856560092998566}
-  currentSpeed: 0
-  myanimator: {fileID: 0}
-  isInteraction: 0
---- !u!114 &1816381900
+  rotateSpeed: 10
+  _canPlayerInput: 1
+--- !u!114 &692613590
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2191,16 +2190,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8113852935009391315}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47ea5ca7185d5453ab3805f7ec51d235, type: 3}
+  m_Script: {fileID: 11500000, guid: 51af33f5d7245463894929587fdfe880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isInteraction: 0
-  myRb: {fileID: 0}
-  TileBound: {x: 0, y: 0}
-  forwardObjectInfo: {fileID: 0}
-  curObjectInfo: {fileID: 0}
-  padding: 0.2
-  mydir: 0
+  myAnimator: {fileID: 0}
+  doInteraction: 0
+  interactionKey: 98
 --- !u!1 &8203952614901920763
 GameObject:
   m_ObjectHideFlags: 0

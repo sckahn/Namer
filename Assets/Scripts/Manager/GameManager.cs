@@ -34,6 +34,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        this.gameObject.AddComponent<StateMachineRunner>();
     }
 
     private void Update()
