@@ -17,10 +17,31 @@ public class GameManager : Singleton<GameManager>
 {
     private GameStates state;
 
+    private CheckSurrounding checkSurrounding;
+
+    public CheckSurrounding GetCheckSurrounding
+    {
+        get
+        {
+            if (gameObject.GetComponent<CheckSurrounding>() == null)
+            {
+                gameObject.AddComponent<CheckSurrounding>();
+                checkSurrounding = gameObject.GetComponent<CheckSurrounding>();
+            }
+            return checkSurrounding;
+        }
+    }
+
     public static event Action<GameStates> OnGameStateChanged; 
 
     private void Start()
     {
+    }
+
+    private void Update()
+    {
+        if(Input.GetKey(KeyCode.R))
+            Reset();
     }
 
     private void UpdateGameState()
@@ -85,14 +106,14 @@ public class GameManager : Singleton<GameManager>
     public void Reset()
     {
         if (state == GameStates.Lobby) return;
-        SceneBehaviorManager.ResetScene();
+            SceneBehaviorManager.ResetScene();
     }
 
     public void LoadScene(Scenes scenes, LoadSceneMode loadSceneMode)
     {
         SceneBehaviorManager.LoadScene(scenes,loadSceneMode);
     }
-    [ContextMenu("CallWin")]
+    
     public void Win()
     {
         ChangeGameState(GameStates.Victory);
