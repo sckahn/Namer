@@ -8,16 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Update = UnityEngine.PlayerLoop.Update;
 
-public enum ObjDirection
-{
-    Up,
-    Down,
-    Left,
-    Right,
-    Front, 
-    Back
 
-}
 public enum Dir
 {
     left = 0,
@@ -183,9 +174,7 @@ public class CheckSurrounding : MonoBehaviour
         Null
     }
     public PlayerDir mydir;
-    private void Start()
-    {
-    }
+
 
     //Find All object In scene Problecm is it collects Rock also
     // public List<GameObject> FindAllInteractObjectsInScene()
@@ -235,28 +224,34 @@ public class CheckSurrounding : MonoBehaviour
     
 
     // check neighboring gameobject using rigidbody.sweeptest returns dictionary<object dictionary[enum], gameobject>
-    public Dictionary<ObjDirection, GameObject[]> CheckNeighboursObjectsUsingSweepTest(GameObject checkingObject, float sweepDistance)
+    public Dictionary<Dir, GameObject[]> CheckNeighboursObjectsUsingSweepTest(GameObject checkingObject, float sweepDistance=.5f)
     {
          var rb = CheckRigidBody(checkingObject);
-            Dictionary<ObjDirection, GameObject[]> objsDict = new Dictionary<ObjDirection, GameObject[]>();
+            Dictionary<Dir, GameObject[]> objsDict = new Dictionary<Dir, GameObject[]>();
             
+            //앞쪽
             var forwardObj= rb.SweepTestAll(Vector3.forward, sweepDistance).Select(x=>x.transform.gameObject).ToArray();
-            objsDict.Add(ObjDirection.Front, forwardObj);
+            objsDict.Add(Dir.forward, forwardObj);
     
+            //뒤쪽
             var backObj = rb.SweepTestAll(Vector3.back, sweepDistance).Select(x=>x.transform.gameObject).ToArray();
-            objsDict.Add(ObjDirection.Back,backObj);
+            objsDict.Add(Dir.back,backObj);
             
+            //왼쪽
             var leftObj = rb.SweepTestAll(Vector3.left, sweepDistance).Select(x=>x.transform.gameObject).ToArray();
-            objsDict.Add(ObjDirection.Left,leftObj);
+            objsDict.Add(Dir.left,leftObj);
             
+            //오른쪽
             var rightObj = rb.SweepTestAll(Vector3.right, sweepDistance).Select(x=>x.transform.gameObject).ToArray();
-            objsDict.Add(ObjDirection.Right,rightObj);
+            objsDict.Add(Dir.right,rightObj);
             
+            //위쪽
             var upObj = rb.SweepTestAll(Vector3.up, sweepDistance).Select(x=>x.transform.gameObject).ToArray();
-            objsDict.Add(ObjDirection.Up,upObj);
+            objsDict.Add(Dir.up,upObj);
             
+            //아래쪽
             var downObj = rb.SweepTestAll(Vector3.down, sweepDistance).Select(x=>x.transform.gameObject).ToArray();
-            objsDict.Add(ObjDirection.Down,downObj);
+            objsDict.Add(Dir.down,downObj);
             
             return objsDict;
     }
@@ -277,12 +272,12 @@ public class CheckSurrounding : MonoBehaviour
     //CheckNeighborsWithCollider() check neighboring gameobject with physics.overlapbox which requires collider 
     
   
-    public Dictionary<ObjDirection, List<GameObject>> CheckNeighborsWithCollider(GameObject checkingGameObject)
+    public Dictionary<Dir, List<GameObject>> CheckNeighborsWithCollider(GameObject checkingGameObject)
     {
-        Dictionary<ObjDirection, List<GameObject>> neigborObjectDict = new Dictionary<ObjDirection, List<GameObject>>();
-        for (int i = 0; i <= (int)ObjDirection.Back; i++)
+        Dictionary<Dir, List<GameObject>> neigborObjectDict = new Dictionary<Dir, List<GameObject>>();
+        for (int i = 0; i <= (int)Dir.back; i++)
         {
-            neigborObjectDict.Add((ObjDirection)i, new List<GameObject>());
+            neigborObjectDict.Add((Dir)i, new List<GameObject>());
         }
         var colider = checkingGameObject.GetComponent<Collider>().bounds.center;
         var colliders = Physics.OverlapBox(colider, transform.localScale/2);
@@ -293,59 +288,44 @@ public class CheckSurrounding : MonoBehaviour
             if ((item.transform.position - checkingGameObject.transform.position).normalized.x > 0 &&
                 (item.transform.position - checkingGameObject.transform.position).normalized.y >= 0)
             {
-                neigborObjectDict[ObjDirection.Right].Add(item.gameObject);
+                neigborObjectDict[Dir.right].Add(item.gameObject);
                 
             }
             //left side
             if ((item.transform.position - checkingGameObject.transform.position).normalized.x < 0 &&
                 (item.transform.position - checkingGameObject.transform.position).normalized.y > 0)
             {
-                neigborObjectDict[ObjDirection.Left].Add(item.gameObject);
+                neigborObjectDict[Dir.left].Add(item.gameObject);
             }
             //front
             if ((item.transform.position - checkingGameObject.transform.position).normalized.z > 0 &&
                 (item.transform.position - checkingGameObject.transform.position).normalized.y > 0)
             {
-                neigborObjectDict[ObjDirection.Front].Add(item.gameObject);
+                neigborObjectDict[Dir.forward].Add(item.gameObject);
             }
             //back
             if ((item.transform.position - checkingGameObject.transform.position).normalized.z < 0 &&
                 (item.transform.position - checkingGameObject.transform.position).normalized.y > 0)
             {
-                neigborObjectDict[ObjDirection.Back].Add(item.gameObject);
+                neigborObjectDict[Dir.back].Add(item.gameObject);
             }
             //down
             if ((item.transform.position - checkingGameObject.transform.position).normalized.y < 0
                 && (item.transform.position - checkingGameObject.transform.position).normalized.x == 0
                 && (item.transform.position - checkingGameObject.transform.position).normalized.z == 0)
             {
-                neigborObjectDict[ObjDirection.Down].Add(item.gameObject);
+                neigborObjectDict[Dir.down].Add(item.gameObject);
             }
             //Up
             if ((item.transform.position - checkingGameObject.transform.position).normalized.y > 0
                 && (item.transform.position - checkingGameObject.transform.position).normalized.x == 0
                 && (item.transform.position - checkingGameObject.transform.position).normalized.z == 0)
             {
-                neigborObjectDict[ObjDirection.Up].Add(item.gameObject);
+                neigborObjectDict[Dir.up].Add(item.gameObject);
             }
         }
     
         return neigborObjectDict;
-    }
-
-    //CheckUpsideNeighboringGameObject() is used for just upward check 
-    public GameObject CheckUpsideNeighboringGameObject(GameObject checkOrigin)
-    {
-        var extents = checkOrigin.GetComponent<Collider>().bounds.extents;
-        var centerPos = checkOrigin.GetComponent<Collider>().bounds.center;
-        Ray ray = new Ray(new Vector3(centerPos.x, centerPos.y + extents.y, centerPos.z), Vector3.up);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 1f))
-        {
-            return hit.transform.gameObject;
-        }
-
-        return null;
     }
 
 
