@@ -17,10 +17,16 @@ public class GameManager : Singleton<GameManager>
 {
     private GameStates state;
 
-    public static event Action<GameStates> OnGameStateChanged; 
+    public static event Action<GameStates> OnGameStateChanged;
+    public bool isTapDown;
 
     private void Start()
     {
+    }
+
+    private void Update()
+    {
+        TapKeyCheck();
     }
 
     private void UpdateGameState()
@@ -49,7 +55,6 @@ public class GameManager : Singleton<GameManager>
         state = newState;
         UpdateGameState();
     }
-
 
     private void HandleLost()
     {
@@ -101,6 +106,18 @@ public class GameManager : Singleton<GameManager>
     public void Lost()
     {
         ChangeGameState(GameStates.Lose);
+    }
+
+    void TapKeyCheck()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            isTapDown = true;
+        }
+        if (Input.GetKeyUp(KeyCode.Tab))
+        {
+            isTapDown = false;
+        }
     }
   
 }
