@@ -44,16 +44,16 @@ public class Longer : MonoBehaviour
     }
 
   
-    public bool CheckGrowable()
+    private bool CheckGrowable()
     {
-        var neighbors = GameManager.GetInstance.GetCheckSurrounding.CheckNeighborsWithCollider(gameObject);
+        var neighbors = GameManager.GetInstance.GetCheckSurrounding.CheckNeighboursObjectsUsingSweepTest(gameObject, 1f);
         print(neighbors.Count);
         foreach (var tt in neighbors)
         {
-            print(tt.Value.Count);
+            print(tt.Value.Length);
         }
         var gameObjects = neighbors[ObjDirection.Up];
-        print(gameObjects.Count);
+        print(gameObjects.Length);
         foreach (var neighborObj in gameObjects)
         {
             if (neighborObj.tag == "InteractObj")

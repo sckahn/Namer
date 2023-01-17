@@ -32,23 +32,6 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private CheckSurrounding checkSurrounding;
-
-    public CheckSurrounding GetCheckSurrounding
-    {
-        get
-        {
-            if (gameObject.GetComponent<CheckSurrounding>() == null)
-            {
-                gameObject.AddComponent<CheckSurrounding>();
-                checkSurrounding = gameObject.GetComponent<CheckSurrounding>();
-            }
-            return checkSurrounding;
-        }
-    }
-
-    public static event Action<GameStates> OnGameStateChanged; 
-
     private void Start()
     {
     }
@@ -78,7 +61,6 @@ public class GameManager : Singleton<GameManager>
                 break;
             
         }
-        OnGameStateChanged?.Invoke(state);
     }
     public void ChangeGameState(GameStates newState)
     {

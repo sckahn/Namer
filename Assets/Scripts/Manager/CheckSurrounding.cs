@@ -188,56 +188,55 @@ public class CheckSurrounding : MonoBehaviour
     }
 
     //Find All object In scene Problecm is it collects Rock also
-    public List<GameObject> FindAllInteractObjectsInScene()
-    {
-        List<GameObject> allObjectInScene = new List<GameObject>();
-
-        // Get all objects in the scene
-        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
-        // Loop through all objects in the scene
-        for (int i = 0; i < allObjects.Length; i++)
-        {
-            if (allObjects[i].tag == "InteractObj")
-            {
-                allObjectInScene.Add(allObjects[i]);
-            }
-        }
-        // foreach (var item in allObjectInScene)
-        // {
-        //     print(item.name);
-        // }
-
-        return allObjectInScene;
-    }
-
-
-
-
-    public List<GameObject> FindNeighborsObjects(GameObject originObject, float checkDistance)
-    {
-        List<GameObject> newNeighbors = new List<GameObject>();
-        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
-
-        for (int i = 0; i < allObjects.Length; i++)
-        {
-            float distance = Vector3.Distance(originObject.transform.position, allObjects[i].transform.position);
-
-            if (distance <= originObject.GetComponent<Renderer>().bounds.extents.magnitude + checkDistance)
-            {
-                newNeighbors.Add(allObjects[i]);
-            }
-        }
-
-      
-        return newNeighbors;
-    }
+    // public List<GameObject> FindAllInteractObjectsInScene()
+    // {
+    //     List<GameObject> allObjectInScene = new List<GameObject>();
+    //
+    //     // Get all objects in the scene
+    //     GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+    //     // Loop through all objects in the scene
+    //     for (int i = 0; i < allObjects.Length; i++)
+    //     {
+    //         if (allObjects[i].tag == "InteractObj")
+    //         {
+    //             allObjectInScene.Add(allObjects[i]);
+    //         }
+    //     }
+    //     // foreach (var item in allObjectInScene)
+    //     // {
+    //     //     print(item.name);
+    //     // }
+    //
+    //     return allObjectInScene;
+    // }
+    //
+    //
+    //
+    //
+    // public List<GameObject> FindNeighborsObjects(GameObject originObject, float checkDistance)
+    // {
+    //     List<GameObject> newNeighbors = new List<GameObject>();
+    //     GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
+    //
+    //     for (int i = 0; i < allObjects.Length; i++)
+    //     {
+    //         float distance = Vector3.Distance(originObject.transform.position, allObjects[i].transform.position);
+    //
+    //         if (distance <= originObject.GetComponent<Renderer>().bounds.extents.magnitude + checkDistance)
+    //         {
+    //             newNeighbors.Add(allObjects[i]);
+    //         }
+    //     }
+    //
+    //   
+    //     return newNeighbors;
+    // }
 
     
 
     // check neighboring gameobject using rigidbody.sweeptest returns dictionary<object dictionary[enum], gameobject>
     public Dictionary<ObjDirection, GameObject[]> CheckNeighboursObjectsUsingSweepTest(GameObject checkingObject, float sweepDistance)
     {
-        sweepDistance = 1f;
          var rb = CheckRigidBody(checkingObject);
             Dictionary<ObjDirection, GameObject[]> objsDict = new Dictionary<ObjDirection, GameObject[]>();
             
