@@ -16,7 +16,7 @@ public enum GameStates
 public class GameManager : Singleton<GameManager>
 {
     private GameStates state;
-
+    public bool isTapDown = false;
     private CheckSurrounding checkSurrounding;
 
     public CheckSurrounding GetCheckSurrounding
