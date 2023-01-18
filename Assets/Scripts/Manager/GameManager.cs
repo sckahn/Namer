@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager>
     {
         get
         {
-            if (gameObject.GetComponent<CheckSurrounding>() == null)
+            if (checkSurrounding == null)
             {
                 gameObject.AddComponent<CheckSurrounding>();
                 checkSurrounding = gameObject.GetComponent<CheckSurrounding>();

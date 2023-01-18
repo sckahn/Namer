@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44253096, g: 0.49161947, b: 0.5714539, a: 1}
+  m_IndirectSpecularColor: {r: 0.4425312, g: 0.49162048, b: 0.5714549, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1443,6 +1443,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3957077196821797142, guid: a849bdf1574554ed19fd7bf117d329e0, type: 3}
   m_PrefabInstance: {fileID: 877506936}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &899510629
+GameObject:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 3927566648822034878, guid: c5daad64b52f7457490a1abaee91ca92, type: 3}
+  m_PrefabInstance: {fileID: 3927566647450636761}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 899510630}
+  m_Layer: 0
+  m_Name: 'GoalPointObj (Missing Prefab with guid: c5daad64b52f7457490a1abaee91ca92)'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &899510630
+Transform:
+  m_ObjectHideFlags: 8
+  m_CorrespondingSourceObject: {fileID: 3927566648822034865, guid: c5daad64b52f7457490a1abaee91ca92, type: 3}
+  m_PrefabInstance: {fileID: 3927566647450636761}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899510629}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &900927429
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3980,7 +4011,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1960958776
 PrefabInstance:
