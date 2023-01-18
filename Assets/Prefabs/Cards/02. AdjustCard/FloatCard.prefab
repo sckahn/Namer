@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2721935581099869929}
   - component: {fileID: -1313255419992942935}
   m_Layer: 0
-  m_Name: FlammableCard
+  m_Name: FloatCard
   m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e8cc538b00e4479865b8e759be81d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardData: {fileID: 11400000, guid: 3151bfb6438114bdbb9e6989a07e731a, type: 2}
+  cardData: {fileID: 11400000, guid: ccdc29fe3d87b49a5aa047e4ade31726, type: 2}
   frontCover: {fileID: 7865115808221761892}
   bc: {fileID: 2721935581099869929}
   highlight: {fileID: 8686928968484850008}
@@ -102,7 +102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2457775549880798153, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
       propertyPath: m_Text
-      value: "\uC798\uD0C0\uB294"
+      value: "\uBC00\uB9BC"
       objectReference: {fileID: 0}
     - target: {fileID: 5886614794521977911, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
       propertyPath: m_RootOrder

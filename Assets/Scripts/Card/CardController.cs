@@ -73,8 +73,10 @@ public class CardController : MonoBehaviour
         CardManager.GetInstance.isPickCard = false;
         if (CardManager.GetInstance.target != null)
         {
-            AddCard(CardManager.GetInstance.target);
+            CastCard(CardManager.GetInstance.target);
             CardManager.GetInstance.target = null;
+            CardManager.GetInstance.myCards.Remove(this.gameObject.GetComponent<CardController>());
+            CardManager.GetInstance.CardAlignment();
             Destroy(this.gameObject, 0.5f);
         }
         else if(bc != null)
@@ -84,7 +86,7 @@ public class CardController : MonoBehaviour
         }
     }
 
-    public void AddCard(GameObject target)
+    public void CastCard(GameObject target)
     {
         if (target)
         {

@@ -1736,6 +1736,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NameStoneObj
       objectReference: {fileID: 0}
+    - target: {fileID: 7588366348015742450, guid: 9ba9eb833df0a44d5996b110b6a5f372, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ba9eb833df0a44d5996b110b6a5f372, type: 3}
 --- !u!1001 &1119503269
@@ -4262,6 +4266,10 @@ PrefabInstance:
     - target: {fileID: 246204052963709162, guid: 533a1e62e2b124e3c9b237de4b3049ea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7111674225067958940, guid: 533a1e62e2b124e3c9b237de4b3049ea, type: 3}
+      propertyPath: m_Convex
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 533a1e62e2b124e3c9b237de4b3049ea, type: 3}

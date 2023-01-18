@@ -48,7 +48,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.98, y: 0.98, z: 0.98}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &8301298310491427171
 MonoBehaviour:
@@ -81,7 +81,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!1001 &3653233252955542326
 PrefabInstance:
@@ -150,7 +150,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Statue
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4480042664696073379, guid: f8027285427914f9289f825ba41173de, type: 3}
+    - {fileID: 4480507131198183111, guid: f8027285427914f9289f825ba41173de, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f8027285427914f9289f825ba41173de, type: 3}
 --- !u!4 &897638316583814817 stripped
 Transform:
@@ -353,22 +355,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5886614794521977911, guid: 1ccea26a23929458d8a0adf47df329ec, type: 3}
   m_PrefabInstance: {fileID: 8622208799260669394}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &8558500693947452711 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 102978271486015733, guid: 1ccea26a23929458d8a0adf47df329ec, type: 3}
-  m_PrefabInstance: {fileID: 8622208799260669394}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &9104340785084006191
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8558500693947452711}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}

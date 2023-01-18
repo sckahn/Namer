@@ -124,6 +124,8 @@ MonoBehaviour:
   - {fileID: 7743834699422014335, guid: 44cdfb3f486154f63b9a250620d75fd0, type: 3}
   - {fileID: 7743834699422014335, guid: 6ff7a3738d3084802a521aacc6d1d29b, type: 3}
   - {fileID: 7743834699422014335, guid: 36f5e637fce0044298ced27106c6c0b4, type: 3}
+  - {fileID: 7743834699422014335, guid: 353bf570ea37845dea63a0561bb75423, type: 3}
+  - {fileID: 7743834699422014335, guid: 4f1315d6e158a47c093cb7ffd42001fb, type: 3}
   target: {fileID: 0}
   isPickCard: 0
   ableCardCtr: 1

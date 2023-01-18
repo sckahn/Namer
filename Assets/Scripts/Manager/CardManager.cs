@@ -9,7 +9,7 @@ public class CardManager : Singleton<CardManager>
     [SerializeField] Transform cardHolderPoint;
     [SerializeField] Transform cardHolderLeft;
     [SerializeField] Transform cardHolderRight;
-    [SerializeField] List<CardController> myCards;
+    public List<CardController> myCards;
     [SerializeField] GameObject[] startCards;
 
     //타겟 상호작용 오브젝트 
@@ -43,7 +43,7 @@ public class CardManager : Singleton<CardManager>
 
     //카드를 생성하는 메서드 
     [ContextMenu("AddCard")]
-    void AddCard(GameObject cardPrefab)
+    public void AddCard(GameObject cardPrefab)
     {
         var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position, Quaternion.identity);
         var card = cardObject.GetComponent<CardController>();
@@ -52,10 +52,10 @@ public class CardManager : Singleton<CardManager>
     }
 
     //카드를 정렬하는 메서드 
-    void CardAlignment()
+    public void CardAlignment()
     {
         List<PRS> originCardPRSs = new List<PRS>();
-        originCardPRSs = RoundAlignment(cardHolderLeft, cardHolderRight, myCards.Count, 0.5f, new Vector3(1f, 1f, 1f));
+        originCardPRSs = RoundAlignment(cardHolderLeft, cardHolderRight, myCards.Count, new Vector3(1f, 1f, 1f));
 
         for (int i = 0; i < myCards.Count; i++)
         {
@@ -68,7 +68,7 @@ public class CardManager : Singleton<CardManager>
     }
 
     //카드를 둘글게 정렬하는 메서드
-    List<PRS> RoundAlignment(Transform leftTr, Transform rightTr, int objCount, float height, Vector3 scale)
+    List<PRS> RoundAlignment(Transform leftTr, Transform rightTr, int objCount, Vector3 scale)
     {
         float[] objLerps = new float[objCount];
         List<PRS> results = new List<PRS>(objCount);
@@ -78,7 +78,7 @@ public class CardManager : Singleton<CardManager>
             case 1: objLerps = new float[] { 0.5f }; break;
             case 2: objLerps = new float[] { 0.24f, 0.73f }; break;
             case 3: objLerps = new float[] { 0.1f, 0.5f, 0.9f }; break;
-            case 4: objLerps = new float[] { 0.2f, 0.4f, 0.6f, 0.8f }; break;
+            case 4: objLerps = new float[] { 0.1f, 0.37f, 0.64f, 0.9f }; break;
             case 5: objLerps = new float[] { 0.1f, 0.3f, 0.5f, 0.7f, 0.9f }; break;
             default:
                 float interval = 1f / (objCount - 1);
@@ -95,9 +95,6 @@ public class CardManager : Singleton<CardManager>
             var targetRot = Quaternion.identity;
             if (objCount >= 4)
             {
-                float curve = Mathf.Sqrt(Mathf.Pow(height, 2) - Mathf.Pow(objLerps[i] - 0.5f, 2));
-                curve = height >= 0 ? curve : -curve;
-                targetPos.y += curve;
                 targetRot = Quaternion.Slerp(leftTr.rotation, rightTr.rotation, objLerps[i]);
             }
             results.Add(new PRS(targetPos, targetRot, scale));

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87ed0abb8b95a4b2492727dfdb634fdf, type: 3}
-  m_Name: Flammable
+  m_Name: Obtainable
   m_EditorClassIdentifier: 
   cardType: 1
-  uiText: "\uD0C0\uB294"
+  uiText: "\uC90D\uC90D"
   addedName: 0
-  addedAdjectives: 01000000
+  addedAdjectives: 09000000
