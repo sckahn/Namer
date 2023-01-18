@@ -29,7 +29,7 @@ public class CardManager : Singleton<CardManager>
         StartCoroutine(DealCard());
     }
 
-    //시작 카드를 딜링해주는 메서
+    //시작 카드를 딜링해주는 메서드 
     IEnumerator DealCard()
     {
         yield return new WaitForSeconds(2f);
@@ -78,6 +78,8 @@ public class CardManager : Singleton<CardManager>
             case 1: objLerps = new float[] { 0.5f }; break;
             case 2: objLerps = new float[] { 0.24f, 0.73f }; break;
             case 3: objLerps = new float[] { 0.1f, 0.5f, 0.9f }; break;
+            case 4: objLerps = new float[] { 0.2f, 0.4f, 0.6f, 0.8f }; break;
+            case 5: objLerps = new float[] { 0.1f, 0.3f, 0.5f, 0.7f, 0.9f }; break;
             default:
                 float interval = 1f / (objCount - 1);
                 for (int i = 0; i < objCount; i++)
