@@ -1,13 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class BouncyAdj : IAdjective
 {
     private Adjective adjectiveName = Adjective.Bouncy;
     private AdjectiveType adjectiveType = AdjectiveType.Repeat;
     private int count = 0;
-    
+
+    #region 통통 꾸밈 카드 멤버변수
+    private GameObject myObj;
+    private Rigidbody rigid;
+    [SerializeField] private float jumpPower = 4.528313f;
+    #endregion
+
     public Adjective GetAdjectiveName()
     {
         return adjectiveName;
@@ -30,7 +37,14 @@ public class BouncyAdj : IAdjective
     
     public void Execute(InteractiveObject thisObject)
     {
-        //Debug.Log("this is Bouncy");
+        if (myObj == null) myObj = thisObject.gameObject;
+        if (rigid == null) rigid = myObj.GetComponent<Rigidbody>();
+        Collider collider = thisObject.GetComponent<BoxCollider>();
+        Dictionary<Dir, GameObject[]> hits = GameManager.GetInstance.GetCheckSurrounding.CheckNeighboursObjectsUsingSweepTest(thisObject.gameObject, 0.2f);
+        if (hits.Keys.Contains(Dir.down))
+        {
+            Bounce();
+        }
     }
 
     public void Execute(InteractiveObject thisObject, GameObject player)
@@ -41,5 +55,11 @@ public class BouncyAdj : IAdjective
     public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
         //Debug.Log("Bouncy : this Object -> other Object");
+    }
+
+    private void Bounce()
+    {
+        rigid.velocity = Vector3.zero;
+        rigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
     }
 }
