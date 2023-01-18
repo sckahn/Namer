@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LongAdj : MonoBehaviour, IAdjective
@@ -39,7 +40,7 @@ public class LongAdj : MonoBehaviour, IAdjective
     
     public void Execute(InteractiveObject thisObject)
     {
-        ObjectScaling();
+        ObjectScaling(thisObject);
     }
 
     public void Execute(InteractiveObject thisObject, GameObject player)
@@ -52,46 +53,35 @@ public class LongAdj : MonoBehaviour, IAdjective
         //Debug.Log("Long : this Object -> other Object");
     }
     [ContextMenu("objScaling")]
-    public void ObjectScaling()
+    public void ObjectScaling(InteractiveObject targetObj)
     {
-        bool flag = CheckGrowable();
+        bool flag = CheckGrowable(targetObj.gameObject);
+        print(flag);
         if (flag)
         {
-            StartCoroutine(WrapperCoroutine(flag));
+            targetObj.StartCoroutine(WrapperCoroutine(flag,targetObj));
         }
         else
         {
-            StartCoroutine(WrapperCoroutine(flag));
+            targetObj.StartCoroutine(WrapperCoroutine(flag,targetObj));
         }
     }
-    private void SetGrowScale()
+    private void SetGrowScale(GameObject targetObj)
     {
-        goalScale = transform.localScale.y + growScale;
-        targetScale = new Vector3(transform.localScale.x, goalScale, transform.localScale.z);
-        currentHeight = transform.localScale.y;
+        goalScale = targetObj.transform.localScale.y + growScale;
+        targetScale = new Vector3(targetObj.transform.localScale.x, goalScale, targetObj.transform.localScale.z);
+        currentHeight = targetObj.transform.localScale.y;
     }
 
-    private void SetShrinkScale()
+    private bool CheckGrowable(GameObject targetObj)
     {
-        goalScale = transform.localScale.y * shrinkScale;
-        targetScale = new Vector3(transform.localScale.x, goalScale, transform.localScale.z);
-        currentHeight = transform.localScale.y;
-    }
-
-  
-    private bool CheckGrowable()
-    {
-        var neighbors = GameManager.GetInstance.GetCheckSurrounding.CheckNeighboursObjectsUsingSweepTest(gameObject, 1f);
-        
-       
-        var gameObjects = neighbors[Dir.up];
-        foreach (var neighborObj in gameObjects)
-        {
-            if (neighborObj.tag == "InteractObj")
-            {
-                return false;
-            }
-        }
+        // var neighbors = GameManager.GetInstance.GetCheckSurrounding.CheckNeighboursObjectsUsingSweepTest(targetObj, 1f);
+        var test = GameManager.GetInstance.GetCheckSurrounding.GetTransformsAtDirOrNull(targetObj, Dir.up);
+        test = GameManager.GetInstance.GetCheckSurrounding.GetTransformsAtDirOrNull(targetObj, Dir.up) == null
+            ? new List<Transform>()
+            : test;
+        if (test.Count != 0) return false;
+      
         
         return true;
     }
@@ -111,35 +101,51 @@ public class LongAdj : MonoBehaviour, IAdjective
 
 
 
-    IEnumerator WrapperCoroutine(bool isGrow)
+    IEnumerator WrapperCoroutine(bool isGrow,InteractiveObject targetObj)
     {
         if (isGrow)
         {
-            SetGrowScale();
-            yield return StartCoroutine(ScaleObj());
+            SetGrowScale(targetObj.gameObject);
+            yield return targetObj.StartCoroutine(ScaleObj(targetObj.gameObject));
         }
         else
         {
-            SetGrowScale();
-            yield return StartCoroutine(ScaleObj());
-            SetShrinkScale();
-            yield return StartCoroutine(ScaleObj());
+            // SetGrowScale(targetObj.gameObject);
+            // yield return targetObj.StartCoroutine(ScaleObj(targetObj.gameObject));
+            // SetShrinkScale(targetObj.gameObject);
+            // yield return targetObj.StartCoroutine(ScaleObj(targetObj.gameObject));
+            targetObj.StartCoroutine(Twinkle(targetObj.gameObject));
         }
     }
 
    
 
-    IEnumerator ScaleObj()
+    IEnumerator ScaleObj(GameObject targetObj)
     {
         currentTime = 0;
-        Vector3 startScale = transform.localScale;
+        Vector3 startScale = targetObj.transform.localScale;
         while (currentTime < growingSpeed)
         {
             currentTime += Time.deltaTime;
-            transform.localScale = Vector3.Lerp(startScale, targetScale, currentTime / growingSpeed);
+            targetObj.transform.localScale = Vector3.Lerp(startScale, targetScale, currentTime / growingSpeed);
             yield return null;
            
         }
     }
+
+    IEnumerator Twinkle(GameObject targetObj)
+    {
+        currentTime = 0;
+        var meshRenderer =  targetObj.GetComponentInChildren<MeshRenderer>();
+        
+        while (currentTime < growingSpeed)
+        {
+            currentTime += Time.deltaTime;
+            meshRenderer.enabled = !meshRenderer.enabled;
+            yield return null;
+        }
+        meshRenderer.enabled = true;
+    }
+
     
 }
