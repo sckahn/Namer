@@ -32,7 +32,7 @@ public class BouncyAdj : IAdjective
 
     public void SetCount(int addCount)
     {
-        this.count += addCount;
+        this.count += addCount;        
     }
     
     public void Execute(InteractiveObject thisObject)
@@ -40,9 +40,18 @@ public class BouncyAdj : IAdjective
         if (myObj == null) myObj = thisObject.gameObject;
         if (rigid == null) rigid = myObj.GetComponent<Rigidbody>();
         Collider collider = thisObject.GetComponent<BoxCollider>();
-        Dictionary<Dir, GameObject[]> hits = GameManager.GetInstance.GetCheckSurrounding.CheckNeighboursObjectsUsingSweepTest(thisObject.gameObject, 0.2f);
-        if (hits.Keys.Contains(Dir.down))
+        //Dictionary<Dir, GameObject[]> hits = GameManager.GetInstance.GetCheckSurrounding.CheckNeighboursObjectsUsingSweepTest(thisObject.gameObject, 0.01f);
+        //if (hits.Keys.Contains(Dir.down) && hits[Dir.down].Length != 0)
+        //{
+        //    Bounce();
+        //}
+
+        CheckSurrounding checkingMachine = GameManager.GetInstance.GetCheckSurrounding;
+        List<Transform> hits = checkingMachine.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.down);
+        Debug.Log("this", thisObject.transform);
+        if (hits != null)
         {
+            Debug.Log("hit!");
             Bounce();
         }
     }
