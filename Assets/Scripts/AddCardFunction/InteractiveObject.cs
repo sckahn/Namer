@@ -13,7 +13,6 @@ public class InteractiveObject : MonoBehaviour
     [SerializeField] GameObject popUpName;
 
     private Vector3 currentPosition;
-    private Material currentMaterial;
     
     private string currentObjectName = "???";
     private string addNameText;
@@ -48,7 +47,6 @@ public class InteractiveObject : MonoBehaviour
     private void OnEnable()
     {
         currentPosition = gameObject.transform.position;
-        currentMaterial = transform.GetChild(0).GetComponent<MeshRenderer>().material;
         
         nameData = FindObjectOfType<NameData>();
 
