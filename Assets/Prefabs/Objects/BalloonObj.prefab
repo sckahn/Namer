@@ -61,9 +61,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c399dfa194be4474091b52a796d29cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectName: Ball
-  checkSpec: 00000000000000000000
-  countSpec: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
+  setInit: 0
+  objectName: 8
+  checkAdj: 0000000000000000000000000000000000000000
+  countAdj: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   popUpName: {fileID: 6640485667171740233}
 --- !u!1 &2864609409946910044
 GameObject:
@@ -264,6 +265,10 @@ PrefabInstance:
     - target: {fileID: 5473862790532644448, guid: a04da139b729947c8b466ba34c3ddff7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7723312783778246506, guid: a04da139b729947c8b466ba34c3ddff7, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a04da139b729947c8b466ba34c3ddff7, type: 3}

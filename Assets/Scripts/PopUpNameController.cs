@@ -5,13 +5,14 @@ using UnityEngine.UI;
 
 public class PopUpNameController : MonoBehaviour
 {
-    [SerializeField] string currentObjectName = "돌";
     [SerializeField] Text nameText;
     Transform cardHolder;
+    InteractiveObject interactiveObject;
 
     private void OnEnable()
     {
         cardHolder = Camera.main.transform;
+        interactiveObject = GetComponentInParent<InteractiveObject>();
     }
 
     void Update()
@@ -21,7 +22,7 @@ public class PopUpNameController : MonoBehaviour
 
     private void setUpPopUpName()
     {
-        nameText.text = currentObjectName;
+        nameText.text = interactiveObject.GetCurrentName();
         gameObject.transform.rotation = cardHolder.rotation;
     }
 }

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Long
   m_EditorClassIdentifier: 
   cardType: 1
-  uiText: "\uAE34"
+  uiText: "\uAE38\uCB49"
   addedName: 0
-  addedAdjectives: 02000000
+  addedAdjectives: 05000000

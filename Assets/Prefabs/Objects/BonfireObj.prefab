@@ -64,6 +64,7 @@ MonoBehaviour:
   objectName: 4
   checkAdj: 0000000000000000000000000000000000000000
   countAdj: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  popUpName: {fileID: 6304153737122996222}
 --- !u!1001 &1277072361373502989
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -177,6 +178,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a04da139b729947c8b466ba34c3ddff7, type: 3}
+--- !u!1 &6304153737122996222 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5099703050391114227, guid: a04da139b729947c8b466ba34c3ddff7, type: 3}
+  m_PrefabInstance: {fileID: 1277072361373502989}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6507142631255847021 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5473862790532644448, guid: a04da139b729947c8b466ba34c3ddff7, type: 3}

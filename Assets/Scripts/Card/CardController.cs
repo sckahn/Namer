@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using static UnityEngine.GraphicsBuffer;
 
 public class CardController : MonoBehaviour
 {
+    [SerializeField] private CardData cardData;
     public PRS originPRS;
-    [SerializeField] GameObject cardHolder;
+    GameObject cardHolder;
     [SerializeField] GameObject frontCover;
     [SerializeField] BoxCollider bc;
     [SerializeField] GameObject highlight;
-    CardComponent cc;
     CardRotate cr;
 
     private void Start()
     {
-        cc = this.gameObject.GetComponent<CardComponent>();
         cr = this.gameObject.GetComponent<CardRotate>();
         cardHolder = FindObjectOfType<CardManager>().gameObject;
     }
@@ -73,7 +73,7 @@ public class CardController : MonoBehaviour
         CardManager.GetInstance.isPickCard = false;
         if (CardManager.GetInstance.target != null)
         {
-            cc.AddCard();
+            AddCard(CardManager.GetInstance.target);
             CardManager.GetInstance.target = null;
             Destroy(this.gameObject, 0.5f);
         }
@@ -82,5 +82,21 @@ public class CardController : MonoBehaviour
             bc.enabled = true;
             frontCover.SetActive(true);
         }
+    }
+
+    public void AddCard(GameObject target)
+    {
+        if (target)
+        {
+            if (cardData.cardType == CardType.Name)
+            {
+               target.GetComponent<InteractiveObject>().AddName(cardData.addedName, cardData.uiText);
+            }
+            else if (cardData.cardType == CardType.Adjective)
+            {
+               target.GetComponent<InteractiveObject>().AddAdjective(cardData.addedAdjectives, cardData.uiText);
+            }
+        }
+
     }
 }

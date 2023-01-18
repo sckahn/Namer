@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Ball
   m_EditorClassIdentifier: 
   cardType: 0
-  uiText: "\uBCFC"
+  uiText: "\uACF5"
   addedName: 2
   addedAdjectives: 

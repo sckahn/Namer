@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8390414494258579863}
   - component: {fileID: 1712746236343687948}
   - component: {fileID: 2721935581099869929}
-  - component: {fileID: 4896508340662502927}
   - component: {fileID: -1313255419992942935}
   m_Layer: 0
   m_Name: PopCard
@@ -48,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e8cc538b00e4479865b8e759be81d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardData: {fileID: 0}
   cardHolder: {fileID: 0}
   frontCover: {fileID: 7865115808221761892}
   bc: {fileID: 2721935581099869929}
@@ -65,21 +65,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.4635068, y: 0.666, z: 0.060031325}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4896508340662502927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7743834699422014335}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4041fc45323b0406c826e804504ceb23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardWord: {fileID: 11400000, guid: ab512257141ec4a5bb352079f8346e53, type: 2}
-  target: {fileID: 0}
-  pi: {fileID: 0}
 --- !u!114 &-1313255419992942935
 MonoBehaviour:
   m_ObjectHideFlags: 0

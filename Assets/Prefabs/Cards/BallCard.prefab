@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 508114610151733876}
   - component: {fileID: 2544812149425663494}
   - component: {fileID: 6089570011369761623}
-  - component: {fileID: 8542754009691281419}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -84,19 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &8542754009691281419
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2031290462652394373}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7743834699422014335
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +94,6 @@ GameObject:
   - component: {fileID: 8390414494258579863}
   - component: {fileID: 1712746236343687948}
   - component: {fileID: 453746082420174526}
-  - component: {fileID: 6447473925214891298}
   - component: {fileID: 9179835326793320750}
   m_Layer: 0
   m_Name: BallCard
@@ -145,6 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e8cc538b00e4479865b8e759be81d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardData: {fileID: 11400000, guid: 24ef513d74b0c40458bce480c9a54627, type: 2}
   cardHolder: {fileID: 0}
   frontCover: {fileID: 4230330137778533953}
   bc: {fileID: 453746082420174526}
@@ -162,21 +148,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.4635068, y: 0.666, z: 0.060031325}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6447473925214891298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7743834699422014335}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4041fc45323b0406c826e804504ceb23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardWord: {fileID: 11400000, guid: 24ef513d74b0c40458bce480c9a54627, type: 2}
-  target: {fileID: 0}
-  pi: {fileID: 0}
 --- !u!114 &9179835326793320750
 MonoBehaviour:
   m_ObjectHideFlags: 0

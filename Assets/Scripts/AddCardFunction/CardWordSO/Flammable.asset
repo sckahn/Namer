@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 808fed202d7394a48a27b32a6ea2475f, type: 3}
-  m_Name: Ball
+  m_Script: {fileID: 11500000, guid: 87ed0abb8b95a4b2492727dfdb634fdf, type: 3}
+  m_Name: Flammable
   m_EditorClassIdentifier: 
-  name: Ball
-  isAdjective: 0
-  adjectivesOrders: 07000000
+  cardType: 1
+  uiText: "\uC798\uD0C0\uB294"
+  addedName: 0
+  addedAdjectives: 01000000
