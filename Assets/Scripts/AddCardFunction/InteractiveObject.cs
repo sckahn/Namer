@@ -47,7 +47,7 @@ public class InteractiveObject : MonoBehaviour
     private void OnEnable()
     {
         currentPosition = gameObject.transform.position;
-
+        
         nameData = FindObjectOfType<NameData>();
 
         if (!gameObject.CompareTag("InteractObj"))
