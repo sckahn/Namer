@@ -13,7 +13,6 @@ public class InteractiveObject : MonoBehaviour
     [SerializeField] GameObject popUpName;
 
     private Vector3 currentPosition;
-    private Material currentMaterial;
     
     private string currentObjectName = "???";
     private string addNameText;
@@ -30,11 +29,25 @@ public class InteractiveObject : MonoBehaviour
     
     private NameData nameData;
 
+    #region doingRepeat
+    private delegate void ExcuteRepeat(InteractiveObject io);
+    ExcuteRepeat excuteRepeat;
+
+    public void AddExcuteRepeat(IAdjective adj)
+    {
+        excuteRepeat += adj.Execute;
+    }
+
+    public void DeleteExcuteRepeat(IAdjective adj)
+    {
+        excuteRepeat -= adj.Execute;
+    }
+    #endregion
+
     private void OnEnable()
     {
         currentPosition = gameObject.transform.position;
-        currentMaterial = gameObject.GetComponentInChildren<MeshRenderer>().material;
-        
+
         nameData = FindObjectOfType<NameData>();
 
         if (!gameObject.CompareTag("InteractObj"))
@@ -45,7 +58,6 @@ public class InteractiveObject : MonoBehaviour
         initName = objectName;
         checkName = objectName;
         checkAdjCount = checkAdj.Count(a => a);
-        addNameText = currentObjectName;
 
         if (nameData != null)
         {
@@ -61,6 +73,7 @@ public class InteractiveObject : MonoBehaviour
         }
         
         objectName = initName;
+        addNameText = nameData.NameInfos[(int)objectName].uiText;
         
         if (objectName == checkName)
         {
@@ -101,6 +114,10 @@ public class InteractiveObject : MonoBehaviour
         {
             ChangeAdjective();
         }
+
+        // run excuteRepeat
+        if (excuteRepeat != null)
+            excuteRepeat.Invoke(this);
     }
 
     // Use When data type of objectName is string
@@ -216,6 +233,7 @@ public class InteractiveObject : MonoBehaviour
         
         if (uiText != null)
         {
+            objectName = (Name)addedName;
             addNameText = uiText;
         }
     }
@@ -242,6 +260,7 @@ public class InteractiveObject : MonoBehaviour
     private void SetAdjective(Adjective addAdjective)
     {
         int adjIdx = (int)addAdjective;
+
         if (adjectives[adjIdx] == null)
         {
             Type type = Type.GetType(addAdjective + "Adj");
@@ -251,15 +270,36 @@ public class InteractiveObject : MonoBehaviour
                 Debug.Log(addAdjective + " Adjective 인터페이스의 이름를 확인해주세요!");
                 return;
             }
-            
+
             adjectives[adjIdx] = adjective;
             checkAdj[adjIdx] = true;
         }
-        
-        adjectives[adjIdx].Execute(this);
+
+        switch (adjectives[adjIdx].GetAdjectiveType())
+        {
+            case (AdjectiveType.Normal): // normal
+                adjectives[adjIdx].Execute(this);
+                break;
+            case (AdjectiveType.Repeat): // repeat
+                AddExcuteRepeat(adjectives[adjIdx]);
+                break;
+            case (AdjectiveType.Contradict): // contradict
+                break;
+        }
+       
         ++countAdj[adjIdx];
     }
-    
+
+    public bool CheckAdj(IAdjective checkAdjective)
+    {
+        if (adjectives.Contains(checkAdjective))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public void Interact(GameObject go)
     {
         if (go.tag == "Player")
