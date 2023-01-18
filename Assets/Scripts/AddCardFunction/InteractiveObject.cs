@@ -33,7 +33,7 @@ public class InteractiveObject : MonoBehaviour
     private void OnEnable()
     {
         currentPosition = gameObject.transform.position;
-        currentMaterial = gameObject.GetComponentInChildren<MeshRenderer>().material;
+        currentMaterial = transform.GetChild(0).GetComponent<MeshRenderer>().material;
         
         nameData = FindObjectOfType<NameData>();
 
@@ -45,7 +45,6 @@ public class InteractiveObject : MonoBehaviour
         initName = objectName;
         checkName = objectName;
         checkAdjCount = checkAdj.Count(a => a);
-        addNameText = currentObjectName;
 
         if (nameData != null)
         {
@@ -61,6 +60,7 @@ public class InteractiveObject : MonoBehaviour
         }
         
         objectName = initName;
+        addNameText = nameData.NameInfos[(int)objectName].uiText;
         
         if (objectName == checkName)
         {
@@ -216,6 +216,7 @@ public class InteractiveObject : MonoBehaviour
         
         if (uiText != null)
         {
+            objectName = (Name)addedName;
             addNameText = uiText;
         }
     }
