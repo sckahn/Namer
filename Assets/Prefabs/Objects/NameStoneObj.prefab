@@ -296,7 +296,11 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6176354208322031504, guid: a72d94752f22a49398713726c0148c4e, type: 3}
+    - {fileID: 5250494017471660486, guid: a72d94752f22a49398713726c0148c4e, type: 3}
+    - {fileID: 1009048343166720877, guid: a72d94752f22a49398713726c0148c4e, type: 3}
+    - {fileID: 5799055606121894642, guid: a72d94752f22a49398713726c0148c4e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a72d94752f22a49398713726c0148c4e, type: 3}
 --- !u!4 &7482906965491203417 stripped
 Transform:

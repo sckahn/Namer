@@ -338,12 +338,10 @@ public class InteractiveObject : MonoBehaviour
         if (GameManager.GetInstance.isTapDown && !popUpName.activeSelf)
         {
             PopUpNameOn();
-            print("On");
         }
         if (!GameManager.GetInstance.isTapDown && popUpName.activeSelf && !isHoverling)
         {
             PopUpNameOff();
-            print("Off");
         }
     }
 }

@@ -48,7 +48,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardData: {fileID: 11400000, guid: 3151bfb6438114bdbb9e6989a07e731a, type: 2}
-  cardHolder: {fileID: 0}
   frontCover: {fileID: 7865115808221761892}
   bc: {fileID: 2721935581099869929}
   highlight: {fileID: 8686928968484850008}
@@ -89,6 +88,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8390414494258579863}
     m_Modifications:
+    - target: {fileID: 495017475644149406, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
+      propertyPath: m_Text
+      value: "\uAFB8\uBC08"
+      objectReference: {fileID: 0}
     - target: {fileID: 1263317207295340012, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.3
@@ -99,7 +102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2457775549880798153, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
       propertyPath: m_Text
-      value: "\uD0C0\uAE30 \uC26C\uC6B4"
+      value: "\uC798\uD0C0\uB294"
       objectReference: {fileID: 0}
     - target: {fileID: 5886614794521977911, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
       propertyPath: m_RootOrder
