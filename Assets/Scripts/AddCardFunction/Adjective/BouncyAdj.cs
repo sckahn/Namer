@@ -5,11 +5,17 @@ using UnityEngine;
 public class BouncyAdj : IAdjective
 {
     private Adjective adjectiveName = Adjective.Bouncy;
+    private AdjectiveType adjectiveType = AdjectiveType.Repeat;
     private int count = 0;
     
-    public Adjective GetName()
+    public Adjective GetAdjectiveName()
     {
         return adjectiveName;
+    }
+
+    public AdjectiveType GetAdjectiveType()
+    {
+        return adjectiveType;
     }
 
     public int GetCount()

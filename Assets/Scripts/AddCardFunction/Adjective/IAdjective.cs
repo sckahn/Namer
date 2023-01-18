@@ -4,7 +4,8 @@ using UnityEngine;
 
 public interface IAdjective
 {
-    public Adjective GetName(); 
+    public Adjective GetAdjectiveName();
+    public AdjectiveType GetAdjectiveType();
     public int GetCount();
     public void SetCount(int addCount);
     

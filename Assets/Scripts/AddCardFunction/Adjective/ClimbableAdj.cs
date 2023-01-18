@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class ClimbableAdj : IAdjective
 {
-    private Adjective name = Adjective.Climbable;
+    private Adjective adjectiveName = Adjective.Climbable;
+    private AdjectiveType adjectiveType = AdjectiveType.Normal;
     private int count = 0;
     
-    public Adjective GetName()
+    public Adjective GetAdjectiveName()
     {
-        return name;
+        return adjectiveName;
+    }
+
+    public AdjectiveType GetAdjectiveType()
+    {
+        return adjectiveType;
     }
     
     public int GetCount()
