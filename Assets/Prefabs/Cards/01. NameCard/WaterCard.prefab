@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 453746082420174526}
   - component: {fileID: 9179835326793320750}
   m_Layer: 0
-  m_Name: RockCard
+  m_Name: WaterCard
   m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e8cc538b00e4479865b8e759be81d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardData: {fileID: 11400000, guid: 24ef513d74b0c40458bce480c9a54627, type: 2}
+  cardData: {fileID: 11400000, guid: f68c54fa260cb446b845243b3404cc9d, type: 2}
   frontCover: {fileID: 4230330137778533953}
   bc: {fileID: 453746082420174526}
   highlight: {fileID: 3395023830973034109}
@@ -90,7 +90,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2457775549880798153, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
       propertyPath: m_Text
-      value: "\uBC14\uC704"
+      value: "\uBB3C"
       objectReference: {fileID: 0}
     - target: {fileID: 5886614794521977911, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
       propertyPath: m_RootOrder
