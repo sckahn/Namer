@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class LongAdj : MonoBehaviour, IAdjective
 {
-    private Adjective name = Adjective.Long;
+    private Adjective adjectiveName = Adjective.Long;
+    private AdjectiveType adjectiveType = AdjectiveType.Normal;
     private int count = 0;
     
     private int growScale = 1;
@@ -16,9 +17,14 @@ public class LongAdj : MonoBehaviour, IAdjective
     private Vector3 targetScale;
     
     
-    public Adjective GetName()
+    public Adjective GetAdjectiveName()
     {
-        return name;
+        return adjectiveName;
+    }
+
+    public AdjectiveType GetAdjectiveType()
+    {
+        return adjectiveType;
     }
 
     public int GetCount()
@@ -33,7 +39,7 @@ public class LongAdj : MonoBehaviour, IAdjective
     
     public void Execute(InteractiveObject thisObject)
     {
-       ObjectScaling();
+        ObjectScaling();
     }
 
     public void Execute(InteractiveObject thisObject, GameObject player)

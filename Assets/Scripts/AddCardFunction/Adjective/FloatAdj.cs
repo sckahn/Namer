@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class FloatAdj : IAdjective
 {
-    private Adjective name = Adjective.Float;
+    private Adjective adjectiveName = Adjective.Float;
+    private AdjectiveType adjectiveType = AdjectiveType.Repeat;
     private int count = 0;
     
-    public Adjective GetName()
+    public Adjective GetAdjectiveName()
     {
-        return name;
+        return adjectiveName;
+    }
+
+    public AdjectiveType GetAdjectiveType()
+    {
+        return adjectiveType;
     }
 
     public int GetCount()

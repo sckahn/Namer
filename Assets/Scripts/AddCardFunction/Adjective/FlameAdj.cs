@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class FlameAdj : IAdjective
 {
-    private Adjective name = Adjective.Flame;
+    private Adjective adjectiveName = Adjective.Flame;
+    private AdjectiveType adjectiveType = AdjectiveType.Contradict;
     private int count = 0;
     
-    public Adjective GetName()
+    public Adjective GetAdjectiveName()
     {
-        return name;
+        return adjectiveName;
+    }
+
+    public AdjectiveType GetAdjectiveType()
+    {
+        return adjectiveType;
     }
 
     public int GetCount()

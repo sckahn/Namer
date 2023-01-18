@@ -19,6 +19,13 @@ public enum Name
     Card,
 }
 
+public enum AdjectiveType
+{
+    Normal,
+    Contradict,
+    Repeat
+}
+
 public enum Adjective
 {
     Win,

@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class ObtainableAdj : IAdjective
 {
-    private Adjective name = Adjective.Obtainable;
+    private Adjective adjectiveName = Adjective.Obtainable;
+    private AdjectiveType adjectiveType = AdjectiveType.Normal;
     private int count = 0;
     
-    public Adjective GetName()
+    public Adjective GetAdjectiveName()
     {
-        return name;
+        return adjectiveName;
+    }
+
+    public AdjectiveType GetAdjectiveType()
+    {
+        return adjectiveType;
     }
 
     public int GetCount()

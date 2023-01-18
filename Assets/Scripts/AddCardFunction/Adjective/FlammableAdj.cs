@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class FlammableAdj : MonoBehaviour, IAdjective
 {
-    private Adjective name = Adjective.Flammable;
+    private Adjective adjectiveName = Adjective.Flammable;
+    private AdjectiveType adjectiveType = AdjectiveType.Contradict;
     private int count = 0;
     
     private bool isContact;
     [Range(0,1)]public float sweepDistance = .5f;
 
-    public Adjective GetName()
+    public Adjective GetAdjectiveName()
     {
-        return name;
+        return adjectiveName;
+    }
+
+    public AdjectiveType GetAdjectiveType()
+    {
+        return adjectiveType;
     }
 
     public int GetCount()
