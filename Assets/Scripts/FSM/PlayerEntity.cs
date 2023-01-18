@@ -30,9 +30,9 @@ public class PlayerEntity : BaseGameEntity
 		// states 할당
 		// 새 Dictionary를 생성 후 Dictionary안에 Entity상태를 Key, State 클래스를 Value로 할당해주세요.
 		states = new Dictionary<PlayerStates, IState<PlayerEntity>>();
-        states[PlayerStates.Idle] = new PlayerOwnedStates.Idle();
-		states[PlayerStates.Run] = new PlayerOwnedStates.Run();
-		states[PlayerStates.Push] = new PlayerOwnedStates.Push();
+        states[PlayerStates.Idle] = new PlayerOwnedStates.IdleState();
+		states[PlayerStates.Run] = new PlayerOwnedStates.RunState();
+		states[PlayerStates.Push] = new PlayerOwnedStates.PushState();
 
 		// stateMachine 할당 및 초기화
 		// stateMachine을 새로 entity 타입으로 할당한 후 초기값을 세팅해주세요

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace PlayerOwnedStates
 {
-	public class Idle : IState<PlayerEntity>
+	public class IdleState : IState<PlayerEntity>
 	{
 		public void Enter(PlayerEntity entity)
 		{
@@ -18,7 +18,7 @@ namespace PlayerOwnedStates
 		}
 	}
 
-	public class Run : IState<PlayerEntity>
+	public class RunState : IState<PlayerEntity>
 	{
 		public void Enter(PlayerEntity entity)
 		{
@@ -36,7 +36,7 @@ namespace PlayerOwnedStates
         }
     }
 
-    public class Push : IState<PlayerEntity>
+    public class PushState : IState<PlayerEntity>
     {
         public void Enter(PlayerEntity entity)
         {
