@@ -296,6 +296,7 @@ public class InteractiveObject : MonoBehaviour
     bool isHoverling = false;
     private void OnMouseOver()
     {
+        if (UIManager.GetInstance.isPause) return;
         isHoverling = true;
         if (this.gameObject.CompareTag("InteractObj") && CardManager.GetInstance.isPickCard)
         {
@@ -311,6 +312,7 @@ public class InteractiveObject : MonoBehaviour
     //오브젝트의 이름을 화면에서 가림 
     private void OnMouseExit()
     {
+        if (UIManager.GetInstance.isPause) return;
         isHoverling = false;
         CardManager.GetInstance.target = null;
         popUpName.SetActive(false);
