@@ -99,22 +99,22 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 targetPos = new Vector3();
 
-        if ((int)GameManager.GetInstance.GetCheckSurrounding.mydir == 0)
+        if ((int)GameManager.GetInstance.GetCheckSurrounding.objDir == 0)
         {
             targetPos += Vector3.forward;
         }
 
-        else if ((int)GameManager.GetInstance.GetCheckSurrounding.mydir == 3)
+        else if ((int)GameManager.GetInstance.GetCheckSurrounding.objDir == 3)
         {
             targetPos += Vector3.right;
         }
 
-        else if ((int)GameManager.GetInstance.GetCheckSurrounding.mydir == 1)
+        else if ((int)GameManager.GetInstance.GetCheckSurrounding.objDir == 1)
         {
             targetPos += Vector3.back;
         }
 
-        else if ((int)GameManager.GetInstance.GetCheckSurrounding.mydir == 2)
+        else if ((int)GameManager.GetInstance.GetCheckSurrounding.objDir == 2)
         {
             targetPos += Vector3.left;
         }

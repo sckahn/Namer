@@ -10,12 +10,12 @@ public class CardComponent : MonoBehaviour
  
     public void Start()
     {
-        GameObject.FindGameObjectWithTag("Player").TryGetComponent<PlayerInteraction>(out pi);
+        //GameObject.FindGameObjectWithTag("Player").TryGetComponent<PlayerInteraction>(out pi);
     }
 
     private void Update()
     {
-        target = pi.forwardObjectInfo;
+        target = GameManager.GetInstance.GetCheckSurrounding.forwardObjectInfo;
     }
 
     public void AddCard()
