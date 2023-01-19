@@ -5,9 +5,13 @@ using UnityEngine;
 public class FloatAdj : IAdjective
 {
     private Adjective adjectiveName = Adjective.Float;
-    private AdjectiveType adjectiveType = AdjectiveType.Repeat;
+    private AdjectiveType adjectiveType = AdjectiveType.Normal;
     private int count = 0;
-    
+    private float currentTime;
+    private float movingSpeed = 1f;
+    private float length = 0.08f;
+    private float speed = 0.8f;
+
     public Adjective GetAdjectiveName()
     {
         return adjectiveName;
@@ -31,6 +35,7 @@ public class FloatAdj : IAdjective
     public void Execute(InteractiveObject thisObject)
     {
         //Debug.Log("this is Float");
+        thisObject.StartCoroutine(FloatObj(thisObject.gameObject));
     }
 
     public void Execute(InteractiveObject thisObject, GameObject player)
@@ -41,5 +46,30 @@ public class FloatAdj : IAdjective
     public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
         //Debug.Log("Float : this Object -> other Object");
+    }
+
+    IEnumerator FloatObj(GameObject obj)
+    {
+        var rb = obj.GetComponent<Rigidbody>();
+        rb.isKinematic = true;
+        rb.useGravity = false;
+
+        currentTime = 0;
+        Vector3 startPos = obj.transform.localPosition;
+        while (currentTime < movingSpeed)
+        {
+            currentTime += Time.deltaTime;
+            obj.transform.localPosition = Vector3.Lerp(startPos, startPos + Vector3.up, currentTime / movingSpeed);
+            yield return null;
+        }
+        yield return new WaitForSeconds(0.2f);
+        Vector3 currentPos = obj.transform.GetChild(0).localPosition;
+        while (true)
+        {
+            currentTime += Time.deltaTime * speed;
+            obj.transform.GetChild(0).
+                localPosition = new Vector3(obj.transform.GetChild(0).localPosition.x, currentPos.y + Mathf.Sin(currentTime) * length, obj.transform.GetChild(0).localPosition.z);
+            yield return null;
+        }
     }
 }
