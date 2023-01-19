@@ -56,14 +56,16 @@ public class LongAdj : MonoBehaviour, IAdjective
     public void ObjectScaling(InteractiveObject targetObj)
     {
         bool flag = CheckGrowable(targetObj.gameObject);
-        print(flag);
         if (flag)
         {
-            targetObj.StartCoroutine(WrapperCoroutine(flag,targetObj));
+            SetGrowScale(targetObj.gameObject);
+            targetObj.StartCoroutine(ScaleObj(targetObj.gameObject));
+            // targetObj.StartCoroutine(WrapperCoroutine(flag,targetObj));
         }
         else
         {
-            targetObj.StartCoroutine(WrapperCoroutine(flag,targetObj));
+            targetObj.StartCoroutine(Twinkle(targetObj.gameObject));
+            // targetObj.StartCoroutine(WrapperCoroutine(flag,targetObj));
         }
     }
     private void SetGrowScale(GameObject targetObj)
@@ -75,31 +77,19 @@ public class LongAdj : MonoBehaviour, IAdjective
 
     private bool CheckGrowable(GameObject targetObj)
     {
-        // var neighbors = GameManager.GetInstance.GetCheckSurrounding.CheckNeighboursObjectsUsingSweepTest(targetObj, 1f);
         var test = GameManager.GetInstance.GetCheckSurrounding.GetTransformsAtDirOrNull(targetObj, Dir.up);
-        test = GameManager.GetInstance.GetCheckSurrounding.GetTransformsAtDirOrNull(targetObj, Dir.up) == null
-            ? new List<Transform>()
-            : test;
-        if (test.Count != 0) return false;
-      
-        
+        if (test != null)
+        {
+            foreach (var item in test)
+            {
+                if (item.gameObject.tag == "Player")
+                    return true;
+            }
+            if (test.Count != 0) return false;
+            
+        }
         return true;
     }
-
-    
-    
-    // 호성님 껄로 체크하는 메소드 내일 오면 물어보기
-    // private bool CheckGrowable()
-    // {
-    //     print(GameManager.GetInstance.GetCheckSurrounding.name);
-    //     var gameObjects = GameManager.GetInstance.GetCheckSurrounding.GetTransformsAtDirOrNull(Dir.up);
-    //     print(gameObjects.Count);
-    //     if (gameObjects.Count == 0)
-    //         return false;
-    //     return true;
-    // }
-
-
 
     IEnumerator WrapperCoroutine(bool isGrow,InteractiveObject targetObj)
     {
@@ -110,16 +100,11 @@ public class LongAdj : MonoBehaviour, IAdjective
         }
         else
         {
-            // SetGrowScale(targetObj.gameObject);
-            // yield return targetObj.StartCoroutine(ScaleObj(targetObj.gameObject));
-            // SetShrinkScale(targetObj.gameObject);
-            // yield return targetObj.StartCoroutine(ScaleObj(targetObj.gameObject));
             targetObj.StartCoroutine(Twinkle(targetObj.gameObject));
         }
     }
 
-   
-
+    // 오브젝트의 y축 스케일을 조정
     IEnumerator ScaleObj(GameObject targetObj)
     {
         currentTime = 0;
@@ -133,17 +118,32 @@ public class LongAdj : MonoBehaviour, IAdjective
         }
     }
 
+    //빨간색으로 반짝이는 효과
     IEnumerator Twinkle(GameObject targetObj)
     {
+        float minBrightness = 0.5f;
+        float maxBrightness = 1.0f;
+        float speed = 1.0f;
+        float currentBrightness;
+        var renderer = targetObj.GetComponentInChildren<Renderer>().material;
+        Color originalcolor = renderer.color;
+         
         currentTime = 0;
         var meshRenderer =  targetObj.GetComponentInChildren<MeshRenderer>();
         
-        while (currentTime < growingSpeed)
+        while (currentTime < growingSpeed+3f)
         {
             currentTime += Time.deltaTime;
-            meshRenderer.enabled = !meshRenderer.enabled;
+            // meshRenderer.enabled = !meshRenderer.enabled;
+            float noise = Mathf.PerlinNoise(Time.time * speed, 0);
+            currentBrightness = Mathf.Lerp(minBrightness, maxBrightness, noise);
+
+            // 여기서 메터리얼의 색깔을 바꾸어서 메터리얼이 달라진다.-> 깃헙데스크톱에 바뀐게 계속 생성된다.
+            renderer.color = new Color(1, currentBrightness, currentBrightness);
             yield return null;
         }
+
+        renderer.color = originalcolor;
         meshRenderer.enabled = true;
     }
 
