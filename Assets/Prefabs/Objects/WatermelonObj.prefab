@@ -227,6 +227,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Watermelon
       objectReference: {fileID: 0}
+    - target: {fileID: 1317533694040268, guid: 4999e26f19486504faede8e224b29155, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4175835545314244, guid: 4999e26f19486504faede8e224b29155, type: 3}
       propertyPath: m_RootOrder
       value: 0
