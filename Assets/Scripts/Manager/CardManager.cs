@@ -43,7 +43,7 @@ public class CardManager : Singleton<CardManager>
 
     //카드를 생성하는 메서드 
     [ContextMenu("AddCard")]
-    public void AddCard(GameObject cardPrefab)
+    void AddCard(GameObject cardPrefab)
     {
         var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position, Quaternion.identity);
         var card = cardObject.GetComponent<CardController>();
@@ -79,7 +79,7 @@ public class CardManager : Singleton<CardManager>
             case 2: objLerps = new float[] { 0.24f, 0.73f }; break;
             case 3: objLerps = new float[] { 0.1f, 0.5f, 0.9f }; break;
             case 4: objLerps = new float[] { 0.1f, 0.37f, 0.64f, 0.9f }; break;
-            case 5: objLerps = new float[] { 0.1f, 0.3f, 0.5f, 0.7f, 0.9f }; break;
+            case 5: objLerps = new float[] { 0.05f, 0.275f, 0.5f, 0.725f, 0.95f }; break;
             default:
                 float interval = 1f / (objCount - 1);
                 for (int i = 0; i < objCount; i++)
