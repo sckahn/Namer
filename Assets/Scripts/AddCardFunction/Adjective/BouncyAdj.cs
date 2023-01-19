@@ -32,7 +32,7 @@ public class BouncyAdj : IAdjective
 
     public void SetCount(int addCount)
     {
-        this.count += addCount;
+        this.count += addCount;        
     }
     
     public void Execute(InteractiveObject thisObject)
@@ -40,10 +40,14 @@ public class BouncyAdj : IAdjective
         if (myObj == null) myObj = thisObject.gameObject;
         if (rigid == null) rigid = myObj.GetComponent<Rigidbody>();
         Collider collider = thisObject.GetComponent<BoxCollider>();
-        Dictionary<Dir, GameObject[]> hits = GameManager.GetInstance.GetCheckSurrounding.CheckNeighboursObjectsUsingSweepTest(thisObject.gameObject, 0.2f);
-        if (hits.Keys.Contains(Dir.down))
+
+        CheckSurrounding checkingMachine = GameManager.GetInstance.GetCheckSurrounding;
+        List<Transform> hits = checkingMachine.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.down);
+
+        if (hits != null)
         {
-            Bounce();
+            if (rigid.velocity.y < 0 && (thisObject.transform.position.y - hits[0].transform.position.y) <= 1.2f)
+                Bounce();
         }
     }
 
@@ -60,6 +64,7 @@ public class BouncyAdj : IAdjective
     private void Bounce()
     {
         rigid.velocity = Vector3.zero;
+        // 플레이어가 위에 있으면, 힘을 더 주도록 해야함 
         rigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
     }
 }

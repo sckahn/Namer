@@ -7,6 +7,11 @@ public class MovableAdj : IAdjective
     private Adjective adjectiveName = Adjective.Movable;
     private AdjectiveType adjectiveType = AdjectiveType.Normal;
     private int count = 0;
+
+    private float currentTime;
+    private bool isRoll;
+    private int movingSpeed = 1;
+    Vector3 target;
     
     public Adjective GetAdjectiveName()
     {
@@ -35,35 +40,72 @@ public class MovableAdj : IAdjective
 
     public void Execute(InteractiveObject thisObject, GameObject player)
     {
-        player.GetComponent<PlayerMovement>().PlayPushAnimation1();
+        if (isRoll) return;
 
+        CheckSurrounding check = GameManager.GetInstance.GetCheckSurrounding;
+        
+        Vector3 direction = (thisObject.transform.position - player.transform.position);
 
-        //Vector3 direction = (thisObject.transform.position - player.transform.position);
-        //if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z) && direction.x > 0)
-        //{ 
-        //    thisObject.transform.position += Vector3.right;
-        //    return;
-        //}
-        //else if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z) && direction.x < 0)
-        //{
-        //    thisObject.transform.position += Vector3.left;
-        //    return;
-        //}
-        //else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.z) && direction.z>0)
-        //{
-        //    thisObject.transform.position += Vector3.forward;
-        //    return;
-        //}
-        //else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.z) && direction.z<0)
-        //{
-        //    thisObject.transform.position += Vector3.back;
-        //    return;
-        //}
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z) && direction.x > 0)
+        {
+            if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.right) !=null ) return;
+
+            target = thisObject.transform.position + Vector3.right;
+
+            thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
+
+            return;
+        }
+        else if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z) && direction.x < 0)
+        {
+            if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.left) != null) return;
+
+            target = thisObject.transform.position + Vector3.left;
+
+            thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
+
+            return;
+        }
+        else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.z) && direction.z > 0)
+        {
+            if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.forward) != null) return;
+
+            target = thisObject.transform.position + Vector3.forward;
+
+            thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
+
+            return;
+        }
+        else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.z) && direction.z < 0)
+        {
+            if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.back) != null) return;
+                
+            target = thisObject.transform.position + Vector3.back;
+
+            thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
+
+            return;
+        }
     }
     
     public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
         //Debug.Log("Movable : this Object -> other Object");
+    }
+
+    IEnumerator MoveObj(GameObject obj)
+    {
+        currentTime = 0;
+        Vector3 startPos = obj.transform.localPosition;
+        isRoll = true;
+        while (currentTime < movingSpeed)
+        {
+            currentTime += Time.deltaTime;
+            obj.transform.localPosition = Vector3.Lerp(startPos, target, currentTime / movingSpeed);
+            yield return null;
+        }
+        isRoll = false;
+        //dt.SetNewPosOrSize();
     }
 }
 

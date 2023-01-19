@@ -2000,6 +2000,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forwardObjectInfo: {fileID: 0}
   curObjectInfo: {fileID: 0}
+  baseSize: 1
   objDir: 0
 --- !u!1001 &1063526148
 PrefabInstance:
@@ -3076,6 +3077,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5873986731690432293, guid: 9b636ffaa26b04b4687aa08a0abf8e78, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301298310491427171, guid: 9b636ffaa26b04b4687aa08a0abf8e78, type: 3}
+      propertyPath: checkAdj.Array.data[5]
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

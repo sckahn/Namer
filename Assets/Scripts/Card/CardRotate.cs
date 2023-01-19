@@ -4,24 +4,22 @@ using UnityEngine;
 
 public class CardRotate : MonoBehaviour
 {
-    [Tooltip("Material Shader Mask Number")]
-    public int maskNumber = 1;
 
     [Tooltip("Horizontal Rotation Speed")]
     [Range(-1, 1)]
-    public float rotationSpeedH = 0.8f;
+    [SerializeField] float rotationSpeedH = 0.8f;
 
     [Tooltip("Horizontal Rotation Speed")]
     [Range(-1, 1)]
-    public float rotationSpeedV = 0.6f;
+    [SerializeField] float rotationSpeedV = 0.6f;
 
     [Tooltip("Maximum Horizontal Angle")]
     [Range(0, 60)]
-    public float angleH = 5;
+    [SerializeField] float angleH = 5;
 
     [Tooltip("Maximum Vertical Angle")]
     [Range(0, 60)]
-    public float angleV = 0;
+    [SerializeField] float angleV = 0;
 
     private float rotationCounter = 0;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PopUpNameController : MonoBehaviour
+class PopUpNameController : MonoBehaviour
 {
     [SerializeField] Text nameText;
     Transform cardHolder;
