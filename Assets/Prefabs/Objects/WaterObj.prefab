@@ -227,6 +227,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cube_Water
       objectReference: {fileID: 0}
+    - target: {fileID: 1379645051613606, guid: 2cb12feb62290af4ab4634e7ac62b956, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4967946560886230, guid: 2cb12feb62290af4ab4634e7ac62b956, type: 3}
       propertyPath: m_RootOrder
       value: 0
