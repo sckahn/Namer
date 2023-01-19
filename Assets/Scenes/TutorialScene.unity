@@ -5697,7 +5697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2429951843022243908, guid: ccba4931a1b56428c8f58185521eedd6, type: 3}
       propertyPath: objectName
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccba4931a1b56428c8f58185521eedd6, type: 3}
@@ -5826,6 +5826,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 891039808740066323, guid: af35ababfd8c54ec0b2d3966acc3c864, type: 3}
+      propertyPath: objectName
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3381410466878145108, guid: af35ababfd8c54ec0b2d3966acc3c864, type: 3}
       propertyPath: m_Name
       value: WatermelonObj
