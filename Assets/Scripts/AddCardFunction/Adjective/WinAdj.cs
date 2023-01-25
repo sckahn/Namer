@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class WinAdj : IAdjective
 {
-    private Adjective adjectiveName = Adjective.Win;
-    private AdjectiveType adjectiveType = AdjectiveType.Normal;
+    private EAdjective adjectiveName = EAdjective.Win;
+    private EAdjectiveType adjectiveType = EAdjectiveType.Normal;
     private int count = 0;
     
-    public Adjective GetAdjectiveName()
+    public EAdjective GetAdjectiveName()
     {
         return adjectiveName;
     }
 
-    public AdjectiveType GetAdjectiveType()
+    public EAdjectiveType GetAdjectiveType()
     {
         return adjectiveType;
     }

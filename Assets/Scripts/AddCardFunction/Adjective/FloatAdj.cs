@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class FloatAdj : IAdjective
 {
-    private Adjective adjectiveName = Adjective.Float;
-    private AdjectiveType adjectiveType = AdjectiveType.Normal;
+    private EAdjective adjectiveName = EAdjective.Float;
+    private EAdjectiveType adjectiveType = EAdjectiveType.Normal;
     private int count = 0;
     private float currentTime;
     private float movingSpeed = 1f;
     private float length = 0.08f;
     private float speed = 0.8f;
 
-    public Adjective GetAdjectiveName()
+    public EAdjective GetAdjectiveName()
     {
         return adjectiveName;
     }
 
-    public AdjectiveType GetAdjectiveType()
+    public EAdjectiveType GetAdjectiveType()
     {
         return adjectiveType;
     }

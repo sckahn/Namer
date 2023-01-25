@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MovableAdj : IAdjective
 {
-    private Adjective adjectiveName = Adjective.Movable;
-    private AdjectiveType adjectiveType = AdjectiveType.Normal;
+    private EAdjective adjectiveName = EAdjective.Movable;
+    private EAdjectiveType adjectiveType = EAdjectiveType.Normal;
     private int count = 0;
 
     private float currentTime;
@@ -13,12 +13,12 @@ public class MovableAdj : IAdjective
     private int movingSpeed = 1;
     Vector3 target;
     
-    public Adjective GetAdjectiveName()
+    public EAdjective GetAdjectiveName()
     {
         return adjectiveName;
     }
 
-    public AdjectiveType GetAdjectiveType()
+    public EAdjectiveType GetAdjectiveType()
     {
         return adjectiveType;
     }

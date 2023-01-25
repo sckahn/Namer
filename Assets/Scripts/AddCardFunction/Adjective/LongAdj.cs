@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class LongAdj : MonoBehaviour, IAdjective
 {
-    private Adjective adjectiveName = Adjective.Long;
-    private AdjectiveType adjectiveType = AdjectiveType.Normal;
+    private EAdjective adjectiveName = EAdjective.Long;
+    private EAdjectiveType adjectiveType = EAdjectiveType.Normal;
     private int count = 0;
     
     private int growScale = 1;
@@ -18,12 +18,12 @@ public class LongAdj : MonoBehaviour, IAdjective
     private Vector3 targetScale;
     
     
-    public Adjective GetAdjectiveName()
+    public EAdjective GetAdjectiveName()
     {
         return adjectiveName;
     }
 
-    public AdjectiveType GetAdjectiveType()
+    public EAdjectiveType GetAdjectiveType()
     {
         return adjectiveType;
     }

@@ -7,8 +7,8 @@ using UnityEngine;
 public struct NameInfo
 {
     public string uiText;
-    public Name name;
-    public Adjective[] adjectives;
+    public EName name;
+    public EAdjective[] adjectives;
     public string contentText;
 }
 

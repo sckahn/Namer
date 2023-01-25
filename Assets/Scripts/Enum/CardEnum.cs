@@ -1,32 +1,33 @@
-public enum CardType
+public enum ECardType
 {
     Name,
     Adjective
 }
 
-public enum Name
+public enum EName
 {
     NullObject,
     NameStone,
     Ball,
     Rock,
-    BonFire,
+    Bonfire,
     Tree,
     Water,
     Sun,
     Balloon,
     Crystal,
+    Watermelon,
     Card,
 }
 
-public enum AdjectiveType
+public enum EAdjectiveType
 {
     Normal,
     Contradict,
     Repeat
 }
 
-public enum Adjective
+public enum EAdjective
 {
     Win,
     Flammable,

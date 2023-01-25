@@ -91,13 +91,13 @@ public class CardController : MonoBehaviour
     {
         if (target)
         {
-            if (cardData.cardType == CardType.Name)
+            if (cardData.cardType == ECardType.Name)
             {
-               target.GetComponent<InteractiveObject>().AddName(cardData.addedName, cardData.uiText);
+               target.GetComponent<InteractiveObject>().AddName(cardData.addedName);
             }
-            else if (cardData.cardType == CardType.Adjective)
+            else if (cardData.cardType == ECardType.Adjective)
             {
-               target.GetComponent<InteractiveObject>().AddAdjective(cardData.addedAdjectives, cardData.uiText);
+               target.GetComponent<InteractiveObject>().AddAdjective(cardData.addedAdjectives);
             }
         }
 

@@ -5,8 +5,8 @@ using System.Linq;
 
 public class BouncyAdj : IAdjective
 {
-    private Adjective adjectiveName = Adjective.Bouncy;
-    private AdjectiveType adjectiveType = AdjectiveType.Repeat;
+    private EAdjective adjectiveName = EAdjective.Bouncy;
+    private EAdjectiveType adjectiveType = EAdjectiveType.Repeat;
     private int count = 0;
 
     #region 통통 꾸밈 카드 멤버변수
@@ -15,12 +15,12 @@ public class BouncyAdj : IAdjective
     [SerializeField] private float jumpPower = 4.528313f;
     #endregion
 
-    public Adjective GetAdjectiveName()
+    public EAdjective GetAdjectiveName()
     {
         return adjectiveName;
     }
 
-    public AdjectiveType GetAdjectiveType()
+    public EAdjectiveType GetAdjectiveType()
     {
         return adjectiveType;
     }

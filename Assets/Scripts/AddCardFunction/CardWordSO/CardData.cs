@@ -6,10 +6,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Card Data", menuName = "Scriptable Object/Card Data", order = 0)]
 public class CardData : ScriptableObject
 {
-    public CardType cardType;
+    public ECardType cardType;
     public string uiText;
-    public Name addedName;
-    public Adjective[] addedAdjectives;
+    public EName addedName;
+    public EAdjective[] addedAdjectives;
 }
 
 [CustomEditor(typeof(CardData))]
@@ -33,12 +33,12 @@ public class CustomInspectorEditor : Editor
         EditorGUILayout.PropertyField(Option_CardType);
         EditorGUILayout.PropertyField(Option_UIText);
 
-        if ((CardType)Option_CardType.enumValueIndex == CardType.Name)
+        if ((ECardType)Option_CardType.enumValueIndex == ECardType.Name)
         {
             EditorGUILayout.LabelField("Name의 Adjective들은 NameData에서 확인해주세요!", EditorStyles.boldLabel);
             EditorGUILayout.PropertyField(Option_AddedName);
         }
-        else if ((CardType)Option_CardType.enumValueIndex == CardType.Adjective)
+        else if ((ECardType)Option_CardType.enumValueIndex == ECardType.Adjective)
         {
             EditorGUILayout.PropertyField(Option_AddedAdjectives);
         }
