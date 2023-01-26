@@ -35,6 +35,7 @@ public class WinAdj : IAdjective
 
     public void Execute(InteractiveObject thisObject, GameObject player)
     {
+        CallWin();
         //Debug.Log("Win : this Object -> Player");
     }
     
@@ -42,4 +43,11 @@ public class WinAdj : IAdjective
     {
         //Debug.Log("Win : this Object -> other Object");
     }
+
+    void CallWin()
+    {
+        GameManager.GetInstance.Win();
+    }
+
+    
 }
