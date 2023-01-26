@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ed0abb8b95a4b2492727dfdb634fdf, type: 3}
   m_Name: Card
   m_EditorClassIdentifier: 
-  cardType: 0
+  cardType: 1
   uiText: "\uCE74\uB4DC"
   addedName: 10
   addedAdjectives: 
