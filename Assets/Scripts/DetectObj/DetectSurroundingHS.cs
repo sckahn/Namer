@@ -75,38 +75,199 @@ public class DetectSurroundingHS : MonoBehaviour
         return mapData[newPos.x, newPos.y, newPos.z];
     }
 
+    private GameObject GetObjectOrNull(Transform indicatedObj, string value, int addValue, GameObject[,,] mapData = null)
+    {
+        if (mapData == null)
+            mapData = this.mapData;
+
+        if (mapData.Length == 0)
+            return null;
+
+        Vector3Int newPos = GetAdjacentVector3(indicatedObj.position, value, addValue);
+        if (!isRightPos(newPos)) return null;
+        return mapData[newPos.x, newPos.y, newPos.z];
+    }
+
+    private GameObject GetObjectOrNull(Vector3 indicatedPos, string value, int addValue, GameObject[,,] mapData = null)
+    {
+        if (mapData == null)
+            mapData = this.mapData;
+
+        if (mapData.Length == 0)
+            return null;
+
+        Vector3Int newPos = GetAdjacentVector3(indicatedPos, value, addValue);
+        if (!isRightPos(newPos)) return null;
+        return mapData[newPos.x, newPos.y, newPos.z];
+    }
+
     // 특정 오브젝트의 한 방향을 검출하는 로직 --> GameObject
-    public GameObject GetAdjacentObjectWithDir(GameObject indicatedObj, Dir dir)
+    public GameObject GetAdjacentObjectWithDir(GameObject indicatedObj, Dir dir, int length = 1)
     {
         GameObject returnObj = null;
         switch (dir)
         {
             // 다른 맵 데이터에서 탐색하기 원한다면, GetObjectOrNull 네번째 파라미터로 3차원 배열 맵 데이터를 넣으세요
             case (Dir.right):
-                returnObj = GetObjectOrNull(indicatedObj, "x", 1);
+                returnObj = GetObjectOrNull(indicatedObj, "x", length);
                 break;
             case (Dir.left):
-                returnObj = GetObjectOrNull(indicatedObj, "x", -1);
+                returnObj = GetObjectOrNull(indicatedObj, "x", -length);
                 break;
             case (Dir.up):
-                returnObj = GetObjectOrNull(indicatedObj, "y", 1);
+                returnObj = GetObjectOrNull(indicatedObj, "y", length);
                 break;
             case (Dir.down):
-                returnObj = GetObjectOrNull(indicatedObj, "y", -1);
+                returnObj = GetObjectOrNull(indicatedObj, "y", -length);
                 break;
             case (Dir.forward):
-                returnObj = GetObjectOrNull(indicatedObj, "z", 1);
+                returnObj = GetObjectOrNull(indicatedObj, "z", length);
                 break;
             case (Dir.back):
-                returnObj = GetObjectOrNull(indicatedObj, "z", -1);
+                returnObj = GetObjectOrNull(indicatedObj, "z", -length);
                 break;
         }
         return returnObj;
     }
 
-    // 특정 오브젝트의 전 방향을 검출하는 로직 1 --> Dictionary<Dir, GameObject>
+    // 특정 오브젝트의 한 방향을 검출하는 로직 --> GameObject
+    public GameObject GetAdjacentObjectWithDir(Transform indicatedObj, Dir dir, int length = 1)
+    {
+        GameObject returnObj = null;
+        switch (dir)
+        {
+            // 다른 맵 데이터에서 탐색하기 원한다면, GetObjectOrNull 네번째 파라미터로 3차원 배열 맵 데이터를 넣으세요
+            case (Dir.right):
+                returnObj = GetObjectOrNull(indicatedObj, "x", length);
+                break;
+            case (Dir.left):
+                returnObj = GetObjectOrNull(indicatedObj, "x", -length);
+                break;
+            case (Dir.up):
+                returnObj = GetObjectOrNull(indicatedObj, "y", length);
+                break;
+            case (Dir.down):
+                returnObj = GetObjectOrNull(indicatedObj, "y", -length);
+                break;
+            case (Dir.forward):
+                returnObj = GetObjectOrNull(indicatedObj, "z", length);
+                break;
+            case (Dir.back):
+                returnObj = GetObjectOrNull(indicatedObj, "z", -length);
+                break;
+        }
+        return returnObj;
+    }
+
+    // 스케일이 변경된 특정 오브젝트의 한 방향을 검출하는 로직 --> GameObject
+    public GameObject GetAdjacentObjectWithDir(GameObject indicatedObj, Dir dir, Vector3 objScale)
+    {
+        int length = 1;
+        if ((int)dir % 2 == 1)
+        {
+            length = (int)dir < 2 ? Mathf.RoundToInt(objScale.x)
+                : ((int)dir < 4 ? Mathf.RoundToInt(objScale.y)
+                : Mathf.RoundToInt(objScale.z));
+        }
+        return GetAdjacentObjectWithDir(indicatedObj, dir, length);
+    }
+
+    // 특정 오브젝트의 6 방향을 검출하는 로직 1 --> List<GameObject>
+    public List<GameObject> GetAdjacentObjects(GameObject indicatedObj)
+    {
+        Vector3 objScale = indicatedObj.transform.lossyScale;
+        if (objScale != Vector3.one)
+        {
+            return GetAdjacentObjects(indicatedObj, objScale);
+        }
+
+        Vector3 indicatedObjPos = indicatedObj.transform.position;
+        string[] values = new string[3] { "x", "y", "z" };
+        int[] addValues = new int[2] { 1, -1 };
+
+        List<GameObject> returnObjects = new List<GameObject>(6);
+
+        for (int i = 0; i < 6; i++)
+        {
+            GameObject go = GetAdjacentObjectWithDir(indicatedObj, (Dir)i);
+            if (go == null) continue;
+            returnObjects.Add(go);
+        }
+        return returnObjects;
+    }
+
+    // 스케일이 변경된 특정 오브젝트의 6++ 방향을 검출하는 로직 --> List<GameObject>
+    public List<GameObject> GetAdjacentObjects(GameObject indicatedObj, Vector3 objScale)
+    {
+        Vector3 indicatedObjPos = indicatedObj.transform.position;
+        string[] values = new string[3] { "x", "y", "z" };
+        int[] addValues = new int[2] { 1, -1 };
+
+        int scaleX = Mathf.RoundToInt(objScale.x);
+        int scaleY = Mathf.RoundToInt(objScale.y);
+        int scaleZ = Mathf.RoundToInt(objScale.z);
+        int count = ((scaleX * scaleY) + (scaleY * scaleZ) + (scaleZ * scaleX)) * 2;
+
+        List<GameObject> returnObjects = new List<GameObject>(count);
+
+        for (int i = 0; i < 2; i++)
+        {
+            for (int y = 0; y < scaleY; y++)
+            {
+                for (int z = 0; z < scaleZ; z++)
+                {
+                    Transform newPos = indicatedObj.transform;
+                    Vector3Int newPosition = GetAdjacentVector3(newPos.position, "y", y);
+                    newPosition = GetAdjacentVector3(newPosition, "z", z);
+                    GameObject go = GetObjectOrNull(newPosition, "x", i % 2 == 1 ? scaleX : -1);
+                    if (go == null || returnObjects.Contains(go)) continue;
+                    returnObjects.Add(go);
+                }
+            }
+        }
+        for (int i = 2; i < 4; i++)
+        {
+            for (int z = 0; z < scaleZ; z++)
+            {
+                for (int x = 0; x < scaleX; x++)
+                {
+                    Transform newPos = indicatedObj.transform;
+                    Vector3Int newPosition = GetAdjacentVector3(newPos.position, "z", z);
+                    newPosition = GetAdjacentVector3(newPosition, "x", x);
+                    GameObject go = GetObjectOrNull(newPosition, "y", i % 2 == 1 ? scaleY : -1);
+                    if (go == null || returnObjects.Contains(go)) continue;
+                    returnObjects.Add(go);
+                }
+            }
+        }
+        for (int i = 4; i < 6; i++)
+        {
+            for (int x = 0; x < scaleX; x++)
+            {
+                for (int y = 0; y < scaleY; y++)
+                {
+                    Transform newPos = indicatedObj.transform;
+                    Vector3Int newPosition = GetAdjacentVector3(newPos.position, "x", x);
+                    newPosition = GetAdjacentVector3(newPosition, "y", y);
+                    GameObject go = GetObjectOrNull(newPosition, "z", i % 2 == 1 ? scaleZ : -1);
+                    if (go == null || returnObjects.Contains(go)) continue;
+                    returnObjects.Add(go);
+                }
+            }
+        }
+        return returnObjects;
+    }
+
+    // 특정 오브젝트의 6 방향을 검출하는 로직 2 --> Dictionary<Dir, GameObject>
     public Dictionary<Dir, GameObject> GetAdjacentDictionary(GameObject indicatedObj)
     {
+        Vector3 objScale = indicatedObj.transform.lossyScale;
+        if (objScale != Vector3.one)
+        {
+            Debug.LogError("Use GetAdjacentsDictionary");
+            return null;
+        }
+
         Vector3 indicatedObjPos = indicatedObj.transform.position;
         string[] values = new string[3] { "x", "y", "z" };
         int[] addValues = new int[2] { 1, -1 };
@@ -122,30 +283,92 @@ public class DetectSurroundingHS : MonoBehaviour
         return returnObjects;
     }
 
-    // 특정 오브젝트의 전 방향을 검출하는 로직 2 --> List<GameObject>
-    public List<GameObject> GetAdjacentObjects(GameObject indicatedObj)
+    // 스케일이 변경된 특정 오브젝트의 6++ 방향을 검출하는 로직 --> Dictionary<Dir, List<GameObject>>
+    public Dictionary<Dir, List<GameObject>> GetAdjacentsDictionary(GameObject indicatedObj, Vector3 objScale)
     {
         Vector3 indicatedObjPos = indicatedObj.transform.position;
         string[] values = new string[3] { "x", "y", "z" };
         int[] addValues = new int[2] { 1, -1 };
 
-        List<GameObject> returnObjects = new List<GameObject>(6);
+        int scaleX = Mathf.RoundToInt(objScale.x);
+        int scaleY = Mathf.RoundToInt(objScale.y);
+        int scaleZ = Mathf.RoundToInt(objScale.z);
+        int count = ((scaleX * scaleY) + (scaleY * scaleZ) + (scaleZ * scaleX)) * 2;
 
-        for (int i = 0; i < 6; i++)
+        Dictionary<Dir, List<GameObject>> returnObjects = new Dictionary<Dir, List<GameObject>>(6);
+
+        for (int i = 0; i < 2; i++)
         {
-            GameObject go = GetAdjacentObjectWithDir(indicatedObj, (Dir)i);
-            if (go == null) continue;
-            returnObjects.Add(go);
+            for (int y = 0; y < scaleY; y++)
+            {
+                for (int z = 0; z < scaleZ; z++)
+                {
+                    Transform newPos = indicatedObj.transform;
+                    Vector3Int newPosition = GetAdjacentVector3(newPos.position, "y", y);
+                    newPosition = GetAdjacentVector3(newPosition, "z", z);
+                    GameObject go = GetObjectOrNull(newPosition, "x", i % 2 == 1 ? scaleX : -1);
+                    if (go == null || (returnObjects.Keys.Contains((Dir)i) && returnObjects[(Dir)i].Contains(go))) continue;
+                    if (returnObjects.Keys.Contains((Dir)i))
+                        returnObjects[(Dir)i].Add(go);
+                    else
+                    {
+                        returnObjects.Add((Dir)i, new List<GameObject>());
+                        returnObjects[(Dir)i].Add(go);
+                    }
+                }
+            }
+        }
+        for (int i = 2; i < 4; i++)
+        {
+            for (int z = 0; z < scaleZ; z++)
+            {
+                for (int x = 0; x < scaleX; x++)
+                {
+                    Transform newPos = indicatedObj.transform;
+                    Vector3Int newPosition = GetAdjacentVector3(newPos.position, "z", z);
+                    newPosition = GetAdjacentVector3(newPosition, "x", x);
+                    GameObject go = GetObjectOrNull(newPosition, "y", i % 2 == 1 ? scaleY : -1);
+                    if (go == null || (returnObjects.Keys.Contains((Dir)i) && returnObjects[(Dir)i].Contains(go))) continue;
+                    if (returnObjects.Keys.Contains((Dir)i))
+                        returnObjects[(Dir)i].Add(go);
+                    else
+                    {
+                        returnObjects.Add((Dir)i, new List<GameObject>());
+                        returnObjects[(Dir)i].Add(go);
+                    }
+                }
+            }
+        }
+        for (int i = 4; i < 6; i++)
+        {
+            for (int x = 0; x < scaleX; x++)
+            {
+                for (int y = 0; y < scaleY; y++)
+                {
+                    Transform newPos = indicatedObj.transform;
+                    Vector3Int newPosition = GetAdjacentVector3(newPos.position, "x", x);
+                    newPosition = GetAdjacentVector3(newPosition, "y", y);
+                    GameObject go = GetObjectOrNull(newPosition, "z", i % 2 == 1 ? scaleZ : -1);
+                    if (go == null || (returnObjects.Keys.Contains((Dir)i) && returnObjects[(Dir)i].Contains(go))) continue;
+                    if (returnObjects.Keys.Contains((Dir)i))
+                        returnObjects[(Dir)i].Add(go);
+                    else
+                    {
+                        returnObjects.Add((Dir)i, new List<GameObject>());
+                        returnObjects[(Dir)i].Add(go);
+                    }
+                }
+            }
         }
         return returnObjects;
     }
+
     #endregion
 
     #region Test
     [ContextMenu("TestGetAdjacentObjs")]
     public void TestGetAdjacentObjs()
     {
-        target = Indicator.GetInstance.target;
         foreach (GameObject go in GetAdjacentObjects(target))
         {
             if (go == null) continue;
@@ -156,13 +379,25 @@ public class DetectSurroundingHS : MonoBehaviour
     [ContextMenu("TestGetAdjacentObjWithDir")]
     public void TestGetAdjacentDict()
     {
-        target = Indicator.GetInstance.target;
         Dictionary<Dir, GameObject> dict = GetAdjacentDictionary(target);
         for (int i = 0; i < 6; i++)
         {
             if (!dict.Keys.Contains((Dir)i)) continue;
             GameObject go = dict[(Dir)i];
-            Debug.Log("Dir" + ((Dir)i).ToString() + " " + go.name + ", pos : " + go.transform.position.ToString(), go.transform);
+            Debug.Log("Dir " + ((Dir)i) + " " + go.name + ", pos : " + go.transform.position.ToString(), go.transform);
+        }
+    }
+
+    [ContextMenu("TestGetAdjacentsDict")]
+    public void TestGetAdjacentsDict()
+    {
+        Dictionary<Dir, List<GameObject>> dict = GetAdjacentsDictionary(target, target.transform.lossyScale);
+        foreach (Dir d in dict.Keys)
+        {
+            foreach (GameObject go in dict[d])
+            {
+                Debug.Log("Dir " + d + " " + go.name + ", pos : " + go.transform.position.ToString(), go.transform);
+            }
         }
     }
 
@@ -176,5 +411,6 @@ public class DetectSurroundingHS : MonoBehaviour
     #endregion
 }
 
-// 겹치는 거 예외
-// 
+// 전체 맵 데이터를 순환하는 검출 로직
+// 특정 오브젝트 인접한 친구들만 검출하는 로직 (gameObject, Transform)
+// return --> List{ (GameObject, Adjactive), .... }

@@ -22,7 +22,7 @@ public class TileMapManager : Singleton<TileMapManager>
     public void Init()
     {
         maxX = 20;
-        maxY = 5;
+        maxY = 7;
         maxZ = 20;
         tileMap = new GameObject[maxX,maxY,maxZ];
     }
