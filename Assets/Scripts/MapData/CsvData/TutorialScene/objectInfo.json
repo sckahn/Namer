@@ -1,0 +1,14 @@
+{"ObjectInfos":[
+  {"prefabName":"BonfireObj","objectID":0,"nameType":"Bonfire","adjectives":[""]},
+  {"prefabName":"RockObj","objectID":1,"nameType":"Rock","adjectives":[""]},
+  {"prefabName":"RockObj","objectID":2,"nameType":"Rock","adjectives":[""]},
+  {"prefabName":"RockObj","objectID":3,"nameType":"Rock","adjectives":[""]},
+  {"prefabName":"CardObj","objectID":4,"nameType":"Watermelon","adjectives":[""]},
+  {"prefabName":"CrystalObj","objectID":5,"nameType":"Crystal","adjectives":[""]},
+  {"prefabName":"TreeObj","objectID":6,"nameType":"Tree","adjectives":[""]},
+  {"prefabName":"BallObj","objectID":7,"nameType":"Ball","adjectives":["Movable",""]},
+  {"prefabName":"WaterObj","objectID":8,"nameType":"Water","adjectives":[""]},
+  {"prefabName":"SunObj","objectID":9,"nameType":"Sun","adjectives":[""]},
+  {"prefabName":"BalloonObj","objectID":10,"nameType":"Balloon","adjectives":[""]},
+  {"prefabName":"NameStoneObj","objectID":11,"nameType":"NameStone","adjectives":[""]},
+  {"prefabName":"WatermelonObj","objectID":12,"nameType":"Water","adjectives":[""]}]}

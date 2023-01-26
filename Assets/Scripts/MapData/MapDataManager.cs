@@ -8,6 +8,21 @@ using System.Text;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 
+[Serializable]
+public class ObjectInfo : MonoBehaviour
+{
+    public string prefabName;
+    public int objectID;
+    public string nameType;
+    public string[] adjectives;
+}
+
+[Serializable]
+public class ObjectInfoList
+{
+    public ObjectInfo[] ObjectInfos;
+}
+
 public class MapDataManager : Singleton<MapDataManager>
 {
     [SerializeField] private Transform groundsParent;
@@ -25,6 +40,9 @@ public class MapDataManager : Singleton<MapDataManager>
     
     private Dictionary<int, string[,]> mapObjectData = new Dictionary<int, string[,]>();
     public Dictionary<int, string[,]> MapObjectData { get { return mapObjectData; } }
+
+    private ObjectInfoList objectsList = new ObjectInfoList();
+    private List<ObjectInfo> objectInfos = new List<ObjectInfo>();
 
     private void Awake()
     {
@@ -92,6 +110,8 @@ public class MapDataManager : Singleton<MapDataManager>
         // csv : 오브젝트 프리펩 타입(00), 적용된 Name(00), 적용된 Adjective(00 ...)
         Dictionary<int, string[,]> objectData = new Dictionary<int, string[,]>();
 
+        int IDCount = 0;
+
         for (int i = 0; i < objectsParent.childCount; i++)
         {
             Transform objectTransform = objectsParent.GetChild(i);
@@ -101,26 +121,29 @@ public class MapDataManager : Singleton<MapDataManager>
             int z = (int)objectTransform.position.z + minHeight;
             int y = (int)objectTransform.position.y;
 
-            string prefabInfo = "";
-            for (int j = 0; j < cardData.PriorityName.Length; j++)
-            {
-                if (objectTransform.name.Contains(cardData.PriorityName[j]))
-                {
-                    prefabInfo = string.Format("{0:D2}", j);
-                    break;
-                }
-            }
-            
-            string nameIndex = interObj.GetObjectName().ToString();
-            string nameInfo = string.Format("{0:D2}", cardData.Names[nameIndex].priority);
+            // string prefabInfo = "";
+            // for (int j = 0; j < cardData.PriorityName.Length; j++)
+            // {
+            //     if (objectTransform.name.Contains(cardData.PriorityName[j]))
+            //     {
+            //         prefabInfo = string.Format("{0:D2}", j);
+            //         break;
+            //     }
+            // }
+            //
+            // string nameIndex = interObj.GetObjectName().ToString();
+            // string nameInfo = string.Format("{0:D2}", cardData.Names[nameIndex].priority);
+            //
 
-            string adjectiveInfo = "";
+            // string adjectiveInfo = "";
             bool[] checkAdj = interObj.GetCheckAdj();
+            string adjs = "";
             for (int j = 0; j < checkAdj.Length; j++)
             {
                 if (checkAdj[j])
                 {
-                    adjectiveInfo += string.Format("{0:D2}", j);
+                    // adjectiveInfo += string.Format("{0:D2}", j);
+                    adjs += cardData.PriorityAdjective[j] + " ";
                 }
             }
 
@@ -128,9 +151,21 @@ public class MapDataManager : Singleton<MapDataManager>
             {
                 objectData.Add(y, new string[height, width]);
             }
-            
-            objectData[y][z,x] = prefabInfo + nameInfo + adjectiveInfo;
+
+            // objectData[y][z,x] = prefabInfo + nameInfo + adjectiveInfo;
             // Debug.Log(y + " , " + x + " , " + z + " : " + objectTransform.name + " : " + objectData[y][z,x]);
+
+            objectData[y][z, x] = IDCount.ToString();
+            
+            // Json
+            ObjectInfo objectInfo = new ObjectInfo();
+            string[] prefabName = objectTransform.name.Split().ToArray();
+            objectInfo.prefabName = prefabName[0];
+            objectInfo.nameType = interObj.GetObjectName().ToString();
+            objectInfo.objectID = IDCount++;
+            objectInfo.adjectives = adjs.Split().ToArray();
+
+            objectInfos.Add(objectInfo);
         }
 
         return objectData;
@@ -180,5 +215,12 @@ public class MapDataManager : Singleton<MapDataManager>
         StreamWriter outStram = File.CreateText(filePath + fileName);
         outStram.Write(stringBuilder);
         outStram.Close();
+
+        if (fileName == "objectData.csv")
+        {
+            objectsList.ObjectInfos = objectInfos.ToArray();
+            string data = JsonUtility.ToJson(objectsList);
+            File.WriteAllText(filePath + "/" + "objectInfo.json", data);
+        }
     }
 }
