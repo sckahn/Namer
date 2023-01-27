@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class DetectSurroundingHS : MonoBehaviour
+public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
 {
-    TileMapManager tilemap;
+    protected TileMapManager tilemap;
     GameObject[,,] mapData;
     int maxX;
     int maxY;
@@ -28,6 +28,10 @@ public class DetectSurroundingHS : MonoBehaviour
         maxX = TileMapManager.GetInstance.maxX;
         maxY = TileMapManager.GetInstance.maxY;
         maxZ = TileMapManager.GetInstance.maxZ;
+    }
+    public GameObject[,,] GetTileMap()
+    {
+        return this.mapData;
     }
 
     #region GetVector in TileMap & isRight?
@@ -88,7 +92,7 @@ public class DetectSurroundingHS : MonoBehaviour
         return mapData[newPos.x, newPos.y, newPos.z];
     }
 
-    private GameObject GetObjectOrNull(Vector3 indicatedPos, string value, int addValue, GameObject[,,] mapData = null)
+    protected GameObject GetObjectOrNull(Vector3 indicatedPos, string value, int addValue, GameObject[,,] mapData = null)
     {
         if (mapData == null)
             mapData = this.mapData;
@@ -410,6 +414,10 @@ public class DetectSurroundingHS : MonoBehaviour
     }
     #endregion
 }
+
+// 전체 맵 데이터를 순환하는 검출 로직
+// 특정 오브젝트 인접한 친구들만 검출하는 로직 (gameObject, Transform)
+// return --> List{ (GameObject, Adjactive), .... }
 
 // 전체 맵 데이터를 순환하는 검출 로직
 // 특정 오브젝트 인접한 친구들만 검출하는 로직 (gameObject, Transform)
