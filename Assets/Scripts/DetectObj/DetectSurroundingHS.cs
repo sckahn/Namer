@@ -6,6 +6,7 @@ using UnityEngine;
 public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
 {
     TileMapManager tilemap;
+    List<Transform> scaleChangedTransforms = new List<Transform>();
     protected GameObject[,,] mapData;
     int maxX;
     int maxY;
@@ -367,6 +368,46 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
         return returnObjects;
     }
 
+    #endregion
+
+    #region Change Array Data
+    // 맵 배열에서 Vector3의 값에 해당하는 게임 오브젝트들을 가져오는 메서드 
+    private Dictionary<Vector3, GameObject> GetArrayObject(params Vector3[] blocks)
+    {
+        Dictionary<Vector3, GameObject> returnDict = new Dictionary<Vector3, GameObject>();
+        foreach (Vector3 block in blocks)
+        {
+            GameObject go = GetObjectOrNull(block, "x", 0);
+            returnDict.Add(block, go);
+        }
+        return returnDict;
+    }
+
+    // 맵 배열 데이터에서 두 개의 값을 교환하는 메서드 
+    public void SwapBlockInMap(Vector3 block1, Vector3 block2)
+    {
+        Dictionary<Vector3, GameObject> dict = GetArrayObject(block1, block2);
+        GameObject go1 = dict[block1];
+        GameObject go2 = dict[block2];
+
+        ChangeValueInMap(block1, go2);
+        ChangeValueInMap(block2, go1);
+
+        Dictionary<Vector3, GameObject> newDict = GetArrayObject(block1, block2);
+
+        Debug.Log(go1 + " -> " + newDict[block1]);
+        Debug.Log(go2 + " -> " + newDict[block2]);
+    }
+
+    // 맵 배열 데이터에서 한 개의 값을 새로운 값으로 변경하는 메서드 
+    public void ChangeValueInMap(Vector3 block, GameObject curObject = null)
+    {
+        int x = Mathf.RoundToInt(block.x);
+        int y = Mathf.RoundToInt(block.y);
+        int z = Mathf.RoundToInt(block.z);
+
+        mapData[x, y, z] = curObject;
+    }
     #endregion
 
     #region Test
