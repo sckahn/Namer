@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
 {
-    protected TileMapManager tilemap;
-    GameObject[,,] mapData;
+    TileMapManager tilemap;
+    protected GameObject[,,] mapData;
     int maxX;
     int maxY;
     int maxZ;
