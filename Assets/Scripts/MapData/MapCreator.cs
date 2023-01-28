@@ -3,45 +3,84 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public class MapCreator : MonoBehaviour
 {
-    [SerializeField] private GameObject groundTile;
-    [SerializeField] private GameObject grassTile;
+    private string filePath;
     
-    private const int MAP_LENGTH = 20;
     private string[,,] tileMap;
     private string[,,] objectMap;
 
-    private GameObject[] prefabs;
+    private int tileX;
+    private int tileY;
+    private int tileZ;
     
-    private void OnEnable()
+    private int objectX;
+    private int objectY;
+    private int objectZ;
+    
+    private GameObject[] tilePrefabs;
+    private GameObject[] objectPrefabs;
+
+    private Dictionary<int, ObjectInfo> objectInfoDic = new Dictionary<int, ObjectInfo>();
+
+    public void CreateTileMap(string filePath, string tileMapFileName)
     {
-        prefabs = Resources.LoadAll<GameObject>("Prefabs/Objects");
-        
-        tileMap = FileReader("mapTileData.csv");
-        objectMap = FileReader("objectData.csv");
-        
+        this.filePath = filePath;
+        tilePrefabs = Resources.LoadAll<GameObject>("Prefabs/GroundTiles");
+        tileMap = MapCsvFileReader(tileMapFileName);
+
         TileCreator();
-        ObjectCreater();
     }
 
-    private string[,,] FileReader(string fileName)
+    public GameObject[,,] CreateObjectMap(string filePath, string objectMapFileName, string objectInfoFileName)
     {
-        string[,,] map = new string[MAP_LENGTH,MAP_LENGTH,MAP_LENGTH];
-        StreamReader sr = new StreamReader("Assets/Scripts/MapData/CsvData/TutorialScene/" + fileName);
+        this.filePath = filePath;
+        objectPrefabs = Resources.LoadAll<GameObject>("Prefabs/Objects");
+        objectMap = MapCsvFileReader(objectMapFileName);
+        ObjectInfoFileReader(objectInfoFileName);
+        
+        return ObjectCreater();
+    }
 
-        int y = 0;
-        int z = 0;
+    private string[,,] MapCsvFileReader(string fileName)
+    {
+        if (!File.Exists(filePath + "/CSV/" + fileName))
+        {
+            Debug.Log(fileName + " 파일이 없습니다! 원하는 씬으로 가서 맵 정보 파일을 먼저 생성해주세요.");
+            return null;
+        }
+        
+        StreamReader sr = new StreamReader(filePath + "/CSV/" + fileName);
+        
+        int[] lineGetSize = Array.ConvertAll(sr.ReadLine().Split(','), int.Parse);
+        string[,,] map = null;
+        if (fileName.Contains("tile"))
+        {
+            tileX = lineGetSize[0];
+            tileY = lineGetSize[1];
+            tileZ = lineGetSize[2];
+            
+            map = new string[tileX, tileY, tileZ];
+        }
+        else if (fileName.Contains("object"))
+        {
+            objectX = lineGetSize[0];
+            objectY = lineGetSize[1];
+            objectZ = lineGetSize[2];
+            
+            map = new string[objectX, objectY, objectZ];
+        }
 
+        int y = 0, z = 0;
         while (true)
         {
             string line = sr.ReadLine();
             
-            if (line==null)
+            if (line == null)
             {
-                //Debug.Log("Escape/현지님 의견 : 탈출이라고 적어라");
                 break;
             }
 
@@ -49,87 +88,104 @@ public class MapCreator : MonoBehaviour
             {
                 y = line[line.Length - 1] - '0';
                 z = 0;
-                //Debug.Log(y);
             }
             else
             {
                 //데이터 배열에 한줄씩 저장
                 string[] data = line.Split(',').ToArray();
                 
-                for (int x = 0; x < data.Length -1; x++)
+                for (int x = 0; x < data.Length; x++)
                 {
                     map[x, y, z] = data[x];
-                    //Debug.Log(x + ", " + y + ", " + z + " : " + tileMap[x, y, z]);
                 }
                 z++;
             }
         }
-
         return map;
     }
-
-    private void TileCreator()
+    
+    private void ObjectInfoFileReader(string fileName)
     {
-        for (int x = 0; x < tileMap.GetLength(0); x++)
+        if (!File.Exists(filePath + "/JSON/" + fileName))
         {
-            for (int y = 0; y < tileMap.GetLength(1); y++)
+            Debug.Log( fileName + " 파일이 없습니다! 원하는 씬으로 가서 맵 정보 파일을 먼저 생성해주세요.");
+            return;
+        }
+        
+        string jsonFilePath = filePath.Replace("Assets/Resources/", "");
+        fileName = fileName.Replace(".json", "");
+        
+        TextAsset textAsset = Resources.Load<TextAsset>(jsonFilePath + "/JSON/" + fileName);
+        List<ObjectInfo> objectInfos = JsonConvert.DeserializeObject<List<ObjectInfo>>(textAsset.text);
+        
+        foreach (var info in objectInfos)
+        {
+            if (!objectInfoDic.ContainsKey(info.objectID))
             {
-                for (int z = 0; z < tileMap.GetLength(2); z++)
-                {
-                    switch (tileMap[x,y,z])
-                    {
-                        case "00" :
-                            Instantiate(groundTile, new Vector3(x, y, z), Quaternion.identity);
-                            break;
-                        case "01" :
-                            Instantiate(grassTile, new Vector3(x, y, z), Quaternion.identity);
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                objectInfoDic.Add(info.objectID, info);
             }
         }
     }
 
-    private void ObjectCreater()
+    private void TileCreator()
     {
-        TextAsset textAsset = Resources.Load<TextAsset>("JsonData/objectInfo");
-        ObjectInfoList objectInfoList = JsonUtility.FromJson<ObjectInfoList>(textAsset.text);
-
-        Dictionary<int, ObjectInfo> objectDic = new Dictionary<int, ObjectInfo>();
-        foreach (var objectInfo in objectInfoList.ObjectInfos)
+        GameObject parent = new GameObject("Grounds");
+        
+        for (int y = 0; y < tileY; y++)
         {
-            objectDic.Add(objectInfo.objectID, objectInfo);
-        }
-
-        for (int x = 0; x < objectMap.GetLength(0); x++)
-        {
-            for (int y = 0; y < objectMap.GetLength(1); y++)
+            GameObject Layer = new GameObject(y + "F");
+            Layer.transform.parent = parent.transform;
+            
+            for (int z = 0; z < tileZ; z++)
             {
-                for (int z = 0; z < objectMap.GetLength(2); z++)
+                for (int x = 0; x < tileX; x++)
                 {
-                    if (objectMap[x, y, z] == null)
+                    for (int i = 0; i < tilePrefabs.Length; i++)
+                    {
+                        if (tilePrefabs[i].name == tileMap[x, y, z])
+                        {
+                            Instantiate(tilePrefabs[i], new Vector3(x, y, z), Quaternion.identity, Layer.transform);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (Layer.transform.childCount == 0)
+            {
+                Destroy(Layer);
+            }
+        }
+    }
+
+    private GameObject[,,] ObjectCreater()
+    {
+        GameObject parent = new GameObject("Objects");
+        
+        GameObject[,,] initObjects = new GameObject[objectX, objectY, objectZ];
+        for (int y = 0; y < objectY; y++)
+        {
+            for (int z = 0; z < objectZ; z++)
+            {
+                for (int x = 0; x < objectX; x++)
+                {
+                    if (objectMap[x, y, z] == "-1")
                     {
                         continue;
                     }
                     
                     int id = int.Parse(objectMap[x, y, z]);
-                    if (id >= 0)
+                    for (int i = 0; i < objectPrefabs.Length; i++)
                     {
-                        for (int i = 0; i < prefabs.Length; i++)
+                        if (objectPrefabs[i].name == objectInfoDic[id].prefabName)
                         {
-                            if (prefabs[i].name == objectDic[id].prefabName)
-                            {
-                                // Debug.Log(x + ", " + y + ", " + z + ", " + " : " + id + " : " + prefabs[i].name);
-                                Instantiate(prefabs[i], new Vector3(x, y, z), Quaternion.identity);
-                                break;
-                            }
+                            initObjects[x, y, z] = Instantiate(objectPrefabs[i], new Vector3(x, y, z), Quaternion.identity, parent.transform);
+                            break;
                         }
                     }
                 }
             }
         }
+        return initObjects;
     }
-    
 }
