@@ -47,15 +47,11 @@ public struct SAdjectiveInfo
 
 public class CardDataManager : Singleton<CardDataManager>
 {
-    private Dictionary<string, SNameInfo> names = new Dictionary<string, SNameInfo>();
-    public Dictionary<string, SNameInfo> Names { get { return names; } }
-    private string[] priorityName; 
-    public string[] PriorityName { get { return priorityName; } }
-    
-    private Dictionary<string, SAdjectiveInfo> adjectives = new Dictionary<string, SAdjectiveInfo>();
-    public Dictionary<string, SAdjectiveInfo> Adjectives { get { return adjectives; } }
-    private string[] priorityAdjective;
-    public string[] PriorityAdjective { get { return priorityAdjective; } }
+    private Dictionary<EName, SNameInfo> names = new Dictionary<EName, SNameInfo>();
+    public Dictionary<EName, SNameInfo> Names { get { return names; } }
+
+    private Dictionary<EAdjective, SAdjectiveInfo> adjectives = new Dictionary<EAdjective, SAdjectiveInfo>();
+    public Dictionary<EAdjective, SAdjectiveInfo> Adjectives { get { return adjectives; } }
 
     private void Awake()
     {
@@ -109,11 +105,9 @@ public class CardDataManager : Singleton<CardDataManager>
 
     void ReadXmlFile()
     {
-        // TextAsset textAsset = Resources.Load("Data/CardData") as TextAsset;
-        // xmlFile.LoadXml(textAsset.text);
-        string xmlFilePath = "Assets/Scripts/AddCardFunction/Data/CardData.xml";
+        TextAsset textAsset = Resources.Load("Data/Card/CardData") as TextAsset;
         XmlDocument xmlFile = new XmlDocument();
-        xmlFile.Load(xmlFilePath);
+        xmlFile.LoadXml(textAsset.text);
 
         XmlNodeList nodeList = xmlFile.SelectNodes("root/worksheet");
         
@@ -121,10 +115,9 @@ public class CardDataManager : Singleton<CardDataManager>
         XmlNodeList nameNodeList = nodeList.Item(0).SelectNodes("Row");
         foreach (XmlNode nameItem in nameNodeList)
         {
-            string itemName = nameItem["이름명"]?.InnerText;
             int priority = Convert.ToInt32(nameItem["우선순위"]?.InnerText);
             string uiText = nameItem["UI표시텍스트"]?.InnerText;
-            EName name = (EName)Enum.Parse(typeof(EName), nameItem["이름명"]?.InnerText);
+            EName itemName = (EName)Enum.Parse(typeof(EName), nameItem["이름명"]?.InnerText);
             
             string adjText = nameItem["보유꾸밈성질"]?.InnerText;
             EAdjective[] adjNames = null;
@@ -133,23 +126,18 @@ public class CardDataManager : Singleton<CardDataManager>
                 adjNames = adjText.Split(", ").Select(item => (EAdjective)Enum.Parse(typeof(EAdjective), item)).ToArray();
             }
             
-            names.Add(itemName, new SNameInfo(priority, uiText, name, adjNames));
+            names.Add(itemName, new SNameInfo(priority, uiText, itemName, adjNames));
         }
-        
-        priorityName = names.OrderBy(item => item.Value.priority).Select(item => item.Key).ToArray();
         
         // Read Adjective Data of Card Data
         XmlNodeList adjNodeList = nodeList.Item(1).SelectNodes("Row");
         foreach (XmlNode adjItem in adjNodeList)
         {
-            string itemName = adjItem["이름명"]?.InnerText;
             int priority = Convert.ToInt32(adjItem["우선순위"]?.InnerText);
             string uiText = adjItem["UI표시텍스트"]?.InnerText;
             EAdjective adjName = (EAdjective)Enum.Parse(typeof(EAdjective), adjItem["이름명"]?.InnerText);
             
-            adjectives.Add(itemName, new SAdjectiveInfo(priority, uiText, adjName));
+            adjectives.Add(adjName, new SAdjectiveInfo(priority, uiText, adjName));
         }
-
-        priorityAdjective = adjectives.OrderBy(item => item.Value.priority).Select(item => item.Key).ToArray();
     }
 }
