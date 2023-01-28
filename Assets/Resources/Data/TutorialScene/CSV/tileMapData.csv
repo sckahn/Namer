@@ -1,0 +1,16 @@
+9,3,4
+Layer0
+GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile
+GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile
+GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile
+GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile
+Layer1
+-1,-1,-1,-1,-1,-1,-1,-1,-1
+-1,-1,-1,-1,-1,-1,-1,-1,-1
+-1,-1,-1,GlassTile,GlassTile,GlassTile,GlassTile,GlassTile,GlassTile
+-1,-1,-1,GlassTile,GlassTile,GlassTile,GlassTile,GlassTile,GlassTile
+Layer2
+-1,-1,-1,-1,-1,-1,-1,-1,-1
+-1,-1,-1,-1,-1,-1,-1,-1,-1
+-1,-1,-1,-1,-1,-1,-1,-1,-1
+-1,-1,-1,-1,-1,-1,-1,-1,-1
