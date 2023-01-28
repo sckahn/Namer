@@ -9,7 +9,7 @@ public class MapDataManager : Singleton<MapDataManager>
 {
     [SerializeField] private bool shouldCreateFile;
     [SerializeField] private bool shouldCreateMap;
-    [SerializeField] private string loadLevel = "";
+    [SerializeField] private string loadLevel;
     
     private string filePath;
     private string tileMapFileName;
@@ -28,6 +28,12 @@ public class MapDataManager : Singleton<MapDataManager>
         tileMapFileName = "tileMapData.csv";
         objectMapFileName = "objectMapData.csv";
         objectInfoFileName = "objectInfoData.json";
+
+        if ((shouldCreateFile && shouldCreateMap) || (!shouldCreateFile && !shouldCreateMap))
+        {
+            Debug.Log("하나만 선택 가능합니다");
+            return;
+        }
         
         if (shouldCreateFile)
         {
@@ -37,6 +43,12 @@ public class MapDataManager : Singleton<MapDataManager>
         
         if (shouldCreateMap)
         {
+            if (loadLevel == null || loadLevel == "")
+            {
+                Debug.Log("Load Level를 입력해주세요");
+                return;
+            }
+            
             mapCreator = this.AddComponent<MapCreator>();
             
             mapCreator.CreateTileMap(filePath + loadLevel, tileMapFileName);
