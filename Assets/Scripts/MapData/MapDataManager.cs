@@ -11,16 +11,16 @@ public class MapDataManager : Singleton<MapDataManager>
     [SerializeField] private bool shouldCreateMap;
     [SerializeField] private string loadLevel = "";
     
+    private string filePath;
+    private string tileMapFileName;
+    private string objectMapFileName;
+    private string objectInfoFileName;
+    
     private FileCreator fileCreator;
     private MapCreator mapCreator;
 
     private GameObject[,,] initObjects;
     public GameObject[,,] InitObjects { get { return initObjects; } set { initObjects = value; } }
-
-    private string filePath;
-    private string tileMapFileName;
-    private string objectMapFileName;
-    private string objectInfoFileName;
 
     private void OnEnable()
     {

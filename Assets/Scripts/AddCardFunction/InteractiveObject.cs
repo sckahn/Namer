@@ -95,7 +95,8 @@ public class InteractiveObject : MonoBehaviour
         {
             if (initAdj[i])
             {
-                SetAdjective((EAdjective)i);
+                EAdjective adjective = cardData.Adjectives.FirstOrDefault(item => item.Value.priority == i).Key;
+                SetAdjective(adjective);
             }
         }
         
@@ -163,12 +164,14 @@ public class InteractiveObject : MonoBehaviour
         {
             if (checkAdj[i] && adjectives[i] == null)
             {
-                SetAdjective((EAdjective)i);
+                EAdjective adjective = cardData.Adjectives.FirstOrDefault(item => item.Value.priority == i).Key;
+                SetAdjective(adjective);
             }
 
             if (!checkAdj[i] && adjectives[i] != null)
             {
-                SubtractAdjective((EAdjective)i);
+                EAdjective adjective = cardData.Adjectives.FirstOrDefault(item => item.Value.priority == i).Key;
+                SubtractAdjective(adjective);
             }
         }
     }
