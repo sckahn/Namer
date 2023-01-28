@@ -77,7 +77,7 @@ public class InteractiveObject : MonoBehaviour
         {
             if (cardData.Names.Count != 0)
             {
-                currentObjectName = cardData.Names[objectName.ToString()].uiText;
+                currentObjectName = cardData.Names[objectName].uiText;
                 InitCard();
             }
         }
@@ -95,14 +95,13 @@ public class InteractiveObject : MonoBehaviour
         {
             if (initAdj[i])
             {
-                EAdjective adjective = (EAdjective)Enum.Parse(typeof(EAdjective), cardData.PriorityAdjective[i]);
-                SetAdjective(adjective);
+                SetAdjective((EAdjective)i);
             }
         }
         
         checkName = initName;
         checkAdjCount = checkAdj.Count(a => a);
-        addNameText = cardData.Names[initName.ToString()].uiText;
+        addNameText = cardData.Names[initName].uiText;
 
         AddName(objectName);
     }
@@ -150,7 +149,7 @@ public class InteractiveObject : MonoBehaviour
         SubtractName(checkName);
         
         checkName = changeName;
-        addNameText = cardData.Names[changeName.ToString()].uiText;
+        addNameText = cardData.Names[changeName].uiText;
         checkAdjCount = checkAdj.Count(a => a);
         
         AddName(changeName);
@@ -164,17 +163,12 @@ public class InteractiveObject : MonoBehaviour
         {
             if (checkAdj[i] && adjectives[i] == null)
             {
-                string adjIndex = cardData.PriorityAdjective[i];
-                EAdjective adjective = cardData.Adjectives[adjIndex].adjectiveName;
-
-                SetAdjective(adjective);
+                SetAdjective((EAdjective)i);
             }
 
             if (!checkAdj[i] && adjectives[i] != null)
             {
-                string adjIndex = cardData.PriorityAdjective[i];
-                EAdjective adjective = cardData.Adjectives[adjIndex].adjectiveName;
-                SubtractAdjective(adjective);
+                SubtractAdjective((EAdjective)i);
             }
         }
     }
@@ -206,7 +200,7 @@ public class InteractiveObject : MonoBehaviour
         return currentObjectName;
     }
 
-    public void AddName(Enum addedName)
+    public void AddName(EName? addedName)
     {
         // Check Error
         if (addedName == null)
@@ -214,8 +208,8 @@ public class InteractiveObject : MonoBehaviour
             Debug.Log("Card의 Name 정보를 확인해주세요!");
             return;
         }
-
-        EAdjective[] addAdjectives = cardData.Names[addedName.ToString()].adjectives;
+        
+        EAdjective[] addAdjectives = cardData.Names[(EName)addedName].adjectives;
         if (addAdjectives != null)
         {
             foreach (EAdjective addAdjective in addAdjectives)
@@ -225,7 +219,7 @@ public class InteractiveObject : MonoBehaviour
         }
 
         objectName = (EName)addedName;
-        addNameText = cardData.Names[addedName.ToString()].uiText;
+        addNameText = cardData.Names[(EName)addedName].uiText;
     }
 
     public void AddAdjective(EAdjective[] addAdjectives)
@@ -244,7 +238,7 @@ public class InteractiveObject : MonoBehaviour
     
     private void SetAdjective(EAdjective addAdjective, bool isAdjective = true)
     {
-        SAdjectiveInfo adjectiveInfo = cardData.Adjectives[addAdjective.ToString()];
+        SAdjectiveInfo adjectiveInfo = cardData.Adjectives[addAdjective];
         int adjIndex = adjectiveInfo.priority;
 
         if (adjectives[adjIndex] == null)
@@ -275,7 +269,7 @@ public class InteractiveObject : MonoBehaviour
 
     private void SubtractName(EName subtractName)
     {
-        EAdjective[] subtractAdjectives = cardData.Names[subtractName.ToString()].adjectives;
+        EAdjective[] subtractAdjectives = cardData.Names[subtractName].adjectives;
 
         if (subtractAdjectives != null)
         {
@@ -288,7 +282,7 @@ public class InteractiveObject : MonoBehaviour
 
     private void SubtractAdjective(EAdjective subtractAdjective, bool isAdjective = true)
     {
-        int adjIndex = cardData.Adjectives[subtractAdjective.ToString()].priority;
+        int adjIndex = cardData.Adjectives[subtractAdjective].priority;
         adjectives[adjIndex] = null;
         --countAdj[adjIndex];
         checkAdj[adjIndex] = false;
