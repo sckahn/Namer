@@ -5,35 +5,130 @@ using UnityEngine;
 
 public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
 {
-    TileMapManager tilemap;
-    List<Transform> scaleChangedTransforms = new List<Transform>();
-    protected GameObject[,,] mapData;
-    int maxX;
-    int maxY;
-    int maxZ;
+    MapDataManager mapManager;
+    LevelInfos levelInfos;
+    Dictionary<Vector3, GameObject> scaleChangedObjects = new Dictionary<Vector3, GameObject>();
+    protected GameObject[,,] objectsData;
+    protected GameObject[,,] tilesData;
+    int maxX = 20;
+    int maxY = 9;
+    int maxZ = 20;
+
+    int tileMaxX = 20;
+    int tileMaxY = 9;
+    int tileMaxZ = 20;
 
     // test
-    [SerializeField] GameObject target;
-    [SerializeField] Dir ECheckDir;
+    private GameObject target;
+    private Dir ECheckDir;
 
-    private void Awake()
+    // LevelInfos 컴포넌트에서 씬이 열리고 바로 해당 함수를 호출
+    // 호출시에 바로 모드를 파악하고, 맵을 로드하거나 (에디터모드인 경우는) 맵 파일을 저장함 
+    public void Init(LevelInfos infos)
     {
-        tilemap = TileMapManager.GetInstance;
-        tilemap.Init();
+        GameObject player = GameObject.Find("Player");
+        if (player != null) player.SetActive(false);
+        this.levelInfos = infos;
+        mapManager = MapDataManager.GetInstance;
+        if (levelInfos.IsCreateMode)
+        {
+            mapManager.CreateFile();
+        }
+        else
+        {
+            mapManager.CreateMap(levelInfos.LevelName);
+            SetMapData();
+            if (player != null) player.SetActive(true);
+        }
     }
 
-    void Start()
+    // 맵을 로드할 때에 한 번 배열을 가져오는 메서드로 따로 사용하면 안 됨
+    // 기존 맵 배열을 사용하는 것이 아니라 인게임용 배열을 가지고 검출, 수정 등을 할 예정 
+    private void SetMapData()
     {
-        Indicator.GetInstance.CreateNewLevel();
-        mapData = TileMapManager.GetInstance.GetTileMap();
-        maxX = TileMapManager.GetInstance.maxX;
-        maxY = TileMapManager.GetInstance.maxY;
-        maxZ = TileMapManager.GetInstance.maxZ;
+        objectsData = (GameObject[,,])mapManager.InitObjects.Clone();
+        tilesData = (GameObject[,,])mapManager.InitTiles.Clone();
+
+        maxX = objectsData.GetLength(0) - 1;
+        maxY = objectsData.GetLength(1) - 1;
+        maxZ = objectsData.GetLength(2) - 1;
+
+        tileMaxX = tilesData.GetLength(0) - 1;
+        tileMaxY = tilesData.GetLength(1) - 1;
+        tileMaxZ = tilesData.GetLength(2) - 1;
     }
-    public GameObject[,,] GetTileMap()
+
+    // 오브젝트 데이터 배열 전체를 가져오는 메서드 
+    public GameObject[,,] GetObjectsData()
     {
-        return this.mapData;
+        return this.objectsData;
     }
+
+    // 타일 데이터 배열 전체를 가져오는 메서드 
+    public GameObject[,,] GetTilesData()
+    {
+        return this.tilesData;
+    }
+
+    // 어떤 오브젝트의 스케일을 건드릴 경우 반드시 호출해야 하는 함수들 
+    #region On Any Object's Scale Changed
+    // 길어질 수 있는지 체크 후에 실제로 변화시키기 전에 꼭 먼저 이 메서드를 호출하세요
+    // 길어진 것이라면, isStretched = true / 줄어든 것이라면, isStretched = false
+    public void OnObjectScaleChanged(Vector3 changedScale, Transform targetObj, bool isStreched = true)
+    {
+        if (isStreched)
+        {
+            for (int x = 0; x < changedScale.x; x++)
+            {
+                for (int y = 0; y < changedScale.y; y++)
+                {
+                    for (int z = 0; z < changedScale.z; z++)
+                    {
+                        Vector3 stretchedPos = new Vector3(x, y, z);
+                        if (stretchedPos == Vector3.zero) continue;
+                        scaleChangedObjects[targetObj.position + stretchedPos] = targetObj.gameObject;
+                    }
+                }
+            }
+        }
+        else
+        {
+            Vector3 LostScale = targetObj.lossyScale - changedScale;
+            for (int x = 0; x <= LostScale.x; x++)
+            {
+                for (int y = 0; y <= LostScale.y; y++)
+                {
+                    for (int z = 0; z <= LostScale.z; z++)
+                    {
+                        Vector3 newPos = new Vector3(x, y, z);
+                        if (newPos == Vector3.zero) continue;
+                        scaleChangedObjects.Remove(targetObj.position + changedScale + newPos);
+                    }
+                }
+            }
+        }
+    }
+
+    // 스케일이 1,1,1이 아닌 오브젝트가 이동할 때, 없어질 때에 해당 오브젝트도 처리하기 위해 가져오는 메서드
+    // 가져온 벡터3 리스트로 배열의 값을 수정하세요 
+    public List<Vector3> GetStretchedObject(Vector3 scale, GameObject targetObj)
+    {
+        List<Vector3> returnObjs = new List<Vector3>();
+        for (int x = 0; x < scale.x; x++)
+        {
+            for (int y = 0; y < scale.y; y++)
+            {
+                for (int z = 0; z < scale.z; z++)
+                {
+                    Vector3 stretchedPos = new Vector3(x, y, z);
+                    if (stretchedPos == Vector3.zero) continue;
+                    returnObjs.Add(targetObj.transform.position + scale);
+                }
+            }
+        }
+        return returnObjs;
+    }
+    #endregion
 
     #region GetVector in TileMap & isRight?
     private Vector3Int GetAdjacentVector3(Vector3 position, string value, int addValue)
@@ -56,55 +151,91 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
         return returnVector;
     }
 
-    private bool isRightPos(Vector3Int pos)
+    private bool isRightPos(Vector3Int pos, bool isObject = true)
     {
-        if (pos.x < 0 || pos.x > maxX || pos.y < 0 || pos.y > maxY || pos.z < 0 || pos.z > maxZ)
+        if (isObject)
         {
-            return false;
+            if (pos.x < 0 || pos.x > maxX || pos.y < 0 || pos.y > maxY || pos.z < 0 || pos.z > maxZ)
+            {
+                return false;
+            }
+            return true;
         }
-        return true;
+        else
+        {
+            if (pos.x < 0 || pos.x > tileMaxX || pos.y < 0 || pos.y > tileMaxY || pos.z < 0 || pos.z > tileMaxZ)
+            {
+                return false;
+            }
+            return true;
+        }
     }
     #endregion
 
     #region Get Adjacent Object(s)
-    private GameObject GetObjectOrNull(GameObject indicatedObj, string value, int addValue, GameObject[,,] mapData = null)
+    private GameObject GetExistTileOrNull(int x, int y, int z)
     {
-        if (mapData == null)
-            mapData = this.mapData;
-
-        if (mapData.Length == 0)
+        if (!isRightPos(new Vector3Int(x, y, z), false))
             return null;
-
-        Vector3Int newPos = GetAdjacentVector3(indicatedObj.transform.position, value, addValue);
-        if (!isRightPos(newPos)) return null;
-        return mapData[newPos.x, newPos.y, newPos.z];
+        return tilesData[x, y, z];
     }
 
-    private GameObject GetObjectOrNull(Transform indicatedObj, string value, int addValue, GameObject[,,] mapData = null)
+    private GameObject GetStretchedObjOrNull(Vector3 vec)
     {
-        if (mapData == null)
-            mapData = this.mapData;
-
-        if (mapData.Length == 0)
-            return null;
-
-        Vector3Int newPos = GetAdjacentVector3(indicatedObj.position, value, addValue);
-        if (!isRightPos(newPos)) return null;
-        return mapData[newPos.x, newPos.y, newPos.z];
+        if (scaleChangedObjects.Keys.Contains(vec))
+            return scaleChangedObjects[vec];
+        return null;
     }
 
-    protected GameObject GetObjectOrNull(Vector3 indicatedPos, string value, int addValue, GameObject[,,] mapData = null)
+    protected GameObject GetBlockOrNull(GameObject indicatedObj, string value, int addValue, GameObject[,,] mapData = null)
+    {
+        return GetBlockOrNull(indicatedObj.transform.position, value, addValue, mapData);
+    }
+
+    protected GameObject GetBlockOrNull(Transform indicatedObj, string value, int addValue, GameObject[,,] mapData = null)
+    {
+        return GetBlockOrNull(indicatedObj.position, value, addValue, mapData);
+    }
+
+    protected GameObject GetBlockOrNull(Vector3 indicatedPos, string value, int addValue, GameObject[,,] mapData = null)
     {
         if (mapData == null)
-            mapData = this.mapData;
+            mapData = this.objectsData;
 
         if (mapData.Length == 0)
             return null;
 
         Vector3Int newPos = GetAdjacentVector3(indicatedPos, value, addValue);
         if (!isRightPos(newPos)) return null;
-        return mapData[newPos.x, newPos.y, newPos.z];
+        if (mapData[newPos.x, newPos.y, newPos.z] != null)
+            return mapData[newPos.x, newPos.y, newPos.z];
+        else
+        {
+            GameObject stretchedObj = GetStretchedObjOrNull(newPos);
+            if (stretchedObj == null)
+            {
+                GameObject tile = GetExistTileOrNull(newPos.x, newPos.y, newPos.z);
+                return tile;
+            }
+            else
+                return stretchedObj;
+        }
     }
+
+    protected GameObject GetObjectInArray(Vector3 vec, GameObject[,,] mapData = null)
+    {
+        if (mapData == null)
+            mapData = this.objectsData;
+
+        if (mapData.Length == 0)
+            return null;
+
+        Vector3Int newPos = new Vector3Int(Mathf.RoundToInt(vec.x), Mathf.RoundToInt(vec.y), Mathf.RoundToInt(vec.z));
+        if (!isRightPos(newPos)) return null;
+        if (mapData[newPos.x, newPos.y, newPos.z] != null)
+            return mapData[newPos.x, newPos.y, newPos.z];
+        return null;
+    } 
 
     // 특정 오브젝트의 한 방향을 검출하는 로직 --> GameObject
     public GameObject GetAdjacentObjectWithDir(GameObject indicatedObj, Dir dir, int length = 1)
@@ -114,22 +245,22 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
         {
             // 다른 맵 데이터에서 탐색하기 원한다면, GetObjectOrNull 네번째 파라미터로 3차원 배열 맵 데이터를 넣으세요
             case (Dir.right):
-                returnObj = GetObjectOrNull(indicatedObj, "x", length);
+                returnObj = GetBlockOrNull(indicatedObj, "x", length);
                 break;
             case (Dir.left):
-                returnObj = GetObjectOrNull(indicatedObj, "x", -length);
+                returnObj = GetBlockOrNull(indicatedObj, "x", -length);
                 break;
             case (Dir.up):
-                returnObj = GetObjectOrNull(indicatedObj, "y", length);
+                returnObj = GetBlockOrNull(indicatedObj, "y", length);
                 break;
             case (Dir.down):
-                returnObj = GetObjectOrNull(indicatedObj, "y", -length);
+                returnObj = GetBlockOrNull(indicatedObj, "y", -length);
                 break;
             case (Dir.forward):
-                returnObj = GetObjectOrNull(indicatedObj, "z", length);
+                returnObj = GetBlockOrNull(indicatedObj, "z", length);
                 break;
             case (Dir.back):
-                returnObj = GetObjectOrNull(indicatedObj, "z", -length);
+                returnObj = GetBlockOrNull(indicatedObj, "z", -length);
                 break;
         }
         return returnObj;
@@ -143,28 +274,29 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
         {
             // 다른 맵 데이터에서 탐색하기 원한다면, GetObjectOrNull 네번째 파라미터로 3차원 배열 맵 데이터를 넣으세요
             case (Dir.right):
-                returnObj = GetObjectOrNull(indicatedObj, "x", length);
+                returnObj = GetBlockOrNull(indicatedObj, "x", length);
                 break;
             case (Dir.left):
-                returnObj = GetObjectOrNull(indicatedObj, "x", -length);
+                returnObj = GetBlockOrNull(indicatedObj, "x", -length);
                 break;
             case (Dir.up):
-                returnObj = GetObjectOrNull(indicatedObj, "y", length);
+                returnObj = GetBlockOrNull(indicatedObj, "y", length);
                 break;
             case (Dir.down):
-                returnObj = GetObjectOrNull(indicatedObj, "y", -length);
+                returnObj = GetBlockOrNull(indicatedObj, "y", -length);
                 break;
             case (Dir.forward):
-                returnObj = GetObjectOrNull(indicatedObj, "z", length);
+                returnObj = GetBlockOrNull(indicatedObj, "z", length);
                 break;
             case (Dir.back):
-                returnObj = GetObjectOrNull(indicatedObj, "z", -length);
+                returnObj = GetBlockOrNull(indicatedObj, "z", -length);
                 break;
         }
         return returnObj;
     }
 
     // 스케일이 변경된 특정 오브젝트의 한 방향을 검출하는 로직 --> GameObject
+    // 생각해보니 여러개를 가져올 수도 있는데... 일단 그건 나중에 수정할 예정 
     public GameObject GetAdjacentObjectWithDir(GameObject indicatedObj, Dir dir, Vector3 objScale)
     {
         int length = 1;
@@ -224,7 +356,7 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
                     Transform newPos = indicatedObj.transform;
                     Vector3Int newPosition = GetAdjacentVector3(newPos.position, "y", y);
                     newPosition = GetAdjacentVector3(newPosition, "z", z);
-                    GameObject go = GetObjectOrNull(newPosition, "x", i % 2 == 1 ? scaleX : -1);
+                    GameObject go = GetBlockOrNull(newPosition, "x", i % 2 == 1 ? scaleX : -1);
                     if (go == null || returnObjects.Contains(go)) continue;
                     returnObjects.Add(go);
                 }
@@ -239,7 +371,7 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
                     Transform newPos = indicatedObj.transform;
                     Vector3Int newPosition = GetAdjacentVector3(newPos.position, "z", z);
                     newPosition = GetAdjacentVector3(newPosition, "x", x);
-                    GameObject go = GetObjectOrNull(newPosition, "y", i % 2 == 1 ? scaleY : -1);
+                    GameObject go = GetBlockOrNull(newPosition, "y", i % 2 == 1 ? scaleY : -1);
                     if (go == null || returnObjects.Contains(go)) continue;
                     returnObjects.Add(go);
                 }
@@ -254,7 +386,7 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
                     Transform newPos = indicatedObj.transform;
                     Vector3Int newPosition = GetAdjacentVector3(newPos.position, "x", x);
                     newPosition = GetAdjacentVector3(newPosition, "y", y);
-                    GameObject go = GetObjectOrNull(newPosition, "z", i % 2 == 1 ? scaleZ : -1);
+                    GameObject go = GetBlockOrNull(newPosition, "z", i % 2 == 1 ? scaleZ : -1);
                     if (go == null || returnObjects.Contains(go)) continue;
                     returnObjects.Add(go);
                 }
@@ -311,7 +443,7 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
                     Transform newPos = indicatedObj.transform;
                     Vector3Int newPosition = GetAdjacentVector3(newPos.position, "y", y);
                     newPosition = GetAdjacentVector3(newPosition, "z", z);
-                    GameObject go = GetObjectOrNull(newPosition, "x", i % 2 == 1 ? scaleX : -1);
+                    GameObject go = GetBlockOrNull(newPosition, "x", i % 2 == 1 ? scaleX : -1);
                     if (go == null || (returnObjects.Keys.Contains((Dir)i) && returnObjects[(Dir)i].Contains(go))) continue;
                     if (returnObjects.Keys.Contains((Dir)i))
                         returnObjects[(Dir)i].Add(go);
@@ -332,7 +464,7 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
                     Transform newPos = indicatedObj.transform;
                     Vector3Int newPosition = GetAdjacentVector3(newPos.position, "z", z);
                     newPosition = GetAdjacentVector3(newPosition, "x", x);
-                    GameObject go = GetObjectOrNull(newPosition, "y", i % 2 == 1 ? scaleY : -1);
+                    GameObject go = GetBlockOrNull(newPosition, "y", i % 2 == 1 ? scaleY : -1);
                     if (go == null || (returnObjects.Keys.Contains((Dir)i) && returnObjects[(Dir)i].Contains(go))) continue;
                     if (returnObjects.Keys.Contains((Dir)i))
                         returnObjects[(Dir)i].Add(go);
@@ -353,7 +485,7 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
                     Transform newPos = indicatedObj.transform;
                     Vector3Int newPosition = GetAdjacentVector3(newPos.position, "x", x);
                     newPosition = GetAdjacentVector3(newPosition, "y", y);
-                    GameObject go = GetObjectOrNull(newPosition, "z", i % 2 == 1 ? scaleZ : -1);
+                    GameObject go = GetBlockOrNull(newPosition, "z", i % 2 == 1 ? scaleZ : -1);
                     if (go == null || (returnObjects.Keys.Contains((Dir)i) && returnObjects[(Dir)i].Contains(go))) continue;
                     if (returnObjects.Keys.Contains((Dir)i))
                         returnObjects[(Dir)i].Add(go);
@@ -370,14 +502,14 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
 
     #endregion
 
-    #region Change Array Data
+    #region Get or Change Array Data
     // 맵 배열에서 Vector3의 값에 해당하는 게임 오브젝트들을 가져오는 메서드 
     private Dictionary<Vector3, GameObject> GetArrayObject(params Vector3[] blocks)
     {
         Dictionary<Vector3, GameObject> returnDict = new Dictionary<Vector3, GameObject>();
         foreach (Vector3 block in blocks)
         {
-            GameObject go = GetObjectOrNull(block, "x", 0);
+            GameObject go = GetObjectInArray(block);
             returnDict.Add(block, go);
         }
         return returnDict;
@@ -406,14 +538,21 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
         int y = Mathf.RoundToInt(block.y);
         int z = Mathf.RoundToInt(block.z);
 
-        mapData[x, y, z] = curObject;
+        objectsData[x, y, z] = curObject;
     }
     #endregion
 
     #region Test
+    private void SetTarget()
+    {
+        target = levelInfos.target;
+        ECheckDir = levelInfos.ECheckDir;
+    }
+
     [ContextMenu("TestGetAdjacentObjs")]
     public void TestGetAdjacentObjs()
     {
+        SetTarget();
         foreach (GameObject go in GetAdjacentObjects(target))
         {
             if (go == null) continue;
@@ -424,6 +563,7 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
     [ContextMenu("TestGetAdjacentObjWithDir")]
     public void TestGetAdjacentDict()
     {
+        SetTarget();
         Dictionary<Dir, GameObject> dict = GetAdjacentDictionary(target);
         for (int i = 0; i < 6; i++)
         {
@@ -436,6 +576,7 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
     [ContextMenu("TestGetAdjacentsDict")]
     public void TestGetAdjacentsDict()
     {
+        SetTarget();
         Dictionary<Dir, List<GameObject>> dict = GetAdjacentsDictionary(target, target.transform.lossyScale);
         foreach (Dir d in dict.Keys)
         {
@@ -449,6 +590,7 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
     [ContextMenu("TestDir")]
     public void TestAdjacentObjWithDir()
     {
+        SetTarget();
         GameObject go = GetAdjacentObjectWithDir(target, ECheckDir);
         if (go == null) Debug.Log("There is nothing!");
         else Debug.Log(go.name, go.transform);

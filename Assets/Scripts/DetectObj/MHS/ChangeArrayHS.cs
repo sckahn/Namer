@@ -16,7 +16,7 @@ public class ChangeArrayHS : DetectSurroundingHS
         Dictionary<Vector3, GameObject> returnDict = new Dictionary<Vector3, GameObject>();
         foreach (Vector3 block in blocks)
         {
-            GameObject go = GetObjectOrNull(block, "x", 0);
+            GameObject go = GetBlockOrNull(block, "x", 0);
             returnDict.Add(block, go);
         }
         return returnDict;
@@ -45,7 +45,7 @@ public class ChangeArrayHS : DetectSurroundingHS
         int y = Mathf.RoundToInt(block.y);
         int z = Mathf.RoundToInt(block.z);
 
-        mapData[x, y, z] = curObject;
+        objectsData[x, y, z] = curObject;
     }
 
     #region Test

@@ -26,13 +26,13 @@ public class MapCreator : MonoBehaviour
 
     private Dictionary<int, ObjectInfo> objectInfoDic = new Dictionary<int, ObjectInfo>();
 
-    public void CreateTileMap(string filePath, string tileMapFileName)
+    public GameObject[,,] CreateTileMap(string filePath, string tileMapFileName)
     {
         this.filePath = filePath;
         tilePrefabs = Resources.LoadAll<GameObject>("Prefabs/GroundTiles");
         tileMap = MapCsvFileReader(tileMapFileName);
 
-        TileCreator();
+        return TileCreator();
     }
 
     public GameObject[,,] CreateObjectMap(string filePath, string objectMapFileName, string objectInfoFileName)
@@ -127,10 +127,12 @@ public class MapCreator : MonoBehaviour
         }
     }
 
-    private void TileCreator()
+    private GameObject[,,] TileCreator()
     {
         GameObject parent = new GameObject("Grounds");
-        
+
+
+        GameObject[,,] initTiles = new GameObject[tileX, tileY, tileZ];
         for (int y = 0; y < tileY; y++)
         {
             GameObject Layer = new GameObject(y + "F");
@@ -144,7 +146,7 @@ public class MapCreator : MonoBehaviour
                     {
                         if (tilePrefabs[i].name == tileMap[x, y, z])
                         {
-                            Instantiate(tilePrefabs[i], new Vector3(x, y, z), Quaternion.identity, Layer.transform);
+                            initTiles[x, y, z] = Instantiate(tilePrefabs[i], new Vector3(x, y, z), Quaternion.identity, Layer.transform);
                             break;
                         }
                     }
@@ -156,6 +158,7 @@ public class MapCreator : MonoBehaviour
                 Destroy(Layer);
             }
         }
+        return initTiles;
     }
 
     private GameObject[,,] ObjectCreater()
