@@ -155,12 +155,30 @@ public class DetectManager : Singleton<DetectManager>
                 // problem how to find influencer and follower? 
                 //문제점 만약 양쪽둘다 주체 객체 형용사 가지고 있으면 어떻할 것인가
 
+                var checkNeighborObj = IsInfluencer(adjacentObjects[i].GetComponent<InteractiveObject>());
+                var checkMovedObj = IsInfluencer(gameObject.GetComponent<InteractiveObject>());
+                
+                
+                // Neighbor 가 주차자인경우
+                // movedObj 가 주체자인경우
+                //neighbor 가 게체자인경우
+                // movedObj 가 개체자인 경우
+                // 둘다 주체자인 경우
+                // 둘다 아닌 경우
 
+                if (checkNeighborObj)
+                {
+                    influenceInfluencerPairDict.Add(CompareTwoAdjs(adjacentObjects[i], gameObject));
+                }
+                if (checkMovedObj)
+                {
+                    influenceInfluencerPairDict.Add(CompareTwoAdjs(gameObject, adjacentObjects[i]));
+                }
 
-                var influencerAdj = adjacentObjects[i].GetComponent<InteractiveObject>().Adjectives.Where(x => x != null)
-                    .FirstOrDefault(x => x.GetAdjectiveName() == EAdjective.Flame);// 어차피 forloop 
-                var influencedAdj = adjacentObjects[i].GetComponent<InteractiveObject>().Adjectives.Where(x => x != null)
-                    .FirstOrDefault(x => x.GetAdjectiveName() == EAdjective.Flammable);// 어차피 forloop 
+                // var influencerAdj = adjacentObjects[i].GetComponent<InteractiveObject>().Adjectives.Where(x => x != null)
+                //     .FirstOrDefault(x => x.GetAdjectiveName() == EAdjective.Flame);// 어차피 forloop 
+                // var influencedAdj = adjacentObjects[i].GetComponent<InteractiveObject>().Adjectives.Where(x => x != null)
+                //     .FirstOrDefault(x => x.GetAdjectiveName() == EAdjective.Flammable);// 어차피 forloop 
 
 
                 // bool influencerAdj =
@@ -172,17 +190,17 @@ public class DetectManager : Singleton<DetectManager>
                 //         select  adj.GetAdjectiveName()).Contains(EAdjective.Flammable);
 
                 // 주변 물채가 둘다 널인경우..
-                if (influencedAdj == null && influencerAdj == null) continue;
-                //주변 물체중 객차자가 없는 경우 -> 주체자 == 
-                if (influencedAdj == null)
-                {
-                    influenceInfluencerPairDict.Add(CompareTwoAdjs(adjacentObjects[i], gameObject));
-                }
-                //주변물체중 주체자가 없는 경우 -> 주체자 == game
-                if (influencerAdj == null)
-                {
-                    influenceInfluencerPairDict.Add(CompareTwoAdjs(gameObject, adjacentObjects[i]));
-                }
+                // if (influencedAdj == null && influencerAdj == null) continue;
+                // //주변 물체중 객차자가 없는 경우 -> 주체자 == 
+                // if (influencedAdj == null)
+                // {
+                //     influenceInfluencerPairDict.Add(CompareTwoAdjs(adjacentObjects[i], gameObject));
+                // }
+                // //주변물체중 주체자가 없는 경우 -> 주체자 == game
+                // if (influencerAdj == null)
+                // {
+                //     influenceInfluencerPairDict.Add(CompareTwoAdjs(gameObject, adjacentObjects[i]));
+                // }
 
             }
         }
@@ -227,22 +245,47 @@ public class DetectManager : Singleton<DetectManager>
                    || adjacentObjects[i].tag != "InteractObj") continue;
 
                 if (adjacentObjects[i].GetComponent<InteractiveObject>().Adjectives.Any() == false) continue;
-                var influencerAdj = adjacentObjects[i].GetComponent<InteractiveObject>().Adjectives.Where(x => x != null)
-                    .FirstOrDefault(x => x.GetAdjectiveName() == EAdjective.Flame);// 어차피 forloop 
-                var influencedAdj = adjacentObjects[i].GetComponent<InteractiveObject>().Adjectives.Where(x => x != null)
-                    .FirstOrDefault(x => x.GetAdjectiveName() == EAdjective.Flammable);// 어차피 forloop 
-                // 주변 물채가 둘다 널인경우..
-                if (influencedAdj == null && influencerAdj == null) continue;
+                
+                var checkNeighborObj = IsInfluencer(adjacentObjects[i].GetComponent<InteractiveObject>());
+                var checkMovedObj = IsInfluencer(gameObject.GetComponent<InteractiveObject>());
+                
+                
+                // Neighbor 가 주차자인경우
+                // movedObj 가 주체자인경우
+                //neighbor 가 게체자인경우
+                // movedObj 가 개체자인 경우
+                // 둘다 주체자인 경우
+                // 둘다 아닌 경우
 
-                if (influencedAdj == null)
+                if (checkNeighborObj)
                 {
                     influenceInfluencerPairDict.Add(CompareTwoAdjs(adjacentObjects[i], gameObject));
                 }
-                //주변물체중 주체자가 없는 경우 -> 주체자 == game
-                if (influencerAdj == null)
+                if (checkMovedObj)
                 {
                     influenceInfluencerPairDict.Add(CompareTwoAdjs(gameObject, adjacentObjects[i]));
                 }
+                 // var influencerAdj = adjacentObjects[i].GetComponent<InteractiveObject>().Adjectives.Where(x => x != null)
+                 //     .FirstOrDefault(x => x.GetAdjectiveName() == EAdjective.Flame);// 어차피 forloop 
+                 // var influencedAdj = adjacentObjects[i].GetComponent<InteractiveObject>().Adjectives.Where(x => x != null)
+                 //     .FirstOrDefault(x => x.GetAdjectiveName() == EAdjective.Flammable);// 어차피 forloop 
+                // 주변 물채가 둘다 널인경우..
+                // if (influencedAdj == null && influencerAdj == null) continue;
+
+                // if (isInfluencer) //만약 객체가 주체자면서 주변애가 객체자면 // 만약 주체가 
+                // {
+                //     influenceInfluencerPairDict.Add(CompareTwoAdjs(adjacentObjects[i], gameObject));
+                // }
+
+                // if (influencedAdj == null)
+                // {
+                //     influenceInfluencerPairDict.Add(CompareTwoAdjs(adjacentObjects[i], gameObject));
+                // }
+                // //주변물체중 주체자가 없는 경우 -> 주체자 == game
+                // if (influencerAdj == null)
+                // {
+                //     influenceInfluencerPairDict.Add(CompareTwoAdjs(gameObject, adjacentObjects[i]));
+                // }
             }
         }
         foreach (var item in influenceInfluencerPairDict)
@@ -503,6 +546,8 @@ public class DetectManager : Singleton<DetectManager>
     private void SetMapData()
     {
         currentObjects = (GameObject[,,])mapManager.InitObjects.Clone();
+        //이전배열 == currentOBJECTS 배열을 만드는 것을 추가 했습니다.
+        UpdatePrevBlockObjs();
         currentTiles = (GameObject[,,])mapManager.InitTiles.Clone();
 
         maxX = currentObjects.GetLength(0) - 1;
