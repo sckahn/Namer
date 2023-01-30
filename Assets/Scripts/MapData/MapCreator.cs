@@ -9,40 +9,31 @@ using UnityEngine;
 public class MapCreator : MonoBehaviour
 {
     private string filePath;
-    
-    private string[,,] tileMap;
-    private string[,,] objectMap;
 
-    private int tileX;
-    private int tileY;
-    private int tileZ;
-    
-    private int objectX;
-    private int objectY;
-    private int objectZ;
+    private int mapX;
+    private int mapY;
+    private int mapZ;
     
     private GameObject[] tilePrefabs;
     private GameObject[] objectPrefabs;
-
-    private Dictionary<int, ObjectInfo> objectInfoDic = new Dictionary<int, ObjectInfo>();
-
-    public void CreateTileMap(string filePath, string tileMapFileName)
+    
+    public GameObject[,,] CreateTileMap(string filePath, string tileMapFileName)
     {
         this.filePath = filePath;
         tilePrefabs = Resources.LoadAll<GameObject>("Prefabs/GroundTiles");
-        tileMap = MapCsvFileReader(tileMapFileName);
+        string[,,] tileMap = MapCsvFileReader(tileMapFileName);
 
-        TileCreator();
+        return TileCreator(tileMap);
     }
 
     public GameObject[,,] CreateObjectMap(string filePath, string objectMapFileName, string objectInfoFileName)
     {
         this.filePath = filePath;
         objectPrefabs = Resources.LoadAll<GameObject>("Prefabs/Objects");
-        objectMap = MapCsvFileReader(objectMapFileName);
-        ObjectInfoFileReader(objectInfoFileName);
+        string[,,] objectMap = MapCsvFileReader(objectMapFileName);
+        Dictionary<int, ObjectInfo> objectInfoDic = ObjectInfoFileReader(objectInfoFileName);
         
-        return ObjectCreater();
+        return ObjectCreater(objectMap, objectInfoDic);
     }
 
     private string[,,] MapCsvFileReader(string fileName)
@@ -56,23 +47,11 @@ public class MapCreator : MonoBehaviour
         StreamReader sr = new StreamReader(filePath + "/CSV/" + fileName);
         
         int[] lineGetSize = Array.ConvertAll(sr.ReadLine().Split(','), int.Parse);
-        string[,,] map = null;
-        if (fileName.Contains("tile"))
-        {
-            tileX = lineGetSize[0];
-            tileY = lineGetSize[1];
-            tileZ = lineGetSize[2];
-            
-            map = new string[tileX, tileY, tileZ];
-        }
-        else if (fileName.Contains("object"))
-        {
-            objectX = lineGetSize[0];
-            objectY = lineGetSize[1];
-            objectZ = lineGetSize[2];
-            
-            map = new string[objectX, objectY, objectZ];
-        }
+        
+        mapX = lineGetSize[0];
+        mapY = lineGetSize[1];
+        mapZ = lineGetSize[2];
+        string[,,] map = new string[mapX, mapY, mapZ];
 
         int y = 0, z = 0;
         while (true)
@@ -104,12 +83,14 @@ public class MapCreator : MonoBehaviour
         return map;
     }
     
-    private void ObjectInfoFileReader(string fileName)
+    private Dictionary<int, ObjectInfo> ObjectInfoFileReader(string fileName)
     {
+        Dictionary<int, ObjectInfo> objectInfoDic = new Dictionary<int, ObjectInfo>();
+        
         if (!File.Exists(filePath + "/JSON/" + fileName))
         {
             Debug.Log( fileName + " 파일이 없습니다! 원하는 씬으로 가서 맵 정보 파일을 먼저 생성해주세요.");
-            return;
+            return null;
         }
         
         string jsonFilePath = filePath.Replace("Assets/Resources/", "");
@@ -117,7 +98,6 @@ public class MapCreator : MonoBehaviour
         
         TextAsset textAsset = Resources.Load<TextAsset>(jsonFilePath + "/JSON/" + fileName);
         List<ObjectInfo> objectInfos = JsonConvert.DeserializeObject<List<ObjectInfo>>(textAsset.text);
-        
         foreach (var info in objectInfos)
         {
             if (!objectInfoDic.ContainsKey(info.objectID))
@@ -125,26 +105,29 @@ public class MapCreator : MonoBehaviour
                 objectInfoDic.Add(info.objectID, info);
             }
         }
+        
+        return objectInfoDic;
     }
 
-    private void TileCreator()
+    private GameObject[,,] TileCreator(string[,,] tileMap)
     {
         GameObject parent = new GameObject("Grounds");
         
-        for (int y = 0; y < tileY; y++)
+        GameObject[,,] initTiles = new GameObject[mapX, mapY, mapZ];
+        for (int y = 0; y < mapY; y++)
         {
             GameObject Layer = new GameObject(y + "F");
             Layer.transform.parent = parent.transform;
             
-            for (int z = 0; z < tileZ; z++)
+            for (int z = 0; z < mapZ; z++)
             {
-                for (int x = 0; x < tileX; x++)
+                for (int x = 0; x < mapX; x++)
                 {
                     for (int i = 0; i < tilePrefabs.Length; i++)
                     {
                         if (tilePrefabs[i].name == tileMap[x, y, z])
                         {
-                            Instantiate(tilePrefabs[i], new Vector3(x, y, z), Quaternion.identity, Layer.transform);
+                            initTiles[x, y, z] = Instantiate(tilePrefabs[i], new Vector3(x, y, z), Quaternion.identity, Layer.transform);
                             break;
                         }
                     }
@@ -156,18 +139,20 @@ public class MapCreator : MonoBehaviour
                 Destroy(Layer);
             }
         }
+
+        return initTiles;
     }
 
-    private GameObject[,,] ObjectCreater()
+    private GameObject[,,] ObjectCreater(string[,,] objectMap, Dictionary<int, ObjectInfo> objectInfoDic)
     {
         GameObject parent = new GameObject("Objects");
         
-        GameObject[,,] initObjects = new GameObject[objectX, objectY, objectZ];
-        for (int y = 0; y < objectY; y++)
+        GameObject[,,] initObjects = new GameObject[mapX, mapY, mapZ];
+        for (int y = 0; y < mapY; y++)
         {
-            for (int z = 0; z < objectZ; z++)
+            for (int z = 0; z < mapZ; z++)
             {
-                for (int x = 0; x < objectX; x++)
+                for (int x = 0; x < mapX; x++)
                 {
                     if (objectMap[x, y, z] == "-1")
                     {
@@ -180,6 +165,7 @@ public class MapCreator : MonoBehaviour
                         if (objectPrefabs[i].name == objectInfoDic[id].prefabName)
                         {
                             initObjects[x, y, z] = Instantiate(objectPrefabs[i], new Vector3(x, y, z), Quaternion.identity, parent.transform);
+                            initObjects[x, y, z].GetComponent<InteractiveObject>().objectInfo = objectInfoDic[id];
                             break;
                         }
                     }

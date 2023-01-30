@@ -7,18 +7,19 @@ using UnityEngine.SceneManagement;
 
 public class MapDataManager : Singleton<MapDataManager>
 {
+    // Test 
     [SerializeField] private bool shouldCreateFile;
     [SerializeField] private bool shouldCreateMap;
     [SerializeField] private string loadLevel;
-    
+    //
     private string filePath;
     private string tileMapFileName;
     private string objectMapFileName;
     private string objectInfoFileName;
-    
-    private FileCreator fileCreator;
-    private MapCreator mapCreator;
 
+    private GameObject[,,] initTiles;
+    public GameObject[,,] InitTiles { get { return initTiles; } set { initTiles = value; } }
+    
     private GameObject[,,] initObjects;
     public GameObject[,,] InitObjects { get { return initObjects; } set { initObjects = value; } }
 
@@ -37,7 +38,7 @@ public class MapDataManager : Singleton<MapDataManager>
         
         if (shouldCreateFile)
         {
-            fileCreator = this.AddComponent<FileCreator>();
+            FileCreator fileCreator = this.AddComponent<FileCreator>();
             fileCreator.CreateFile(filePath + SceneManager.GetActiveScene().name, tileMapFileName, objectMapFileName, objectInfoFileName);
         }
         
@@ -49,9 +50,9 @@ public class MapDataManager : Singleton<MapDataManager>
                 return;
             }
             
-            mapCreator = this.AddComponent<MapCreator>();
+            MapCreator mapCreator = this.AddComponent<MapCreator>();
             
-            mapCreator.CreateTileMap(filePath + loadLevel, tileMapFileName);
+            initTiles = mapCreator.CreateTileMap(filePath + loadLevel, tileMapFileName);
             initObjects = mapCreator.CreateObjectMap(filePath + loadLevel, objectMapFileName, objectInfoFileName);
         }
     }
