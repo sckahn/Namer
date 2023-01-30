@@ -50,7 +50,7 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
         tilesData = (GameObject[,,])mapManager.InitTiles.Clone();
 
         maxX = objectsData.GetLength(0) - 1;
-        maxY = objectsData.GetLength(1) - 1;
+        maxY = objectsData.GetLength(1) + 2;
         maxZ = objectsData.GetLength(2) - 1;
 
         tileMaxX = tilesData.GetLength(0) - 1;
@@ -504,7 +504,7 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
 
     #region Get or Change Array Data
     // 맵 배열에서 Vector3의 값에 해당하는 게임 오브젝트들을 가져오는 메서드 
-    private Dictionary<Vector3, GameObject> GetArrayObject(params Vector3[] blocks)
+    private Dictionary<Vector3, GameObject> GetArrayObjects(params Vector3[] blocks)
     {
         Dictionary<Vector3, GameObject> returnDict = new Dictionary<Vector3, GameObject>();
         foreach (Vector3 block in blocks)
@@ -518,17 +518,17 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
     // 맵 배열 데이터에서 두 개의 값을 교환하는 메서드 
     public void SwapBlockInMap(Vector3 block1, Vector3 block2)
     {
-        Dictionary<Vector3, GameObject> dict = GetArrayObject(block1, block2);
+        Dictionary<Vector3, GameObject> dict = GetArrayObjects(block1, block2);
         GameObject go1 = dict[block1];
         GameObject go2 = dict[block2];
 
         ChangeValueInMap(block1, go2);
         ChangeValueInMap(block2, go1);
 
-        Dictionary<Vector3, GameObject> newDict = GetArrayObject(block1, block2);
+        Dictionary<Vector3, GameObject> newDict = GetArrayObjects(block1, block2);
 
-        Debug.Log(go1 + " -> " + newDict[block1]);
-        Debug.Log(go2 + " -> " + newDict[block2]);
+        //Debug.Log(go1 + " -> " + newDict[block1]);
+        //Debug.Log(go2 + " -> " + newDict[block2]);
     }
 
     // 맵 배열 데이터에서 한 개의 값을 새로운 값으로 변경하는 메서드 
@@ -594,6 +594,30 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
         GameObject go = GetAdjacentObjectWithDir(target, ECheckDir);
         if (go == null) Debug.Log("There is nothing!");
         else Debug.Log(go.name, go.transform);
+    }
+
+    [ContextMenu("TestSwap")]
+    public void TestSwapValue()
+    {
+        Dictionary<Vector3, GameObject> dict = GetArrayObjects(levelInfos.block1, levelInfos.block2);
+        Debug.Log("Before");
+        Debug.Log("block1 : " + dict[levelInfos.block1]);
+        Debug.Log("block2 : " + dict[levelInfos.block2]);
+        SwapBlockInMap(levelInfos.block1, levelInfos.block2);
+        Dictionary<Vector3, GameObject> dict2 = GetArrayObjects(levelInfos.block1, levelInfos.block2);
+        Debug.Log("After");
+        Debug.Log("block1 : " + dict2[levelInfos.block1]);
+        Debug.Log("block2 : " + dict2[levelInfos.block2]);
+    }
+
+    [ContextMenu("TestChange")]
+    public void TestChnageValue()
+    {
+        Dictionary<Vector3, GameObject> dict = GetArrayObjects(levelInfos.block1);
+        Debug.Log("block1 : " + dict[levelInfos.block1]);
+        ChangeValueInMap(levelInfos.block1, levelInfos.newValue);
+        Dictionary<Vector3, GameObject> dict2 = GetArrayObjects(levelInfos.block1);
+        Debug.Log("block1 : " + dict2[levelInfos.block1]);
     }
     #endregion
 }

@@ -307,6 +307,9 @@ MonoBehaviour:
   levelName: MHS
   target: {fileID: 0}
   ECheckDir: 0
+  block1: {x: 7, y: 3, z: 3}
+  block2: {x: 8, y: 3, z: 3}
+  newValue: {fileID: 0}
 --- !u!4 &1116749639
 Transform:
   m_ObjectHideFlags: 0
@@ -633,7 +636,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7932567354593375873, guid: 647a0498071d24128925850f6a25e445, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.32
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7932567354593375873, guid: 647a0498071d24128925850f6a25e445, type: 3}
       propertyPath: m_LocalPosition.z
