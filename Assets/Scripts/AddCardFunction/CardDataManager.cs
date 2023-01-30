@@ -58,52 +58,7 @@ public class CardDataManager : Singleton<CardDataManager>
         ReadXmlFile();
     }
 
-    /*
-    private void SetCardData()
-    {
-        if (nameData == null)
-        {
-            nameData = FindObjectOfType<NameData>();
-        }
-
-        foreach (NameInfo nameInfo in nameData.NameInfos)
-        {
-            Adjective[] enumAdjectives = nameInfo.adjectives;
-            List<IAdjective> iAdjectives = new List<IAdjective>();
-            for (int i = 0; i < enumAdjectives.Length - 1; i++)
-            {
-                Type type = Type.GetType(enumAdjectives[i] + "Adj");
-                var adjective = Activator.CreateInstance(type) as IAdjective;
-                if (adjective == null)
-                {
-                    Debug.Log( enumAdjectives[i] + " Adjective 인터페이스의 이름를 확인해주세요!");
-                    return;
-                }
-                
-                iAdjectives.Add(adjective);
-            }
-
-            names.Add(nameInfo.name, iAdjectives.ToArray());
-        }
-
-        int count = Enum.GetValues(typeof(Adjective)).Length;
-
-        for (int i = 0; i < count - 1; i++)
-        {
-            Type type = Type.GetType((Adjective)i + "Adj");
-            var adjective = Activator.CreateInstance(type) as IAdjective;
-            if (adjective == null)
-            {
-                Debug.Log( (Adjective)i + " Adjective 인터페이스의 이름를 확인해주세요!");
-                return;
-            }
-            
-            adjectives.Add(adjective);
-        }
-    }
-    */
-
-    void ReadXmlFile()
+    public void ReadXmlFile()
     {
         TextAsset textAsset = Resources.Load("Data/Card/CardData") as TextAsset;
         XmlDocument xmlFile = new XmlDocument();
@@ -125,8 +80,11 @@ public class CardDataManager : Singleton<CardDataManager>
             {
                 adjNames = adjText.Split(", ").Select(item => (EAdjective)Enum.Parse(typeof(EAdjective), item)).ToArray();
             }
-            
-            names.Add(itemName, new SNameInfo(priority, uiText, itemName, adjNames));
+
+            if (!names.ContainsKey(itemName))
+            {
+                names.Add(itemName, new SNameInfo(priority, uiText, itemName, adjNames));
+            }
         }
         
         // Read Adjective Data of Card Data
@@ -136,8 +94,11 @@ public class CardDataManager : Singleton<CardDataManager>
             int priority = Convert.ToInt32(adjItem["우선순위"]?.InnerText);
             string uiText = adjItem["UI표시텍스트"]?.InnerText;
             EAdjective adjName = (EAdjective)Enum.Parse(typeof(EAdjective), adjItem["이름명"]?.InnerText);
-            
-            adjectives.Add(adjName, new SAdjectiveInfo(priority, uiText, adjName));
+
+            if (!adjectives.ContainsKey(adjName))
+            {
+                adjectives.Add(adjName, new SAdjectiveInfo(priority, uiText, adjName));
+            }
         }
     }
 }
