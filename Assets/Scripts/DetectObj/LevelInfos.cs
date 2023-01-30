@@ -21,6 +21,6 @@ public class LevelInfos : MonoBehaviour
 
     private void Awake()
     {
-        DetectSurroundingHS.GetInstance.Init(this);
+        DetectManager.GetInstance.Init(this);
     }
 }

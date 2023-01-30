@@ -663,6 +663,7 @@ public class DetectManager : Singleton<DetectManager>
 
         Vector3Int newPos = GetAdjacentVector3(indicatedPos, value, addValue);
         if (!isRightPos(newPos)) return null;
+        if (mapData.GetLength(1) <= newPos.y) return null; // 수정중 
         if (mapData[newPos.x, newPos.y, newPos.z] != null)
             return mapData[newPos.x, newPos.y, newPos.z];
         else
@@ -1094,3 +1095,5 @@ public class DetectManager : Singleton<DetectManager>
     }
     #endregion
 }
+
+// y축으로 둥둥 시에 기존에 y축 length을 넘어버리면, out of range
