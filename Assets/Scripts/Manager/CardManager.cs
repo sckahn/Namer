@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CardManager : Singleton<CardManager>
 {
-    [SerializeField] GameObject cardPrefab;
     [SerializeField] Transform cardSpawnPoint;
     [SerializeField] Transform cardHolderPoint;
     [SerializeField] Transform cardHolderLeft;
@@ -32,11 +31,11 @@ public class CardManager : Singleton<CardManager>
     //시작 카드를 딜링해주는 메서드 
     IEnumerator DealCard()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < startCards.Length; i++)
         {
             AddCard(startCards[i]);
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.5f);
         }
 
     }
