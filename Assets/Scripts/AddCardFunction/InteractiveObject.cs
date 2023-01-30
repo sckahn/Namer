@@ -30,6 +30,8 @@ public class InteractiveObject : MonoBehaviour
     public IAdjective[] Adjectives { get { return  adjectives; } }
     private CardDataManager cardData;
     
+    public ObjectInfo objectInfo;
+    
     public EName GetObjectName()
     {
         return objectName;
@@ -62,8 +64,6 @@ public class InteractiveObject : MonoBehaviour
 
     private void OnEnable()
     {
-        cardData = CardDataManager.GetInstance;
-
         if (!gameObject.CompareTag("InteractObj"))
         {
             Debug.Log("태그를 InteractObj로 설정해주세요!");
@@ -72,15 +72,6 @@ public class InteractiveObject : MonoBehaviour
         currentPosition = gameObject.transform.position;
         initName = objectName;
         initAdj = checkAdj;
-
-        if (cardData != null)
-        {
-            if (cardData.Names.Count != 0)
-            {
-                currentObjectName = cardData.Names[objectName].uiText;
-                InitCard();
-            }
-        }
     }
 
     private void InitCard(bool setInit = false)
@@ -110,13 +101,13 @@ public class InteractiveObject : MonoBehaviour
     #region Run When Inspector Data Change & Test
     private void Update()
     {
-        AllPopUpNameCtr();
         if (cardData == null)
         {
-            Debug.Log("start");
             cardData = CardDataManager.GetInstance;
+            currentObjectName = cardData.Names[objectName].uiText;
             InitCard();
         }
+        AllPopUpNameCtr();
 
         // set init
         if (setInit)
