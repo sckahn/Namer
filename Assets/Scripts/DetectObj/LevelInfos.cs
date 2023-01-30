@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class LevelInfos : MonoBehaviour
 {
+    [Header("MODE")]
     [SerializeField] bool isCreateMode;
     [SerializeField] string levelName;
 
     // test
+    [Header("TEST")]
     [SerializeField] public GameObject target;
     [SerializeField] public Dir ECheckDir;
     [SerializeField] public Vector3 block1;

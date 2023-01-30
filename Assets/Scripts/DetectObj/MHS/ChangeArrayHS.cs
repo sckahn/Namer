@@ -45,7 +45,7 @@ public class ChangeArrayHS : DetectSurroundingHS
         int y = Mathf.RoundToInt(block.y);
         int z = Mathf.RoundToInt(block.z);
 
-        objectsData[x, y, z] = curObject;
+        currentObjects[x, y, z] = curObject;
     }
 
     #region Test
