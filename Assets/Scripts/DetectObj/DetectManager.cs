@@ -542,7 +542,11 @@ public class DetectManager : Singleton<DetectManager>
                     {
                         Vector3 stretchedPos = new Vector3(x, y, z);
                         if (stretchedPos == Vector3.zero) continue;
-                        scaleChangedObjects[targetObj.position + stretchedPos] = targetObj.gameObject;
+                        Vector3 vec = (targetObj.position + stretchedPos);
+                        vec.x = Mathf.RoundToInt(vec.x);
+                        vec.y = Mathf.RoundToInt(vec.y);
+                        vec.z = Mathf.RoundToInt(vec.z);
+                        scaleChangedObjects[vec] = targetObj.gameObject;
                     }
                 }
             }
@@ -558,7 +562,11 @@ public class DetectManager : Singleton<DetectManager>
                     {
                         Vector3 newPos = new Vector3(x, y, z);
                         if (newPos == Vector3.zero) continue;
-                        scaleChangedObjects.Remove(targetObj.position + changedScale + newPos);
+                        Vector3 vec = (targetObj.position + changedScale + newPos);
+                        vec.x = Mathf.RoundToInt(vec.x);
+                        vec.y = Mathf.RoundToInt(vec.y);
+                        vec.z = Mathf.RoundToInt(vec.z);
+                        scaleChangedObjects.Remove(vec);
                     }
                 }
             }
@@ -643,6 +651,13 @@ public class DetectManager : Singleton<DetectManager>
         return null;
     }
 
+    private GameObject GetStretchedObjOrNull(Vector3Int vec)
+    {
+        if (scaleChangedObjects.Keys.Contains(vec))
+            return scaleChangedObjects[vec];
+        return null;
+    }
+
     protected GameObject GetBlockOrNull(GameObject indicatedObj, string value, int addValue, GameObject[,,] mapData = null)
     {
         return GetBlockOrNull(indicatedObj.transform.position, value, addValue, mapData);
@@ -662,15 +677,17 @@ public class DetectManager : Singleton<DetectManager>
             return null;
 
         Vector3Int newPos = GetAdjacentVector3(indicatedPos, value, addValue);
-        if (!isRightPos(newPos)) return null;
+        Vector3 newPosFloat = new Vector3(newPos.x, newPos.y, newPos.z);
+        if (!isRightPos(newPos, true)) return null;
         if (mapData.GetLength(1) <= newPos.y) return null; // 수정중 
         if (mapData[newPos.x, newPos.y, newPos.z] != null)
             return mapData[newPos.x, newPos.y, newPos.z];
         else
         {
-            GameObject stretchedObj = GetStretchedObjOrNull(newPos);
+            GameObject stretchedObj = GetStretchedObjOrNull(newPosFloat);
             if (stretchedObj == null)
             {
+                if (!isRightPos(newPos)) return null;
                 GameObject tile = GetExistTileOrNull(newPos.x, newPos.y, newPos.z);
                 return tile;
             }
@@ -957,9 +974,9 @@ public class DetectManager : Singleton<DetectManager>
         return returnObjects;
     }
 
-    #endregion
+#endregion
 
-    #region Get or Change Array Data
+#region Get or Change Array Data
     // 맵 배열에서 Vector3의 값에 해당하는 게임 오브젝트들을 가져오는 메서드 
     private Dictionary<Vector3, GameObject> GetArrayObjects(params Vector3[] blocks)
     {
@@ -997,11 +1014,11 @@ public class DetectManager : Singleton<DetectManager>
 
         currentObjects[x, y, z] = curObject;
     }
-    #endregion
+#endregion
 
-    #endregion
+#endregion
 
-    #region Test
+#region Test
     [ContextMenu("TestGameObjListDetector")]
     public void TestGameObjs()
     {
@@ -1093,7 +1110,13 @@ public class DetectManager : Singleton<DetectManager>
         Dictionary<Vector3, GameObject> dict2 = GetArrayObjects(levelInfos.block1);
         Debug.Log("block1 : " + dict2[levelInfos.block1]);
     }
-    #endregion
+
+    [ContextMenu("TestAddScaledObject")]
+    public void TestAddScaledObject()
+    {
+        OnObjectScaleChanged(levelInfos.changeScale, levelInfos.target.transform, levelInfos.isStretched);
+    }
+#endregion
 }
 
 // y축으로 둥둥 시에 기존에 y축 length을 넘어버리면, out of range

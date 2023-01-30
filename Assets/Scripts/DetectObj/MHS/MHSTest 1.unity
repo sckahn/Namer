@@ -304,12 +304,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isCreateMode: 0
-  levelName: MHSTest 1
+  levelName: Level01
   target: {fileID: 0}
   ECheckDir: 0
   block1: {x: 7, y: 3, z: 3}
   block2: {x: 8, y: 3, z: 3}
   newValue: {fileID: 0}
+  changeScale: {x: 0, y: 0, z: 0}
+  isStretched: 0
 --- !u!4 &1116749639
 Transform:
   m_ObjectHideFlags: 0

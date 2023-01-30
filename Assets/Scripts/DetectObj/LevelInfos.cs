@@ -15,6 +15,8 @@ public class LevelInfos : MonoBehaviour
     [SerializeField] public Vector3 block1;
     [SerializeField] public Vector3 block2;
     [SerializeField] public GameObject newValue;
+    [SerializeField] public Vector3 changeScale;
+    [SerializeField] public bool isStretched;
 
     public bool IsCreateMode { get { return isCreateMode; } }
     public string LevelName { get { return levelName; } }
