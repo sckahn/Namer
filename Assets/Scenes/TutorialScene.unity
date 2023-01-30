@@ -2508,6 +2508,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8301298310491427171, guid: fc0275dc244294361ac836eceb936154, type: 3}
+      propertyPath: checkAdj.Array.data[2]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301298310491427171, guid: fc0275dc244294361ac836eceb936154, type: 3}
+      propertyPath: checkAdj.Array.data[3]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301298310491427171, guid: fc0275dc244294361ac836eceb936154, type: 3}
+      propertyPath: checkAdj.Array.data[9]
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc0275dc244294361ac836eceb936154, type: 3}
 --- !u!1001 &1356203939
@@ -2749,6 +2761,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5873986731690432293, guid: 9b636ffaa26b04b4687aa08a0abf8e78, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301298310491427171, guid: 9b636ffaa26b04b4687aa08a0abf8e78, type: 3}
+      propertyPath: checkAdj.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301298310491427171, guid: 9b636ffaa26b04b4687aa08a0abf8e78, type: 3}
+      propertyPath: checkAdj.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301298310491427171, guid: 9b636ffaa26b04b4687aa08a0abf8e78, type: 3}
+      propertyPath: checkAdj.Array.data[2]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301298310491427171, guid: 9b636ffaa26b04b4687aa08a0abf8e78, type: 3}
+      propertyPath: checkAdj.Array.data[3]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301298310491427171, guid: 9b636ffaa26b04b4687aa08a0abf8e78, type: 3}
+      propertyPath: checkAdj.Array.data[4]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301298310491427171, guid: 9b636ffaa26b04b4687aa08a0abf8e78, type: 3}
+      propertyPath: checkAdj.Array.data[5]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301298310491427171, guid: 9b636ffaa26b04b4687aa08a0abf8e78, type: 3}
+      propertyPath: checkAdj.Array.data[6]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301298310491427171, guid: 9b636ffaa26b04b4687aa08a0abf8e78, type: 3}
+      propertyPath: checkAdj.Array.data[7]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301298310491427171, guid: 9b636ffaa26b04b4687aa08a0abf8e78, type: 3}
+      propertyPath: checkAdj.Array.data[8]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301298310491427171, guid: 9b636ffaa26b04b4687aa08a0abf8e78, type: 3}
+      propertyPath: checkAdj.Array.data[9]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301298310491427171, guid: 9b636ffaa26b04b4687aa08a0abf8e78, type: 3}
+      propertyPath: checkAdj.Array.data[10]
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3883,6 +3939,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8301298310491427171, guid: 9b636ffaa26b04b4687aa08a0abf8e78, type: 3}
+      propertyPath: checkAdj.Array.data[7]
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b636ffaa26b04b4687aa08a0abf8e78, type: 3}
 --- !u!4 &2023976987 stripped
@@ -4497,6 +4557,18 @@ PrefabInstance:
     - target: {fileID: 2429951843022243908, guid: ccba4931a1b56428c8f58185521eedd6, type: 3}
       propertyPath: objectName
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2429951843022243908, guid: ccba4931a1b56428c8f58185521eedd6, type: 3}
+      propertyPath: checkAdj.Array.data[2]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2429951843022243908, guid: ccba4931a1b56428c8f58185521eedd6, type: 3}
+      propertyPath: checkAdj.Array.data[3]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2429951843022243908, guid: ccba4931a1b56428c8f58185521eedd6, type: 3}
+      propertyPath: checkAdj.Array.data[5]
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccba4931a1b56428c8f58185521eedd6, type: 3}

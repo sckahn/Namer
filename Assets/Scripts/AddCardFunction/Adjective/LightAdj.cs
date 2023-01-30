@@ -31,6 +31,11 @@ public class LightAdj : IAdjective
     public void Execute(InteractiveObject thisObject)
     {
         //Debug.Log("this is Light");
+        GameObject gameObject = new GameObject("Light");
+        gameObject.transform.SetParent(thisObject.transform);
+        gameObject.transform.localPosition = new Vector3(0, 0.5f, 0);
+        gameObject.AddComponent<Light>();
+        gameObject.GetComponent<Light>().intensity = 5;
     }
 
     public void Execute(InteractiveObject thisObject, GameObject player)

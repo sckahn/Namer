@@ -10,9 +10,8 @@ using UnityEngine;
 public class FileCreator : MonoBehaviour
 {
     private string filePath;
-    
-    private Transform groundParent;
-    private Transform objectParent;
+
+    private int gapY = 2;
 
     private int minX;
     private int maxX;
@@ -20,22 +19,19 @@ public class FileCreator : MonoBehaviour
     private int maxY;
     private int minZ;
     private int maxZ;
-
-    private string[,,] tileMapData;
-    private string[,,] objectMapData;
-
+    
     private int totalX;
     private int totalY;
     private int totalZ;
+
+    private string[,,] tileMapData;
+    private string[,,] objectMapData;
     
     private List<ObjectInfo> objectInfos = new List<ObjectInfo>();
     
     public void CreateFile(string filePath, string tileMapFileName, string objectMapFileName, string objectInfoFileName)
     {
         this.filePath = filePath;
-        
-        groundParent = GameObject.Find("Grounds").transform;
-        objectParent = GameObject.Find("Objects").transform;
 
         GetMapSize();
         Indicator();
@@ -47,13 +43,13 @@ public class FileCreator : MonoBehaviour
 
     private void GetMapSize()
     {
-        Transform[] groundChilds = groundParent.GetComponentsInChildren<Transform>();
-        Transform[] objectChilds = objectParent.GetComponentsInChildren<Transform>();
+        Transform[] groundChilds = GameObject.Find("Grounds").transform.GetComponentsInChildren<Transform>();
+        Transform[] objectChilds = GameObject.Find("Objects").transform.GetComponentsInChildren<Transform>();
 
         minX = (int)groundChilds.Min(item => item.position.x);
         maxX = (int)groundChilds.Max(item => item.position.x);
         minY = (int)groundChilds.Min(item => item.position.y);
-        maxY = (int)objectChilds.Max(item => item.position.y);
+        maxY = (int)objectChilds.Max(item => item.position.y) + gapY;
         minZ = (int)groundChilds.Min(item => item.position.z);
         maxZ = (int)groundChilds.Max(item => item.position.z);
         
@@ -111,7 +107,13 @@ public class FileCreator : MonoBehaviour
         {
             if (interObj.GetCheckAdj()[i])
             {
-                adjectives.Add((EAdjective)i);
+                if (CardDataManager.GetInstance.Adjectives.Count == 0)
+                {
+                    CardDataManager.GetInstance.ReadXmlFile();
+                }
+                
+                EAdjective adjective = CardDataManager.GetInstance.Adjectives.FirstOrDefault(item => item.Value.priority == i).Key;
+                adjectives.Add(adjective);
             }
         }
         objectInfo.adjectives = adjectives.ToArray();
@@ -130,7 +132,6 @@ public class FileCreator : MonoBehaviour
         }
 
         sb.AppendLine(totalX + delimiter + totalY + delimiter + totalZ);
-
         for (int y = 0; y < totalY; y++)
         {
             sb.AppendLine("Layer" + y);
