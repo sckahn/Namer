@@ -221,12 +221,12 @@ public class DetectManager : Singleton<DetectManager>
 
             for (int i = 0; i < adjacentObjects.Count; i++)
             {
+                
                 if (adjacentObjects[i] == null
                    || adjacentObjects[i] == gameObject // 자기 자신이거나
                    || adjacentObjects[i].tag != "InteractObj") continue;
 
                 if (adjacentObjects[i].GetComponent<InteractiveObject>().Adjectives.Any() == false) continue;
-
                 var influencerAdj = adjacentObjects[i].GetComponent<InteractiveObject>().Adjectives.Where(x => x != null)
                     .FirstOrDefault(x => x.GetAdjectiveName() == EAdjective.Flame);// 어차피 forloop 
                 var influencedAdj = adjacentObjects[i].GetComponent<InteractiveObject>().Adjectives.Where(x => x != null)
@@ -243,15 +243,14 @@ public class DetectManager : Singleton<DetectManager>
                 {
                     influenceInfluencerPairDict.Add(CompareTwoAdjs(gameObject, adjacentObjects[i]));
                 }
-
-
             }
         }
         foreach (var item in influenceInfluencerPairDict)
         {
-
+        
             foreach (var ite in item)
             {
+                
                 Debug.Log(ite.Key, ite.Key.transform);
                 foreach (var adjs in ite.Value)
                 {
@@ -492,6 +491,7 @@ public class DetectManager : Singleton<DetectManager>
         }
         else
         {
+            Debug.Log("here");
             mapManager.CreateMap(levelInfos.LevelName);
             SetMapData();
             if (player != null) player.SetActive(true);
@@ -1019,11 +1019,31 @@ public class DetectManager : Singleton<DetectManager>
 #endregion
 
 #region Test
+    
+   
+    public void TestSetForTestPurposeList()
+    {
+        ForTestPurpos = new List<GameObject>();
+        Debug.Log(currentObjects.Length);
+        foreach (var item in currentObjects)
+        {
+            if(item == null) continue;
+            string goName = item.name;
+            if (goName.Contains('W'))
+            {
+                ForTestPurpos.Add(item);
+            }
+        }
+            
+    }
+        
     [ContextMenu("TestGameObjListDetector")]
     public void TestGameObjs()
     {
+        TestSetForTestPurposeList();
         InteractionDetector(ForTestPurpos);
     }
+  
     [ContextMenu("TestDetectMoveGameObj")]
     public void TestDetectMoveGameObj()
     {
