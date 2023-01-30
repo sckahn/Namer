@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class MapDataManager : Singleton<MapDataManager>
 {
-    // Test 
+    // Test
+    [SerializeField] private bool isTest = false;
     [SerializeField] private bool shouldCreateFile;
     [SerializeField] private bool shouldCreateMap;
     [SerializeField] private string loadLevel;
@@ -25,10 +26,7 @@ public class MapDataManager : Singleton<MapDataManager>
 
     private void OnEnable()
     {
-        filePath = "Assets/Resources/Data/";
-        tileMapFileName = "tileMapData.csv";
-        objectMapFileName = "objectMapData.csv";
-        objectInfoFileName = "objectInfoData.json";
+        if (!isTest) return;
 
         if ((shouldCreateFile && shouldCreateMap) || (!shouldCreateFile && !shouldCreateMap))
         {
@@ -38,22 +36,44 @@ public class MapDataManager : Singleton<MapDataManager>
         
         if (shouldCreateFile)
         {
-            FileCreator fileCreator = this.AddComponent<FileCreator>();
-            fileCreator.CreateFile(filePath + SceneManager.GetActiveScene().name, tileMapFileName, objectMapFileName, objectInfoFileName);
+            CreateFile();
         }
         
         if (shouldCreateMap)
         {
-            if (loadLevel == null || loadLevel == "")
-            {
-                Debug.Log("Load Level를 입력해주세요");
-                return;
-            }
-            
-            MapCreator mapCreator = this.AddComponent<MapCreator>();
-            
-            initTiles = mapCreator.CreateTileMap(filePath + loadLevel, tileMapFileName);
-            initObjects = mapCreator.CreateObjectMap(filePath + loadLevel, objectMapFileName, objectInfoFileName);
+            CreateMap(loadLevel);
         }
+    }
+
+    private void SettingManager()
+    {
+        filePath = "Assets/Resources/Data/";
+        tileMapFileName = "tileMapData.csv";
+        objectMapFileName = "objectMapData.csv";
+        objectInfoFileName = "objectInfoData.json";
+    }
+
+    public void CreateFile()
+    {
+        SettingManager();
+
+        FileCreator fileCreator = this.AddComponent<FileCreator>();
+        fileCreator.CreateFile(filePath + SceneManager.GetActiveScene().name, tileMapFileName, objectMapFileName, objectInfoFileName);
+    }
+
+    public void CreateMap(string levelName)
+    {
+        SettingManager();
+
+        if (levelName == null || levelName == "")
+        {
+            Debug.Log("Load Level를 입력해주세요");
+            return;
+        }
+
+        MapCreator mapCreator = this.AddComponent<MapCreator>();
+
+        initTiles = mapCreator.CreateTileMap(filePath + levelName, tileMapFileName);
+        initObjects = mapCreator.CreateObjectMap(filePath + levelName, objectMapFileName, objectInfoFileName);
     }
 }
