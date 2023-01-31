@@ -20,15 +20,16 @@ public class DetectSurroundingHS : Singleton<DetectSurroundingHS>
     {
         tilemap = TileMapManager.GetInstance;
         tilemap.Init();
-    }
-
-    void Start()
-    {
         Indicator.GetInstance.CreateNewLevel();
         mapData = TileMapManager.GetInstance.GetTileMap();
         maxX = TileMapManager.GetInstance.maxX;
         maxY = TileMapManager.GetInstance.maxY;
         maxZ = TileMapManager.GetInstance.maxZ;
+    }
+
+    void OnEnable()
+    {
+
     }
     public GameObject[,,] GetTileMap()
     {
