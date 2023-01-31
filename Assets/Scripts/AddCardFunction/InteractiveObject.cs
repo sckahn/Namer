@@ -226,7 +226,10 @@ public class InteractiveObject : MonoBehaviour
             Debug.Log("Card의 Name 정보를 확인해주세요!");
             return;
         }
-        
+        //수정한 부분
+        DetectManager.GetInstance.StartDetector(new List<GameObject>() { this.gameObject });
+        //수정한 부분 
+
         EAdjective[] addAdjectives = cardData.Names[(EName)addedName].adjectives;
         if (addAdjectives != null)
         {
@@ -238,6 +241,10 @@ public class InteractiveObject : MonoBehaviour
 
         objectName = (EName)addedName;
         addNameText = cardData.Names[(EName)addedName].uiText;
+
+        //수정한 부분
+        DetectManager.GetInstance.StartDetector(new List<GameObject>() { this.gameObject });
+        //수정한 부분 
     }
 
     public void AddAdjective(EAdjective[] addAdjectives)
@@ -247,13 +254,17 @@ public class InteractiveObject : MonoBehaviour
             Debug.Log("Card의 Adjective 정보를 채워주세요!");
             return;
         }
-        
+
+        //수정한 부분
+        DetectManager.GetInstance.StartDetector(new List<GameObject>() { this.gameObject });
+        //수정한 부분 
+
         foreach (var addAdjective in addAdjectives)
         {
             SetAdjective(addAdjective);
         }
     }
-    
+
     private void SetAdjective(EAdjective addAdjective, bool isAdjective = true)
     {
         SAdjectiveInfo adjectiveInfo = cardData.Adjectives[addAdjective];

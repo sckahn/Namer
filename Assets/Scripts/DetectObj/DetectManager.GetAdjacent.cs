@@ -531,9 +531,9 @@ public partial class DetectManager : Singleton<DetectManager>
 
         if (currentObjects[x, y, z] != curObject)
         {
-            Debug.LogError("배열을 제대로 갱신 하세요!");
-            if (curObject != null)
-                Debug.LogError("Error Object : " + curObject.name, curObject);
+            //Debug.LogError("배열을 제대로 갱신 하세요!");
+            //if (curObject != null)
+                //Debug.LogError("Error Object : " + curObject.name, curObject);
             return false;
         }
         else

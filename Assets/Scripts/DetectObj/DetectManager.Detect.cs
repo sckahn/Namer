@@ -105,7 +105,7 @@ public partial class DetectManager : Singleton<DetectManager>
 
         if (changedObjs.Count == 0)
         {
-            Debug.LogWarning("There Are No Changed In the Scene!!!");
+            //Debug.LogWarning("There Are No Changed In the Scene!!!");
             return null;
         }
 
@@ -182,10 +182,10 @@ public partial class DetectManager : Singleton<DetectManager>
         {
             foreach (var ite in item)
             {
-                Debug.Log(ite.Key, ite.Key.transform);
+                //Debug.Log(ite.Key, ite.Key.transform);
                 foreach (var adjs in ite.Value)
                 {
-                    Debug.Log(adjs.GetAdjectiveName());
+                    //Debug.Log(adjs.GetAdjectiveName());
                 }
             }
         }
@@ -268,10 +268,10 @@ public partial class DetectManager : Singleton<DetectManager>
             foreach (var ite in item)
             {
 
-                Debug.Log(ite.Key, ite.Key.transform);
+                //Debug.Log(ite.Key, ite.Key.transform);
                 foreach (var adjs in ite.Value)
                 {
-                    Debug.Log(adjs.GetAdjectiveName());
+                    //Debug.Log(adjs.GetAdjectiveName());
                 }
             }
         }
@@ -395,10 +395,10 @@ public partial class DetectManager : Singleton<DetectManager>
         {
             foreach (var ite in item)
             {
-                Debug.Log(ite.Key, ite.Key.transform);
+                //Debug.Log(ite.Key, ite.Key.transform);
                 foreach (var adjs in ite.Value)
                 {
-                    Debug.Log(adjs.GetAdjectiveName());
+                    //Debug.Log(adjs.GetAdjectiveName());
                 }
             }
         }

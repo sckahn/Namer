@@ -72,8 +72,74 @@ public partial class DetectManager : Singleton<DetectManager>
         tileMaxZ = currentTiles.GetLength(2) - 1;
     }
 
-#region Test
+    #region Test
+    // 전체 오브젝트 순회 검사 후 인터렉션 순차적으로 실행
+    [ContextMenu("StartDetector")]
+    public void StartDetector()
+    {
+        List<Dictionary<GameObject, List<IAdjective>>> interactions = InteractionDetector();
+        if (interactions == null || interactions.Count == 0) return;
+        for (int i = 0; i < interactions.Count; i++)
+        {
+            int idx = 0;
+            GameObject interactor = null;
+            foreach (GameObject go in interactions[i].Keys)
+            {
+                if (idx == 0)
+                {
+                    interactor = go;
+                    idx++;
+                    continue;
+                }
 
+                foreach (IAdjective adj in interactions[i][go])
+                {
+                    if (interactor == null)
+                    {
+                        Debug.Log("ErrorExcute");
+                        continue;
+                    }
+                    Debug.Log("adj: " + adj.GetAdjectiveName());
+                    Debug.Log("interactor: " + interactor.name);
+                    Debug.Log("go: " + go.name);
+                    adj.Execute(go.GetComponent<InteractiveObject>(), interactor.GetComponent<InteractiveObject>());
+                }
+            }
+        }
+    }
+
+    public void StartDetector(List<GameObject> changedObjects)
+    {
+        List<Dictionary<GameObject, List<IAdjective>>> interactions = InteractionDetector(changedObjects);
+        if (interactions == null || interactions.Count == 0) return;
+        for (int i = 0; i < interactions.Count; i++)
+        {
+            int idx = 0;
+            GameObject interactor = null;
+            foreach (GameObject go in interactions[i].Keys)
+            {
+                if (idx == 0)
+                {
+                    interactor = go;
+                    idx++;
+                    continue;
+                }
+
+                foreach (IAdjective adj in interactions[i][go])
+                {
+                    if (interactor == null)
+                    {
+                        Debug.Log("ErrorExcute");
+                        continue;
+                    }
+                    Debug.Log("adj: " + adj.GetAdjectiveName());
+                    Debug.Log("interactor: " + interactor.name);
+                    Debug.Log("go: " + go.name);
+                    adj.Execute(go.GetComponent<InteractiveObject>(), interactor.GetComponent<InteractiveObject>());
+                }
+            }
+        }
+    }
 
     public void TestSetForTestPurposeList()
     {

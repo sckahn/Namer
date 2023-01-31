@@ -41,9 +41,9 @@ public class FlammableAdj : IAdjective
 
     public void Execute(InteractiveObject thisObject)
     {
-        ParticleSetting(thisObject);
-        ObjectOnFire(thisObject);
-        Debug.Log("execute1");
+        //ParticleSetting(thisObject);
+        //ObjectOnFire(thisObject);
+        //Debug.Log("execute1");
     }
 
     public void Execute(InteractiveObject thisObject, GameObject player)
@@ -55,11 +55,14 @@ public class FlammableAdj : IAdjective
     public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
         Debug.Log("Flammable : this Object -> other Object");
-        if (otherObject.Adjectives[(int)EAdjective.Flame].GetAdjectiveName() == EAdjective.Flame)
-        {
-            isContact = true;
-            ObjectOnFire(thisObject.gameObject);
-        }
+        //if (otherObject.Adjectives[(int)EAdjective.Flame].GetAdjectiveName() == EAdjective.Flame)
+        //{
+        //    isContact = true;
+        //    ObjectOnFire(thisObject.gameObject);
+        //}
+        ParticleSetting(thisObject);
+        isContact = true;
+        ObjectOnFire(thisObject.gameObject);
     }
 
     [ContextMenu("Flammable Testing")]
