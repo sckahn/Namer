@@ -34,9 +34,47 @@ public partial class DetectManager : Singleton<DetectManager>
     private Dir ECheckDir;
     public List<GameObject> ForTestPurpos;
 
+    // LevelInfos 컴포넌트에서 씬이 열리고 바로 해당 함수를 호출
+    // 호출시에 바로 모드를 파악하고, 맵을 로드하거나 (에디터모드인 경우는) 맵 파일을 저장함 
+    public void Init(LevelInfos infos)
+    {
+        GameObject player = GameObject.Find("Player");
+        if (player != null) player.SetActive(false);
+        this.levelInfos = infos;
+        mapManager = MapDataManager.GetInstance;
+        if (levelInfos.IsCreateMode)
+        {
+            mapManager.CreateFile();
+        }
+        else
+        {
+            mapManager.CreateMap(levelInfos.LevelName);
+            SetMapData();
+            if (player != null) player.SetActive(true);
+        }
+    }
+
+    // 맵을 로드할 때에 한 번 배열을 가져오는 메서드로 따로 사용하면 안 됨
+    // 기존 맵 배열을 사용하는 것이 아니라 인게임용 배열을 가지고 검출, 수정 등을 할 예정 
+    private void SetMapData()
+    {
+        currentObjects = (GameObject[,,])mapManager.InitObjects.Clone();
+        //이전배열 == currentOBJECTS 배열을 만드는 것을 추가 했습니다.
+        UpdatePrevBlockObjs();
+        currentTiles = (GameObject[,,])mapManager.InitTiles.Clone();
+
+        maxX = currentObjects.GetLength(0) - 1;
+        maxY = currentObjects.GetLength(1) + 2;
+        maxZ = currentObjects.GetLength(2) - 1;
+
+        tileMaxX = currentTiles.GetLength(0) - 1;
+        tileMaxY = currentTiles.GetLength(1) - 1;
+        tileMaxZ = currentTiles.GetLength(2) - 1;
+    }
+
 #region Test
-    
-   
+
+
     public void TestSetForTestPurposeList()
     {
         ForTestPurpos = new List<GameObject>();
@@ -150,8 +188,18 @@ public partial class DetectManager : Singleton<DetectManager>
     [ContextMenu("TestAddScaledObject")]
     public void TestAddScaledObject()
     {
-        OnObjectScaleChanged(levelInfos.changeScale, levelInfos.target.transform, levelInfos.isStretched);
+        OnObjectScaleChanged(levelInfos.changeScale, levelInfos.target.transform);
     }
+
+    [ContextMenu("PrintScaledObjects")]
+    public void PrintScaledObjects()
+    {
+        foreach(Vector3 vec in scaleChangedObjects.Keys)
+        {
+            Debug.Log(vec.x + "," + vec.y + "," + vec.z + " : " + scaleChangedObjects[vec], scaleChangedObjects[vec]);
+        }
+    }
+
 #endregion
 }
 

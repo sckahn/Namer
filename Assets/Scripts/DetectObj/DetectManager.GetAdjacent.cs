@@ -6,44 +6,6 @@ using UnityEngine;
 public partial class DetectManager : Singleton<DetectManager>
 {
 #region Check Adjacent region By.HS
-    // LevelInfos 컴포넌트에서 씬이 열리고 바로 해당 함수를 호출
-    // 호출시에 바로 모드를 파악하고, 맵을 로드하거나 (에디터모드인 경우는) 맵 파일을 저장함 
-    public void Init(LevelInfos infos)
-    {
-        GameObject player = GameObject.Find("Player");
-        if (player != null) player.SetActive(false);
-        this.levelInfos = infos;
-        mapManager = MapDataManager.GetInstance;
-        if (levelInfos.IsCreateMode)
-        {
-            mapManager.CreateFile();
-        }
-        else
-        {
-            Debug.Log("here");
-            mapManager.CreateMap(levelInfos.LevelName);
-            SetMapData();
-            if (player != null) player.SetActive(true);
-        }
-    }
-
-    // 맵을 로드할 때에 한 번 배열을 가져오는 메서드로 따로 사용하면 안 됨
-    // 기존 맵 배열을 사용하는 것이 아니라 인게임용 배열을 가지고 검출, 수정 등을 할 예정 
-    private void SetMapData()
-    {
-        currentObjects = (GameObject[,,])mapManager.InitObjects.Clone();
-        //이전배열 == currentOBJECTS 배열을 만드는 것을 추가 했습니다.
-        UpdatePrevBlockObjs();
-        currentTiles = (GameObject[,,])mapManager.InitTiles.Clone();
-
-        maxX = currentObjects.GetLength(0) - 1;
-        maxY = currentObjects.GetLength(1) + 2;
-        maxZ = currentObjects.GetLength(2) - 1;
-
-        tileMaxX = currentTiles.GetLength(0) - 1;
-        tileMaxY = currentTiles.GetLength(1) - 1;
-        tileMaxZ = currentTiles.GetLength(2) - 1;
-    }
 
     // 오브젝트 데이터 배열 전체를 가져오는 메서드 
     public GameObject[,,] GetObjectsData()
@@ -61,46 +23,35 @@ public partial class DetectManager : Singleton<DetectManager>
     #region On Any Object's Scale Changed
     // 길어질 수 있는지 체크 후에 실제로 변화시키기 전에 꼭 먼저 이 메서드를 호출하세요
     // 길어진 것이라면, isStretched = true / 줄어든 것이라면, isStretched = false
-    public void OnObjectScaleChanged(Vector3 changedScale, Transform targetObj, bool isStreched = true)
+    public void OnObjectScaleChanged(Vector3 changedScale, Transform targetObj)
     {
-        if (isStreched)
+        RemoveScaledObject(targetObj.gameObject);
+
+        for (int x = 0; x < changedScale.x; x++)
         {
-            for (int x = 0; x < changedScale.x; x++)
+            for (int y = 0; y < changedScale.y; y++)
             {
-                for (int y = 0; y < changedScale.y; y++)
+                for (int z = 0; z < changedScale.z; z++)
                 {
-                    for (int z = 0; z < changedScale.z; z++)
-                    {
-                        Vector3 stretchedPos = new Vector3(x, y, z);
-                        if (stretchedPos == Vector3.zero) continue;
-                        Vector3 vec = (targetObj.position + stretchedPos);
-                        vec.x = Mathf.RoundToInt(vec.x);
-                        vec.y = Mathf.RoundToInt(vec.y);
-                        vec.z = Mathf.RoundToInt(vec.z);
-                        scaleChangedObjects[vec] = targetObj.gameObject;
-                    }
+                    Vector3 stretchedPos = new Vector3(x, y, z);
+                    if (stretchedPos == Vector3.zero) continue;
+                    Vector3 vec = (targetObj.position + stretchedPos);
+                    vec.x = Mathf.RoundToInt(vec.x);
+                    vec.y = Mathf.RoundToInt(vec.y);
+                    vec.z = Mathf.RoundToInt(vec.z);
+                    scaleChangedObjects[vec] = targetObj.gameObject;
                 }
             }
         }
-        else
+    }
+
+    public void RemoveScaledObject(GameObject targetObj)
+    {
+        List<Vector3> keys = scaleChangedObjects.Where(t => t.Value == targetObj).Select(t => t.Key).ToList();
+        if (keys == null || keys.Count == 0) return;
+        foreach (Vector3 key in keys)
         {
-            Vector3 LostScale = targetObj.lossyScale - changedScale;
-            for (int x = 0; x <= LostScale.x; x++)
-            {
-                for (int y = 0; y <= LostScale.y; y++)
-                {
-                    for (int z = 0; z <= LostScale.z; z++)
-                    {
-                        Vector3 newPos = new Vector3(x, y, z);
-                        if (newPos == Vector3.zero) continue;
-                        Vector3 vec = (targetObj.position + changedScale + newPos);
-                        vec.x = Mathf.RoundToInt(vec.x);
-                        vec.y = Mathf.RoundToInt(vec.y);
-                        vec.z = Mathf.RoundToInt(vec.z);
-                        scaleChangedObjects.Remove(vec);
-                    }
-                }
-            }
+            scaleChangedObjects.Remove(key);
         }
     }
 
@@ -245,6 +196,10 @@ public partial class DetectManager : Singleton<DetectManager>
     // 특정 오브젝트의 한 방향을 검출하는 로직 --> GameObject
     public GameObject GetAdjacentObjectWithDir(GameObject indicatedObj, Dir dir, int length = 1)
     {
+        // 예외처리 - 배열 갱신 실패 
+        if (!CheckValueInMap(indicatedObj))
+            return null;
+
         GameObject returnObj = null;
         switch (dir)
         {
@@ -274,6 +229,10 @@ public partial class DetectManager : Singleton<DetectManager>
     // 특정 오브젝트의 한 방향을 검출하는 로직 --> GameObject
     public GameObject GetAdjacentObjectWithDir(Transform indicatedObj, Dir dir, int length = 1)
     {
+        // 예외처리 - 배열 갱신 실패 
+        if (!CheckValueInMap(indicatedObj.gameObject))
+            return null;
+
         GameObject returnObj = null;
         switch (dir)
         {
@@ -301,9 +260,12 @@ public partial class DetectManager : Singleton<DetectManager>
     }
 
     // 스케일이 변경된 특정 오브젝트의 한 방향을 검출하는 로직 --> GameObject
-    // 생각해보니 여러개를 가져올 수도 있는데... 일단 그건 나중에 수정할 예정 
     public GameObject GetAdjacentObjectWithDir(GameObject indicatedObj, Dir dir, Vector3 objScale)
     {
+        // 예외처리 - 배열 갱신 실패 
+        if (!CheckValueInMap(indicatedObj))
+            return null;
+
         int length = 1;
         if ((int)dir % 2 == 1)
         {
@@ -526,7 +488,7 @@ public partial class DetectManager : Singleton<DetectManager>
         Dictionary<Vector3, GameObject> dict = GetArrayObjects(block1, block2);
         GameObject go1 = dict[block1];
         GameObject go2 = dict[block2];
-
+        
         ChangeValueInMap(block1, go2);
         ChangeValueInMap(block2, go1);
 
@@ -536,14 +498,48 @@ public partial class DetectManager : Singleton<DetectManager>
         //Debug.Log(go2 + " -> " + newDict[block2]);
     }
 
-    // 맵 배열 데이터에서 한 개의 값을 새로운 값으로 변경하는 메서드 
-    public void ChangeValueInMap(Vector3 block, GameObject curObject = null)
+    // 맵 배열 데이터에서 한 개의 값을 새로운 값으로 변경하는 메서드
+    // 스케일이 Vector3.one 이 아닌 오브젝트를 이동, 제거하는 경우 예외 처리 추가 
+    public void ChangeValueInMap(Vector3 block, GameObject changedObject = null)
     {
         int x = Mathf.RoundToInt(block.x);
         int y = Mathf.RoundToInt(block.y);
         int z = Mathf.RoundToInt(block.z);
 
-        currentObjects[x, y, z] = curObject;
+        GameObject preObj = currentObjects[x, y, z];
+        if (preObj != null && scaleChangedObjects.Values.Contains(preObj))
+        {
+            RemoveScaledObject(preObj);
+        }
+
+        currentObjects[x, y, z] = changedObject;
+
+        if (changedObject == null) return;
+        if (scaleChangedObjects.Values.Contains(changedObject))
+        {
+            OnObjectScaleChanged(changedObject.transform.lossyScale, changedObject.transform);
+        }
+    }
+
+    // 예외 처리용 함수 
+    public bool CheckValueInMap(GameObject curObject)
+    {
+        Vector3 block = curObject.transform.position;
+        int x = Mathf.RoundToInt(block.x);
+        int y = Mathf.RoundToInt(block.y);
+        int z = Mathf.RoundToInt(block.z);
+
+        if (currentObjects[x, y, z] != curObject)
+        {
+            Debug.LogError("배열을 제대로 갱신 하세요!");
+            if (curObject != null)
+                Debug.LogError("Error Object : " + curObject.name, curObject);
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
     #endregion
 
