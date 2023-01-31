@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 [Serializable]
-public class ObjectInfo
+public struct ObjectInfo
 {
     public string prefabName;
     public int objectID;
