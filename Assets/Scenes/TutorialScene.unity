@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: cc421da483ed06c49933077a621bff25, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44253123, g: 0.49162042, b: 0.5714547, a: 1}
+  m_IndirectSpecularColor: {r: 0.3977087, g: 0.35966814, b: 0.6947754, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1063,14 +1063,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
-  m_LocalRotation: {x: 0.52004725, y: -0.083408825, z: 0.29881305, w: 0.7958043}
+  m_LocalRotation: {x: 0.49438673, y: -0.073830515, z: 0.3013225, w: 0.8119948}
   m_LocalPosition: {x: 0.25, y: 5, z: 3.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 61.349, y: 21.797, z: 54.192}
+  m_LocalEulerAnglesHint: {x: 57.927, y: 19.59, z: 51.635}
 --- !u!4 &720209464 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3381410466878145109, guid: af35ababfd8c54ec0b2d3966acc3c864, type: 3}
@@ -4579,26 +4579,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7932567353644962545, guid: 647a0498071d24128925850f6a25e445, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7932567353644962557, guid: 647a0498071d24128925850f6a25e445, type: 3}
       propertyPath: startCards.Array.data[0]
       value: 
-      objectReference: {fileID: 7743834699422014335, guid: caf783e894de54c4f9c0e6f240f54e0b, type: 3}
-    - target: {fileID: 7932567353644962557, guid: 647a0498071d24128925850f6a25e445, type: 3}
-      propertyPath: startCards.Array.data[1]
-      value: 
-      objectReference: {fileID: 7743834699422014335, guid: e2d0092794f904fc6a7587177cbfaf37, type: 3}
+      objectReference: {fileID: 7743834699422014335, guid: 7a0a85784976c44dfb37b8808a61395b, type: 3}
     - target: {fileID: 7932567353644962557, guid: 647a0498071d24128925850f6a25e445, type: 3}
       propertyPath: startCards.Array.data[2]
       value: 
-      objectReference: {fileID: 7743834699422014335, guid: 4f1315d6e158a47c093cb7ffd42001fb, type: 3}
+      objectReference: {fileID: 7743834699422014335, guid: f44614f6b7c8a4cfbabb96bdccf4a3d3, type: 3}
     - target: {fileID: 7932567353644962557, guid: 647a0498071d24128925850f6a25e445, type: 3}
       propertyPath: startCards.Array.data[3]
       value: 
-      objectReference: {fileID: 7743834699422014335, guid: 5198e63598b6743d89be101b049362b7, type: 3}
+      objectReference: {fileID: 7743834699422014335, guid: 4f1315d6e158a47c093cb7ffd42001fb, type: 3}
     - target: {fileID: 7932567353644962557, guid: 647a0498071d24128925850f6a25e445, type: 3}
       propertyPath: startCards.Array.data[4]
       value: 
-      objectReference: {fileID: 7743834699422014335, guid: dad3619588d36428d9b1a8854aa44053, type: 3}
+      objectReference: {fileID: 7743834699422014335, guid: 684dd573bbe2642189b51df3bbd939c0, type: 3}
     - target: {fileID: 7932567354593375873, guid: 647a0498071d24128925850f6a25e445, type: 3}
       propertyPath: m_RootOrder
       value: 0

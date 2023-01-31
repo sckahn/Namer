@@ -190,6 +190,18 @@ PrefabInstance:
       propertyPath: m_Text
       value: "\uC2B9\uB9AC"
       objectReference: {fileID: 0}
+    - target: {fileID: 5389832308665577680, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5512085962414732456, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5713884528943876523, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5886614794521977911, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -236,6 +248,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6615870101938414092, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7444633240153519476, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
+      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8167100953595549833, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}

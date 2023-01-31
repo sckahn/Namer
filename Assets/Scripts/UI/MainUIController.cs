@@ -9,9 +9,12 @@ public class MainUIController : MonoBehaviour
     [SerializeField] GameObject pressAnyKeyTxt;
     [SerializeField] GameObject title;
     [SerializeField] GameObject cardHolder;
+    [SerializeField] GameObject informationTxt;
+    [SerializeField] GameObject levelInformationTxt;
 
     [SerializeField] float titleMovingTime = 1f;
     [SerializeField] float cameraMovingTime = 1f;
+    [SerializeField] float levelSelectMovingTime = 1.5f;
     bool isPressAnyKey;
     float currentTime;
     [SerializeField] float speed = 2f;
@@ -25,8 +28,25 @@ public class MainUIController : MonoBehaviour
     void Update()
     {
         PressAnyKey();
+        informationTxtOnOff();
+
     }
 
+    //안내 문구를 상황에 따라 키고 끕니다 
+    void informationTxtOnOff()
+    {
+        if (CardManager.GetInstance.isPickCard && informationTxt.activeSelf == false)
+        {
+            informationTxt.SetActive(true);
+
+        }
+        else if (!CardManager.GetInstance.isPickCard && informationTxt.activeSelf == true)
+        {
+            informationTxt.SetActive(false);
+        }
+    }
+
+    //타이틀 화면에서 아무키나 입력하
     void PressAnyKey()
     {
         if (!isPressAnyKey && Input.anyKeyDown)
@@ -42,7 +62,7 @@ public class MainUIController : MonoBehaviour
 
     void TitleMove(float titleMovingTime)
     {
-        title.transform.DOMove(new Vector3(960f, 930f, 0f), titleMovingTime);
+        title.transform.DOMove(new Vector3(Screen.width/2f, Screen.height/1.161f, 0f), titleMovingTime);
         title.transform.DOScale(new Vector3(0.5f, 0.5f, 1f), titleMovingTime);
     }
 
@@ -68,5 +88,13 @@ public class MainUIController : MonoBehaviour
                 pressAnyKeyTxt.transform.localPosition.z);
             yield return null;
         }
+    }
+
+    public void LevelSelectScene()
+    {
+        Camera.main.transform.DOMove(new Vector3(10f, 7f, -3.17f), levelSelectMovingTime);
+        Camera.main.transform.DORotate(new Vector3(60f, 90f, 0f), levelSelectMovingTime);
+        title.transform.DOMove(new Vector3(Screen.width / 6.09f, Screen.height / 1.161f, 0f), levelSelectMovingTime);
+
     }
 }

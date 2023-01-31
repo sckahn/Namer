@@ -22,7 +22,6 @@ class PopUpNameController : MonoBehaviour
 
     private void setUpPopUpName()
     {
-        nameText.text = interactiveObject.GetCurrentName();
         gameObject.transform.rotation = cardHolder.rotation;
     }
 }
