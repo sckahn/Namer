@@ -59,12 +59,13 @@ public class LongAdj : MonoBehaviour, IAdjective
         if (flag)
         {
             SetGrowScale(targetObj.gameObject);
-            targetObj.StartCoroutine(ScaleObj(targetObj.gameObject));
+            DetectManager.GetInstance.OnObjectScaleChanged(targetScale,targetObj.transform);
+            InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(ScaleObj(targetObj.gameObject));
             // targetObj.StartCoroutine(WrapperCoroutine(flag,targetObj));
         }
         else
         {
-            targetObj.StartCoroutine(Twinkle(targetObj.gameObject));
+            InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(Twinkle(targetObj.gameObject));
             // targetObj.StartCoroutine(WrapperCoroutine(flag,targetObj));
         }
     }
@@ -77,16 +78,20 @@ public class LongAdj : MonoBehaviour, IAdjective
 
     private bool CheckGrowable(GameObject targetObj)
     {
-        var test = GameManager.GetInstance.GetCheckSurrounding.GetTransformsAtDirOrNull(targetObj, Dir.up);
-        if (test != null)
+        //1. check if it is growable
+        //2. after grow update object arr 
+        
+        // var test = GameManager.GetInstance.GetCheckSurrounding.GetTransformsAtDirOrNull(targetObj, Dir.up);
+        var upperNeighbor = DetectManager.GetInstance.GetAdjacentObjectWithDir(targetObj, Dir.up);
+
+        if (upperNeighbor != null)
         {
-            foreach (var item in test)
+            if (upperNeighbor.tag == "Player")
+                return true;
+            else
             {
-                if (item.gameObject.tag == "Player")
-                    return true;
+                return false;
             }
-            if (test.Count != 0) return false;
-            
         }
         return true;
     }
