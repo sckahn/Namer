@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Hardware;
 using UnityEngine;
 
 public class MovableAdj : IAdjective
@@ -43,50 +44,87 @@ public class MovableAdj : IAdjective
         if (isRoll) return;
 
         CheckSurrounding check = GameManager.GetInstance.GetCheckSurrounding;
-        
-        Vector3 direction = (thisObject.transform.position - player.transform.position);
+        DetectManager detectManager = DetectManager.GetInstance;
+        var neihbors =detectManager.GetAdjacentsDictionary(thisObject.gameObject,thisObject.transform.lossyScale);
+
+        var prevLocatio = thisObject.gameObject.transform.position;
+            Vector3 direction = (thisObject.transform.position - player.transform.position);
 
         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z) && direction.x > 0)
         {
-            if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.right) !=null ) return;
-
+            // if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.right) !=null ) return;
+            if (neihbors.ContainsKey(Dir.right)) return;
             target = thisObject.transform.position + Vector3.right;
-
+            detectManager.SwapBlockInMap(prevLocatio, target);
             thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
-
+        
             return;
         }
         else if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z) && direction.x < 0)
         {
-            if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.left) != null) return;
-
+            // if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.left) != null) return;
+            if (neihbors.ContainsKey(Dir.left)) return;
+        
             target = thisObject.transform.position + Vector3.left;
-
+            detectManager.SwapBlockInMap(prevLocatio, target);
             thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
-
+        
             return;
         }
         else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.z) && direction.z > 0)
         {
-            if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.forward) != null) return;
-
+            // if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.forward) != null) return;
+            if (neihbors.ContainsKey(Dir.forward)) return;
             target = thisObject.transform.position + Vector3.forward;
-
+            detectManager.SwapBlockInMap(prevLocatio, target);
             thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
-
+        
             return;
         }
         else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.z) && direction.z < 0)
         {
-            if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.back) != null) return;
-                
+            // if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.back) != null) return;
+            if (neihbors.ContainsKey(Dir.back))return;
             target = thisObject.transform.position + Vector3.back;
-
+            detectManager.SwapBlockInMap(prevLocatio, target);
+        
             thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
-
             return;
         }
+        
+        
+        
+        
+
     }
+
+    //현제 물체 위치 찍는 메소드 test용
+    void CheckArrChange(DetectManager detectManager, GameObject go)
+    {
+        var foreTestPurpos = detectManager.GetObjectsData();
+        for (int i = 0; i < foreTestPurpos.GetLength(0); i++)
+        {
+            for (int j = 0; j < foreTestPurpos.GetLength(1); j++)
+            {
+                for (int k = 0; k < foreTestPurpos.GetLength(2); k++)
+                {
+                    if (foreTestPurpos[i, j, k] == null) continue;
+                    if (go == foreTestPurpos[i, j, k])
+                    {
+                        Debug.Log("----------------------------------");
+                
+                        Debug.Log($"{i} {j} {k}");
+                        Debug.Log(go, go.transform);       
+                        Debug.Log(foreTestPurpos[i,j,k], foreTestPurpos[i,j,k].transform);
+                    }
+                }
+            }
+            
+        }
+        
+        
+    }
+    
     
     public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
