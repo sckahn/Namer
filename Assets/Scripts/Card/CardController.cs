@@ -6,7 +6,11 @@ using static UnityEngine.GraphicsBuffer;
 
 public class CardController : MonoBehaviour
 {
-    [SerializeField] private CardData cardData;
+    // [SerializeField] private CardData cardData;
+    [SerializeField] private ECardType cardType;
+    [SerializeField] private EName name;
+    [SerializeField] private EAdjective[] adjectives;
+    
     public PRS originPRS;
     GameObject cardHolder;
     [SerializeField] GameObject frontCover;
@@ -91,13 +95,13 @@ public class CardController : MonoBehaviour
     {
         if (target)
         {
-            if (cardData.cardType == ECardType.Name)
+            if (cardType == ECardType.Name)
             {
-               target.GetComponent<InteractiveObject>().AddName(cardData.addedName);
+               target.GetComponent<InteractiveObject>().AddName(name);
             }
-            else if (cardData.cardType == ECardType.Adjective)
+            else if (cardType == ECardType.Adjective)
             {
-               target.GetComponent<InteractiveObject>().AddAdjective(cardData.addedAdjectives);
+               target.GetComponent<InteractiveObject>().AddAdjective(adjectives);
             }
         }
     }

@@ -130,7 +130,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e8cc538b00e4479865b8e759be81d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardData: {fileID: 11400000, guid: 1d7fc43de911b4d89805c9597e9c7872, type: 2}
+  cardType: 1
+  name: 0
+  adjectives: 05000000
   frontCover: {fileID: 8780169716584442077}
   bc: {fileID: 3201817411243718055}
   highlight: {fileID: 7814245775451451617}

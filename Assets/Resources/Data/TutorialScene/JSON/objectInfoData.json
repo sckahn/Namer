@@ -1,0 +1,80 @@
+[
+  {
+    "prefabName": "RockObj",
+    "objectID": 0,
+    "nameType": 3,
+    "adjectives": []
+  },
+  {
+    "prefabName": "RockObj",
+    "objectID": 1,
+    "nameType": 3,
+    "adjectives": []
+  },
+  {
+    "prefabName": "RockObj",
+    "objectID": 2,
+    "nameType": 3,
+    "adjectives": []
+  },
+  {
+    "prefabName": "TreeObj",
+    "objectID": 3,
+    "nameType": 5,
+    "adjectives": []
+  },
+  {
+    "prefabName": "CardObj",
+    "objectID": 4,
+    "nameType": 10,
+    "adjectives": []
+  },
+  {
+    "prefabName": "WatermelonObj",
+    "objectID": 5,
+    "nameType": 6,
+    "adjectives": []
+  },
+  {
+    "prefabName": "SunObj",
+    "objectID": 6,
+    "nameType": 7,
+    "adjectives": []
+  },
+  {
+    "prefabName": "BalloonObj",
+    "objectID": 7,
+    "nameType": 8,
+    "adjectives": []
+  },
+  {
+    "prefabName": "NameStoneObj",
+    "objectID": 8,
+    "nameType": 1,
+    "adjectives": []
+  },
+  {
+    "prefabName": "BonfireObj",
+    "objectID": 9,
+    "nameType": 4,
+    "adjectives": []
+  },
+  {
+    "prefabName": "CrystalObj",
+    "objectID": 10,
+    "nameType": 9,
+    "adjectives": []
+  },
+  {
+    "prefabName": "BallObj",
+    "objectID": 11,
+    "nameType": 2,
+    "adjectives": []
+  },
+  {
+    "prefabName": "WaterObj",
+    "objectID": 12,
+    "nameType": 6,
+    "adjectives": []
+  }
+]

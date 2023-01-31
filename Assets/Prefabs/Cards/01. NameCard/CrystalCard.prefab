@@ -47,7 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e8cc538b00e4479865b8e759be81d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardData: {fileID: 11400000, guid: 39daa8b5f62194758be7f6ad092f4f26, type: 2}
+  cardType: 0
+  name: 9
+  adjectives: 
   frontCover: {fileID: 4230330137778533953}
   bc: {fileID: 453746082420174526}
   highlight: {fileID: 3395023830973034109}

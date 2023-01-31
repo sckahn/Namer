@@ -1,0 +1,74 @@
+[
+  {
+    "prefabName": "WatermelonObj",
+    "objectID": 0,
+    "nameType": 0,
+    "adjectives": []
+  },
+  {
+    "prefabName": "CardObj",
+    "objectID": 1,
+    "nameType": 10,
+    "adjectives": []
+  },
+  {
+    "prefabName": "WatermelonObj",
+    "objectID": 2,
+    "nameType": 0,
+    "adjectives": []
+  },
+  {
+    "prefabName": "WatermelonObj",
+    "objectID": 3,
+    "nameType": 0,
+    "adjectives": []
+  },
+  {
+    "prefabName": "WatermelonObj",
+    "objectID": 4,
+    "nameType": 0,
+    "adjectives": []
+  },
+  {
+    "prefabName": "WatermelonObj",
+    "objectID": 5,
+    "nameType": 0,
+    "adjectives": []
+  },
+  {
+    "prefabName": "WatermelonObj",
+    "objectID": 6,
+    "nameType": 0,
+    "adjectives": []
+  },
+  {
+    "prefabName": "RockObj",
+    "objectID": 7,
+    "nameType": 3,
+    "adjectives": []
+  },
+  {
+    "prefabName": "NameStoneObj",
+    "objectID": 8,
+    "nameType": 1,
+    "adjectives": []
+  },
+  {
+    "prefabName": "RockObj",
+    "objectID": 9,
+    "nameType": 3,
+    "adjectives": []
+  },
+  {
+    "prefabName": "WatermelonObj",
+    "objectID": 10,
+    "nameType": 0,
+    "adjectives": []
+  },
+  {
+    "prefabName": "BonfireObj",
+    "objectID": 11,
+    "nameType": 4,
+    "adjectives": []
+  }
+]

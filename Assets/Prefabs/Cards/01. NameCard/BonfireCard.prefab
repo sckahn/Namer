@@ -47,7 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05e8cc538b00e4479865b8e759be81d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardData: {fileID: 11400000, guid: 8ea4bf770cad2472291431f72403663c, type: 2}
+  cardType: 0
+  name: 4
+  adjectives: 
   frontCover: {fileID: 4230330137778533953}
   bc: {fileID: 453746082420174526}
   highlight: {fileID: 3395023830973034109}
@@ -145,7 +147,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7277805989260689589, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8167100953595549833, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
       propertyPath: m_Name
