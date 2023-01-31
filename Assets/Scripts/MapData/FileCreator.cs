@@ -60,6 +60,9 @@ public class FileCreator : MonoBehaviour
 
     private void Indicator()
     {
+        Transform[] tilePrefabs = Resources.LoadAll<Transform>("Prefabs/GroundTiles");
+        Transform[] objectPredabs = Resources.LoadAll<Transform>("Prefabs/Objects");
+        
         tileMapData = new string[totalX, totalY, totalZ];
         objectMapData = new string[totalX, totalY, totalZ];
         
@@ -78,12 +81,11 @@ public class FileCreator : MonoBehaviour
                         if (hit.collider.CompareTag("InteractObj"))
                         {
                             objectMapData[x - minX, y - minY, z - minZ] = id.ToString();
-                            AddObjectInfo(hit.collider, id++);
+                            AddObjectInfo(hit.collider, id++, GetPrefabName(objectPredabs, hit.collider.name));
                         }
                         else if (!hit.collider.CompareTag("Player"))
                         {
-                            string[] prefabName = hit.collider.name.Split();
-                            tileMapData[x - minX, y - minY, z - minZ] = prefabName[0];
+                            tileMapData[x - minX, y - minY, z - minZ] = GetPrefabName(tilePrefabs, hit.collider.name);
                         }
                     }
                 }
@@ -91,14 +93,26 @@ public class FileCreator : MonoBehaviour
         }
     }
 
-    private void AddObjectInfo(Collider objectCollider, int id)
+    private string GetPrefabName(Transform[] prefabs, string colliderName)
+    {
+        for (int i = 0; i < prefabs.Length; i++)
+        {
+            if (colliderName.Contains(prefabs[i].name))
+            {
+                return prefabs[i].name;
+            }
+        }
+
+        return null;
+    }
+
+    private void AddObjectInfo(Collider objectCollider, int id, string prefabName)
     {
         InteractiveObject interObj = objectCollider.GetComponent<InteractiveObject>();
         
         // prefabname, id, name, adjs
         ObjectInfo objectInfo = new ObjectInfo();
-        string[] prefabName = objectCollider.name.Split();
-        objectInfo.prefabName = prefabName[0];
+        objectInfo.prefabName = prefabName;
         objectInfo.objectID = id;
         objectInfo.nameType = interObj.GetObjectName();
 
