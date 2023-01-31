@@ -83,6 +83,11 @@ public class FileCreator : MonoBehaviour
                         else if (!hit.collider.CompareTag("Player"))
                         {
                             string[] prefabName = hit.collider.name.Split();
+                            if (prefabName[0].Contains("(Clone)"))
+                            {
+                                prefabName[0] = prefabName[0].Replace("(Clone)", "");
+                            }
+                            
                             tileMapData[x - minX, y - minY, z - minZ] = prefabName[0];
                         }
                     }
