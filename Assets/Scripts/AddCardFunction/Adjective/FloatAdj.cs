@@ -56,12 +56,17 @@ public class FloatAdj : IAdjective
 
         currentTime = 0;
         Vector3 startPos = obj.transform.localPosition;
+        //Debug.Log(startPos);
         while (currentTime < movingSpeed)
         {
             currentTime += Time.deltaTime;
             obj.transform.localPosition = Vector3.Lerp(startPos, startPos + Vector3.up, currentTime / movingSpeed);
             yield return null;
         }
+
+        DetectManager.GetInstance.SwapBlockInMap(startPos,obj.transform.position);
+        //Debug.Log(obj.transform.position);
+
         yield return new WaitForSeconds(0.2f);
         Vector3 currentPos = obj.transform.GetChild(0).localPosition;
         while (true)

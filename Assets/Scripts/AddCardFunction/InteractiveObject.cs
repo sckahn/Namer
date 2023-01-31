@@ -7,39 +7,53 @@ using UnityEngine.Events;
 
 public class InteractiveObject : MonoBehaviour
 {
+    // Todo 테스트 완료 후, 삭제할 예정
+    #region Test Field
     [SerializeField] private bool setInit;
     [SerializeField] private EName objectName;
     [SerializeField] private bool[] checkAdj = new bool[20];
     [SerializeField] private int[] countAdj = new int[20];
-    [SerializeField] GameObject popUpName;
 
-    private Vector3 currentPosition;
-    
-    private string currentObjectName;
-    private string addNameText;
-    private string[] addAdjectiveTexts = new string[20];
-    
-    /// Test Field
     private EName initName;
     private EName checkName;
     private int checkAdjCount;
     private bool[] initAdj;
-    ///
     
+    public bool[] GetCheckAdj()
+    {
+        return checkAdj;
+    }
+    #endregion
+
+    [SerializeField] GameObject popUpName;
+    
+    // object's basic value
+    private Vector3 currentPosition;
+
+    // object's name = adjective card's ui texts + name card's ui text
+    private string currentObjectName;
+    private string addNameText;
+    private string[] addAdjectiveTexts = new string[20];
+
+    // added adjective functions(interface)
     private IAdjective[] adjectives = new IAdjective[20];
     public IAdjective[] Adjectives { get { return  adjectives; } }
-    private CardDataManager cardData;
     
+    // manager to get card data 
+    private CardDataManager cardData;
+
+    // object's information
     public ObjectInfo objectInfo;
+    
+    public int GetObjectID()
+    {
+        return objectInfo.objectID;
+    }
     
     public EName GetObjectName()
     {
         return objectName;
-    }
-
-    public bool[] GetCheckAdj()
-    {
-        return checkAdj;
+        // return objectInfo.nameType;
     }
     
     public UnityEvent Execute { get; set; }
@@ -103,6 +117,16 @@ public class InteractiveObject : MonoBehaviour
     {
         if (cardData == null)
         {
+            if (objectInfo.objectID >= 0)
+            {
+                objectName = objectInfo.nameType;
+                for (int i = 0; i < objectInfo.adjectives.Length; i++)
+                {
+                    int adjIndex = (int)objectInfo.adjectives[i];
+                    checkAdj[adjIndex] = true;
+                }
+            }
+
             cardData = CardDataManager.GetInstance;
             currentObjectName = cardData.Names[objectName].uiText;
             InitCard();
