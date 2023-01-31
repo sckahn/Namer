@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class InteractionSequencer : Singleton<InteractionSequencer>
 {
-    public static Queue<IEnumerator> CoroutineQueue;
-    public static Queue<IEnumerator> InteractionQueue; // PlayerInteraction OR AddCard 
+    public Queue<IEnumerator> CoroutineQueue;
+    public Queue<IEnumerator> InteractionQueue; // PlayerInteraction OR AddCard 
+    private bool isPlayerInteractionPlaying = false;
     
     // 전반적인 인터렉션 관장
     // 플레이어 OR ADD Card로 인터렉션 시 다른 오브젝트 애니메이션 && 배열 함수 Sorting 정지 --> IEnumerator 제어로 결정
@@ -75,16 +76,23 @@ public class InteractionSequencer : Singleton<InteractionSequencer>
     }
 
     #endregion
+
+    public IEnumerator WaitUntilPlayerInteractionEnd()
+    {
+        yield return new WaitUntil(() => isPlayerInteractionPlaying == false);
+    }
     
 
     // PlayerInteraction OR Addcard로 인한 Coroutine 제어
-    IEnumerator SequentialCoroutine()
+    private IEnumerator SequentialCoroutine()
     {
         while (true)
         {
             // 인터렉션이 먼저 실행되어야 하는 경우
             if (InteractionQueue.Count > 0)
             {
+                isPlayerInteractionPlaying = true;
+                
                 // ConcurrentCoroutines
                 // 모든 코루틴 다 꺼내기 (어떤 코루틴이 먼저 실행 될지 몰라도 되는 경우)
                 while (CoroutineQueue.Count > 0)
@@ -93,18 +101,17 @@ public class InteractionSequencer : Singleton<InteractionSequencer>
                 }
 
                 yield return StartCoroutine(InteractionQueue.Dequeue());
+                isPlayerInteractionPlaying = false;
             }
 
             else
             {
-                // ConcurrentCoroutines
-                // 모든 코루틴 다 꺼내기
                 while (CoroutineQueue.Count > 0)
                 {
                     StartCoroutine(CoroutineQueue.Dequeue());
                 }
             }
-            
+
             yield return null;
         }
     }
