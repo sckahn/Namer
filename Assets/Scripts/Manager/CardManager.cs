@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CardManager : Singleton<CardManager>
 {
@@ -9,6 +10,7 @@ public class CardManager : Singleton<CardManager>
     [SerializeField] Transform cardHolderLeft;
     [SerializeField] Transform cardHolderRight;
     public List<CardController> myCards;
+    public List<MainMeneCardController> mainCards;
     [SerializeField] GameObject[] startCards;
 
     //타겟 상호작용 오브젝트 
@@ -31,10 +33,18 @@ public class CardManager : Singleton<CardManager>
     //시작 카드를 딜링해주는 메서드 
     IEnumerator DealCard()
     {
+        var scene = SceneManager.GetActiveScene();
         yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < startCards.Length; i++)
         {
-            AddCard(startCards[i]);
+            if(scene.name == "MainScene" || scene.name == "LevelSelect")
+            {
+                MainMenuAddCard(startCards[i]);
+            }
+            else
+            {
+                AddCard(startCards[i]);
+            }
             yield return new WaitForSeconds(0.5f);
         }
 
@@ -50,6 +60,14 @@ public class CardManager : Singleton<CardManager>
         CardAlignment();
     }
 
+    void MainMenuAddCard(GameObject cardPrefab)
+    {
+        var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position, Quaternion.identity);
+        var card = cardObject.GetComponent<MainMeneCardController>();
+        mainCards.Add(card);
+        MainCardAlignment();
+    }
+
     //카드를 정렬하는 메서드 
     public void CardAlignment()
     {
@@ -59,6 +77,21 @@ public class CardManager : Singleton<CardManager>
         for (int i = 0; i < myCards.Count; i++)
         {
             var targetCard = myCards[i];
+
+            targetCard.originPRS = originCardPRSs[i];
+            targetCard.originPRS.rot = cardHolderPoint.transform.rotation;
+            targetCard.MoveTransform(targetCard.originPRS, true, 2f);
+        }
+    }
+    //메인화면 카드를 정렬하는 메서드 
+    public void MainCardAlignment()
+    {
+        List<PRS> originCardPRSs = new List<PRS>();
+        originCardPRSs = RoundAlignment(cardHolderLeft, cardHolderRight, mainCards.Count, new Vector3(1f, 1f, 1f));
+
+        for (int i = 0; i < mainCards.Count; i++)
+        {
+            var targetCard = mainCards[i];
 
             targetCard.originPRS = originCardPRSs[i];
             targetCard.originPRS.rot = cardHolderPoint.transform.rotation;

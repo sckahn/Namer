@@ -35,7 +35,7 @@ public class FloatAdj : IAdjective
     public void Execute(InteractiveObject thisObject)
     {
         //Debug.Log("this is Float");
-        thisObject.StartCoroutine(FloatObj(thisObject.gameObject));
+        InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(FloatObj(thisObject.gameObject));
     }
 
     public void Execute(InteractiveObject thisObject, GameObject player)
@@ -61,7 +61,7 @@ public class FloatAdj : IAdjective
         {
             currentTime += Time.deltaTime;
             obj.transform.localPosition = Vector3.Lerp(startPos, startPos + Vector3.up, currentTime / movingSpeed);
-            yield return null;
+            yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd();
         }
 
         DetectManager.GetInstance.SwapBlockInMap(startPos,obj.transform.position);
@@ -74,7 +74,7 @@ public class FloatAdj : IAdjective
             currentTime += Time.deltaTime * speed;
             obj.transform.GetChild(0).
                 localPosition = new Vector3(obj.transform.GetChild(0).localPosition.x, currentPos.y + Mathf.Sin(currentTime) * length, obj.transform.GetChild(0).localPosition.z);
-            yield return null;
+            yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd();
         }
     }
 }

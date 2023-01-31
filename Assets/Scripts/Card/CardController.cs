@@ -104,6 +104,5 @@ public class CardController : MonoBehaviour
                target.GetComponent<InteractiveObject>().AddAdjective(adjectives);
             }
         }
-
     }
 }
