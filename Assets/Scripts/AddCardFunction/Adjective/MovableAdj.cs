@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Hardware;
@@ -49,14 +50,14 @@ public class MovableAdj : IAdjective
 
         var prevLocatio = thisObject.gameObject.transform.position;
             Vector3 direction = (thisObject.transform.position - player.transform.position);
-
         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z) && direction.x > 0)
         {
             // if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.right) !=null ) return;
             if (neihbors.ContainsKey(Dir.right)) return;
             target = thisObject.transform.position + Vector3.right;
             detectManager.SwapBlockInMap(prevLocatio, target);
-            thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
+            InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(MoveObj(thisObject.gameObject));
+            // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
         
             return;
         }
@@ -67,7 +68,8 @@ public class MovableAdj : IAdjective
         
             target = thisObject.transform.position + Vector3.left;
             detectManager.SwapBlockInMap(prevLocatio, target);
-            thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
+            // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
+            InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(MoveObj(thisObject.gameObject));
         
             return;
         }
@@ -77,8 +79,8 @@ public class MovableAdj : IAdjective
             if (neihbors.ContainsKey(Dir.forward)) return;
             target = thisObject.transform.position + Vector3.forward;
             detectManager.SwapBlockInMap(prevLocatio, target);
-            thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
-        
+            // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
+            InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(MoveObj(thisObject.gameObject));
             return;
         }
         else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.z) && direction.z < 0)
@@ -88,7 +90,8 @@ public class MovableAdj : IAdjective
             target = thisObject.transform.position + Vector3.back;
             detectManager.SwapBlockInMap(prevLocatio, target);
         
-            thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
+            // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
+            InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(MoveObj(thisObject.gameObject));
             return;
         }
         
@@ -97,6 +100,8 @@ public class MovableAdj : IAdjective
         
 
     }
+
+
 
     //현제 물체 위치 찍는 메소드 test용
     void CheckArrChange(DetectManager detectManager, GameObject go)

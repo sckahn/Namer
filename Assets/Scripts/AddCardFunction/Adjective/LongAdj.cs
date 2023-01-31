@@ -60,12 +60,12 @@ public class LongAdj : MonoBehaviour, IAdjective
         {
             SetGrowScale(targetObj.gameObject);
             DetectManager.GetInstance.OnObjectScaleChanged(targetScale,targetObj.transform);
-            targetObj.StartCoroutine(ScaleObj(targetObj.gameObject));
+            InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(ScaleObj(targetObj.gameObject));
             // targetObj.StartCoroutine(WrapperCoroutine(flag,targetObj));
         }
         else
         {
-            targetObj.StartCoroutine(Twinkle(targetObj.gameObject));
+            InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(Twinkle(targetObj.gameObject));
             // targetObj.StartCoroutine(WrapperCoroutine(flag,targetObj));
         }
     }
