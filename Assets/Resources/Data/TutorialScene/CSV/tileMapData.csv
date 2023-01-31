@@ -5,7 +5,7 @@ GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,Gro
 GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile
 GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile,GroundTile
 Layer1
--1,-1,-1,-1,GroundTile,-1,-1,-1,-1
+-1,-1,-1,-1,-1,-1,-1,-1,-1
 -1,-1,-1,-1,-1,-1,-1,-1,-1
 -1,-1,-1,GlassTile,GlassTile,GlassTile,GlassTile,GlassTile,GlassTile
 -1,-1,-1,GlassTile,GlassTile,GlassTile,GlassTile,GlassTile,GlassTile
