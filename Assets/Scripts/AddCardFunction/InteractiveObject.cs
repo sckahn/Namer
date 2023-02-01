@@ -200,6 +200,8 @@ public class InteractiveObject : MonoBehaviour
 
     public void AddName(EName? addedName)
     {
+        SubtractName(objectName);
+
         // Check Error
         if (addedName == null)
         {
