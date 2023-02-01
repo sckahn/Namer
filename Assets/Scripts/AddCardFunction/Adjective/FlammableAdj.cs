@@ -52,6 +52,7 @@ public class FlammableAdj : IAdjective
         ParticleSetting(thisObject);
         isContact = true;
         ObjectOnFire(thisObject.gameObject);
+        SoundManager.Instance.Play(SoundManager.Instance.effectClips[0]);
     }
 
     private void ObjectOnFire(GameObject targetObj)
