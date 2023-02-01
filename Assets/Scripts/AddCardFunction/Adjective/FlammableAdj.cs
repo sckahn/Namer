@@ -41,91 +41,27 @@ public class FlammableAdj : IAdjective
 
     public void Execute(InteractiveObject thisObject)
     {
-        //ParticleSetting(thisObject);
-        //ObjectOnFire(thisObject);
-        //Debug.Log("execute1");
     }
 
     public void Execute(InteractiveObject thisObject, GameObject player)
     {
-        //Debug.Log("Flammable : this Object -> Player");
-        // ObjectOnFire(thisObject);
     }
 
     public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
-        Debug.Log("Flammable : this Object -> other Object");
-        //if (otherObject.Adjectives[(int)EAdjective.Flame].GetAdjectiveName() == EAdjective.Flame)
-        //{
-        //    isContact = true;
-        //    ObjectOnFire(thisObject.gameObject);
-        //}
         ParticleSetting(thisObject);
         isContact = true;
         ObjectOnFire(thisObject.gameObject);
     }
 
-    [ContextMenu("Flammable Testing")]
-    private void ObjectOnFire(InteractiveObject targetObj)
-    {
-        //LookUpFlame(targetObj.gameObject);
-        if (isContact)
-        {
-            isContact = false;
-            isOnFire = true;
-            targetObj.StartCoroutine(OnFire(targetObj.gameObject));
-            isOnFire = false;
-            // targetObj.gameObject.SetActive(false);
-            // print("Boom");
-        }
-    }
-
     private void ObjectOnFire(GameObject targetObj)
     {
-        // LookUpFlame(targetObj.gameObject); // 이거 이중 체크 인데..
         if (isContact)
         {
             isContact = false;
-            isOnFire = true;
+            
             targetObj.GetComponent<InteractiveObject>().StartCoroutine(OnFire(targetObj.gameObject));
-            isOnFire = false;
-            // targetObj.gameObject.SetActive(false);
-            // print("Boom");
         }
-    }
-
-
-
-    private void LookUpFlame(GameObject targetObj)
-    {
-
-        Dictionary<Dir, List<Transform>> crossDirDict = new Dictionary<Dir, List<Transform>>();
-        for (int i = 0; i < Enum.GetNames(typeof(Dir)).Length; i++)
-        {
-            if ((Dir)i != Dir.down && (Dir)i != Dir.up && (Dir)i != Dir.Null)
-            {
-                var objList = GameManager.GetInstance.GetCheckSurrounding.GetTransformsAtDirOrNull(targetObj, (Dir)i);
-                if (objList != null)
-                    crossDirDict.Add((Dir)i, objList);
-            }
-        }
-        foreach (var ol in crossDirDict)
-        {
-            foreach (var item in ol.Value)
-            {
-                Debug.Log(item.name + ol.Key);
-                Debug.Log(item.gameObject.name);
-                //interactiveobject component가 없을 경우 에러뜸 임시로 예외처리 해줌
-                if (item.gameObject.GetComponent<InteractiveObject>() == null) continue;
-
-                if (item.gameObject.GetComponent<InteractiveObject>().Adjectives[(int)EAdjective.Flame]
-                        .GetAdjectiveName() == EAdjective.Flame)
-                {
-                    isContact = true;
-                }
-            }
-        }
-        Debug.Log(isContact);
     }
 
     GameObject FindEffect(String prefabName)
@@ -152,21 +88,11 @@ public class FlammableAdj : IAdjective
 
         Vector3 pos = thisObj.transform.position;
 
-        Debug.Log("Pos : " + pos.x + pos.y + pos.z);
-
         DetectManager.GetInstance.ChangeValueInMap(pos,null);
 
         yield return new WaitForSeconds(1.5f);
 
         GameObject.Destroy(thisObj);
-        //while (isOnFire)
-        //{
-        //    fire.Play();
-        //    yield return new WaitForSeconds(5f);
-        //    //waith until phase has changed
-        //    // yield return new WaitUntil();
-        //    // yield return new DOTweenCYInstruction.WaitForCompletion();
-        //}
     }
 
     private void ParticleSetting(InteractiveObject thisObject)
