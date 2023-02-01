@@ -346,9 +346,10 @@ public class CheckSurrounding : MonoBehaviour
     {
         RaycastHit IORay;
         Vector3 fwd = gameObject.transform.TransformDirection(Vector3.forward);
-        //Debug.DrawRay(transform.position, fwd, Color.green);
+        var position = gameObject.transform.position;
+        //Debug.DrawRay(new Vector3(position.x, position.y + 0.5f, position.z), fwd, Color.green);
 
-        if (Physics.Raycast(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.5f, gameObject.transform.position.z), fwd, out IORay, 0.5f))
+        if (Physics.Raycast(new Vector3(position.x, position.y + 0.5f, position.z), fwd, out IORay, 0.2f))
         {
             if (curObjectInfo.GetComponent<BoxCollider>().bounds.center.x - IORay.transform.position.x == -1 &&
                 curObjectInfo.GetComponent<BoxCollider>().bounds.center.z - IORay.transform.position.z == 0)
