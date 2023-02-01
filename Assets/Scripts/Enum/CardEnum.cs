@@ -6,7 +6,7 @@ public enum ECardType
 
 public enum EName
 {
-    NullObject,
+    Null,
     NameStone,
     Ball,
     Rock,
@@ -29,6 +29,7 @@ public enum EAdjectiveType
 
 public enum EAdjective
 {
+    Null,
     Win,
     Flammable,
     Flame, 

@@ -175,6 +175,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3837913927598997558, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
+      propertyPath: isTest
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3837913927598997558, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
       propertyPath: loadLevel
       value: Level01
       objectReference: {fileID: 0}
