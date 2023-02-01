@@ -149,6 +149,9 @@ public class MovableAdj : IAdjective
         }
         isRoll = false;
         //dt.SetNewPosOrSize();
+        //수정한 부분
+        DetectManager.GetInstance.StartDetector(new List<GameObject>() { obj });
+        //수정한 부분 
     }
 }
 
