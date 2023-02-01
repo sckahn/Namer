@@ -41,9 +41,9 @@ public class FlammableAdj : IAdjective
 
     public void Execute(InteractiveObject thisObject)
     {
-        ParticleSetting(thisObject);
-        ObjectOnFire(thisObject);
-        Debug.Log("execute1");
+        //ParticleSetting(thisObject);
+        //ObjectOnFire(thisObject);
+        //Debug.Log("execute1");
     }
 
     public void Execute(InteractiveObject thisObject, GameObject player)
@@ -55,17 +55,20 @@ public class FlammableAdj : IAdjective
     public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
         Debug.Log("Flammable : this Object -> other Object");
-        if (otherObject.Adjectives[(int)EAdjective.Flame].GetAdjectiveName() == EAdjective.Flame)
-        {
-            isContact = true;
-            ObjectOnFire(thisObject.gameObject);
-        }
+        //if (otherObject.Adjectives[(int)EAdjective.Flame].GetAdjectiveName() == EAdjective.Flame)
+        //{
+        //    isContact = true;
+        //    ObjectOnFire(thisObject.gameObject);
+        //}
+        ParticleSetting(thisObject);
+        isContact = true;
+        ObjectOnFire(thisObject.gameObject);
     }
 
     [ContextMenu("Flammable Testing")]
     private void ObjectOnFire(InteractiveObject targetObj)
     {
-        LookUpFlame(targetObj.gameObject);
+        //LookUpFlame(targetObj.gameObject);
         if (isContact)
         {
             isContact = false;
@@ -154,6 +157,7 @@ public class FlammableAdj : IAdjective
         DetectManager.GetInstance.ChangeValueInMap(pos,null);
 
         yield return new WaitForSeconds(1.5f);
+
         GameObject.Destroy(thisObj);
         //while (isOnFire)
         //{
@@ -167,8 +171,11 @@ public class FlammableAdj : IAdjective
 
     private void ParticleSetting(InteractiveObject thisObject)
     {
+        if (thisObject.transform.Find("FireEffect")) return;
+
         fireEffect = FindEffect("Fire effect2");
-        GameObject.Instantiate(fireEffect, thisObject.transform);
+        GameObject effect = GameObject.Instantiate(fireEffect, thisObject.transform);
+        effect.name = "FireEffect";
         fire = thisObject.gameObject.GetComponentInChildren<ParticleSystem>();
         fire.Stop();
     }

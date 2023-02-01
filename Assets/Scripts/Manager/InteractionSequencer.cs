@@ -80,8 +80,11 @@ public class InteractionSequencer : Singleton<InteractionSequencer>
     public IEnumerator WaitUntilPlayerInteractionEnd()
     {
         yield return new WaitUntil(() => isPlayerInteractionPlaying == false);
+        //수정한 부분
+        DetectManager.GetInstance.StartDetector();
+        //수정한 부분 
     }
-    
+
 
     // PlayerInteraction OR Addcard로 인한 Coroutine 제어
     private IEnumerator SequentialCoroutine()
