@@ -20,6 +20,8 @@ public class MainUIController : MonoBehaviour
     [SerializeField] GameObject informationTxt;
     [SerializeField] GameObject levelSelectCardHolder;
     [SerializeField] GameObject returnBtn;
+    [SerializeField] GameObject pauseBtn;
+    [SerializeField] GameObject goBtn;
     [SerializeField] GameObject creditObject;
     [SerializeField] GameObject[] mainMenuGrounds;
     GameObject levelInformationTxt;
@@ -148,6 +150,8 @@ public class MainUIController : MonoBehaviour
             creditObject.SetActive(false);
             creditObject.transform.DOMove(new Vector3(0, -11, 0) ,0.1f);
             returnBtn.SetActive(false);
+            goBtn.SetActive(false);
+            pauseBtn.SetActive(false);
         }
         state = MainMenuState.Main;
         Camera.main.transform.DOMove(new Vector3(0f, 7f, -3.17f), levelSelectMovingTime);
@@ -164,6 +168,7 @@ public class MainUIController : MonoBehaviour
         title.transform.DOScale(new Vector3(0.3f, 0.3f, 1f), 2f);
         Invoke("CreditObjOn", 3f);
         returnBtn.SetActive(true);
+        pauseBtn.SetActive(true);
     }
 
     void CreditObjOn()
@@ -178,4 +183,20 @@ public class MainUIController : MonoBehaviour
             MainMenuScene();
         }
     }
+
+    public void PauseBtn()
+    {
+        Time.timeScale = 0;
+        pauseBtn.SetActive(false);
+        goBtn.SetActive(true);
+    }
+
+    public void GoBtn()
+    {
+        Time.timeScale = 1;
+        goBtn.SetActive(false);
+        pauseBtn.SetActive(true);
+    }
+
+
 }
