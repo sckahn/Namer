@@ -180,6 +180,7 @@ public class MainUIController : MonoBehaviour
     {
         if (state == MainMenuState.Credit)
         {
+            Time.timeScale = 1;
             MainMenuScene();
         }
     }
