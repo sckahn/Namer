@@ -42,4 +42,9 @@ public class ClimbableAdj : IAdjective
     {
         //Debug.Log("Climbable : this Object -> other Object");
     }
+
+    public void Abandon(InteractiveObject thisObject)
+    {
+        
+    }
 }

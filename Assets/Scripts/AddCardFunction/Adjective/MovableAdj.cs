@@ -136,6 +136,11 @@ public class MovableAdj : IAdjective
         //Debug.Log("Movable : this Object -> other Object");
     }
 
+    public void Abandon(InteractiveObject thisObject)
+    {
+        
+    }
+
     IEnumerator MoveObj(GameObject obj)
     {
         currentTime = 0;
@@ -149,6 +154,9 @@ public class MovableAdj : IAdjective
         }
         isRoll = false;
         //dt.SetNewPosOrSize();
+        //수정한 부분
+        DetectManager.GetInstance.StartDetector(new List<GameObject>() { obj });
+        //수정한 부분 
     }
 }
 
