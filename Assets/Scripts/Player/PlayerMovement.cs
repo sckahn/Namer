@@ -70,6 +70,10 @@ public class PlayerMovement : MonoBehaviour
                 if (interactobj.tag == "InteractObj")
                 {
                     playerEntity.ChangeState(PlayerStates.Push);
+                    //변경한 부분 
+                    DetectManager.GetInstance.StartDetector();
+
+                    //변경한 부분 
                     interactobj.GetComponent<InteractiveObject>().Interact(this.gameObject);
                 }
             }
@@ -79,6 +83,34 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         // TODO GameManager한테 인풋 받을 수 있는 변수 가져오기
+
+        // if (Input.GetKeyDown(KeyCode.O))
+        // {
+        //     GameObject TargetObj;
+        //     
+        //     GameManager.GetInstance.GetCheckSurrounding.CheckCharacterCurrentTile(this.gameObject);
+        //     GameManager.GetInstance.GetCheckSurrounding.CheckForwardObj(this.gameObject);
+        //
+        //     TargetObj = GameManager.GetInstance.GetCheckSurrounding.forwardObjectInfo;
+        //     if (TargetObj)
+        //     {
+        //         TargetObj.AddComponent<TestAddCardLong>();
+        //     }
+        // }
+        //
+        // if (Input.GetKeyDown(KeyCode.P))
+        // {
+        //     GameObject TargetObj;
+        //     
+        //     GameManager.GetInstance.GetCheckSurrounding.CheckCharacterCurrentTile(this.gameObject);
+        //     GameManager.GetInstance.GetCheckSurrounding.CheckForwardObj(this.gameObject);
+        //     
+        //     TargetObj = GameManager.GetInstance.GetCheckSurrounding.forwardObjectInfo;
+        //     if (TargetObj)
+        //     {
+        //         TargetObj.AddComponent<TestMoveable>();
+        //     }
+        // }
 
         // 인터렉션 중에는 이동 또는 다른 인터렉션 불가
         if (_canPlayerInput && !playerEntity.doInteraction)

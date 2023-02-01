@@ -42,4 +42,9 @@ public class ObtainableAdj : IAdjective
     {
         //Debug.Log("Obtainable : this Object -> other Object");
     }
+
+    public void Abandon(InteractiveObject thisObject)
+    {
+        
+    }
 }

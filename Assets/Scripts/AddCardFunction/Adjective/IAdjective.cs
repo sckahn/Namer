@@ -12,4 +12,6 @@ public interface IAdjective
     public void Execute(InteractiveObject thisObject);
     public void Execute(InteractiveObject thisObject, GameObject player);
     public void Execute(InteractiveObject thisObject, InteractiveObject otherObject);
+
+    public void Abandon(InteractiveObject thisObject);
 }

@@ -52,6 +52,14 @@ public class LongAdj : MonoBehaviour, IAdjective
     {
         //Debug.Log("Long : this Object -> other Object");
     }
+
+    public void Abandon(InteractiveObject thisObject)
+    {
+        // 이렇게 할지 말지 고민중 
+        DetectManager.GetInstance.OnObjectScaleChanged(new Vector3(1, 1, 1), thisObject.transform);
+        thisObject.gameObject.transform.localScale = new Vector3(1, 1, 1);
+    }
+
     [ContextMenu("objScaling")]
     public void ObjectScaling(InteractiveObject targetObj)
     {
@@ -59,12 +67,13 @@ public class LongAdj : MonoBehaviour, IAdjective
         if (flag)
         {
             SetGrowScale(targetObj.gameObject);
-            targetObj.StartCoroutine(ScaleObj(targetObj.gameObject));
+            DetectManager.GetInstance.OnObjectScaleChanged(targetScale,targetObj.transform);
+            InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(ScaleObj(targetObj.gameObject));
             // targetObj.StartCoroutine(WrapperCoroutine(flag,targetObj));
         }
         else
         {
-            targetObj.StartCoroutine(Twinkle(targetObj.gameObject));
+            InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(Twinkle(targetObj.gameObject));
             // targetObj.StartCoroutine(WrapperCoroutine(flag,targetObj));
         }
     }
@@ -77,30 +86,37 @@ public class LongAdj : MonoBehaviour, IAdjective
 
     private bool CheckGrowable(GameObject targetObj)
     {
-        var test = GameManager.GetInstance.GetCheckSurrounding.GetTransformsAtDirOrNull(targetObj, Dir.up);
-        if (test != null)
+        //1. check if it is growable
+        //2. after grow update object arr 
+        
+        // var test = GameManager.GetInstance.GetCheckSurrounding.GetTransformsAtDirOrNull(targetObj, Dir.up);
+        var upperNeighbor = DetectManager.GetInstance.GetAdjacentObjectWithDir(targetObj, Dir.up);
+
+        if (upperNeighbor != null)
         {
-            foreach (var item in test)
+            if (upperNeighbor.tag == "Player")
+                return true;
+            else
             {
-                if (item.gameObject.tag == "Player")
-                    return true;
+                return false;
             }
-            if (test.Count != 0) return false;
-            
         }
         return true;
     }
 
     IEnumerator WrapperCoroutine(bool isGrow,InteractiveObject targetObj)
     {
-        if (isGrow)
+        if (targetObj != null)
         {
-            SetGrowScale(targetObj.gameObject);
-            yield return targetObj.StartCoroutine(ScaleObj(targetObj.gameObject));
-        }
-        else
-        {
-            targetObj.StartCoroutine(Twinkle(targetObj.gameObject));
+            if (isGrow)
+            {
+                SetGrowScale(targetObj.gameObject);
+                yield return targetObj.StartCoroutine(ScaleObj(targetObj.gameObject));
+            }
+            else
+            {
+                targetObj.StartCoroutine(Twinkle(targetObj.gameObject));
+            }
         }
     }
 
@@ -109,13 +125,16 @@ public class LongAdj : MonoBehaviour, IAdjective
     {
         currentTime = 0;
         Vector3 startScale = targetObj.transform.localScale;
-        while (currentTime < growingSpeed)
+        while (targetObj != null && currentTime < growingSpeed)
         {
             currentTime += Time.deltaTime;
             targetObj.transform.localScale = Vector3.Lerp(startScale, targetScale, currentTime / growingSpeed);
             yield return null;
            
         }
+        //수정한 부분
+        DetectManager.GetInstance.StartDetector(new List<GameObject>() { targetObj });
+        //수정한 부분 
     }
 
     //빨간색으로 반짝이는 효과
@@ -131,7 +150,7 @@ public class LongAdj : MonoBehaviour, IAdjective
         currentTime = 0;
         var meshRenderer =  targetObj.GetComponentInChildren<MeshRenderer>();
         
-        while (currentTime < growingSpeed+3f)
+        while (targetObj != null && currentTime < growingSpeed+3f)
         {
             currentTime += Time.deltaTime;
             // meshRenderer.enabled = !meshRenderer.enabled;
