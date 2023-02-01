@@ -292,6 +292,7 @@ public class InteractiveObject : MonoBehaviour
     private void SubtractAdjective(EAdjective subtractAdjective, bool isAdjective = true)
     {
         int adjIndex = cardData.Adjectives[subtractAdjective].priority;
+        adjectives[adjIndex].Abandon(this);
         adjectives[adjIndex] = null;
         --countAdj[adjIndex];
         checkAdj[adjIndex] = false;

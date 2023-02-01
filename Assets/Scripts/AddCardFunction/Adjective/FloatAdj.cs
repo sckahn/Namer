@@ -48,6 +48,11 @@ public class FloatAdj : IAdjective
         //Debug.Log("Float : this Object -> other Object");
     }
 
+    public void Abandon(InteractiveObject thisObject)
+    {
+        
+    }
+
     IEnumerator FloatObj(GameObject obj)
     {
         var rb = obj.GetComponent<Rigidbody>();

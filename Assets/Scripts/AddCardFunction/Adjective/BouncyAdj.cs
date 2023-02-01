@@ -61,6 +61,11 @@ public class BouncyAdj : IAdjective
         //Debug.Log("Bouncy : this Object -> other Object");
     }
 
+    public void Abandon(InteractiveObject thisObject)
+    {
+        
+    }
+
     private void Bounce()
     {
         rigid.velocity = Vector3.zero;

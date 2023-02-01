@@ -52,6 +52,12 @@ public class LongAdj : MonoBehaviour, IAdjective
     {
         //Debug.Log("Long : this Object -> other Object");
     }
+
+    public void Abandon(InteractiveObject thisObject)
+    {
+        
+    }
+
     [ContextMenu("objScaling")]
     public void ObjectScaling(InteractiveObject targetObj)
     {

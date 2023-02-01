@@ -65,6 +65,11 @@ public class FlammableAdj : IAdjective
         ObjectOnFire(thisObject.gameObject);
     }
 
+    public void Abandon(InteractiveObject thisObject)
+    {
+        
+    }
+
     [ContextMenu("Flammable Testing")]
     private void ObjectOnFire(InteractiveObject targetObj)
     {
