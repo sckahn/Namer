@@ -68,7 +68,7 @@ public class FlammableAdj : IAdjective
     [ContextMenu("Flammable Testing")]
     private void ObjectOnFire(InteractiveObject targetObj)
     {
-        LookUpFlame(targetObj.gameObject);
+        //LookUpFlame(targetObj.gameObject);
         if (isContact)
         {
             isContact = false;
@@ -157,6 +157,7 @@ public class FlammableAdj : IAdjective
         DetectManager.GetInstance.ChangeValueInMap(pos,null);
 
         yield return new WaitForSeconds(1.5f);
+
         GameObject.Destroy(thisObj);
         //while (isOnFire)
         //{
@@ -170,8 +171,11 @@ public class FlammableAdj : IAdjective
 
     private void ParticleSetting(InteractiveObject thisObject)
     {
+        if (thisObject.transform.Find("FireEffect")) return;
+
         fireEffect = FindEffect("Fire effect2");
-        GameObject.Instantiate(fireEffect, thisObject.transform);
+        GameObject effect = GameObject.Instantiate(fireEffect, thisObject.transform);
+        effect.name = "FireEffect";
         fire = thisObject.gameObject.GetComponentInChildren<ParticleSystem>();
         fire.Stop();
     }

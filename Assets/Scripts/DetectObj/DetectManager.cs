@@ -72,12 +72,17 @@ public partial class DetectManager : Singleton<DetectManager>
         tileMaxZ = currentTiles.GetLength(2) - 1;
     }
 
+    private void FixedUpdate()
+    {
+        //StartDetector();
+    }
+
     #region Test
     // 전체 오브젝트 순회 검사 후 인터렉션 순차적으로 실행
     [ContextMenu("StartDetector")]
     public void StartDetector()
     {
-        List<Dictionary<GameObject, List<IAdjective>>> interactions = InteractionDetector();
+        List<Dictionary<GameObject, List<IAdjective>>> interactions = IterateThroughMap();
         if (interactions == null || interactions.Count == 0) return;
         for (int i = 0; i < interactions.Count; i++)
         {

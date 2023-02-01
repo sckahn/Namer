@@ -60,22 +60,6 @@ public class InteractiveObject : MonoBehaviour
     public UnityEvent InteractPlayer { get; set; }
     public UnityEvent InteractOtherObject { get; set; }
 
-
-    #region doingRepeat
-    private delegate void ExcuteRepeat(InteractiveObject io);
-    ExcuteRepeat excuteRepeat;
-
-    public void AddExcuteRepeat(IAdjective adj)
-    {
-        excuteRepeat += adj.Execute;
-    }
-
-    public void DeleteExcuteRepeat(IAdjective adj)
-    {
-        excuteRepeat -= adj.Execute;
-    }
-    #endregion
-
     private void OnEnable()
     {
         if (!gameObject.CompareTag("InteractObj"))
@@ -141,10 +125,10 @@ public class InteractiveObject : MonoBehaviour
         }
         
         // change name
-        if (objectName != checkName)
-        {
-            ChangeName(objectName);
-        }
+        //if (objectName != checkName)
+        //{
+        //    ChangeName(objectName);
+        //}
         
         // change adjective
         int currentCheckAdj = checkAdj.Count(a => a);
@@ -152,10 +136,6 @@ public class InteractiveObject : MonoBehaviour
         {
             ChangeAdjective();
         }
-
-        // run excuteRepeat
-        if (excuteRepeat != null)
-            excuteRepeat.Invoke(this);
     }
 
     // Use When data type of objectName is string
@@ -284,10 +264,8 @@ public class InteractiveObject : MonoBehaviour
         switch (adjectives[adjIndex].GetAdjectiveType())
         {
             case (EAdjectiveType.Normal): // normal
-                adjectives[adjIndex].Execute(this);
-                break;
             case (EAdjectiveType.Repeat): // repeat
-                AddExcuteRepeat(adjectives[adjIndex]);
+                adjectives[adjIndex].Execute(this);
                 break;
             case (EAdjectiveType.Contradict): // contradict
                 break;

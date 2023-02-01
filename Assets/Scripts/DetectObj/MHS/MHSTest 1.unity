@@ -655,25 +655,33 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 7932567353644962545, guid: 647a0498071d24128925850f6a25e445, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7932567353644962545, guid: 647a0498071d24128925850f6a25e445, type: 3}
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7932567353644962557, guid: 647a0498071d24128925850f6a25e445, type: 3}
+      propertyPath: startCards.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7932567353644962557, guid: 647a0498071d24128925850f6a25e445, type: 3}
       propertyPath: startCards.Array.data[0]
       value: 
-      objectReference: {fileID: 7743834699422014335, guid: caf783e894de54c4f9c0e6f240f54e0b, type: 3}
+      objectReference: {fileID: 7743834699422014335, guid: 3118202093bdf4b4b8d78148378596ea, type: 3}
     - target: {fileID: 7932567353644962557, guid: 647a0498071d24128925850f6a25e445, type: 3}
       propertyPath: startCards.Array.data[1]
       value: 
-      objectReference: {fileID: 7743834699422014335, guid: e2d0092794f904fc6a7587177cbfaf37, type: 3}
+      objectReference: {fileID: 7743834699422014335, guid: 167a2a3c340604d7a8d98e08bb1f22a9, type: 3}
     - target: {fileID: 7932567353644962557, guid: 647a0498071d24128925850f6a25e445, type: 3}
       propertyPath: startCards.Array.data[2]
       value: 
-      objectReference: {fileID: 7743834699422014335, guid: 4f1315d6e158a47c093cb7ffd42001fb, type: 3}
+      objectReference: {fileID: 7743834699422014335, guid: caf783e894de54c4f9c0e6f240f54e0b, type: 3}
     - target: {fileID: 7932567353644962557, guid: 647a0498071d24128925850f6a25e445, type: 3}
       propertyPath: startCards.Array.data[3]
       value: 
-      objectReference: {fileID: 7743834699422014335, guid: 5198e63598b6743d89be101b049362b7, type: 3}
+      objectReference: {fileID: 7743834699422014335, guid: dad3619588d36428d9b1a8854aa44053, type: 3}
     - target: {fileID: 7932567353644962557, guid: 647a0498071d24128925850f6a25e445, type: 3}
       propertyPath: startCards.Array.data[4]
       value: 
