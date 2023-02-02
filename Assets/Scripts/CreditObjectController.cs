@@ -15,14 +15,22 @@ public class CreditObjectController : MonoBehaviour
 
     void OnEnable()
     {
+        this.transform.position = new Vector3(0, -10, 0);
         this.transform.DOMove(new Vector3(0, 6f, 0) ,movingSpeed);
-        Invoke("ReturnToMainMenu", movingSpeed + 5f);
+    }
+
+    private void Update()
+    {
+        ReturnToMainMenu();
     }
 
 
     void ReturnToMainMenu()
     {
-        mainUIController.MainMenuScene();
+        if(this.transform.position.y == 6f)
+        {
+            mainUIController.MainMenuScene();
+        }
     }
 
 }
