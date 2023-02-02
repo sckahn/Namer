@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4370623, g: 0.4847663, b: 0.5650303, a: 1}
+  m_IndirectSpecularColor: {r: 0.43706173, g: 0.48476565, b: 0.56502926, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -311,12 +311,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2f36e9b27b14bbf8b7fc8849d43b06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardPrefab: {fileID: 7743834699422014335, guid: a9a158cf1af624b4a95a9e1a9c7317b3, type: 3}
   cardSpawnPoint: {fileID: 857450379}
   cardHolderPoint: {fileID: 13797638}
   cardHolderLeft: {fileID: 678500602}
   cardHolderRight: {fileID: 372633459}
   myCards: []
+  mainCards: []
   startCards:
   - {fileID: 7743834699422014335, guid: 44cdfb3f486154f63b9a250620d75fd0, type: 3}
   - {fileID: 7743834699422014335, guid: 6ff7a3738d3084802a521aacc6d1d29b, type: 3}
@@ -2332,7 +2332,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8922161847626270825, guid: 47cb50c07573949c586a05fc22ebba0a, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8922161847626270825, guid: 47cb50c07573949c586a05fc22ebba0a, type: 3}
       propertyPath: m_LocalRotation.x
@@ -2340,7 +2340,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8922161847626270825, guid: 47cb50c07573949c586a05fc22ebba0a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8922161847626270825, guid: 47cb50c07573949c586a05fc22ebba0a, type: 3}
       propertyPath: m_LocalRotation.z
@@ -2352,11 +2352,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8922161847626270825, guid: 47cb50c07573949c586a05fc22ebba0a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8922161847626270825, guid: 47cb50c07573949c586a05fc22ebba0a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8960856560092998560, guid: 47cb50c07573949c586a05fc22ebba0a, type: 3}
+      propertyPath: rootmotionSpeed
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47cb50c07573949c586a05fc22ebba0a, type: 3}
