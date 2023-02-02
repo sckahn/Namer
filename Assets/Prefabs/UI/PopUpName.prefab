@@ -114,7 +114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0860e2b31e0544c89a7f5141ae0b806f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentObjectName: "\uB3CC"
   nameText: {fileID: 9166210127954159685}
 --- !u!1 &5551691928872579150
 GameObject:
@@ -183,8 +182,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 94a0792d2b3e74de5a1082900da91fc1, type: 3}
-    m_FontSize: 25
+    m_Font: {fileID: 12800000, guid: b4eb3d01d3d9c4bba91de99fd072e24d, type: 3}
+    m_FontSize: 23
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0

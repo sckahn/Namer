@@ -2177,11 +2177,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5c51ff3ddace4f08b6a34df6090c8b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerEntity: {fileID: 0}
   interactobj: {fileID: 0}
-  bottomobj: {fileID: 0}
   moveSpeed: 3
   rotateSpeed: 10
   _canPlayerInput: 1
+  rootmotionSpeed: 1
 --- !u!114 &692613590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2195,8 +2196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myAnimator: {fileID: 0}
-  doInteraction: 0
-  interactionKey: 98
+  interactionKey: 32
 --- !u!1 &8203952614901920763
 GameObject:
   m_ObjectHideFlags: 0

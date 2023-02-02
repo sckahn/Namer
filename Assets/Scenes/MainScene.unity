@@ -4579,7 +4579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1036913641839899097, guid: b56418e776a7b475b956d86163864508, type: 3}
       propertyPath: m_Text
-      value: Sound Manager& Programmer
+      value: Quality Assurance & Programmer
       objectReference: {fileID: 0}
     - target: {fileID: 1614675806318853521, guid: b56418e776a7b475b956d86163864508, type: 3}
       propertyPath: m_Text
@@ -7562,9 +7562,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Special Thanks
-
-'
+  m_Text: SPECIAL THANKS
 --- !u!222 &1557481541
 CanvasRenderer:
   m_ObjectHideFlags: 0
