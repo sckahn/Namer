@@ -50,7 +50,7 @@ public class FloatAdj : IAdjective
 
     public void Abandon(InteractiveObject thisObject)
     {
-        
+        GravityOn(thisObject.gameObject);
     }
 
     IEnumerator FloatObj(GameObject obj)
@@ -76,6 +76,7 @@ public class FloatAdj : IAdjective
         yield return new WaitForSeconds(0.2f);
         if (obj != null) yield return null;
         Vector3 currentPos = obj.transform.GetChild(0).localPosition;
+        
         while (obj != null && obj.GetComponent<InteractiveObject>().CheckAdj(this))
         {
             currentTime += Time.deltaTime * speed;
@@ -83,8 +84,14 @@ public class FloatAdj : IAdjective
                 localPosition = new Vector3(obj.transform.GetChild(0).localPosition.x, currentPos.y + Mathf.Sin(currentTime) * length, obj.transform.GetChild(0).localPosition.z);
             yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd();
         }
-        if (obj != null)
+        Abandon(obj.GetComponent<InteractiveObject>());
+    }
+
+    void GravityOn(GameObject gameObject)
+    {
+        if (gameObject != null)
         {
+            var rb = gameObject.GetComponent<Rigidbody>();
             rb.isKinematic = false;
             rb.useGravity = true;
         }
