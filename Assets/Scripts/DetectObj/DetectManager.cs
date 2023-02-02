@@ -77,7 +77,6 @@ public partial class DetectManager : Singleton<DetectManager>
         //StartDetector();
     }
 
-    #region Test
     // 전체 오브젝트 순회 검사 후 인터렉션 순차적으로 실행
     [ContextMenu("StartDetector")]
     public void StartDetector()
@@ -101,12 +100,8 @@ public partial class DetectManager : Singleton<DetectManager>
                 {
                     if (interactor == null)
                     {
-                        Debug.Log("ErrorExcute");
                         continue;
                     }
-                    Debug.Log("adj: " + adj.GetAdjectiveName());
-                    Debug.Log("interactor: " + interactor.name);
-                    Debug.Log("go: " + go.name);
                     adj.Execute(go.GetComponent<InteractiveObject>(), interactor.GetComponent<InteractiveObject>());
                 }
             }
@@ -134,17 +129,15 @@ public partial class DetectManager : Singleton<DetectManager>
                 {
                     if (interactor == null)
                     {
-                        Debug.Log("ErrorExcute");
                         continue;
                     }
-                    Debug.Log("adj: " + adj.GetAdjectiveName());
-                    Debug.Log("interactor: " + interactor.name);
-                    Debug.Log("go: " + go.name);
                     adj.Execute(go.GetComponent<InteractiveObject>(), interactor.GetComponent<InteractiveObject>());
                 }
             }
         }
     }
+
+#region Test
 
     public void TestSetForTestPurposeList()
     {
