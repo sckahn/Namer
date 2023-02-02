@@ -44,6 +44,11 @@ public class WinAdj : IAdjective
         //Debug.Log("Win : this Object -> other Object");
     }
 
+    public void Abandon(InteractiveObject thisObject)
+    {
+        
+    }
+
     void CallWin()
     {
         GameManager.GetInstance.Win();

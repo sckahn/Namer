@@ -136,6 +136,11 @@ public class MovableAdj : IAdjective
         //Debug.Log("Movable : this Object -> other Object");
     }
 
+    public void Abandon(InteractiveObject thisObject)
+    {
+        
+    }
+
     IEnumerator MoveObj(GameObject obj)
     {
         currentTime = 0;

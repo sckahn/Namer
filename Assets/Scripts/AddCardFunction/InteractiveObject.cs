@@ -200,6 +200,8 @@ public class InteractiveObject : MonoBehaviour
 
     public void AddName(EName? addedName)
     {
+        SubtractName(objectName);
+
         // Check Error
         if (addedName == null)
         {
@@ -282,6 +284,8 @@ public class InteractiveObject : MonoBehaviour
         {
             foreach (var adjective in subtractAdjectives)
             {
+                if (adjective == null) continue;
+
                 SubtractAdjective(adjective, false);
             }
         }
@@ -290,6 +294,11 @@ public class InteractiveObject : MonoBehaviour
     private void SubtractAdjective(EAdjective subtractAdjective, bool isAdjective = true)
     {
         int adjIndex = cardData.Adjectives[subtractAdjective].priority;
+        if (adjectives[adjIndex] == null)
+        { 
+            return;
+        }
+        adjectives[adjIndex].Abandon(this);
         adjectives[adjIndex] = null;
         --countAdj[adjIndex];
         checkAdj[adjIndex] = false;
@@ -297,11 +306,6 @@ public class InteractiveObject : MonoBehaviour
         if (isAdjective)
         {
             addAdjectiveTexts[adjIndex] = null;
-        }
-        
-        if (subtractAdjective == EAdjective.Long)
-        {
-            this.gameObject.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 

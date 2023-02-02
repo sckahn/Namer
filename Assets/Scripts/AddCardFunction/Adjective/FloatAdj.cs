@@ -48,6 +48,11 @@ public class FloatAdj : IAdjective
         //Debug.Log("Float : this Object -> other Object");
     }
 
+    public void Abandon(InteractiveObject thisObject)
+    {
+        
+    }
+
     IEnumerator FloatObj(GameObject obj)
     {
         var rb = obj.GetComponent<Rigidbody>();
@@ -83,6 +88,5 @@ public class FloatAdj : IAdjective
             rb.isKinematic = false;
             rb.useGravity = true;
         }
-        // 콜라이더가 1바이1인데 대각선 아래 있어도 걸려서 안 떨어짐 
     }
 }

@@ -52,7 +52,29 @@ public class FlammableAdj : IAdjective
         ParticleSetting(thisObject);
         isContact = true;
         ObjectOnFire(thisObject.gameObject);
+
         SoundManager.Instance.Play(SoundManager.Instance.effectClips[0]);
+
+    }
+
+    public void Abandon(InteractiveObject thisObject)
+    {
+        
+    }
+
+    [ContextMenu("Flammable Testing")]
+    private void ObjectOnFire(InteractiveObject targetObj)
+    {
+        //LookUpFlame(targetObj.gameObject);
+        if (isContact)
+        {
+            isContact = false;
+            isOnFire = true;
+            targetObj.StartCoroutine(OnFire(targetObj.gameObject));
+            isOnFire = false;
+            // targetObj.gameObject.SetActive(false);
+            // print("Boom");
+        }
     }
 
     private void ObjectOnFire(GameObject targetObj)
