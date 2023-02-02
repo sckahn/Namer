@@ -12,7 +12,7 @@ public class LongAdj : MonoBehaviour, IAdjective
     private int growScale = 1;
     private float shrinkScale = 0.5f;
     private float goalScale;
-    private float currentHeight;
+    private Vector3 prevScale;
     [SerializeField]private float growingSpeed = 1f;
     private float currentTime;
     private Vector3 targetScale;
@@ -40,6 +40,7 @@ public class LongAdj : MonoBehaviour, IAdjective
     
     public void Execute(InteractiveObject thisObject)
     {
+        SoundManager.Instance.Play(SoundManager.Instance.effectClips[2]);
         ObjectScaling(thisObject);
     }
 
@@ -55,12 +56,18 @@ public class LongAdj : MonoBehaviour, IAdjective
 
     public void Abandon(InteractiveObject thisObject)
     {
-        // 이렇게 할지 말지 고민중 
-        DetectManager.GetInstance.OnObjectScaleChanged(new Vector3(1, 1, 1), thisObject.transform);
-        thisObject.gameObject.transform.localScale = new Vector3(1, 1, 1);
+        ShrinkObj(thisObject);
     }
 
-    [ContextMenu("objScaling")]
+    public void ShrinkObj(InteractiveObject thisObject)
+    {
+        var canShrink = SetShrinkScale(thisObject.gameObject);
+        if (canShrink)
+        {
+            DetectManager.GetInstance.OnObjectScaleChanged(targetScale,thisObject.transform);
+            InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(ScaleObj(thisObject.gameObject));
+        }
+    }
     public void ObjectScaling(InteractiveObject targetObj)
     {
         bool flag = CheckGrowable(targetObj.gameObject);
@@ -68,20 +75,40 @@ public class LongAdj : MonoBehaviour, IAdjective
         {
             SetGrowScale(targetObj.gameObject);
             DetectManager.GetInstance.OnObjectScaleChanged(targetScale,targetObj.transform);
+          
             InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(ScaleObj(targetObj.gameObject));
             // targetObj.StartCoroutine(WrapperCoroutine(flag,targetObj));
         }
         else
         {
+            prevScale = targetObj.transform.lossyScale;
             InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(Twinkle(targetObj.gameObject));
             // targetObj.StartCoroutine(WrapperCoroutine(flag,targetObj));
         }
     }
     private void SetGrowScale(GameObject targetObj)
     {
+        prevScale = targetObj.transform.lossyScale;
         goalScale = targetObj.transform.localScale.y + growScale;
         targetScale = new Vector3(targetObj.transform.localScale.x, goalScale, targetObj.transform.localScale.z);
-        currentHeight = targetObj.transform.localScale.y;
+        // currentHeight = targetObj.transform.localScale.y;
+    }
+
+    private bool SetShrinkScale(GameObject targetObj)
+    {
+
+
+        if (Mathf.RoundToInt(targetObj.transform.localScale.y) == 1) return false;
+        if (prevScale.y != targetObj.transform.lossyScale.y)
+        {
+            goalScale = targetObj.transform.localScale.y - growScale;
+            prevScale = targetObj.transform.lossyScale;
+            targetScale = new Vector3(targetObj.transform.localScale.x, goalScale, targetObj.transform.localScale.z);
+            return true;
+        }
+
+        return false;
+        // currentHeight = targetObj.transform.localScale.y;
     }
 
     private bool CheckGrowable(GameObject targetObj)
@@ -90,7 +117,8 @@ public class LongAdj : MonoBehaviour, IAdjective
         //2. after grow update object arr 
         
         // var test = GameManager.GetInstance.GetCheckSurrounding.GetTransformsAtDirOrNull(targetObj, Dir.up);
-        var upperNeighbor = DetectManager.GetInstance.GetAdjacentObjectWithDir(targetObj, Dir.up);
+        // var upperNeighbor = DetectManager.GetInstance.GetAdjacentObjectWithDir(targetObj, Dir.up);
+        var upperNeighbor=DetectManager.GetInstance.GetAdjacentObjectWithDir(targetObj, Dir.up, targetObj.transform.lossyScale);
 
         if (upperNeighbor != null)
         {
@@ -104,22 +132,7 @@ public class LongAdj : MonoBehaviour, IAdjective
         return true;
     }
 
-    IEnumerator WrapperCoroutine(bool isGrow,InteractiveObject targetObj)
-    {
-        if (targetObj != null)
-        {
-            if (isGrow)
-            {
-                SetGrowScale(targetObj.gameObject);
-                yield return targetObj.StartCoroutine(ScaleObj(targetObj.gameObject));
-            }
-            else
-            {
-                targetObj.StartCoroutine(Twinkle(targetObj.gameObject));
-            }
-        }
-    }
-
+   
     // 오브젝트의 y축 스케일을 조정
     IEnumerator ScaleObj(GameObject targetObj)
     {
@@ -165,6 +178,30 @@ public class LongAdj : MonoBehaviour, IAdjective
         renderer.color = originalcolor;
         meshRenderer.enabled = true;
     }
+
+    #region TestCaseCode
+
+    /*
+     * Test Cases
+     * 1. 그로우 안하고 슈링크 하기 v
+     * 2. 그로우 실패후 슈링크 하기 v
+     * 3. 그로우 후 이동해서 flame에 가다가 되기 v
+     * 4. 그로우 -> 슈링크후 flame 가다가 되기 안되는게 정상 v  
+     */
+    [ContextMenu("Grow")]
+    public void Grow()
+    {
+        ObjectScaling(gameObject.GetComponent<InteractiveObject>());
+    }
+
+    [ContextMenu("Shrink")]
+    public void Shrink()
+    {
+        ShrinkObj(gameObject.GetComponent<InteractiveObject>());
+    }
+    
+
+    #endregion
 
     
 }

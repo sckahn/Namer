@@ -18,6 +18,7 @@ public class GameManager : Singleton<GameManager>
     private GameStates state;
     public bool isTapDown = false;
     private CheckSurrounding checkSurrounding;
+    public bool isPlayerDoInteraction;
 
     public CheckSurrounding GetCheckSurrounding
     {
@@ -35,6 +36,7 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         this.gameObject.AddComponent<StateMachineRunner>();
+        isPlayerDoInteraction = false;
         
         GameObject nameData = Resources.Load("NameData") as GameObject;
         Instantiate(nameData, Vector3.zero, Quaternion.identity);
@@ -86,7 +88,6 @@ public class GameManager : Singleton<GameManager>
         Debug.Log("You win");
         // show viectory ui
         // menu for next lever or quit
-        throw new NotImplementedException();
     }
 
     private void HandleInGame()

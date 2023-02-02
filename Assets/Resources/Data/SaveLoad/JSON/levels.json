@@ -1,0 +1,134 @@
+[
+  {
+    "levelName" : "Level01",
+    "level" : -1,
+    "scenario": "",
+    "playerPosition": {
+      "x": 0.0,
+      "y": 1.0,
+      "z": 0.0
+    },
+    "cardView": {
+      "cardRead": [
+        3,
+        5,
+        9,
+        3
+      ],
+      "adjectiveRead": [
+        4
+      ]
+    }
+  },
+  {
+    "levelName" : "Tutorial",
+    "level" : 0,
+    "scenario": "",
+    "playerPosition": {
+      "x": -3.0,
+      "y": 0.0,
+      "z": 1.0
+    },
+    "cardView": {
+      "cardRead": [
+        
+      ],
+      "adjectiveRead": [
+        5,
+        6
+      ]
+    }
+  },
+  {
+    "levelName" : "Level01",
+    "level": 1,
+    "scenario": "",
+    "playerPosition": {
+      "x": -1.0,
+      "y": 1.0,
+      "z": 1.0
+    },
+    "cardView": {
+      "cardRead": [
+        2
+      ],
+      "adjectiveRead": [
+        6,
+        2
+      ]
+    }
+  },
+  {
+    "levelName" : "Level02",
+    "level": 2,
+    "scenario": "",
+    "playerPosition": {
+      "x": -3.0,
+      "y": 1.0,
+      "z": 0.0
+    },
+    "cardView": {
+      "cardRead": [
+        8
+      ],
+      "adjectiveRead": [
+        6,
+        4
+      ]
+    }
+  },
+  {
+    "levelName" : "Level03",
+    "level": 3,
+    "scenario": "",
+    "playerPosition": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "cardView": {
+      "cardRead": [
+        
+      ],
+      "adjectiveRead": [
+        
+      ]
+    }
+  },
+  {
+    "levelName" : "Level04",
+    "level": 4,
+    "scenario": "",
+    "playerPosition": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "cardView": {
+      "cardRead": [
+        
+      ],
+      "adjectiveRead": [
+        
+      ]
+    }
+  },
+  {
+    "levelName" : "Level05",
+    "level": 5,
+    "scenario": "",
+    "playerPosition": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "cardView": {
+      "cardRead": [
+
+      ],
+      "adjectiveRead": [
+
+      ]
+    }
+  }
+]

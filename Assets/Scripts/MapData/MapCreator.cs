@@ -3,13 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
 using UnityEngine;
 
 public class MapCreator : MonoBehaviour
 {
-    private string filePath;
-
     private int mapX;
     private int mapY;
     private int mapZ;
@@ -17,35 +14,24 @@ public class MapCreator : MonoBehaviour
     private GameObject[] tilePrefabs;
     private GameObject[] objectPrefabs;
     
-    public GameObject[,,] CreateTileMap(string filePath, string tileMapFileName)
+    public GameObject[,,] CreateTileMap(StreamReader tileMapData)
     {
-        this.filePath = filePath;
         tilePrefabs = Resources.LoadAll<GameObject>("Prefabs/GroundTiles");
-        string[,,] tileMap = MapCsvFileReader(tileMapFileName);
+        string[,,] tileMap = ReadMapDataCsv(tileMapData);
 
         return TileCreator(tileMap);
     }
 
-    public GameObject[,,] CreateObjectMap(string filePath, string objectMapFileName, string objectInfoFileName)
+    public GameObject[,,] CreateObjectMap(StreamReader objectMapData, Dictionary<int, ObjectInfo> objectInfoDic)
     {
-        this.filePath = filePath;
         objectPrefabs = Resources.LoadAll<GameObject>("Prefabs/Objects");
-        string[,,] objectMap = MapCsvFileReader(objectMapFileName);
-        Dictionary<int, ObjectInfo> objectInfoDic = ObjectInfoFileReader(objectInfoFileName);
-        
-        return ObjectCreater(objectMap, objectInfoDic);
+        string[,,] objectMap = ReadMapDataCsv(objectMapData);
+
+        return ObjectCreator(objectMap, objectInfoDic);
     }
 
-    private string[,,] MapCsvFileReader(string fileName)
+    private string[,,] ReadMapDataCsv(StreamReader sr)
     {
-        if (!File.Exists(filePath + "/CSV/" + fileName))
-        {
-            Debug.Log(fileName + " 파일이 없습니다! 원하는 씬으로 가서 맵 정보 파일을 먼저 생성해주세요.");
-            return null;
-        }
-        
-        StreamReader sr = new StreamReader(filePath + "/CSV/" + fileName);
-        
         int[] lineGetSize = Array.ConvertAll(sr.ReadLine().Split(','), int.Parse);
         
         mapX = lineGetSize[0];
@@ -82,32 +68,6 @@ public class MapCreator : MonoBehaviour
         }
         return map;
     }
-    
-    private Dictionary<int, ObjectInfo> ObjectInfoFileReader(string fileName)
-    {
-        Dictionary<int, ObjectInfo> objectInfoDic = new Dictionary<int, ObjectInfo>();
-        
-        if (!File.Exists(filePath + "/JSON/" + fileName))
-        {
-            Debug.Log( fileName + " 파일이 없습니다! 원하는 씬으로 가서 맵 정보 파일을 먼저 생성해주세요.");
-            return null;
-        }
-        
-        string jsonFilePath = filePath.Replace("Assets/Resources/", "");
-        fileName = fileName.Replace(".json", "");
-        
-        TextAsset textAsset = Resources.Load<TextAsset>(jsonFilePath + "/JSON/" + fileName);
-        List<ObjectInfo> objectInfos = JsonConvert.DeserializeObject<List<ObjectInfo>>(textAsset.text);
-        foreach (var info in objectInfos)
-        {
-            if (!objectInfoDic.ContainsKey(info.objectID))
-            {
-                objectInfoDic.Add(info.objectID, info);
-            }
-        }
-        
-        return objectInfoDic;
-    }
 
     private GameObject[,,] TileCreator(string[,,] tileMap)
     {
@@ -143,7 +103,7 @@ public class MapCreator : MonoBehaviour
         return initTiles;
     }
 
-    private GameObject[,,] ObjectCreater(string[,,] objectMap, Dictionary<int, ObjectInfo> objectInfoDic)
+    private GameObject[,,] ObjectCreator(string[,,] objectMap, Dictionary<int, ObjectInfo> objectInfoDic)
     {
         GameObject parent = new GameObject("Objects");
         
