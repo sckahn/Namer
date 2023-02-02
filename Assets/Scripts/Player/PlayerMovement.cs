@@ -13,7 +13,9 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 3;
     public int rotateSpeed = 10;
     public bool _canPlayerInput = true;
+    private Dir targetDir;
 
+    [SerializeField] [Range(0f, 5f)] private float rootmotionSpeed;
     // TODO KeyMapping ?
 
     private void Start()
@@ -60,8 +62,8 @@ public class PlayerMovement : MonoBehaviour
             
             if (GameManager.GetInstance.GetCheckSurrounding.forwardObjectInfo)
             {
-                interactobj = GameManager.GetInstance.GetCheckSurrounding.forwardObjectInfo;
-
+                targetDir = GameManager.GetInstance.GetCheckSurrounding.objDir;
+                
                 if (interactobj.CompareTag("InteractObj"))
                 {
                     playerEntity.ChangeState(PlayerStates.Push);
@@ -77,21 +79,7 @@ public class PlayerMovement : MonoBehaviour
         GameManager.GetInstance.GetCheckSurrounding.CheckCharacterCurrentTile(this.gameObject);
         GameManager.GetInstance.GetCheckSurrounding.CheckForwardObj(this.gameObject);
         interactobj = GameManager.GetInstance.GetCheckSurrounding.forwardObjectInfo;
-
-
-
-        Debug.Log((int)(this.transform.rotation.eulerAngles.y % 90) + " : 나머지  ");
         
-        if (interactobj)
-        {
-            var position = interactobj.transform.position;
-            var position1 = this.transform.position;
-            //Vector3 fwd = this.transform.TransformDirection(Vector3.forward);
-            //Debug.Log(Mathf.Rad2Deg * Mathf.Atan2(fwd.x, fwd.z));
-            //Debug.Log(Mathf.Rad2Deg * Mathf.Acos(Vector2.Dot(new Vector2(position.x, position.z), new Vector2(fwd.x, fwd.z)) /
-            //new Vector2(position.x, position.z).magnitude * new Vector2(fwd.x, fwd.z).magnitude));
-        }
-
         // 인터렉션 중에는 이동 또는 다른 인터렉션 불가
         if (_canPlayerInput && !GameManager.GetInstance.isPlayerDoInteraction)
         {
@@ -103,78 +91,53 @@ public class PlayerMovement : MonoBehaviour
 
     public void PushRootmotionEvent()
     {
-        StartCoroutine(PushRootmotion(interactobj.transform));    
+        StartCoroutine(PushRootmotion());    
     }
 
-
-    private void Dircheck(GameObject targetobj)
-    {
-        if (targetobj)
-        {
-            
-        }
-    }
-
-    public IEnumerator test()
-    {
-        
-        GameManager.GetInstance.GetCheckSurrounding.CheckCharacterCurrentTile(this.gameObject);
-        GameManager.GetInstance.GetCheckSurrounding.CheckForwardObj(this.gameObject);
-        interactobj = GameManager.GetInstance.GetCheckSurrounding.forwardObjectInfo;
-        var position = interactobj.transform.position;
-        
-        if (GameManager.GetInstance.GetCheckSurrounding.objDir == Dir.right)
-        {
-            //while (transform.rotation.y)
-        }
-        
-        if (GameManager.GetInstance.GetCheckSurrounding.objDir == Dir.left)
-        {
-            
-        }
-        
-        if (GameManager.GetInstance.GetCheckSurrounding.objDir == Dir.up)
-        {
-            
-        }
-        
-        if (GameManager.GetInstance.GetCheckSurrounding.objDir == Dir.down)
-        {
-            
-        }
-
-
-        yield return null;
-
-    }
     // 방향만 맞춰주면 되는 경우
-    public IEnumerator SetRotationBeforeInteraction(Transform targetObjTransform)
+    public IEnumerator SetRotationBeforeInteraction()
     {
-        if (GameManager.GetInstance.GetCheckSurrounding.objDir == Dir.right)
+        float targetRotationY = 0;
+        //float curPlayerRoationY = transform.eulerAngles.y;
+        switch (targetDir)
         {
-            //this.transform.rotation = Quaternion.Lerp();
+            case Dir.right :
+                targetRotationY = 90;
+                break;
+            case Dir.down :
+                targetRotationY = 180;
+                break;
+            case Dir.left :
+                targetRotationY = 270;
+                break;
+            case Dir.up :
+                targetRotationY = 0;
+                break;
+            default :
+                Debug.LogError("잘못된 타겟 방향값입니다...!");
+                break;
         }
+
+        // if (this.transform.rotation.y < 0)
+        // {
+        //     curPlayerRoationY += 360;
+        // }
+        //float destinationRotationY = targetRotationY - curPlayerRoationY;
         
-        if (GameManager.GetInstance.GetCheckSurrounding.objDir == Dir.left)
-        {
-            
-        }
-        
-        if (GameManager.GetInstance.GetCheckSurrounding.objDir == Dir.up)
-        {
-            
-        }
-        
-        if (GameManager.GetInstance.GetCheckSurrounding.objDir == Dir.down)
-        {
-            
-        }
-        
-        while (true)
-        {
-            yield return new WaitForFixedUpdate();
-        }
-        
+        // TODO Lerp Lotation 하기
+        //float rotationTime = 0;
+        transform.rotation = Quaternion.Euler(new Vector3(0, targetRotationY, 0));
+
+        // while (rotationTime < 1 )
+        // {
+        //     rotationTime += Time.deltaTime;
+        //     if (rotationTime > 1f)
+        //     {
+        //         rotationTime = 1;
+        //     }
+        //     
+        //     yield return new WaitForEndOfFrame();
+        // }
         
         yield return null;
     }
@@ -183,46 +146,45 @@ public class PlayerMovement : MonoBehaviour
     // 포지션도 맞춰줘야 할 경우
     public IEnumerator SetPositionBeforeInteraction(Transform targetObjTransform)
     {
-        var position = GameManager.GetInstance.GetCheckSurrounding.curObjectInfo.transform.position;
-        Vector2 playerTilePos = new Vector2(position.x, position.z);
+        // TODO 포지션 맞춰줘야 하는 경우 고민
         
-        Vector2 targetPos = new Vector2(targetObjTransform.position.x - playerTilePos.x,
-            targetObjTransform.position.z - playerTilePos.y);
-        float padding = 0.05f;
-        
-        // TODO Walk 애니메이션 사용하는 것도 좋을 듯.
-        // while ()
-        // {
-        //     this.transform.position = 
-        // }
-        //
-        // this.transform.position
         yield return null;
     }
 
-    public IEnumerator PushRootmotion(Transform targetObjTransform)
+    public IEnumerator PushRootmotion()
     {
-        yield return SetPositionBeforeInteraction(GameManager.GetInstance.GetCheckSurrounding.curObjectInfo.transform);
+        yield return SetRotationBeforeInteraction();
         
-        Vector3 targetPos = targetObjTransform.position;
-        float padding = 0.005f;
-        Vector3 temp = targetPos + interactobj.transform.position;
-
-        while ((interactobj.transform.position - temp).magnitude > 0.01f)
+        Vector3 targetPos = Vector3.zero;
+        
+        switch (targetDir)
         {
-            interactobj.transform.position = new Vector3(targetPos.x * padding + interactobj.transform.position.x,
-                interactobj.transform.position.y,
-                targetPos.z * padding + interactobj.transform.position.z);
-
-            this.transform.position = new Vector3(targetPos.x * padding + this.transform.position.x,
-             this.transform.position.y,
-             targetPos.z * padding + this.transform.position.z);
-
-            yield return new WaitForSeconds(0.01f);
+            case Dir.right :
+                targetPos = Vector3.right;
+                break;
+            case Dir.down :
+                targetPos = Vector3.back;
+                break;
+            case Dir.left :
+                targetPos = Vector3.left;
+                break;
+            case Dir.up :
+                targetPos = Vector3.forward;
+                break;
+            default :
+                Debug.LogError("잘못된 타겟 방향값입니다...!");
+                break;
         }
-
-        //TODO 포지션 맞춰주기
-        interactobj.transform.position = new Vector3(Mathf.Round(interactobj.transform.position.x), Mathf.Round(interactobj.transform.position.y), Mathf.Round(interactobj.transform.position.z));
+        var curPos = transform.position;
+        Vector3 destinationPos = targetPos + curPos;
+        float moveTime = 0;
+        
+        while (moveTime < 1)
+        {
+            moveTime += Time.deltaTime * rootmotionSpeed;
+            transform.position = Vector3.Lerp(curPos, destinationPos, moveTime);
+                yield return new WaitForEndOfFrame();
+        }
     }
 }
 
