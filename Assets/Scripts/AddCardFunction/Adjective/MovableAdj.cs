@@ -153,6 +153,9 @@ public class MovableAdj : IAdjective
         currentTime = 0;
         Vector3 startPos = obj.transform.localPosition;
         isRoll = true;
+
+        SoundManager.Instance.Play(SoundManager.Instance.effectClips[1]);
+
         while (currentTime < movingSpeed)
         {
             currentTime += Time.deltaTime;
