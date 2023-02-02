@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: KHG
+  m_text: KHJ
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffd0ae8aa64a74bceaf6cf34c299b92b, type: 2}
   m_sharedMaterial: {fileID: 9004548681602695470, guid: ffd0ae8aa64a74bceaf6cf34c299b92b, type: 2}
@@ -244,7 +244,7 @@ GameObject:
   - component: {fileID: 3909399597987590732}
   - component: {fileID: 5722296147073226204}
   m_Layer: 0
-  m_Name: KHGCard
+  m_Name: KHJCard
   m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

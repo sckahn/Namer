@@ -147,8 +147,8 @@ public class MainUIController : MonoBehaviour
         }
         if(state == MainMenuState.Credit)
         {
+            creditObject.transform.position =new Vector3(0, -10, 0);
             creditObject.SetActive(false);
-            creditObject.transform.DOMove(new Vector3(0, -11, 0) ,0.1f);
             returnBtn.SetActive(false);
             goBtn.SetActive(false);
             pauseBtn.SetActive(false);

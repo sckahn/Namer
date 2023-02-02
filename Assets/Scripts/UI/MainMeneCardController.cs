@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMeneCardController : MonoBehaviour
 {
@@ -127,6 +128,10 @@ public class MainMeneCardController : MonoBehaviour
             case "MainCard(Clone)":
                 mainUIController.MainMenuScene();
                 break;
+            case "1StageCard(Clone)":
+                LoadingSceneController.LoadScene("DemoPlay");
+                break;
+                
 
             default:
                 break;
