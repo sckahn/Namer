@@ -90,20 +90,6 @@ public class GameDataManager : Singleton<GameDataManager>
         SaveLoadData loadData = new SaveLoadData();
         userDataDic = loadData.ReadJsonFile<string, UserData>(filePath + "SaveLoad", userDataFileName);
         levelDataDic = loadData.ReadJsonFile<int, LevelData>(filePath + "SaveLoad", levelDataFileName);
-
-
-        StringBuilder sb = new StringBuilder();
-        foreach (var userData in userDataDic)
-        {
-            sb.AppendLine(userData.Key + " : " + userData.Value.nickName);
-        }
-
-        foreach (var levelData in levelDataDic)
-        {
-            sb.AppendLine(levelData.Key + " : " + levelData.Value.levelName);
-        }
-        
-        Debug.Log(sb);
     }
     
 #endregion
