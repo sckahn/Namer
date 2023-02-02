@@ -37,7 +37,7 @@ public class CardManager : Singleton<CardManager>
         yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < startCards.Length; i++)
         {
-            if(scene.name == "MainScene" || scene.name == "LevelSelect")
+            if(scene.name == "MainScene")
             {
                 MainMenuAddCard(startCards[i]);
             }

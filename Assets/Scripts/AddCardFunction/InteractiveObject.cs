@@ -18,7 +18,7 @@ public class InteractiveObject : MonoBehaviour
     private EName checkName;
     private int checkAdjCount;
     private bool[] initAdj;
-    
+
     public bool[] GetCheckAdj()
     {
         return checkAdj;
@@ -125,10 +125,10 @@ public class InteractiveObject : MonoBehaviour
         }
         
         // change name
-        //if (objectName != checkName)
-        //{
-        //    ChangeName(objectName);
-        //}
+        // if (objectName != checkName)
+        // {
+        //     ChangeName(objectName);
+        // }
         
         // change adjective
         int currentCheckAdj = checkAdj.Count(a => a);
@@ -201,7 +201,7 @@ public class InteractiveObject : MonoBehaviour
     public void AddName(EName? addedName)
     {
         SubtractName(objectName);
-
+        
         // Check Error
         if (addedName == null)
         {
@@ -220,13 +220,13 @@ public class InteractiveObject : MonoBehaviour
                 SetAdjective(addAdjective, false);
             }
         }
-
+        
         objectName = (EName)addedName;
         addNameText = cardData.Names[(EName)addedName].uiText;
 
         //수정한 부분
         DetectManager.GetInstance.StartDetector(new List<GameObject>() { this.gameObject });
-        //수정한 부분 
+        //수정한 부분
     }
 
     public void AddAdjective(EAdjective[] addAdjectives)

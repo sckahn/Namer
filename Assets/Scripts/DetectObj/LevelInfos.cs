@@ -6,7 +6,7 @@ public class LevelInfos : MonoBehaviour
 {
     [Header("MODE")]
     [SerializeField] bool isCreateMode;
-    [SerializeField] string levelName;
+    [Range(-1, 10)][SerializeField] int levelNumber;
 
     // test
     [Header("TEST")]
@@ -19,10 +19,10 @@ public class LevelInfos : MonoBehaviour
     [SerializeField] public bool isStretched;
 
     public bool IsCreateMode { get { return isCreateMode; } }
-    public string LevelName { get { return levelName; } }
+     public int LevelNumber { get { return levelNumber; } }
 
     private void Awake()
     {
-        DetectManager.GetInstance.Init(this);
+        DetectManager.GetInstance.Init(levelNumber);
     }
 }

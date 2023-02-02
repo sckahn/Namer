@@ -57,6 +57,8 @@ public class MovableAdj : IAdjective
             target = thisObject.transform.position + Vector3.right;
             detectManager.SwapBlockInMap(prevLocatio, target);
             InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(MoveObj(thisObject.gameObject));
+            player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Push);
+
             // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
         
             return;
@@ -70,7 +72,8 @@ public class MovableAdj : IAdjective
             detectManager.SwapBlockInMap(prevLocatio, target);
             // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
             InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(MoveObj(thisObject.gameObject));
-        
+            player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Push);
+
             return;
         }
         else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.z) && direction.z > 0)
@@ -81,6 +84,8 @@ public class MovableAdj : IAdjective
             detectManager.SwapBlockInMap(prevLocatio, target);
             // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
             InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(MoveObj(thisObject.gameObject));
+            player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Push);
+
             return;
         }
         else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.z) && direction.z < 0)
@@ -92,6 +97,8 @@ public class MovableAdj : IAdjective
         
             // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
             InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(MoveObj(thisObject.gameObject));
+            player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Push);
+
             return;
         }
         
