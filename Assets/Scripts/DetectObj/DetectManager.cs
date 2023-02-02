@@ -36,20 +36,21 @@ public partial class DetectManager : Singleton<DetectManager>
 
     // LevelInfos 컴포넌트에서 씬이 열리고 바로 해당 함수를 호출
     // 호출시에 바로 모드를 파악하고, 맵을 로드하거나 (에디터모드인 경우는) 맵 파일을 저장함 
-    public void Init(LevelInfos infos)
+    public void Init(int level)
     {
+        levelInfos = FindObjectOfType<LevelInfos>();
         GameObject player = GameObject.Find("Player");
         if (player != null) player.SetActive(false);
-        this.levelInfos = infos;
         gameDataManager = GameDataManager.GetInstance;
+        gameDataManager.GetUserAndLevelData();
         if (levelInfos.IsCreateMode)
         {
             gameDataManager.CreateFile();
         }
         else
         {
-            gameDataManager.GetUserAndLevelData();
-            gameDataManager.CreateMap(levelInfos.LevelName);
+            string levelName = gameDataManager.LevelDataDic[level].levelName;
+            gameDataManager.CreateMap(levelName);
             SetMapData();
             if (player != null) player.SetActive(true);
         }
