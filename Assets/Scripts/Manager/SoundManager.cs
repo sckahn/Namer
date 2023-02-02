@@ -8,7 +8,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource sound;
     
     public List<AudioClip> effectClips = new List<AudioClip> ();
-    public List<AudioClip> bgmClips = new List<AudioClip>();
+    public List<AudioClip> bgmClips = new List<AudioClip> ();
 
     private void Awake()
     {
@@ -31,6 +31,7 @@ public class SoundManager : MonoBehaviour
     public void Play(AudioClip clip)
     {
         //sound.clip = clip;
+        Debug.Log(clip.name);
         sound.PlayOneShot(clip);
     }
 }

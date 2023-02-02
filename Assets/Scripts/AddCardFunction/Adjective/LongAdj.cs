@@ -40,6 +40,7 @@ public class LongAdj : MonoBehaviour, IAdjective
     
     public void Execute(InteractiveObject thisObject)
     {
+        SoundManager.Instance.Play(SoundManager.Instance.effectClips[2]);
         ObjectScaling(thisObject);
     }
 
