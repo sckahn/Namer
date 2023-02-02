@@ -12,12 +12,27 @@ public class MainMeneCardController : MonoBehaviour
     [SerializeField] GameObject highlight;
     MainUIController mainUIController;
     CardRotate cr;
+    GameObject levelSelectCardHolder;
 
     private void Start()
     {
         cr = this.gameObject.GetComponent<CardRotate>();
-        cardHolder = FindObjectOfType<CardManager>().gameObject;
         mainUIController = FindObjectOfType<MainUIController>();
+        levelSelectCardHolder = GameObject.Find("CardHolders").transform.Find("LevelSelectCardHolder").gameObject;
+        cardHolderPicker();
+    }
+
+    void cardHolderPicker()
+    {
+        if (levelSelectCardHolder.activeInHierarchy)
+        {
+            cardHolder = FindObjectOfType<LevelSelectCardController>().gameObject;
+        }
+        else
+        {
+            cardHolder = FindObjectOfType<CardManager>().gameObject;
+        }
+
     }
 
     public void MoveTransform(PRS prs, bool useDotween, float dotweenTime = 0)
@@ -77,15 +92,21 @@ public class MainMeneCardController : MonoBehaviour
         {
             MainCastCard(this.gameObject.name);
             CardManager.GetInstance.target = null;
-            bc.enabled = false;
-            frontCover.SetActive(false);
+            Invoke("CardReturn", 1f);
         }
         else if (bc != null)
         {
-            bc.enabled = true;
-            frontCover.SetActive(true);
+            CardReturn();
         }
     }
+
+    void CardReturn()
+    {
+        bc.enabled = true;
+        frontCover.SetActive(true);
+    }
+
+
 
     public void MainCastCard(string cardName)
     {
@@ -101,7 +122,10 @@ public class MainMeneCardController : MonoBehaviour
                 print("OptionCard");
                 break;
             case "CreditCard(Clone)":
-                print("CreditCard");
+                mainUIController.CreditScene();
+                break;
+            case "MainCard(Clone)":
+                mainUIController.MainMenuScene();
                 break;
 
             default:

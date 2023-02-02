@@ -9,6 +9,12 @@ public class MainMenuObect : MonoBehaviour
     //카드를 선택한 상태에서 오브젝트를 호버링하면 카드의 타겟으로 설정
     //오브젝트의 이름을 화면에 띄움
     bool isHoverling = false;
+
+    private void Update()
+    {
+        AllPopUpNameCtr();
+    }
+
     private void OnMouseOver()
     {
         if (UIManager.GetInstance.isPause) return;
