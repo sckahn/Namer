@@ -1,16 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
 using UnityEngine;
 
-public class FileCreator : MonoBehaviour
+public class MapReader : MonoBehaviour
 {
-    private string filePath;
-
     private int gapY = 2;
 
     private int minX;
@@ -24,21 +20,10 @@ public class FileCreator : MonoBehaviour
     private int totalY;
     private int totalZ;
 
-    private string[,,] tileMapData;
-    private string[,,] objectMapData;
-    
-    private List<ObjectInfo> objectInfos = new List<ObjectInfo>();
-    
-    public void CreateFile(string filePath, string tileMapFileName, string objectMapFileName, string objectInfoFileName)
+    public MapData GetMapData()
     {
-        this.filePath = filePath;
-
         GetMapSize();
-        Indicator();
-        
-        WriteCsvFile(tileMapData, tileMapFileName);
-        WriteCsvFile(objectMapData, objectMapFileName);
-        WriteJsonFile(objectInfoFileName);
+        return Indicator();
     }
 
     private void GetMapSize()
@@ -58,13 +43,14 @@ public class FileCreator : MonoBehaviour
         totalZ = maxZ - minZ + 1;
     }
 
-    private void Indicator()
+    private MapData Indicator()
     {
         Transform[] tilePrefabs = Resources.LoadAll<Transform>("Prefabs/GroundTiles");
         Transform[] objectPredabs = Resources.LoadAll<Transform>("Prefabs/Objects");
         
-        tileMapData = new string[totalX, totalY, totalZ];
-        objectMapData = new string[totalX, totalY, totalZ];
+        string[,,] tileMapData = new string[totalX, totalY, totalZ];
+        string[,,] objectMapData = new string[totalX, totalY, totalZ];
+        List<ObjectInfo> objectInfos = new List<ObjectInfo>();
         
         int id = 0;
         for (int y = minY; y <= maxY; y++)
@@ -75,13 +61,14 @@ public class FileCreator : MonoBehaviour
                 {
                     Ray ray = new Ray(new Vector3(x, y + 0.5f, z - 1.5f), transform.forward);
                     RaycastHit hit;
-                    
-                    if (Physics.Raycast(ray, out hit,1f))
+
+                    if (Physics.Raycast(ray, out hit, 1f))
                     {
                         if (hit.collider.CompareTag("InteractObj"))
                         {
                             objectMapData[x - minX, y - minY, z - minZ] = id.ToString();
-                            AddObjectInfo(hit.collider, id++, GetPrefabName(objectPredabs, hit.collider.name));
+                            objectInfos.Add(AddObjectInfo(hit.collider, id++,
+                                GetPrefabName(objectPredabs, hit.collider.name)));
                         }
                         else if (!hit.collider.CompareTag("Player"))
                         {
@@ -91,6 +78,8 @@ public class FileCreator : MonoBehaviour
                 }
             }
         }
+
+        return new MapData(CreateCsvData(tileMapData), CreateCsvData(objectMapData), objectInfos);
     }
 
     private string GetPrefabName(Transform[] prefabs, string colliderName)
@@ -106,7 +95,7 @@ public class FileCreator : MonoBehaviour
         return null;
     }
 
-    private void AddObjectInfo(Collider objectCollider, int id, string prefabName)
+    private ObjectInfo AddObjectInfo(Collider objectCollider, int id, string prefabName)
     {
         InteractiveObject interObj = objectCollider.GetComponent<InteractiveObject>();
         
@@ -131,19 +120,14 @@ public class FileCreator : MonoBehaviour
             }
         }
         objectInfo.adjectives = adjectives.ToArray();
-        
-        objectInfos.Add(objectInfo);
+
+        return objectInfo;
     }
 
-    void WriteCsvFile(string[,,] dataStrings, string fileName)
+    private StringBuilder CreateCsvData(string[,,] dataStrings)
     {
         StringBuilder sb = new StringBuilder();
         string delimiter = ",";
-        
-        if (!Directory.Exists(filePath + "/CSV/"))
-        {
-            Directory.CreateDirectory(filePath + "/CSV/");
-        }
 
         sb.AppendLine(totalX + delimiter + totalY + delimiter + totalZ);
         for (int y = 0; y < totalY; y++)
@@ -154,7 +138,7 @@ public class FileCreator : MonoBehaviour
                 for (int x = 0; x < totalX; x++)
                 {
                     delimiter = x < totalX - 1 ? "," : "";
-                    
+
                     if (dataStrings[x, y, z] == null)
                     {
                         sb.Append("-1" + delimiter);
@@ -164,24 +148,11 @@ public class FileCreator : MonoBehaviour
                         sb.Append(dataStrings[x, y, z] + delimiter);
                     }
                 }
+
                 sb.AppendLine();
             }
         }
-        
-        StreamWriter outStream = File.CreateText(filePath + "/CSV/"+ fileName);
-        outStream.Write(sb);
-        outStream.Close();
-    }
 
-    private void WriteJsonFile(string fileName)
-    {
-        if (!Directory.Exists(filePath + "/JSON/"))
-        {
-            Directory.CreateDirectory(filePath + "/JSON/");
-        }
-        
-        string data = JsonConvert.SerializeObject(objectInfos, Formatting.Indented);
-        File.WriteAllText(filePath + "/JSON/" + fileName, data);
+        return sb;
     }
-    
 }

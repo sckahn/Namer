@@ -19,8 +19,6 @@ public class InteractiveObject : MonoBehaviour
     private int checkAdjCount;
     private bool[] initAdj;
 
-    private bool inputNameCard = false;
-    
     public bool[] GetCheckAdj()
     {
         return checkAdj;
@@ -127,10 +125,10 @@ public class InteractiveObject : MonoBehaviour
         }
         
         // change name
-        if (objectName != checkName)
-        {
-            ChangeName(objectName);
-        }
+        // if (objectName != checkName)
+        // {
+        //     ChangeName(objectName);
+        // }
         
         // change adjective
         int currentCheckAdj = checkAdj.Count(a => a);
@@ -144,8 +142,6 @@ public class InteractiveObject : MonoBehaviour
 
     private void ChangeName(EName changeName)
     {
-        if (inputNameCard) return;
-        
         SubtractName(checkName);
         
         checkName = changeName;
@@ -204,11 +200,8 @@ public class InteractiveObject : MonoBehaviour
 
     public void AddName(EName? addedName)
     {
-        // Test Change Name
-        inputNameCard = true;
-        
         SubtractName(objectName);
-
+        
         // Check Error
         if (addedName == null)
         {

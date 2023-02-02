@@ -7,7 +7,7 @@ public enum ECardType
 public enum EName
 {
     Null,
-    NameStone,
+    Rose,
     Ball,
     Rock,
     Bonfire,

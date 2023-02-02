@@ -17,7 +17,7 @@ public partial class DetectManager : Singleton<DetectManager>
 
     protected GameObject[,,] currentTiles;
 
-    MapDataManager mapManager;
+    GameDataManager gameDataManager;
     LevelInfos levelInfos;
     Dictionary<Vector3, GameObject> scaleChangedObjects = new Dictionary<Vector3, GameObject>();
 
@@ -41,14 +41,15 @@ public partial class DetectManager : Singleton<DetectManager>
         GameObject player = GameObject.Find("Player");
         if (player != null) player.SetActive(false);
         this.levelInfos = infos;
-        mapManager = MapDataManager.GetInstance;
+        gameDataManager = GameDataManager.GetInstance;
         if (levelInfos.IsCreateMode)
         {
-            mapManager.CreateFile();
+            gameDataManager.CreateFile();
         }
         else
         {
-            mapManager.CreateMap(levelInfos.LevelName);
+            gameDataManager.GetUserAndLevelData();
+            gameDataManager.CreateMap(levelInfos.LevelName);
             SetMapData();
             if (player != null) player.SetActive(true);
         }
@@ -58,10 +59,10 @@ public partial class DetectManager : Singleton<DetectManager>
     // 기존 맵 배열을 사용하는 것이 아니라 인게임용 배열을 가지고 검출, 수정 등을 할 예정 
     private void SetMapData()
     {
-        currentObjects = (GameObject[,,])mapManager.InitObjects.Clone();
+        currentObjects = (GameObject[,,])gameDataManager.InitObjects.Clone();
         //이전배열 == currentOBJECTS 배열을 만드는 것을 추가 했습니다.
         UpdatePrevBlockObjs();
-        currentTiles = (GameObject[,,])mapManager.InitTiles.Clone();
+        currentTiles = (GameObject[,,])gameDataManager.InitTiles.Clone();
 
         maxX = currentObjects.GetLength(0) - 1;
         maxY = currentObjects.GetLength(1) + 2;

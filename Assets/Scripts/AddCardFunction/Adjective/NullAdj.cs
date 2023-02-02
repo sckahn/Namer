@@ -42,4 +42,9 @@ public class NullAdj : IAdjective
     {
         //Debug.Log("Null : this Object -> other Object");
     }
+    
+    public void Abandon(InteractiveObject thisObject)
+    {
+        
+    }
 }
