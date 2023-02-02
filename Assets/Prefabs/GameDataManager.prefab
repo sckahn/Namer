@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2478308730698983310}
-  - component: {fileID: 3837913927598997558}
+  - component: {fileID: -2267348103837080897}
   m_Layer: 0
-  m_Name: MapDataManager
+  m_Name: GameDataManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3837913927598997558
+--- !u!114 &-2267348103837080897
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,9 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5481165786977658627}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53a1bea0bfdb74d8aab339dd64cdd424, type: 3}
+  m_Script: {fileID: 11500000, guid: a3af4b8f192214a93ac9bacb55d7bd7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTest: 0
   shouldCreateFile: 0
   shouldCreateMap: 0
   loadLevel: 
