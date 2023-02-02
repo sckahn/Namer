@@ -88,7 +88,6 @@ public class GameManager : Singleton<GameManager>
         Debug.Log("You win");
         // show viectory ui
         // menu for next lever or quit
-        throw new NotImplementedException();
     }
 
     private void HandleInGame()

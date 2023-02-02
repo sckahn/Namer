@@ -43,6 +43,7 @@ namespace PlayerOwnedStates
         {
             entity.myAnimator.SetBool("isPush", true);
             GameManager.GetInstance.isPlayerDoInteraction = true;
+            
         }
 
         public void Execute(PlayerEntity entity)

@@ -35,6 +35,7 @@ public class WinAdj : IAdjective
 
     public void Execute(InteractiveObject thisObject, GameObject player)
     {
+        player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Victory);
         CallWin();
         //Debug.Log("Win : this Object -> Player");
     }

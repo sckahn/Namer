@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
     #region components
     private Rigidbody rb;
     private Animator myanimator;
-    private PlayerEntity playerEntity;
+    public PlayerEntity playerEntity;
     #endregion
 
     public GameObject interactobj;
@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public bool _canPlayerInput = true;
     private Dir targetDir;
 
-    [SerializeField] [Range(0f, 5f)] private float rootmotionSpeed;
+    [SerializeField] [Range(0.1f, 5f)] private float rootmotionSpeed;
     // TODO KeyMapping ?
 
     private void Start()
@@ -59,18 +59,20 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(playerEntity.interactionKey))
         {
             // TODO 인터렉션 시 해당 Obj 방향으로 정렬
-            
-            if (GameManager.GetInstance.GetCheckSurrounding.forwardObjectInfo)
+            if (interactobj)
             {
                 targetDir = GameManager.GetInstance.GetCheckSurrounding.objDir;
                 
                 if (interactobj.CompareTag("InteractObj"))
                 {
-                    playerEntity.ChangeState(PlayerStates.Push);
-                    //변경한 부분 
-                    DetectManager.GetInstance.StartDetector();
-
-                    //변경한 부분 
+                    if (interactobj.GetComponent<InteractiveObject>().GetCheckAdj()[(int)EAdjective.Movable])
+                    {
+                    }
+                    
+                    else if (interactobj.GetComponent<InteractiveObject>().GetCheckAdj()[(int)EAdjective.Win])
+                    {
+                    }
+                    
                     interactobj.GetComponent<InteractiveObject>().Interact(this.gameObject);
                 }
             }
@@ -185,10 +187,12 @@ public class PlayerMovement : MonoBehaviour
         
         while (moveTime < 1)
         {
-            moveTime += Time.deltaTime * rootmotionSpeed;
-            transform.position = Vector3.Lerp(curPos, destinationPos, moveTime);
-                yield return new WaitForEndOfFrame();
+            moveTime += Time.deltaTime * rootmotionSpeed; 
+            transform.position = Vector3.Lerp(curPos, destinationPos, moveTime + 0.1f);
+            yield return new WaitForEndOfFrame();
         }
+
+        yield return null;
     }
 }
 
