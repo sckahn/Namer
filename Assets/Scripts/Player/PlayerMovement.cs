@@ -67,6 +67,10 @@ public class PlayerMovement : MonoBehaviour
                 if (interactobj.CompareTag("InteractObj"))
                 {
                     playerEntity.ChangeState(PlayerStates.Push);
+                    //변경한 부분 
+                    DetectManager.GetInstance.StartDetector();
+
+                    //변경한 부분 
                     interactobj.GetComponent<InteractiveObject>().Interact(this.gameObject);
                 }
             }

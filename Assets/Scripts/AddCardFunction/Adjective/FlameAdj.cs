@@ -42,4 +42,9 @@ public class FlameAdj : IAdjective
     {
         //Debug.Log("Flame : this Object -> other Object");
     }
+
+    public void Abandon(InteractiveObject thisObject)
+    {
+        
+    }
 }
