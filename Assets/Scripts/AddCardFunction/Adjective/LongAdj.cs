@@ -9,14 +9,18 @@ public class LongAdj : IAdjective
     private EAdjective adjectiveName = EAdjective.Long;
     private EAdjectiveType adjectiveType = EAdjectiveType.Normal;
     private int count = 0;
-    
+
+    #region LongAdjMember
+
     private int growScale = 1;
     private float shrinkScale = 0.5f;
     private float goalScale;
-    private float currentHeight;
-    [SerializeField]private float growingSpeed = 1f;
+    private float growingSpeed = 1f;
     private float currentTime;
     private Vector3 targetScale;
+    
+    #endregion
+    
     
     
     public EAdjective GetAdjectiveName()
@@ -83,7 +87,6 @@ public class LongAdj : IAdjective
     {
         goalScale = targetObj.transform.localScale.y + growScale;
         targetScale = new Vector3(targetObj.transform.localScale.x, goalScale, targetObj.transform.localScale.z);
-        currentHeight = targetObj.transform.localScale.y;
     }
 
     private bool CheckGrowable(GameObject targetObj)
@@ -104,22 +107,6 @@ public class LongAdj : IAdjective
             }
         }
         return true;
-    }
-
-    IEnumerator WrapperCoroutine(bool isGrow,InteractiveObject targetObj)
-    {
-        if (targetObj != null)
-        {
-            if (isGrow)
-            {
-                SetGrowScale(targetObj.gameObject);
-                yield return targetObj.StartCoroutine(ScaleObj(targetObj.gameObject));
-            }
-            else
-            {
-                targetObj.StartCoroutine(Twinkle(targetObj.gameObject));
-            }
-        }
     }
 
     // 오브젝트의 y축 스케일을 조정
