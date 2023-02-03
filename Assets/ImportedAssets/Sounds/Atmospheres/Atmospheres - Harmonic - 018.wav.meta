@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/ImportedAssets/Sounds/Atmospheres/Atmospheres - Harmonic - 018.wav.meta
 guid: 43c08bfee606f43908f117269b4491a9
+========
+guid: 289f7cc43a03f44f78f68dab0b04c97f
+>>>>>>>> KBHSoundTest:Assets/ImportedAssets/Sounds/Atmospheres/Atmospheres - Sub - 003 - III.wav.meta
 AudioImporter:
   externalObjects: {}
   serializedVersion: 6
