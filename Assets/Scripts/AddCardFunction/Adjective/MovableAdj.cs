@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Hardware;
 using UnityEngine;
 
 public class MovableAdj : IAdjective
@@ -153,6 +151,9 @@ public class MovableAdj : IAdjective
         currentTime = 0;
         Vector3 startPos = obj.transform.localPosition;
         isRoll = true;
+
+        SoundManager.Instance.Play(SoundManager.Instance.effectClips[1]);
+
         while (currentTime < movingSpeed)
         {
             currentTime += Time.deltaTime;

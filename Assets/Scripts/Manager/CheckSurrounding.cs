@@ -1,12 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
-using Update = UnityEngine.PlayerLoop.Update;
+
 
 
 public enum Dir
