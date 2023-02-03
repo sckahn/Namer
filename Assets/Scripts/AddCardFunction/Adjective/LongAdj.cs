@@ -41,7 +41,7 @@ public class LongAdj : IAdjective
     
     public void Execute(InteractiveObject thisObject)
     {
-        SoundManager.Instance.Play(SoundManager.Instance.effectClips[2]);
+        SoundManager.GetInstance.Play(SoundManager.GetInstance.effectClips[2]);
         ObjectScaling(thisObject);
     }
 

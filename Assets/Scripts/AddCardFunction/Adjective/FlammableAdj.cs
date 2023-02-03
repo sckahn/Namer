@@ -50,7 +50,7 @@ public class FlammableAdj : IAdjective
         isContact = true;
         ObjectOnFire(thisObject.gameObject);
 
-        SoundManager.Instance.Play(SoundManager.Instance.effectClips[0]);
+        SoundManager.GetInstance.Play(SoundManager.GetInstance.effectClips[0]);
 
     }
 
