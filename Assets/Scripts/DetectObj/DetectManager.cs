@@ -1,15 +1,11 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Palmmedia.ReportGenerator.Core.Reporting.Builders;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEngine.WSA;
 
 // Partial class로 파일을 나눠서 관리하도록 했습니다.
 // DetectManager.cs & DetectManager.Detect.cs & DetectManager.GetAdjacent.cs
+
+// TODO 코드 정리 해주세요.
 public partial class DetectManager : Singleton<DetectManager>
 {
     private GameObject[,,] currentObjects;

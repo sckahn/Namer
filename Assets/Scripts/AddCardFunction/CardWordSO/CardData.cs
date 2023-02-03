@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Card Data", menuName = "Scriptable Object/Card Data", order = 0)]
 public class CardData : ScriptableObject
 {
+    // TODO 코드 정리 해주세요.
+    
     public ECardType cardType;
     public string uiText;
     public EName addedName;
