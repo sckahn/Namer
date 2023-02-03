@@ -47,7 +47,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sound: {fileID: 2625901015695942103}
   effectClips:
-  - {fileID: 8300000, guid: 843b6d957c7904e05b141a997f4f60d3, type: 3}
+  - {fileID: 8300000, guid: fc014a50987fa46e093e12658b52ab98, type: 3}
+  - {fileID: 8300000, guid: ed00552589f014a9287ec81b83b91e62, type: 3}
+  - {fileID: 8300000, guid: 4830bec95f2ac451cbed64521f1e7ee5, type: 3}
+  - {fileID: 8300000, guid: 68751f4c568fe4551a2303fa45f8cf55, type: 3}
   bgmClips: []
 --- !u!82 &2625901015695942103
 AudioSource:
@@ -59,7 +62,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: da1cd5b6763fc4275ab6784cd05eb660, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 58f58c46e550f4b0998c22019b375070, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
