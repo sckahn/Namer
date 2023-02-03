@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public bool _canPlayerInput = true;
     private Dir targetDir;
 
-    [SerializeField] [Range(0.1f, 5f)] private float rootmotionSpeed;
+    [SerializeField] [Range(0.1f, 5f)] private float rootmotionSpeed = 0.1f;
     // TODO KeyMapping ?
 
     private void Start()
