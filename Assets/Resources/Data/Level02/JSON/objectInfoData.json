@@ -12,21 +12,21 @@
     "adjectives": []
   },
   {
-    "prefabName": "RockObj",
+    "prefabName": "SunObj",
     "objectID": 2,
-    "nameType": 3,
-    "adjectives": []
-  },
-  {
-    "prefabName": "RockObj",
-    "objectID": 3,
-    "nameType": 3,
+    "nameType": 7,
     "adjectives": []
   },
   {
     "prefabName": "NameStoneObj",
-    "objectID": 4,
+    "objectID": 3,
     "nameType": 1,
+    "adjectives": []
+  },
+  {
+    "prefabName": "BonfireObj",
+    "objectID": 4,
+    "nameType": 4,
     "adjectives": []
   },
   {

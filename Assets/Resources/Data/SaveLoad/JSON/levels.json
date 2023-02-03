@@ -1,7 +1,7 @@
 [
   {
-    "levelName" : "Level01",
     "level" : -1,
+    "SceneName" : "Level01",
     "scenario": "",
     "playerPosition": {
       "x": 0.0,
@@ -9,7 +9,7 @@
       "z": 0.0
     },
     "cardView": {
-      "cardRead": [
+      "nameRead": [
         3,
         5,
         9,
@@ -21,8 +21,8 @@
     }
   },
   {
-    "levelName" : "Tutorial",
     "level" : 0,
+    "SceneName" : "Tutorial",
     "scenario": "",
     "playerPosition": {
       "x": -3.0,
@@ -30,7 +30,7 @@
       "z": 1.0
     },
     "cardView": {
-      "cardRead": [
+      "nameRead": [
         
       ],
       "adjectiveRead": [
@@ -40,16 +40,16 @@
     }
   },
   {
-    "levelName" : "Level01",
     "level": 1,
+    "SceneName" : "Level01",
     "scenario": "",
     "playerPosition": {
-      "x": -1.0,
+      "x": 0.0,
       "y": 1.0,
-      "z": 1.0
+      "z": 0.0
     },
     "cardView": {
-      "cardRead": [
+      "nameRead": [
         2
       ],
       "adjectiveRead": [
@@ -59,16 +59,16 @@
     }
   },
   {
-    "levelName" : "Level02",
     "level": 2,
+    "SceneName" : "Level02",
     "scenario": "",
     "playerPosition": {
-      "x": -3.0,
+      "x": 0.0,
       "y": 1.0,
       "z": 0.0
     },
     "cardView": {
-      "cardRead": [
+      "nameRead": [
         8
       ],
       "adjectiveRead": [
@@ -78,16 +78,16 @@
     }
   },
   {
-    "levelName" : "Level03",
     "level": 3,
+    "SceneName" : "Level03",
     "scenario": "",
     "playerPosition": {
       "x": 0.0,
-      "y": 0.0,
+      "y": 3.0,
       "z": 0.0
     },
     "cardView": {
-      "cardRead": [
+      "nameRead": [
         
       ],
       "adjectiveRead": [
@@ -96,8 +96,8 @@
     }
   },
   {
-    "levelName" : "Level04",
     "level": 4,
+    "SceneName" : "Level04",
     "scenario": "",
     "playerPosition": {
       "x": 0.0,
@@ -105,7 +105,7 @@
       "z": 0.0
     },
     "cardView": {
-      "cardRead": [
+      "nameRead": [
         
       ],
       "adjectiveRead": [
@@ -114,8 +114,8 @@
     }
   },
   {
-    "levelName" : "Level05",
     "level": 5,
+    "SceneName" : "Level05",
     "scenario": "",
     "playerPosition": {
       "x": 0.0,
@@ -123,7 +123,7 @@
       "z": 0.0
     },
     "cardView": {
-      "cardRead": [
+      "nameRead": [
 
       ],
       "adjectiveRead": [
