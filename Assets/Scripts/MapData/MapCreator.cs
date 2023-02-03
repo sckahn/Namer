@@ -11,22 +11,15 @@ public class MapCreator : MonoBehaviour
     private int mapY;
     private int mapZ;
     
-    private GameObject[] tilePrefabs;
-    private GameObject[] objectPrefabs;
-    
     public GameObject[,,] CreateTileMap(StreamReader tileMapData)
     {
-        tilePrefabs = Resources.LoadAll<GameObject>("Prefabs/GroundTiles");
         string[,,] tileMap = ReadMapDataCsv(tileMapData);
-
         return TileCreator(tileMap);
     }
 
     public GameObject[,,] CreateObjectMap(StreamReader objectMapData, Dictionary<int, ObjectInfo> objectInfoDic)
     {
-        objectPrefabs = Resources.LoadAll<GameObject>("Prefabs/Objects");
         string[,,] objectMap = ReadMapDataCsv(objectMapData);
-
         return ObjectCreator(objectMap, objectInfoDic);
     }
 
@@ -83,14 +76,13 @@ public class MapCreator : MonoBehaviour
             {
                 for (int x = 0; x < mapX; x++)
                 {
-                    for (int i = 0; i < tilePrefabs.Length; i++)
+                    if (tileMap[x, y, z] == "-1")
                     {
-                        if (tilePrefabs[i].name == tileMap[x, y, z])
-                        {
-                            initTiles[x, y, z] = Instantiate(tilePrefabs[i], new Vector3(x, y, z), Quaternion.identity, Layer.transform);
-                            break;
-                        }
+                        continue;
                     }
+                    
+                    GameObject tilePrefab = Resources.Load("Prefabs/GroundTiles/" + tileMap[x, y, z]) as GameObject;
+                    initTiles[x, y, z] = Instantiate(tilePrefab, new Vector3(x, y, z), Quaternion.identity, Layer.transform);
                 }
             }
 
@@ -120,15 +112,10 @@ public class MapCreator : MonoBehaviour
                     }
                     
                     int id = int.Parse(objectMap[x, y, z]);
-                    for (int i = 0; i < objectPrefabs.Length; i++)
-                    {
-                        if (objectPrefabs[i].name == objectInfoDic[id].prefabName)
-                        {
-                            initObjects[x, y, z] = Instantiate(objectPrefabs[i], new Vector3(x, y, z), Quaternion.identity, parent.transform);
-                            initObjects[x, y, z].GetComponent<InteractiveObject>().objectInfo = objectInfoDic[id];
-                            break;
-                        }
-                    }
+                    
+                    GameObject objectPrefabs = Resources.Load("Prefabs/Objects/" + objectInfoDic[id].prefabName) as GameObject;
+                    initObjects[x, y, z] = Instantiate(objectPrefabs, new Vector3(x, y, z), Quaternion.identity, parent.transform);
+                    initObjects[x, y, z].GetComponent<InteractiveObject>().objectInfo = objectInfoDic[id];
                 }
             }
         }

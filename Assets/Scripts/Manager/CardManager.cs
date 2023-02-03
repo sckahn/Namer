@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -35,19 +37,48 @@ public class CardManager : Singleton<CardManager>
     {
         var scene = SceneManager.GetActiveScene();
         yield return new WaitForSeconds(0.1f);
-        for (int i = 0; i < startCards.Length; i++)
+        
+        if(scene.name == "MainScene")
         {
-            if(scene.name == "MainScene")
+            for (int i = 0; i < startCards.Length; i++)
             {
                 MainMenuAddCard(startCards[i]);
+                yield return new WaitForSeconds(0.5f);
             }
-            else
+        }
+        else
+        {
+            GameObject[] cards = GetLevelCards();
+            for (int i = 0; i < cards.Length; i++)
             {
-                AddCard(startCards[i]);
+                AddCard(cards[i]);
+                yield return new WaitForSeconds(0.5f);
             }
-            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    private GameObject[] GetLevelCards()
+    {
+        CardDataManager cardData = CardDataManager.GetInstance;
+        
+        int level = FindObjectOfType<LevelInfos>().LevelNumber;
+        List<EName> names = GameDataManager.GetInstance.LevelDataDic[level].cardView.nameRead;
+        List<EAdjective> adjectives = GameDataManager.GetInstance.LevelDataDic[level].cardView.adjectiveRead;
+        
+        List<GameObject> cards = new List<GameObject>();
+        for (int i = 0; i < names.Count; i++)
+        {
+            GameObject cardPrefab = Resources.Load("Prefabs/Cards/01. NameCard/" + cardData.Names[names[i]].cardPrefabName) as GameObject;
+            cards.Add(cardPrefab);
         }
 
+        for (int i = 0; i < adjectives.Count; i++)
+        {
+            GameObject cardPrefab = Resources.Load("Prefabs/Cards/02. AdjustCard/" + cardData.Adjectives[adjectives[i]].cardPrefabName) as GameObject;
+            cards.Add(cardPrefab);
+        }
+        
+        return cards.ToArray();
     }
 
     //카드를 생성하는 메서드 
@@ -77,7 +108,7 @@ public class CardManager : Singleton<CardManager>
         for (int i = 0; i < myCards.Count; i++)
         {
             var targetCard = myCards[i];
-
+            
             targetCard.originPRS = originCardPRSs[i];
             targetCard.originPRS.rot = cardHolderPoint.transform.rotation;
             targetCard.MoveTransform(targetCard.originPRS, true, 2f);

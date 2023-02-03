@@ -38,8 +38,8 @@ public struct UserData
 
 public struct LevelData
 {
-    public string levelName;
     public int level;
+    public string SceneName;
     public string scenario;
     public Position playerPosition;
     public CardView cardView;
@@ -47,7 +47,7 @@ public struct LevelData
 
 public struct CardView
 {
-    public List<EName> cardRead;
+    public List<EName> nameRead;
     public List<EAdjective> adjectiveRead;
 }
 

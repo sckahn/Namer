@@ -11,14 +11,16 @@ public struct SNameInfo
     public readonly string uiText;
     public readonly EName name;
     public readonly EAdjective[] adjectives;
+    public readonly string cardPrefabName;
     public readonly string contentText;
 
-    public SNameInfo(int priority, string uiText, EName name, EAdjective[] adjectives, string contentText = "")
+    public SNameInfo(int priority, string uiText, EName name, EAdjective[] adjectives, string cardPrefabName, string contentText = "")
     {
         this.priority = priority;
         this.uiText = uiText;
         this.name = name;
         this.adjectives = adjectives;
+        this.cardPrefabName = cardPrefabName;
         this.contentText = contentText;
     }
 }
@@ -29,9 +31,10 @@ public struct SAdjectiveInfo
     public readonly string uiText;
     public readonly EAdjective adjectiveName;
     public readonly IAdjective adjective;
+    public readonly string cardPrefabName;
     public readonly string contentText;
 
-    public SAdjectiveInfo(int priority, string uiText, EAdjective adjectiveName, string contentText = "")
+    public SAdjectiveInfo(int priority, string uiText, EAdjective adjectiveName, string cardPrefabName, string contentText = "")
     {
         this.priority = priority;
         this.uiText = uiText;
@@ -41,6 +44,7 @@ public struct SAdjectiveInfo
         var adjFunc = Activator.CreateInstance(type) as IAdjective;
         this.adjective = adjFunc;
         
+        this.cardPrefabName = cardPrefabName;
         this.contentText = contentText;
     }
 }
@@ -80,10 +84,12 @@ public class CardDataManager : Singleton<CardDataManager>
             {
                 adjNames = adjText.Split(", ").Select(item => (EAdjective)Enum.Parse(typeof(EAdjective), item)).ToArray();
             }
-
+            
+            string cardPrefabName = nameItem["카드프리팹이름"]?.InnerText;
+            
             if (!names.ContainsKey(itemName))
             {
-                names.Add(itemName, new SNameInfo(priority, uiText, itemName, adjNames));
+                names.Add(itemName, new SNameInfo(priority, uiText, itemName, adjNames, cardPrefabName));
             }
         }
         
@@ -94,10 +100,11 @@ public class CardDataManager : Singleton<CardDataManager>
             int priority = Convert.ToInt32(adjItem["우선순위"]?.InnerText);
             string uiText = adjItem["UI표시텍스트"]?.InnerText;
             EAdjective adjName = (EAdjective)Enum.Parse(typeof(EAdjective), adjItem["이름명"]?.InnerText);
+            string cardPrefabName = adjItem["카드프리팹이름"]?.InnerText;
 
             if (!adjectives.ContainsKey(adjName))
             {
-                adjectives.Add(adjName, new SAdjectiveInfo(priority, uiText, adjName));
+                adjectives.Add(adjName, new SAdjectiveInfo(priority, uiText, adjName, cardPrefabName));
             }
         }
     }
