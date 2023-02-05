@@ -59,7 +59,7 @@ public class CardManager : Singleton<CardManager>
 
     private GameObject[] GetLevelCards()
     {
-        CardDataManager cardData = CardDataManager.GetInstance;
+        GameDataManager cardData = GameDataManager.GetInstance;
         
         int level = FindObjectOfType<LevelInfos>().LevelNumber;
         List<EName> names = GameDataManager.GetInstance.LevelDataDic[level].cardView.nameRead;

@@ -40,10 +40,10 @@ public class InteractiveObject : MonoBehaviour
     public IAdjective[] Adjectives { get { return  adjectives; } }
     
     // manager to get card data 
-    private CardDataManager cardData;
+    private GameDataManager cardData;
 
     // object's information
-    public ObjectInfo objectInfo = new ObjectInfo();
+    public SObjectInfo objectInfo = new SObjectInfo();
     
     public int GetObjectID()
     {
@@ -113,7 +113,7 @@ public class InteractiveObject : MonoBehaviour
                 }
             }
 
-            cardData = CardDataManager.GetInstance;
+            cardData = GameDataManager.GetInstance;
             currentObjectName = cardData.Names[objectName].uiText;
             InitCard();
         }
