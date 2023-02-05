@@ -18,7 +18,7 @@ public class MapReader : MonoBehaviour
     private int totalY;
     private int totalZ;
 
-    public MapData GetMapData()
+    public SMapData GetMapData()
     {
         GetMapSize();
         return Indicator();
@@ -41,14 +41,14 @@ public class MapReader : MonoBehaviour
         totalZ = maxZ - minZ + 1;
     }
 
-    private MapData Indicator()
+    private SMapData Indicator()
     {
         Transform[] tilePrefabs = Resources.LoadAll<Transform>("Prefabs/GroundTiles");
         Transform[] objectPredabs = Resources.LoadAll<Transform>("Prefabs/Objects");
         
         string[,,] tileMapData = new string[totalX, totalY, totalZ];
         string[,,] objectMapData = new string[totalX, totalY, totalZ];
-        List<ObjectInfo> objectInfos = new List<ObjectInfo>();
+        List<SObjectInfo> objectInfos = new List<SObjectInfo>();
         
         int id = 0;
         for (int y = minY; y <= maxY; y++)
@@ -77,7 +77,7 @@ public class MapReader : MonoBehaviour
             }
         }
 
-        return new MapData(CreateCsvData(tileMapData), CreateCsvData(objectMapData), objectInfos);
+        return new SMapData(CreateCsvData(tileMapData), CreateCsvData(objectMapData), objectInfos);
     }
 
     private string GetPrefabName(Transform[] prefabs, string colliderName)
@@ -93,12 +93,12 @@ public class MapReader : MonoBehaviour
         return null;
     }
 
-    private ObjectInfo AddObjectInfo(Collider objectCollider, int id, string prefabName)
+    private SObjectInfo AddObjectInfo(Collider objectCollider, int id, string prefabName)
     {
         InteractiveObject interObj = objectCollider.GetComponent<InteractiveObject>();
         
         // prefabname, id, name, adjs
-        ObjectInfo objectInfo = new ObjectInfo();
+        SObjectInfo objectInfo = new SObjectInfo();
         objectInfo.prefabName = prefabName;
         objectInfo.objectID = id;
         objectInfo.nameType = interObj.GetObjectName();
@@ -108,12 +108,12 @@ public class MapReader : MonoBehaviour
         {
             if (interObj.GetCheckAdj()[i])
             {
-                if (CardDataManager.GetInstance.Adjectives.Count == 0)
+                if (GameDataManager.GetInstance.Adjectives.Count == 0)
                 {
-                    CardDataManager.GetInstance.ReadXmlFile();
+                    GameDataManager.GetInstance.GetCardData();
                 }
                 
-                EAdjective adjective = CardDataManager.GetInstance.Adjectives.FirstOrDefault(item => item.Value.priority == i).Key;
+                EAdjective adjective = GameDataManager.GetInstance.Adjectives.FirstOrDefault(item => item.Value.priority == i).Key;
                 adjectives.Add(adjective);
             }
         }

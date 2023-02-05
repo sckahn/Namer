@@ -16,7 +16,7 @@ public class MapCreator : MonoBehaviour
         return TileCreator(tileMap);
     }
 
-    public GameObject[,,] CreateObjectMap(StreamReader objectMapData, Dictionary<int, ObjectInfo> objectInfoDic)
+    public GameObject[,,] CreateObjectMap(StreamReader objectMapData, Dictionary<int, SObjectInfo> objectInfoDic)
     {
         string[,,] objectMap = ReadMapDataCsv(objectMapData);
         return ObjectCreator(objectMap, objectInfoDic);
@@ -94,7 +94,7 @@ public class MapCreator : MonoBehaviour
         return initTiles;
     }
 
-    private GameObject[,,] ObjectCreator(string[,,] objectMap, Dictionary<int, ObjectInfo> objectInfoDic)
+    private GameObject[,,] ObjectCreator(string[,,] objectMap, Dictionary<int, SObjectInfo> objectInfoDic)
     {
         GameObject parent = new GameObject("Objects");
         
