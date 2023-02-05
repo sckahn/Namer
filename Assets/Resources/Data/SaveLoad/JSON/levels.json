@@ -1,7 +1,7 @@
 [
   {
     "level" : -1,
-    "SceneName" : "Level01",
+    "sceneName" : "Level01",
     "scenario": "",
     "playerPosition": {
       "x": 0.0,
@@ -22,7 +22,7 @@
   },
   {
     "level" : 0,
-    "SceneName" : "Tutorial",
+    "sceneName" : "Tutorial",
     "scenario": "",
     "playerPosition": {
       "x": -3.0,
@@ -41,7 +41,7 @@
   },
   {
     "level": 1,
-    "SceneName" : "Level01",
+    "sceneName" : "Level01",
     "scenario": "",
     "playerPosition": {
       "x": 0.0,
@@ -60,7 +60,7 @@
   },
   {
     "level": 2,
-    "SceneName" : "Level02",
+    "sceneName" : "Level02",
     "scenario": "",
     "playerPosition": {
       "x": 0.0,
@@ -79,7 +79,7 @@
   },
   {
     "level": 3,
-    "SceneName" : "Level03",
+    "sceneName" : "Level03",
     "scenario": "",
     "playerPosition": {
       "x": 0.0,
@@ -97,7 +97,7 @@
   },
   {
     "level": 4,
-    "SceneName" : "Level04",
+    "sceneName" : "Level04",
     "scenario": "",
     "playerPosition": {
       "x": 0.0,
@@ -115,7 +115,7 @@
   },
   {
     "level": 5,
-    "SceneName" : "Level05",
+    "sceneName" : "Level05",
     "scenario": "",
     "playerPosition": {
       "x": 0.0,
