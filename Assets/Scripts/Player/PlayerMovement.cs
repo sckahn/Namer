@@ -1,3 +1,4 @@
+using System.CodeDom.Compiler;
 using UnityEngine;
 using System.Collections;
 
@@ -61,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
             // TODO 인터렉션 시 해당 Obj 방향으로 정렬
             if (interactobj)
             {
-                targetDir = GameManager.GetInstance.GetCheckSurrounding.objDir;
+                targetDir = DetectManager.GetInstance.objDir;
                 
                 if (interactobj.CompareTag("InteractObj"))
                 {
@@ -82,9 +83,13 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         // TODO GameManager한테 인풋 받을 수 있는 변수 가져오기
-        GameManager.GetInstance.GetCheckSurrounding.CheckCharacterCurrentTile(this.gameObject);
-        GameManager.GetInstance.GetCheckSurrounding.CheckForwardObj(this.gameObject);
-        interactobj = GameManager.GetInstance.GetCheckSurrounding.forwardObjectInfo;
+        // GameManager.GetInstance.GetCheckSurrounding.CheckCharacterCurrentTile(this.gameObject);
+        DetectManager.GetInstance.CheckCharacterCurrentTile(this.gameObject);
+        
+        // GameManager.GetInstance.GetCheckSurrounding.CheckForwardObj(this.gameObject);
+        DetectManager.GetInstance.CheckForwardObj(this.gameObject);
+        // interactobj = GameManager.GetInstance.GetCheckSurrounding.forwardObjectInfo;
+        interactobj = DetectManager.GetInstance.forwardObjectInfo;
         
         // 인터렉션 중에는 이동 또는 다른 인터렉션 불가
         if (_canPlayerInput && !GameManager.GetInstance.isPlayerDoInteraction)

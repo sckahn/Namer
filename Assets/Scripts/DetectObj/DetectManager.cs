@@ -4,7 +4,16 @@ using UnityEngine;
 
 // Partial class로 파일을 나눠서 관리하도록 했습니다.
 // DetectManager.cs & DetectManager.Detect.cs & DetectManager.GetAdjacent.cs
-
+public enum Dir
+{
+    left = 0,
+    right,
+    down,
+    up,
+    back,
+    forward,
+    Null
+}
 // TODO 코드 정리 해주세요.
 public partial class DetectManager : Singleton<DetectManager>
 {
