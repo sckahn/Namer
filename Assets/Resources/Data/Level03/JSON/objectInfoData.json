@@ -1,0 +1,26 @@
+[
+  {
+    "prefabName": "RockObj",
+    "objectID": 0,
+    "nameType": 3,
+    "adjectives": []
+  },
+  {
+    "prefabName": "RockObj",
+    "objectID": 1,
+    "nameType": 3,
+    "adjectives": []
+  },
+  {
+    "prefabName": "NameStoneObj",
+    "objectID": 2,
+    "nameType": 1,
+    "adjectives": []
+  },
+  {
+    "prefabName": "SunObj",
+    "objectID": 3,
+    "nameType": 7,
+    "adjectives": []
+  }
+]
