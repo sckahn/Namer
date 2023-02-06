@@ -13,10 +13,7 @@ public class PlayerEntity : BaseGameEntity
     public Animator myAnimator;
 	#endregion
 
-	public KeyCode interactionKey = KeyCode.B;
-
-
-    public override void Start()
+	public override void Start()
     {
 		base.Start();
         myAnimator = GetComponentInChildren<Animator>();

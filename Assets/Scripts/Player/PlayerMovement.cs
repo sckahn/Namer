@@ -13,10 +13,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject interactobj;
     public float moveSpeed = 3;
     public int rotateSpeed = 10;
-    public bool _canPlayerInput = true;
     private Dir targetDir;
 
-    [SerializeField] [Range(0.1f, 5f)] private float rootmotionSpeed = 0.1f;
+    [SerializeField] [Range(0.1f, 5f)] private float rootmotionSpeed;
     // TODO KeyMapping ?
 
     private void Start()
@@ -57,9 +56,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void PlayInteraction()
     {
-        if (Input.GetKeyDown(playerEntity.interactionKey))
+        if (Input.GetKeyDown(GameManager.GetInstance.interactionKey))
         {
-            // TODO 인터렉션 시 해당 Obj 방향으로 정렬
             if (interactobj)
             {
                 targetDir = DetectManager.GetInstance.objDir;
@@ -92,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
         interactobj = DetectManager.GetInstance.forwardObjectInfo;
         
         // 인터렉션 중에는 이동 또는 다른 인터렉션 불가
-        if (_canPlayerInput && !GameManager.GetInstance.isPlayerDoInteraction)
+        if (GameManager.GetInstance.isPlayerCanInput && !GameManager.GetInstance.isPlayerDoInteraction)
         {
             // 이동 함수 + 인터렉션
             PlayerMove(PlayerInput());
