@@ -19,16 +19,17 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
             lock (m_lock)
             {
+                if (Instance == null)
+                { 
+                    // 비활성화 되어있는 오브젝트도 탐색
+                    Instance = (T)GetAllObjectsOnlyInScene<T>();
+                    Debug.Log(Instance);
                     if (Instance == null)
                     {
-                            // 비활성화 되어있는 오브젝트도 탐색
-                        Instance = (T)GetAllObjectsOnlyInScene<T>();
-                        if (Instance == null)
-                        {
-                            Instance = new GameObject(typeof(T).ToString()).AddComponent<T>();
-                        }
+                        Instance = new GameObject(typeof(T).ToString()).AddComponent<T>();
                         DontDestroyOnLoad(Instance);
                     }
+                }
                 return Instance;
             }
             Component GetAllObjectsOnlyInScene<T1>() where T1 : Component
