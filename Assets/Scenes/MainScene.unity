@@ -5170,6 +5170,9 @@ MonoBehaviour:
   isPlayerCanInput: 0
   RestartKey: 114
   interactionKey: 32
+  ShowNameKey: 9
+  ManagerPrefabs:
+  - {fileID: 2625901015695942100, guid: 09c0184ae5229764f9de6e8bcbfef7e9, type: 3}
 --- !u!4 &1154774481
 Transform:
   m_ObjectHideFlags: 0

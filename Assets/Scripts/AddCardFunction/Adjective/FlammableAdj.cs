@@ -65,9 +65,7 @@ public class FlammableAdj : IAdjective
         if (isContact)
         {
             isContact = false;
-            isOnFire = true;
             targetObj.StartCoroutine(OnFire(targetObj.gameObject));
-            isOnFire = false;
             // targetObj.gameObject.SetActive(false);
             // print("Boom");
         }
