@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -30,6 +31,7 @@ public class CardManager : Singleton<CardManager>
         StartCoroutine(DealCard());
     }
 
+
     //시작 카드를 딜링해주는 메서드 
     IEnumerator DealCard()
     {
@@ -45,6 +47,7 @@ public class CardManager : Singleton<CardManager>
             {
                 AddCard(startCards[i]);
             }
+
             yield return new WaitForSeconds(0.5f);
         }
 
@@ -56,8 +59,18 @@ public class CardManager : Singleton<CardManager>
     {
         var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position, Quaternion.identity);
         var card = cardObject.GetComponent<CardController>();
+        var scene = SceneManager.GetActiveScene();
+        if (scene.name != "MainScene")
+        {
+            cardObject.transform.parent = Camera.main.transform;
+        }
         myCards.Add(card);
         CardAlignment();
+    }
+
+    void SetParent()
+    {
+
     }
 
     void MainMenuAddCard(GameObject cardPrefab)
