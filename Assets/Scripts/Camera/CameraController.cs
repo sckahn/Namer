@@ -13,8 +13,8 @@ public class CameraController : MonoBehaviour
 
     void Awake()
     {
+        if (cameraKey == KeyCode.None) cameraKey = KeyCode.Q;
         normalCamPirority = playerNormalViewCam.Priority;
-        cameraKey = KeyCode.Q;
     }
 
     void Update()
