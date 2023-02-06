@@ -5,6 +5,7 @@ using Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
+    // 전역변수화할 enum : 카메라 priority입니다.
     enum PriorityOrder
     {
         BehindAtAll = 8,
@@ -14,10 +15,14 @@ public class CameraController : MonoBehaviour
         FrontAtAll
     }
 
-    bool isOn = false;
+    // 둘 다 게임 매니저에서 관리 필요
+    bool topViewOn = false;
     int normalCamPirority;
 
+    // 키 값도 인풋 매니저나 게임 매니저에서 관리 필요 -> 후에 컨트롤러 설정에서 쉽게 변경하도록 하기 
     [SerializeField] KeyCode cameraKey;
+
+    // 카메라들 프리팹에서 넣어놓기 
     [SerializeField] CinemachineVirtualCamera playerTopViewCam;
     [SerializeField] CinemachineVirtualCamera playerNormalViewCam;
     [SerializeField] CinemachineVirtualCamera targetCam;
@@ -65,8 +70,8 @@ public class CameraController : MonoBehaviour
         // 토글로 탑뷰 하기
         if (Input.GetKeyDown(cameraKey))
         {
-            isOn = !isOn;
-            playerTopViewCam.Priority = (isOn ? (int)PriorityOrder.FrontByNormal : (int)PriorityOrder.BehingByNormal);
+            topViewOn = !topViewOn;
+            playerTopViewCam.Priority = (topViewOn ? (int)PriorityOrder.FrontByNormal : (int)PriorityOrder.BehingByNormal);
         }
     }
 
