@@ -22,7 +22,6 @@ public class GameManager : Singleton<GameManager>
 {
     private GameStates state;
     public bool isTapDown;
-    private CheckSurrounding checkSurrounding;
 
     #region Player variable
     [Header("Player Variable")]
@@ -42,18 +41,7 @@ public class GameManager : Singleton<GameManager>
 
     public float curTimeScale { get; private set; }
     
-    public CheckSurrounding GetCheckSurrounding
-    {
-        get
-        {
-            if (checkSurrounding == null)
-            {
-                gameObject.AddComponent<CheckSurrounding>();
-                checkSurrounding = gameObject.GetComponent<CheckSurrounding>();
-            }
-            return checkSurrounding;
-        }
-    }
+   
     
     private void Awake()
     {

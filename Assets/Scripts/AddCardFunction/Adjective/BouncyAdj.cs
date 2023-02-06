@@ -39,9 +39,11 @@ public class BouncyAdj : IAdjective
         if (rigid == null) rigid = myObj.GetComponent<Rigidbody>();
         Collider collider = thisObject.GetComponent<BoxCollider>();
 
-        CheckSurrounding checkingMachine = GameManager.GetInstance.GetCheckSurrounding;
-        List<Transform> hits = checkingMachine.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.down);
-
+        // CheckSurrounding checkingMachine = GameManager.GetInstance.GetCheckSurrounding;
+        var adjacentsDictionary = DetectManager.GetInstance.GetAdjacentsDictionary(thisObject.gameObject, thisObject.transform.lossyScale);
+        
+        // List<Transform> hits = checkingMachine.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.down);
+        List<GameObject> hits = adjacentsDictionary[Dir.down];
         if (hits != null)
         {
             if (rigid.velocity.y < 0 && (thisObject.transform.position.y - hits[0].transform.position.y) <= 1.2f)

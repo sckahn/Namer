@@ -42,7 +42,7 @@ public class MovableAdj : IAdjective
     {
         if (isRoll) return;
 
-        CheckSurrounding check = GameManager.GetInstance.GetCheckSurrounding;
+        // CheckSurrounding check = GameManager.GetInstance.GetCheckSurrounding;
         DetectManager detectManager = DetectManager.GetInstance;
         var neihbors =detectManager.GetAdjacentsDictionary(thisObject.gameObject,thisObject.transform.lossyScale);
 
