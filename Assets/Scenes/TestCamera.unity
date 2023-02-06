@@ -222,6 +222,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &245438623 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4426741328231058292, guid: cf04884e10e114691a8e254f0ff75f96, type: 3}
+  m_PrefabInstance: {fileID: 369978254}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &369978254
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -229,6 +240,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4426741327379167428, guid: cf04884e10e114691a8e254f0ff75f96, type: 3}
+      propertyPath: playerTopViewCam
+      value: 
+      objectReference: {fileID: 245438623}
+    - target: {fileID: 4426741327379167428, guid: cf04884e10e114691a8e254f0ff75f96, type: 3}
+      propertyPath: playerNormalViewCam
+      value: 
+      objectReference: {fileID: 1613641799}
     - target: {fileID: 4426741327379167430, guid: cf04884e10e114691a8e254f0ff75f96, type: 3}
       propertyPath: m_Name
       value: Cameras
@@ -494,6 +513,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 060dff4be628445d0b067bbc6a203f12, type: 3}
+--- !u!114 &1613641799 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4426741328974726387, guid: cf04884e10e114691a8e254f0ff75f96, type: 3}
+  m_PrefabInstance: {fileID: 369978254}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1680424975
 GameObject:
   m_ObjectHideFlags: 0
