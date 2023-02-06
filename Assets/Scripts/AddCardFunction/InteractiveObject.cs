@@ -290,8 +290,7 @@ public class InteractiveObject : MonoBehaviour
         {
             foreach (var adjective in subtractAdjectives)
             {
-                if (adjective == null) continue;
-
+                // if (adjective == null) continue;
                 SubtractAdjective(adjective, false);
             }
         }
