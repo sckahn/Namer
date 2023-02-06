@@ -12,7 +12,6 @@ public class FlammableAdj : IAdjective
     #region 잘타는 꾸밈 카드 맴버변수
     private GameObject fireEffect;
     private ParticleSystem fire;
-    private bool isOnFire;
     private bool isContact;
     #endregion
 
