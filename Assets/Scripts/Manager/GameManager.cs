@@ -35,9 +35,6 @@ public class GameManager : Singleton<GameManager>
     {
         this.gameObject.AddComponent<StateMachineRunner>();
         isPlayerDoInteraction = false;
-        
-        GameObject nameData = Resources.Load("NameData") as GameObject;
-        Instantiate(nameData, Vector3.zero, Quaternion.identity);
     }
 
     private void Update()

@@ -1,0 +1,38 @@
+[
+  {
+    "prefabName": "RockObj",
+    "objectID": 0,
+    "nameType": 3,
+    "adjectives": []
+  },
+  {
+    "prefabName": "RockObj",
+    "objectID": 1,
+    "nameType": 3,
+    "adjectives": []
+  },
+  {
+    "prefabName": "SunObj",
+    "objectID": 2,
+    "nameType": 7,
+    "adjectives": []
+  },
+  {
+    "prefabName": "NameStoneObj",
+    "objectID": 3,
+    "nameType": 1,
+    "adjectives": []
+  },
+  {
+    "prefabName": "BonfireObj",
+    "objectID": 4,
+    "nameType": 4,
+    "adjectives": []
+  },
+  {
+    "prefabName": "BonfireObj",
+    "objectID": 5,
+    "nameType": 4,
+    "adjectives": []
+  }
+]

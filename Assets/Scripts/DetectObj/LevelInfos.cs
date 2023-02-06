@@ -17,7 +17,7 @@ public class LevelInfos : MonoBehaviour
     [SerializeField] public bool isStretched;
 
     public bool IsCreateMode { get { return isCreateMode; } }
-     public int LevelNumber { get { return levelNumber; } }
+     public int LevelNumber { get { return levelNumber; } set { levelNumber = value; } }
 
     private void Awake()
     {
