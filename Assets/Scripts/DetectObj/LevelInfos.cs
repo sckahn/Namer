@@ -5,6 +5,7 @@ public class LevelInfos : MonoBehaviour
     [Header("MODE")]
     [SerializeField] bool isCreateMode;
     [Range(-1, 10)][SerializeField] int levelNumber;
+    [TextArea][SerializeField] string levelDialog;
 
     // test
     [Header("TEST")]

@@ -1,9 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class SoundManager : Singleton<SoundManager>
 {
-    public AudioSource sound;
+    public AudioMixer audiomixer; 
+    public AudioSource bgmSound;
+    public AudioSource sfxSound;
+
+    public Slider bgmSlider;
+    public Slider sfxSlider;
     
     public List<AudioClip> effectClips = new List<AudioClip> ();
     public List<AudioClip> bgmClips = new List<AudioClip> ();
@@ -15,13 +22,23 @@ public class SoundManager : Singleton<SoundManager>
 
     public void BgmPlay()
     {
-        sound.loop = true;
-        sound.volume = 0.3f;
-        sound.Play(); 
+        bgmSound.loop = true;
+        bgmSound.volume = 1;
+        bgmSound.Play(); 
     }
 
     public void Play(AudioClip clip)
     {
-        sound.PlayOneShot(clip);
+        sfxSound.PlayOneShot(clip);
+    }
+
+    public void SetBgmVolume()
+    {
+        audiomixer.SetFloat("BGM", Mathf.Log10(bgmSlider.value) * 20);
+    }   
+    
+    public void SetSfxVolume()
+    {
+        audiomixer.SetFloat("SFX", Mathf.Log10(sfxSlider.value) * 20);
     }
 }

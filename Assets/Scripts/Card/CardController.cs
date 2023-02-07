@@ -13,6 +13,7 @@ public class CardController : MonoBehaviour
     [SerializeField] GameObject frontCover;
     [SerializeField] BoxCollider bc;
     [SerializeField] GameObject highlight;
+    [SerializeField] GameObject Encyclopedia;
     CardRotate cr;
 
     private void Start()
@@ -25,7 +26,7 @@ public class CardController : MonoBehaviour
     {
         if (useDotween)
         {
-            transform.DOMove(prs.pos, dotweenTime);
+            transform.DOLocalMove(prs.pos, dotweenTime);
             transform.DORotateQuaternion(prs.rot, dotweenTime);
             transform.DOScale(prs.scale, dotweenTime);
         }
@@ -43,6 +44,14 @@ public class CardController : MonoBehaviour
         if (GameManager.GetInstance.currentState == GameStates.Pause) return;
         if (!CardManager.GetInstance.ableCardCtr) return;
         highlight.SetActive(true);
+
+
+        if (CardManager.GetInstance.isEncyclopedia)
+        {
+            Encyclopedia.SetActive(true);
+            return;
+        }
+
         cr.enabled = true;
     }
 
@@ -51,6 +60,11 @@ public class CardController : MonoBehaviour
     {
         if (!CardManager.GetInstance.ableCardCtr) return;
         highlight.SetActive(false);
+        if (CardManager.GetInstance.isEncyclopedia)
+        {
+            Encyclopedia.SetActive(false);
+            return;
+        }
         cr.enabled = false;
         transform.DORotateQuaternion(cardHolder.transform.rotation, 0.5f);
     }
@@ -59,6 +73,7 @@ public class CardController : MonoBehaviour
     private void OnMouseDown()
     {
         if (GameManager.GetInstance.currentState == GameStates.Pause) return;
+        if (CardManager.GetInstance.isEncyclopedia) return;
         if (!CardManager.GetInstance.ableCardCtr) return;
         CardManager.GetInstance.isPickCard = true;
         //transform.DOMove(Input.mousePosition , 5f);
