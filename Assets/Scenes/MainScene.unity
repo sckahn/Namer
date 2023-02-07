@@ -471,6 +471,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 127523098}
   m_CullTransparentMesh: 1
+--- !u!1 &129132252 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1410691945977366807, guid: 6f6b6079af8484edfa0dee4e79e996df, type: 3}
+  m_PrefabInstance: {fileID: 4762379679559794455}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &136113490 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8084541184639974393, guid: 65ef400e7f24d4b5797ef372639a1895, type: 3}
@@ -2494,6 +2499,7 @@ MonoBehaviour:
   - {fileID: 7046714}
   encyclopedia: {fileID: 872287249}
   mainMenucards: {fileID: 1216206864}
+  mainRose: {fileID: 129132252}
   titleMovingTime: 3
   cameraMovingTime: 3
   levelSelectMovingTime: 1
@@ -5656,7 +5662,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1227670112
 GameObject:
@@ -12109,6 +12115,38 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1723216745489824738, guid: f5d06205347b3424d85d38d373c50b32, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723216745589254469, guid: f5d06205347b3424d85d38d373c50b32, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723216746070738775, guid: f5d06205347b3424d85d38d373c50b32, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723216746524829517, guid: f5d06205347b3424d85d38d373c50b32, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723216746806277877, guid: f5d06205347b3424d85d38d373c50b32, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723216746934362247, guid: f5d06205347b3424d85d38d373c50b32, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723216747284546427, guid: f5d06205347b3424d85d38d373c50b32, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723216747498968902, guid: f5d06205347b3424d85d38d373c50b32, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6849028085859878683, guid: f5d06205347b3424d85d38d373c50b32, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -12268,6 +12306,10 @@ PrefabInstance:
     - target: {fileID: 8979535685487429366, guid: f5d06205347b3424d85d38d373c50b32, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -2.7149851
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979535686050437194, guid: f5d06205347b3424d85d38d373c50b32, type: 3}
+      propertyPath: m_Name
+      value: LayoutCards
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5d06205347b3424d85d38d373c50b32, type: 3}

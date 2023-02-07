@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2721935581099869929}
   - component: {fileID: -1313255419992942935}
   m_Layer: 0
-  m_Name: 01.TestCard
+  m_Name: NullCard
   m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardType: 1
   name: 0
-  adjectives: 08000000
+  adjectives: 00000000
   frontCover: {fileID: 7865115808221761892}
   bc: {fileID: 2721935581099869929}
   highlight: {fileID: 8686928968484850008}
@@ -156,7 +156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5912989029215623428, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
       propertyPath: m_Text
-      value: "\uD1B5\uD1B5"
+      value: ???
       objectReference: {fileID: 0}
     - target: {fileID: 6615870101938414092, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
       propertyPath: m_IsActive

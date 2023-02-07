@@ -27,6 +27,7 @@ public class MainUIController : MonoBehaviour
     [SerializeField] GameObject[] mainMenuGrounds;
     [SerializeField] GameObject encyclopedia;
     [SerializeField] GameObject mainMenucards;
+    [SerializeField] GameObject mainRose;
     GameObject levelInformationTxt;
 
     [SerializeField] float titleMovingTime = 1f;
@@ -37,6 +38,8 @@ public class MainUIController : MonoBehaviour
     float currentTime;
     float speed = 2f;
     float length = 15f;
+
+    GameDataManager gameDataManager;
 
     MainMenuState state;
 
@@ -163,13 +166,15 @@ public class MainUIController : MonoBehaviour
         title.transform.DOMove(new Vector3(Screen.width / 2f, Screen.height / 1.161f, 0f), levelSelectMovingTime);
     }
 
-    //도감 화면으로 넘어
+    //도감 화면으로 넘어감 
     public void EncyclopediaScene()
     {
         state = MainMenuState.Encyclopedia;
         encyclopedia.SetActive(true);
         title.SetActive(false);
         mainMenucards.SetActive(false);
+        mainRose.SetActive(false);
+        mainRose.transform.GetChild(0).gameObject.SetActive(false);
         CardManager.GetInstance.isEncyclopedia = true;
     }
 
@@ -195,6 +200,7 @@ public class MainUIController : MonoBehaviour
         encyclopedia.SetActive(false);
         title.SetActive(true);
         mainMenucards.SetActive(true);
+        mainRose.SetActive(true);
         CardManager.GetInstance.isEncyclopedia = false;
     }
 

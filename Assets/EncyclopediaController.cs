@@ -10,10 +10,39 @@ public class EncyclopediaController : MonoBehaviour
     [SerializeField] float wheelSpeed = 0.1f;
     [SerializeField] float maxHeight = 1f;
     [SerializeField] Scrollbar scrollbar;
+    GameObject[] pediaCards;
+
+    GameDataManager gameDataManager;
+
+    private void OnEnable()
+    {
+        print("OnEnable");
+        gameDataManager = GameDataManager.GetInstance;
+        gameDataManager.GetCardData();
+        gameDataManager.GetUserAndLevelData();
+        EncyclopediaInit();
+    }
 
     void Update()
     {
         ScrollWheel();
+    }
+
+    private void EncyclopediaInit()
+    {
+        print("Init");
+        GameDataManager.GetInstance.GetMainCardEncyclopedia("000000");
+        //pediaCards = GameDataManager.GetInstance.GetMainCardEncyclopedia("000000");
+
+        //for (int i = 0; i < pediaCards.Length; i++)
+        //{
+        //    print(pediaCards[i]); 
+        //    var cardObject = (GameObject)Instantiate(pediaCards[i], new Vector3(0, 0, 0), Quaternion.identity);
+        //    cardObject.transform.parent = GameObject.Find("LayoutCards").transform;
+        //    cardObject.transform.localPosition = new Vector3(-0.9f, 0, 0);
+
+        //}
+
     }
 
     public void SyncScrollBar()
