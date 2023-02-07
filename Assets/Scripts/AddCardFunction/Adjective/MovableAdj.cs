@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MovableAdj : IAdjective
 {
+    //TODO 오브젝트가 맵끝에있을때 유아이나 이펙트 보여주는기능 만들기
     private EAdjective adjectiveName = EAdjective.Movable;
     private EAdjectiveType adjectiveType = EAdjectiveType.Normal;
     private int count = 0;
@@ -43,6 +44,8 @@ public class MovableAdj : IAdjective
         if (isRoll) return;
 
         // CheckSurrounding check = GameManager.GetInstance.GetCheckSurrounding;
+        int maxX = DetectManager.GetInstance.GetMaxX;
+        int maxZ = DetectManager.GetInstance.GetMaxZ;
         DetectManager detectManager = DetectManager.GetInstance;
         var neihbors =detectManager.GetAdjacentsDictionary(thisObject.gameObject,thisObject.transform.lossyScale);
 
@@ -51,7 +54,7 @@ public class MovableAdj : IAdjective
         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z) && direction.x > 0)
         {
             // if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.right) !=null ) return;
-            if (neihbors.ContainsKey(Dir.right)) return;
+            if (neihbors.ContainsKey(Dir.right)|| thisObject.transform.position.x >=maxZ-1) return;
             target = thisObject.transform.position + Vector3.right;
             detectManager.SwapBlockInMap(prevLocatio, target);
             InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(MoveObj(thisObject.gameObject));
@@ -64,7 +67,7 @@ public class MovableAdj : IAdjective
         else if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z) && direction.x < 0)
         {
             // if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.left) != null) return;
-            if (neihbors.ContainsKey(Dir.left)) return;
+            if (neihbors.ContainsKey(Dir.left) || thisObject.transform.position.x <= 0) return;
         
             target = thisObject.transform.position + Vector3.left;
             detectManager.SwapBlockInMap(prevLocatio, target);
@@ -77,7 +80,7 @@ public class MovableAdj : IAdjective
         else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.z) && direction.z > 0)
         {
             // if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.forward) != null) return;
-            if (neihbors.ContainsKey(Dir.forward)) return;
+            if (neihbors.ContainsKey(Dir.forward)|| thisObject.transform.position.z >= maxZ-1) return;
             target = thisObject.transform.position + Vector3.forward;
             detectManager.SwapBlockInMap(prevLocatio, target);
             // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
@@ -89,7 +92,7 @@ public class MovableAdj : IAdjective
         else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.z) && direction.z < 0)
         {
             // if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.back) != null) return;
-            if (neihbors.ContainsKey(Dir.back))return;
+            if (neihbors.ContainsKey(Dir.back) || thisObject.transform.position.z <= 0)return;
             target = thisObject.transform.position + Vector3.back;
             detectManager.SwapBlockInMap(prevLocatio, target);
         

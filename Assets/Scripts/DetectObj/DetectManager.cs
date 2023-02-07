@@ -29,7 +29,9 @@ public partial class DetectManager : Singleton<DetectManager>
     int maxX = 20;
     int maxY = 9;
     int maxZ = 20;
-
+    public int GetMaxX { get { return maxX; } }
+    public int GetMaxY { get { return maxY; } }
+    public int GetMaxZ { get { return maxZ; } }
     int tileMaxX = 20;
     int tileMaxY = 9;
     int tileMaxZ = 20;
