@@ -43,7 +43,6 @@ public class EncyclopediaController : MonoBehaviour
             cardObject.transform.localRotation = new Quaternion(0, 0, 0, 0);
 
         }
-
     }
 
     public void SyncScrollBar()

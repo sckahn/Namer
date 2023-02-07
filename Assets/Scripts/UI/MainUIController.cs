@@ -209,21 +209,21 @@ public class MainUIController : MonoBehaviour
     {
         if (state == MainMenuState.Credit)
         {
-            Time.timeScale = 1;
+            GameManager.GetInstance.SetTimeScale(1);
             MainMenuScene();
         }
     }
 
     public void PauseBtn()
     {
-        Time.timeScale = 0;
+        GameManager.GetInstance.SetTimeScale(0);
         pauseBtn.SetActive(false);
         goBtn.SetActive(true);
     }
 
     public void GoBtn()
     {
-        Time.timeScale = 1;
+        GameManager.GetInstance.SetTimeScale(1);
         goBtn.SetActive(false);
         pauseBtn.SetActive(true);
     }
