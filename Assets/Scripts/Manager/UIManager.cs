@@ -24,13 +24,13 @@ public class UIManager : Singleton<UIManager>
         {
             pauseUIPanel.SetActive(true);
             isPause = true;
-            Time.timeScale = 0;
+            GameManager.GetInstance.SetTimeScale(0);
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && isPause )
         {
             pauseUIPanel.SetActive(false);
             isPause = false;
-            Time.timeScale = 1;
+            GameManager.GetInstance.SetTimeScale(1);
         }
     }
 }

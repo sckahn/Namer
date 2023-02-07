@@ -4,7 +4,16 @@ using UnityEngine;
 
 // Partial class로 파일을 나눠서 관리하도록 했습니다.
 // DetectManager.cs & DetectManager.Detect.cs & DetectManager.GetAdjacent.cs
-
+public enum Dir
+{
+    left = 0,
+    right,
+    down,
+    up,
+    back,
+    forward,
+    Null
+}
 // TODO 코드 정리 해주세요.
 public partial class DetectManager : Singleton<DetectManager>
 {
@@ -20,6 +29,9 @@ public partial class DetectManager : Singleton<DetectManager>
     int maxX = 20;
     int maxY = 9;
     int maxZ = 20;
+    public int GetMaxX { get { return maxX; } }
+    public int GetMaxY { get { return maxY; } }
+    public int GetMaxZ { get { return maxZ; } }
 
     int tileMaxX = 20;
     int tileMaxY = 9;
