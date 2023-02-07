@@ -88,18 +88,13 @@ public class GameDataManager : Singleton<GameDataManager>
         }
 
         string frontFileName = "";
-        if (level <= userDataDic[userID].clearLevel)
+        if (userID != "")
         {
-            if (userID != "")
-            {
-                frontFileName = userID;
-                UpdateUserData(level, userID, false);
-            }
+            frontFileName = level <= userDataDic[userID].clearLevel ? userID : "";
+            UpdateUserData(level, userID, false);
         }
-        else
-        {
-            SetCardEncyclopedia(level, levelDataDic[level].cardView);
-        }
+        
+        SetCardEncyclopedia(level, levelDataDic[level].cardView);
 
         SaveLoadFile loadFile = new SaveLoadFile();
         StreamReader tileMapData = loadFile.ReadCsvFile(filePath + sceneName, frontFileName + tileMapFileName);
