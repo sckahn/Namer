@@ -26,7 +26,7 @@ public class CardController : MonoBehaviour
     {
         if (useDotween)
         {
-            transform.DOMove(prs.pos, dotweenTime);
+            transform.DOLocalMove(prs.pos, dotweenTime);
             transform.DORotateQuaternion(prs.rot, dotweenTime);
             transform.DOScale(prs.scale, dotweenTime);
         }

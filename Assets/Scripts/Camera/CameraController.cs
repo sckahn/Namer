@@ -5,7 +5,6 @@ using Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
-    // 전역변수화할 enum : 카메라 priority입니다.
     enum PriorityOrder
     {
         BehindAtAll = 8,
@@ -18,6 +17,7 @@ public class CameraController : MonoBehaviour
     // 둘 다 게임 매니저에서 관리 필요
     bool topViewOn = false;
     int normalCamPirority;
+    Transform player;
 
     // 키 값도 인풋 매니저나 게임 매니저에서 관리 필요 -> 후에 컨트롤러 설정에서 쉽게 변경하도록 하기 
     [SerializeField] KeyCode cameraKey;
@@ -37,11 +37,19 @@ public class CameraController : MonoBehaviour
 
     public void Init()
     {
+        // 카메라 키 설정 
         if (cameraKey == KeyCode.None) cameraKey = KeyCode.Q;
+
+        // 각 캠의 우선순위 설정 
         playerNormalViewCam.Priority = (int)PriorityOrder.normal;
         playerTopViewCam.Priority = (int)PriorityOrder.BehingByNormal;
         targetCam.Priority = (int)PriorityOrder.BehindAtAll;
         normalCamPirority = playerNormalViewCam.Priority;
+
+        // 모든 팔로우 캠이 플레이어를 따라다니도록 설정 
+        player = GameObject.Find("Player").transform;
+        playerNormalViewCam.Follow = player;
+        playerTopViewCam.Follow = player;
     }
 
     public void FocusOn(Transform target)

@@ -72,6 +72,11 @@ public class CardManager : Singleton<CardManager>
     {
         var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position, Quaternion.identity);
         var card = cardObject.GetComponent<CardController>();
+        var scene = SceneManager.GetActiveScene();
+        if (scene.name != "MainScene")
+        {
+            cardObject.transform.parent = Camera.main.transform;
+        }
         myCards.Add(card);
         CardAlignment();
     }
@@ -87,7 +92,7 @@ public class CardManager : Singleton<CardManager>
     }
 
     //카드를 정렬하는 메서드 
-    public void CardAlignment()
+    public void CardAlignment(float time = 2f)
     {
         List<PRS> originCardPRSs = new List<PRS>();
         originCardPRSs = RoundAlignment(cardHolderLeft, cardHolderRight, myCards.Count, new Vector3(1f, 1f, 1f));
@@ -98,14 +103,20 @@ public class CardManager : Singleton<CardManager>
             
             targetCard.originPRS = originCardPRSs[i];
             targetCard.originPRS.rot = cardHolderPoint.transform.rotation;
-            targetCard.MoveTransform(targetCard.originPRS, true, 2f);
+            targetCard.MoveTransform(targetCard.originPRS, true, time);
         }
     }
+
+    public void SetInputTrue()
+    {
+        GameManager.GetInstance.isPlayerCanInput = true;
+    }
+
     //메인화면 카드를 정렬하는 메서드 
     public void MainCardAlignment()
     {
         List<PRS> originCardPRSs = new List<PRS>();
-        originCardPRSs = RoundAlignment(cardHolderLeft, cardHolderRight, mainCards.Count, new Vector3(1f, 1f, 1f));
+        originCardPRSs = RoundAlignment(cardHolderLeft, cardHolderRight, mainCards.Count, new Vector3(1f, 1f, 1f), true);
 
         for (int i = 0; i < mainCards.Count; i++)
         {
@@ -118,7 +129,7 @@ public class CardManager : Singleton<CardManager>
     }
 
     //카드를 둘글게 정렬하는 메서드
-    List<PRS> RoundAlignment(Transform leftTr, Transform rightTr, int objCount, Vector3 scale)
+    List<PRS> RoundAlignment(Transform leftTr, Transform rightTr, int objCount, Vector3 scale, bool isMain = false)
     {
         float[] objLerps = new float[objCount];
         List<PRS> results = new List<PRS>(objCount);
@@ -139,9 +150,19 @@ public class CardManager : Singleton<CardManager>
                 break;
         }
 
+        Vector3 cardHolderPos = leftTr.parent.localPosition;
+        Vector3 leftPos = new Vector3(-1.2f, 0, 0) + cardHolderPos;
+        Vector3 rightPos = new Vector3(1.2f, 0, 0) + cardHolderPos;
+
+        if (isMain)
+        {
+            leftPos = leftTr.position;
+            rightPos = rightTr.position;
+        }
+
         for (int i = 0; i < objCount; i++)
         {
-            var targetPos = Vector3.Lerp(leftTr.position, rightTr.position, objLerps[i]);
+            var targetPos = Vector3.Lerp(leftPos, rightPos, objLerps[i]);
             var targetRot = Quaternion.identity;
             if (objCount >= 4)
             {
