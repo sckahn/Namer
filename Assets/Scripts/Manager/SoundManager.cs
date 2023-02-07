@@ -24,7 +24,7 @@ public class SoundManager : MonoBehaviour
     public void BgmPlay()
     {
         sound.loop = true;
-        sound.volume = 0.3f;
+        sound.volume = 1f;
         sound.Play(); 
     }
 

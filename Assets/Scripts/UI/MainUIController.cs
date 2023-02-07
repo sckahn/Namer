@@ -9,7 +9,8 @@ enum MainMenuState
     Title = 0,
     Main = 1,
     Level = 2,
-    Credit = 3,
+    Encyclopedia,
+    Credit,
 }
 
 public class MainUIController : MonoBehaviour
@@ -24,6 +25,8 @@ public class MainUIController : MonoBehaviour
     [SerializeField] GameObject goBtn;
     [SerializeField] GameObject creditObject;
     [SerializeField] GameObject[] mainMenuGrounds;
+    [SerializeField] GameObject encyclopedia;
+    [SerializeField] GameObject mainMenucards;
     GameObject levelInformationTxt;
 
     [SerializeField] float titleMovingTime = 1f;
@@ -32,8 +35,8 @@ public class MainUIController : MonoBehaviour
     [SerializeField] float menuTileMovingTime = 1f;
     bool isPressAnyKey;
     float currentTime;
-    [SerializeField] float speed = 2f;
-    [SerializeField] float length = 15f;
+    float speed = 2f;
+    float length = 15f;
 
     MainMenuState state;
 
@@ -112,7 +115,7 @@ public class MainUIController : MonoBehaviour
         }
     }
 
-    //메인메뉴 타일들을 밑에서부터 랜덤하게 생성해서 제자리로 이동시/
+    //메인메뉴 타일들을 밑에서 생성해서 랜덤한 속도로 제자리에 배치됨
     float ranNum;
     IEnumerator MainMenuGroudsSetUp()
     {
@@ -160,6 +163,16 @@ public class MainUIController : MonoBehaviour
         title.transform.DOMove(new Vector3(Screen.width / 2f, Screen.height / 1.161f, 0f), levelSelectMovingTime);
     }
 
+    //도감 화면으로 넘어
+    public void EncyclopediaScene()
+    {
+        state = MainMenuState.Encyclopedia;
+        encyclopedia.SetActive(true);
+        title.SetActive(false);
+        mainMenucards.SetActive(false);
+        CardManager.GetInstance.isEncyclopedia = true;
+    }
+
     public void CreditScene()
     {
         state = MainMenuState.Credit;
@@ -174,6 +187,15 @@ public class MainUIController : MonoBehaviour
     void CreditObjOn()
     {
         creditObject.SetActive(true);
+    }
+
+    public void EncyclopediaReturnBtn()
+    {
+        state = MainMenuState.Main;
+        encyclopedia.SetActive(false);
+        title.SetActive(true);
+        mainMenucards.SetActive(true);
+        CardManager.GetInstance.isEncyclopedia = false;
     }
 
     public void ReturnBtn()

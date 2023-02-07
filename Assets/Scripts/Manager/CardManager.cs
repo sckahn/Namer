@@ -20,6 +20,7 @@ public class CardManager : Singleton<CardManager>
 
     public bool isPickCard = false;
     public bool ableCardCtr = true;
+    public bool isEncyclopedia = false;
 
     private void Start()
     {
@@ -68,15 +69,11 @@ public class CardManager : Singleton<CardManager>
         CardAlignment();
     }
 
-    void SetParent()
-    {
-
-    }
-
     void MainMenuAddCard(GameObject cardPrefab)
     {
         var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position, Quaternion.identity);
         var card = cardObject.GetComponent<MainMeneCardController>();
+        cardObject.transform.parent = GameObject.Find("MainMenuCards").transform;
         mainCards.Add(card);
         MainCardAlignment();
     }
