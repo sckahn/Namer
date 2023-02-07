@@ -46,17 +46,20 @@ public class CardManager : Singleton<CardManager>
         }
         else
         {
-            for (int i = 0; i < startCards.Length; i++)
-            {
-                AddCard(startCards[i]);
-                yield return new WaitForSeconds(0.5f);
-            }
-            //GameObject[] cards = GetLevelCards();
-            //for (int i = 0; i < cards.Length; i++)
+            // 테스트 할 때는 위에 걸 주석 해제 
+            //for (int i = 0; i < startCards.Length; i++)
             //{
-            //    AddCard(cards[i]);
+            //    AddCard(startCards[i]);
             //    yield return new WaitForSeconds(0.5f);
             //}
+
+            // 실제 플레이에서는 아래 코드를 주석 해제 
+            GameObject[] cards = GetLevelCards();
+            for (int i = 0; i < cards.Length; i++)
+            {
+                AddCard(cards[i]);
+                yield return new WaitForSeconds(0.5f);
+            }
         }
     }
 
