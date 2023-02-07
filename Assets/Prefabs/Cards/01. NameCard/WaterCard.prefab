@@ -48,11 +48,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardType: 0
-  name: 6
+  nameType: 0
   adjectives: 
   frontCover: {fileID: 4230330137778533953}
   bc: {fileID: 453746082420174526}
   highlight: {fileID: 3395023830973034109}
+  Encyclopedia: {fileID: 7743834699422014335}
 --- !u!65 &453746082420174526
 BoxCollider:
   m_ObjectHideFlags: 0
