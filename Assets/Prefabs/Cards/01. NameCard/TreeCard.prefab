@@ -48,11 +48,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardType: 0
-  name: 5
+  nameType: 0
   adjectives: 
   frontCover: {fileID: 4230330137778533953}
   bc: {fileID: 453746082420174526}
   highlight: {fileID: 3395023830973034109}
+  Encyclopedia: {fileID: 2155044647775482130}
 --- !u!65 &453746082420174526
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -170,6 +171,11 @@ PrefabInstance:
 --- !u!4 &1896874318909967103 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5886614794521977911, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
+  m_PrefabInstance: {fileID: 5468066845115952840}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2155044647775482130 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6199829836609462234, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
   m_PrefabInstance: {fileID: 5468066845115952840}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &3395023830973034109 stripped
