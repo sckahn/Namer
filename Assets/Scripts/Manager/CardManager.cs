@@ -51,7 +51,7 @@ public class CardManager : Singleton<CardManager>
         else
         {
             GameDataManager gameData = GameDataManager.GetInstance;
-            int level = FindObjectOfType<LevelInfos>().LevelNumber;
+            int level = GameManager.GetInstance.Level;
             GameObject[] cards = gameData.GetCardPrefabs(gameData.LevelDataDic[level].cardView);
             
             for (int i = 0; i < cards.Length; i++)
