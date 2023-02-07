@@ -6,44 +6,26 @@
     "adjectives": []
   },
   {
-    "prefabName": "CardObj",
+    "prefabName": "RockObj",
     "objectID": 1,
-    "nameType": 11,
-    "adjectives": []
-  },
-  {
-    "prefabName": "WatermelonObj",
-    "objectID": 2,
-    "nameType": 0,
-    "adjectives": []
-  },
-  {
-    "prefabName": "WatermelonObj",
-    "objectID": 3,
-    "nameType": 0,
+    "nameType": 3,
     "adjectives": []
   },
   {
     "prefabName": "RockObj",
-    "objectID": 4,
+    "objectID": 2,
     "nameType": 3,
     "adjectives": []
   },
   {
     "prefabName": "NameStoneObj",
-    "objectID": 5,
+    "objectID": 3,
     "nameType": 1,
     "adjectives": []
   },
   {
-    "prefabName": "RockObj",
-    "objectID": 6,
-    "nameType": 3,
-    "adjectives": []
-  },
-  {
     "prefabName": "BonfireObj",
-    "objectID": 7,
+    "objectID": 4,
     "nameType": 4,
     "adjectives": []
   }
