@@ -129,7 +129,11 @@ public class MainMeneCardController : MonoBehaviour
                 mainUIController.MainMenuScene();
                 break;
             case "1StageCard(Clone)":
+                GameManager.GetInstance.SetLevelFromCard(cardName);
                 LoadingSceneController.LoadScene("DemoPlay");
+                // LoadingSceneController.LoadScene("JSTESTER");
+                //이부분 살짝 수정함
+                // GameManager.GetInstance.SetLevelFromCard(cardName);
                 break;
                 
 

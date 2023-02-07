@@ -22,10 +22,11 @@ public class CardManager : Singleton<CardManager>
 
     private void Start()
     {
-        CardStart();
+        if(SceneManager.GetActiveScene().name=="MainScene")
+            CardStart();
     }
 
-    void CardStart()
+    public void CardStart()
     {
         StartCoroutine(DealCard());
     }
@@ -59,7 +60,8 @@ public class CardManager : Singleton<CardManager>
     {
         GameDataManager cardData = GameDataManager.GetInstance;
         
-        int level = FindObjectOfType<LevelInfos>().LevelNumber;
+        // int level = FindObjectOfType<LevelInfos>().LevelNumber;
+        int level = GameManager.GetInstance.Level;
         List<EName> names = GameDataManager.GetInstance.LevelDataDic[level].cardView.nameRead;
         List<EAdjective> adjectives = GameDataManager.GetInstance.LevelDataDic[level].cardView.adjectiveRead;
         

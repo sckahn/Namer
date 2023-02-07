@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Text;
+using UnityEditor;
 
 public enum GameStates
 {
@@ -112,7 +114,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        if(Input.GetKey(restartKey))
+        if(Input.GetKeyDown(restartKey))
             Reset();
 
         DetectInputkey();
@@ -184,7 +186,7 @@ public class GameManager : Singleton<GameManager>
 
     private void HandleInGame()
     {
-        
+        LoadMap();
         //load new scene 
         //LoadScene(Scenes.InGame,LoadSceneMode.Single);
         //instantiate player
@@ -200,8 +202,8 @@ public class GameManager : Singleton<GameManager>
     
     public void Reset()
     {
-        if (currentState == GameStates.Lobby) return;
-            SceneBehaviorManager.ResetScene();
+        if (currentState != GameStates.InGame) return;
+            ResetCurrentLvl();
     }
 
     public void LoadScene(Scenes scenes, LoadSceneMode loadSceneMode)
@@ -218,4 +220,123 @@ public class GameManager : Singleton<GameManager>
     {
         ChangeGameState(GameStates.Lose);
     }
+     #region JSCODE
+
+    int curLevel =-3;
+    public int Level { get { return curLevel; } }
+    private GameObject groundObjs;
+    private GameObject objcts;
+    public string userId = "000000";
+
+     GameObject player;
+    void LoadMap(int level)
+    {
+        // DetectManager.GetInstance.Init(level);
+        DetectManager.GetInstance.Init(level);
+
+    }
+
+    int GetCurrentLevel()
+    {
+        var gameDataManager = GameDataManager.GetInstance;
+        gameDataManager.GetUserAndLevelData();
+        curLevel = gameDataManager.UserDataDic[userId].clearLevel;
+        return curLevel;
+    }
+
+    int GetCurrentLevel(int level)
+    {
+        curLevel = level;
+        return curLevel;
+    }
+
+    public void SetLevelFromCard(string CardName)
+    {
+        StringBuilder sb = new StringBuilder();
+        foreach (var letter in CardName)
+        {
+            if (letter >= '0' && letter <= '9')
+            {
+                sb.Append(letter);
+            }
+        }
+        int level = int.Parse(sb.ToString()) - 1;
+        //testCode
+        // level = 1;        
+        GetCurrentLevel(level);
+    }
+
+    [ContextMenu("DeleteCurrentMap Test")]
+    void DeleteCurrentMap()
+    {
+        groundObjs = GameObject.Find("Grounds");
+        objcts = GameObject.Find("Objects");
+        if (groundObjs != null && objcts != null)
+        {
+            Destroy(groundObjs);
+            Destroy(objcts);
+        }
+    }
+
+    [ContextMenu("DeleteCard")]
+    void DeleteCurrentCard()
+    {
+        CardManager cardManager = CardManager.GetInstance;
+        var currentDeck = cardManager.myCards;
+        foreach (var eachCard in currentDeck)
+        {
+            Destroy(eachCard.gameObject);
+        }
+        currentDeck.Clear();
+    }
+
+    void GetNewCardDeck()
+    {
+        CardManager.GetInstance.CardStart();
+    }
+
+    [ContextMenu("ResetMap")]
+    void ResetCurrentLvl()
+    {
+        if (curLevel == -3)
+        {
+            Debug.LogError("There are no level Data!!!");
+            return;
+        }
+        DeleteCurrentCard();
+        DeleteCurrentMap();
+        LoadMap(curLevel);
+        GetNewCardDeck();
+    }
+
+    
+    //DemoScene에서 하면 왜됌?
+    //근데 씬불러올때는 안되네;
+    [ContextMenu("LoadMapTest")]
+    void LoadMap()
+    {
+        // LoadPlayerPrefabs();
+        if(curLevel == -3)
+            curLevel=GetCurrentLevel();
+   
+        DetectManager.GetInstance.Init(curLevel);
+        CardManager.GetInstance.CardStart(); // 여기서 문제네 
+    }
+    //load scene with loading card -> get level data from level card
+
+    //TODO Change PlayerPrefabs to Resources or set it to inspector
+    void LoadPlayerPrefabs()
+    {
+        string prefabFilePath = "Assets/Prefabs/Characters/Player/Player.prefab";
+        //Assets/Prefabs/Characters/Player/Player.prefab
+        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabFilePath);
+         player = Instantiate(prefab);
+        player.name = "Player";
+    }
+
+
+ 
+
+
+    #endregion
 }
