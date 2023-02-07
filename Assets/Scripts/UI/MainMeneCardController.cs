@@ -117,7 +117,7 @@ public class MainMeneCardController : MonoBehaviour
                 mainUIController.LevelSelectScene();
                 break;
             case "EncyclopediaCard(Clone)":
-                print("도감");
+                mainUIController.EncyclopediaScene();
                 break;
             case "OptionCard(Clone)":
                 print("OptionCard");
