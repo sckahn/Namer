@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class GameDataManager : Singleton<GameDataManager>
 {
+    // Test
+    private string firstUserID = "";
+    
     // map information - 3 dimensional space array
     private GameObject[,,] initTiles;
     public GameObject[,,] InitTiles { get { return initTiles; } set { initTiles = value; } }
@@ -58,7 +61,7 @@ public class GameDataManager : Singleton<GameDataManager>
         FilePathInfo();
         if ((userID == "" && isLevelClear) || (userID != "" && !isLevelClear))
         {
-            Debug.Log("인자 값을 확인해주세요. 레벨 클리어했다면 사용자 아이디가 필요합니다.");
+            Debug.LogError("인자 값을 확인해주세요. 레벨 클리어했다면 사용자 아이디가 필요합니다.");
             return;
         }
         
@@ -80,19 +83,24 @@ public class GameDataManager : Singleton<GameDataManager>
         string sceneName = levelDataDic[level].sceneName;
         if (sceneName == null || sceneName == "")
         {
-            Debug.Log("Load Level를 입력해주세요");
+            Debug.LogError("Load Level를 입력해주세요");
             return;
         }
 
         string frontFileName = "";
-        if (userID != "")
+        if (level <= userDataDic[userID].clearLevel)
         {
-            frontFileName = level <= userDataDic[userID].clearLevel ? userID : "";
-            UpdateUserData(level, userID, false);
+            if (userID != "")
+            {
+                frontFileName = userID;
+                UpdateUserData(level, userID, false);
+            }
         }
-        
-        SetCardEncyclopedia(level, levelDataDic[level].cardView);
-        
+        else
+        {
+            SetCardEncyclopedia(level, levelDataDic[level].cardView);
+        }
+
         SaveLoadFile loadFile = new SaveLoadFile();
         StreamReader tileMapData = loadFile.ReadCsvFile(filePath + sceneName, frontFileName + tileMapFileName);
         StreamReader objectMapData = loadFile.ReadCsvFile(filePath + sceneName, frontFileName + objectMapFileName);
@@ -101,8 +109,6 @@ public class GameDataManager : Singleton<GameDataManager>
         MapCreator mapCreator = gameObject.AddComponent<MapCreator>();
         initTiles = mapCreator.CreateTileMap(tileMapData);
         initObjects = mapCreator.CreateObjectMap(objectMapData, objectInfoDic);
-
-        GetMainCardEncyclopedia("000000");
     }
     
 #endregion
@@ -116,13 +122,28 @@ public class GameDataManager : Singleton<GameDataManager>
         SaveLoadFile loadFile = new SaveLoadFile();
         userDataDic = loadFile.ReadJsonFile<string, SUserData>(filePath + "SaveLoad", userDataFileName);
         levelDataDic = loadFile.ReadJsonFile<int, SLevelData>(filePath + "SaveLoad", levelDataFileName);
+        
+        // Test
+        foreach (var userData in userDataDic)
+        {
+            if (firstUserID == "")
+            {
+                firstUserID = userData.Key;
+                break;
+            }
+        }
+    }
+
+    public string GetUserID()
+    {
+        return firstUserID;
     }
 
     public void AddUserData(string userID)
     {
         if (!userDataDic.ContainsKey("000000"))
         {
-            Debug.Log("GameDataManager.GetInstance.GetUserAndLevelData()를 해주세요!");
+            Debug.LogError("GameDataManager.GetInstance.GetUserAndLevelData()를 해주세요!");
             return;
         }
         
@@ -185,6 +206,10 @@ public class GameDataManager : Singleton<GameDataManager>
         {
             levelDataDic.Add(level, levelData);
         }
+        
+        SaveLoadFile saveFile = new SaveLoadFile();
+        saveFile.UpdateDicDataToJsonFile(levelDataDic, filePath + "SaveLoad", levelDataFileName);
+
     }
 
 #endregion
@@ -243,7 +268,7 @@ public class GameDataManager : Singleton<GameDataManager>
     {
         if (cardView.nameRead.Count == 0 && cardView.adjectiveRead.Count == 0)
         {
-            Debug.Log("볼 수 있는 카드가 없어요");
+            Debug.LogError("볼 수 있는 카드가 없어요");
             return null;
         }
         
@@ -259,7 +284,6 @@ public class GameDataManager : Singleton<GameDataManager>
 
         for (int i = 0; i < adjectiveReads.Count; i++)
         {
-            Debug.Log(adjectiveReads[i] + " : " + adjectives[adjectiveReads[i]].cardPrefabName);
             GameObject cardPrefab = Resources.Load("Prefabs/Cards/02. AdjustCard/" + adjectives[adjectiveReads[i]].cardPrefabName) as GameObject;
             cards.Add(cardPrefab);
         }
