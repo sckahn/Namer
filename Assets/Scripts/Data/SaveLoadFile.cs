@@ -162,11 +162,12 @@ public class SaveLoadFile
                 }
                 
                 string cardPrefabName = item["카드프리팹이름"]?.InnerText;
+                string content = item["설명"]?.InnerText;
 
                 TK key = (TK)(object)itemName;
                 if (!dataDic.ContainsKey(key))
                 {
-                    TV value = (TV)(object)new SNameInfo(priority, uiText, itemName, adjNames, cardPrefabName);
+                    TV value = (TV)(object)new SNameInfo(priority, uiText, itemName, adjNames, cardPrefabName, content);
                     dataDic.Add(key, value);
                 }
             }
@@ -176,11 +177,12 @@ public class SaveLoadFile
                 string uiText = item["UI표시텍스트"]?.InnerText;
                 EAdjective adjName = (EAdjective)Enum.Parse(typeof(EAdjective), item["이름명"]?.InnerText);
                 string cardPrefabName = item["카드프리팹이름"]?.InnerText;
+                string content = item["설명"]?.InnerText;
                     
                 TK key = (TK)(object)adjName;
                 if (!dataDic.ContainsKey(key))
                 {
-                    TV value = (TV)(object)new SAdjectiveInfo(priority, uiText, adjName, cardPrefabName);
+                    TV value = (TV)(object)new SAdjectiveInfo(priority, uiText, adjName, cardPrefabName, content);
                     dataDic.Add(key, value);
                 }
             }
