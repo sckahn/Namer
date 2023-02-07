@@ -1,4 +1,7 @@
+using System;
 using System.Collections;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -6,23 +9,24 @@ using UnityEngine.SceneManagement;
 public class LoadingSceneController : MonoBehaviour
 {
     static string nextScene;
+    public AsyncOperation op;
     [SerializeField] Image progressBar;
 
     public static void LoadScene(string sceneName)
     {
         nextScene = sceneName;
         SceneManager.LoadScene("LoadingScene");
-
     }
 
     void Start()
     {
+        DontDestroyOnLoad(this.gameObject);
         StartCoroutine(LoadSceneProcess());
     }
 
     IEnumerator LoadSceneProcess()
     {
-        AsyncOperation op = SceneManager.LoadSceneAsync(nextScene);
+        op = SceneManager.LoadSceneAsync(nextScene);
         op.allowSceneActivation = false;
 
         float timer = 0f;
@@ -41,9 +45,19 @@ public class LoadingSceneController : MonoBehaviour
                 if (progressBar.fillAmount >= 1f)
                 {
                     op.allowSceneActivation = true;
-                    yield break;
+                    yield return null;
                 }
             }
         }
+        
+        Destroy(this.gameObject);
+        yield return null;
+    }
+
+    private void OnDestroy()
+    {
+        UIManager.GetInstance.ingameCanvas = GameObject.Find("IngameCanvas");
+        UIManager.GetInstance.pauseUIPanel = UIManager.GetInstance.ingameCanvas.transform.GetChild(0).gameObject;
+        GameManager.GetInstance.ChangeGameState(GameStates.InGame);
     }
 }
