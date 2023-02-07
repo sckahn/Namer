@@ -46,37 +46,23 @@ public class CardManager : Singleton<CardManager>
         }
         else
         {
-            GameObject[] cards = GetLevelCards();
+            GameDataManager gameData = GameDataManager.GetInstance;
+            int level = FindObjectOfType<LevelInfos>().LevelNumber;
+            GameObject[] cards = gameData.GetCardPrefabs(gameData.LevelDataDic[level].cardView);
+            
             for (int i = 0; i < cards.Length; i++)
             {
                 AddCard(cards[i]);
                 yield return new WaitForSeconds(0.5f);
             }
+            
+            // 테스트 시 위의 코드를 주석처리하고, 아래의 함수를 사용해주세요.
+            // for (int i = 0; i < startCards.Length; i++)
+            // {
+            //     AddCard(startCards[i]);
+            //     yield return new WaitForSeconds(0.5f);
+            // }
         }
-    }
-
-    private GameObject[] GetLevelCards()
-    {
-        GameDataManager cardData = GameDataManager.GetInstance;
-        
-        int level = FindObjectOfType<LevelInfos>().LevelNumber;
-        List<EName> names = GameDataManager.GetInstance.LevelDataDic[level].cardView.nameRead;
-        List<EAdjective> adjectives = GameDataManager.GetInstance.LevelDataDic[level].cardView.adjectiveRead;
-        
-        List<GameObject> cards = new List<GameObject>();
-        for (int i = 0; i < names.Count; i++)
-        {
-            GameObject cardPrefab = Resources.Load("Prefabs/Cards/01. NameCard/" + cardData.Names[names[i]].cardPrefabName) as GameObject;
-            cards.Add(cardPrefab);
-        }
-
-        for (int i = 0; i < adjectives.Count; i++)
-        {
-            GameObject cardPrefab = Resources.Load("Prefabs/Cards/02. AdjustCard/" + cardData.Adjectives[adjectives[i]].cardPrefabName) as GameObject;
-            cards.Add(cardPrefab);
-        }
-        
-        return cards.ToArray();
     }
 
     //카드를 생성하는 메서드 

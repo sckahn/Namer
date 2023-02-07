@@ -45,16 +45,14 @@ public partial class DetectManager : Singleton<DetectManager>
 
         if (levelInfos.IsCreateMode)
         {
-            gameDataManager.CreateFile();
+            gameDataManager.CreateFile(levelInfos.LevelNumber);
         }
         else
         {
-            string levelName = gameDataManager.LevelDataDic[level].sceneName;
-            
             SPosition position = gameDataManager.LevelDataDic[level].playerPosition;
             player.transform.position = new Vector3(position.x, position.y, position.z);
             
-            gameDataManager.CreateMap(levelName);
+            gameDataManager.CreateMap(level);
             SetMapData();
             if (player != null) player.SetActive(true);
         }

@@ -115,6 +115,13 @@ public class MapCreator : MonoBehaviour
                     GameObject objectPrefabs = Resources.Load("Prefabs/Objects/" + objectInfoDic[id].prefabName) as GameObject;
                     initObjects[x, y, z] = Instantiate(objectPrefabs, new Vector3(x, y, z), Quaternion.identity, parent.transform);
                     initObjects[x, y, z].GetComponent<InteractiveObject>().objectInfo = objectInfoDic[id];
+
+                    int level = FindObjectOfType<LevelInfos>().LevelNumber;
+                    SCardView cardView = new SCardView();
+                    cardView.nameRead = new[] { objectInfoDic[id].nameType }.ToList();
+                    cardView.adjectiveRead = objectInfoDic[id].adjectives.ToList();
+
+                    GameDataManager.GetInstance.SetCardEncyclopedia(level, cardView);
                 }
             }
         }
