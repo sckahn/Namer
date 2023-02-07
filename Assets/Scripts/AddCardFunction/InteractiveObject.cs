@@ -360,7 +360,7 @@ public class InteractiveObject : MonoBehaviour
     bool isHoverling = false;
     private void OnMouseOver()
     {
-        if (UIManager.GetInstance.isPause) return;
+        if (GameManager.GetInstance.currentState == GameStates.Pause) return;
         isHoverling = true;
         if (this.gameObject.CompareTag("InteractObj") && CardManager.GetInstance.isPickCard)
         {
@@ -376,7 +376,7 @@ public class InteractiveObject : MonoBehaviour
     //오브젝트의 이름을 화면에서 가림 
     private void OnMouseExit()
     {
-        if (UIManager.GetInstance.isPause) return;
+        if (GameManager.GetInstance.currentState == GameStates.Pause) return;
         isHoverling = false;
         CardManager.GetInstance.target = null;
         popUpName.SetActive(false);
@@ -399,15 +399,15 @@ public class InteractiveObject : MonoBehaviour
     }
 
     //탭키에 따라 모든 네임 팝업을 띄움
-    private void AllPopUpNameCtr()
-    {
-        if (GameManager.GetInstance.isTapDown && !popUpName.activeSelf)
-        {
-            PopUpNameOn();
-        }
-        if (!GameManager.GetInstance.isTapDown && popUpName.activeSelf && !isHoverling)
-        {
-            PopUpNameOff();
-        }
-    }
+     private void AllPopUpNameCtr()
+     {
+         if (UIManager.GetInstance.isShowNameKeyPressed && !popUpName.activeSelf)
+         {
+             PopUpNameOn();
+         }
+         if (!UIManager.GetInstance.isShowNameKeyPressed && popUpName.activeSelf && !isHoverling)
+         {
+             PopUpNameOff();
+         }
+     }
 }

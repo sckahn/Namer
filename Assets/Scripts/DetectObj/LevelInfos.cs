@@ -22,6 +22,6 @@ public class LevelInfos : MonoBehaviour
 
     private void Awake()
     {
-        DetectManager.GetInstance.Init(levelNumber);
+        // DetectManager.GetInstance.Init(levelNumber);
     }
 }

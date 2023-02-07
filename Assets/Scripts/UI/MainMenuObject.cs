@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenuObect : MonoBehaviour
+public class MainMenuObject : MonoBehaviour
 {
     [SerializeField] GameObject popUpName;
 
@@ -17,7 +15,7 @@ public class MainMenuObect : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (UIManager.GetInstance.isPause) return;
+        if (GameManager.GetInstance.currentState == GameStates.Pause) return;
         isHoverling = true;
         if (this.gameObject.CompareTag("InteractObj") && CardManager.GetInstance.isPickCard)
         {
@@ -33,7 +31,7 @@ public class MainMenuObect : MonoBehaviour
     //오브젝트의 이름을 화면에서 가림 
     private void OnMouseExit()
     {
-        if (UIManager.GetInstance.isPause) return;
+        if (GameManager.GetInstance.currentState == GameStates.Pause) return;
         isHoverling = false;
         CardManager.GetInstance.target = null;
         popUpName.SetActive(false);
@@ -58,13 +56,14 @@ public class MainMenuObect : MonoBehaviour
     //탭키에 따라 모든 네임 팝업을 띄움
     private void AllPopUpNameCtr()
     {
-        if (GameManager.GetInstance.isTapDown && !popUpName.activeSelf)
+        if (UIManager.GetInstance.isShowNameKeyPressed && !popUpName.activeSelf)
         {
             PopUpNameOn();
         }
-        if (!GameManager.GetInstance.isTapDown && popUpName.activeSelf && !isHoverling)
+        if (!UIManager.GetInstance.isShowNameKeyPressed && popUpName.activeSelf && !isHoverling)
         {
             PopUpNameOff();
         }
     }
+    
 }

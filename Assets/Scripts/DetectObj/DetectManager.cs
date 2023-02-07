@@ -44,30 +44,48 @@ public partial class DetectManager : Singleton<DetectManager>
 
     // LevelInfos 컴포넌트에서 씬이 열리고 바로 해당 함수를 호출
     // 호출시에 바로 모드를 파악하고, 맵을 로드하거나 (에디터모드인 경우는) 맵 파일을 저장함 
+    // public void Init(int level)
+    // {
+    //     levelInfos = FindObjectOfType<LevelInfos>();
+    //     
+    //     GameObject player = GameObject.Find("Player");
+    //     if (player != null) player.SetActive(false);
+    //     
+    //     gameDataManager = GameDataManager.GetInstance;
+    //     gameDataManager.GetCardData();
+    //     gameDataManager.GetUserAndLevelData();
+    //
+    //     if (levelInfos.IsCreateMode)
+    //     {
+    //         gameDataManager.CreateFile();
+    //     }
+    //     else
+    //     {
+    //         string levelName = gameDataManager.LevelDataDic[level].sceneName;
+    //         
+    //         SPosition position = gameDataManager.LevelDataDic[level].playerPosition;
+    //         player.transform.position = new Vector3(position.x, position.y, position.z);
+    //         
+    //         gameDataManager.CreateMap(levelName);
+    //         SetMapData();
+    //         if (player != null) player.SetActive(true);
+    //     }
+    // }
     public void Init(int level)
     {
-        levelInfos = FindObjectOfType<LevelInfos>();
-        
         GameObject player = GameObject.Find("Player");
         if (player != null) player.SetActive(false);
         
         gameDataManager = GameDataManager.GetInstance;
         gameDataManager.GetCardData();
         gameDataManager.GetUserAndLevelData();
-
-        if (levelInfos.IsCreateMode)
-        {
-            gameDataManager.CreateFile(levelInfos.LevelNumber);
-        }
-        else
-        {
-            SPosition position = gameDataManager.LevelDataDic[level].playerPosition;
-            player.transform.position = new Vector3(position.x, position.y, position.z);
-            
-            gameDataManager.CreateMap(level);
-            SetMapData();
-            if (player != null) player.SetActive(true);
-        }
+        SPosition position = gameDataManager.LevelDataDic[level].playerPosition;
+        player.transform.position = new Vector3(position.x, position.y, position.z);
+        
+        gameDataManager.CreateMap(level);
+        SetMapData();
+        if (player != null) player.SetActive(true);
+        
     }
 
     // 맵을 로드할 때에 한 번 배열을 가져오는 메서드로 따로 사용하면 안 됨

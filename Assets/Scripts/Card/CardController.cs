@@ -5,7 +5,7 @@ public class CardController : MonoBehaviour
 {
     // [SerializeField] private CardData cardData;
     [SerializeField] private ECardType cardType;
-    [SerializeField] private EName name;
+    [SerializeField] private EName nameType;
     [SerializeField] private EAdjective[] adjectives;
     
     public PRS originPRS;
@@ -41,7 +41,7 @@ public class CardController : MonoBehaviour
     //마우스가 호버중이면 하이라이트 표시를하고 카트를 회전시킨다
     private void OnMouseOver()
     {
-        if (UIManager.GetInstance.isPause) return;
+        if (GameManager.GetInstance.currentState == GameStates.Pause) return;
         if (!CardManager.GetInstance.ableCardCtr) return;
         highlight.SetActive(true);
 
@@ -72,8 +72,8 @@ public class CardController : MonoBehaviour
     //카드 영역에서 마우스 누르면 카드 선택 커서로 변경, 카드를 숨김 
     private void OnMouseDown()
     {
+        if (GameManager.GetInstance.currentState == GameStates.Pause) return;
         if (CardManager.GetInstance.isEncyclopedia) return;
-        if (UIManager.GetInstance.isPause) return;
         if (!CardManager.GetInstance.ableCardCtr) return;
         CardManager.GetInstance.isPickCard = true;
         //transform.DOMove(Input.mousePosition , 5f);
@@ -109,7 +109,7 @@ public class CardController : MonoBehaviour
         {
             if (cardType == ECardType.Name)
             {
-               target.GetComponent<InteractiveObject>().AddName(name);
+               target.GetComponent<InteractiveObject>().AddName(nameType);
             }
             else if (cardType == ECardType.Adjective)
             {
