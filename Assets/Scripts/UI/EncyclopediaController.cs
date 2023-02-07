@@ -35,7 +35,6 @@ public class EncyclopediaController : MonoBehaviour
 
         for (int i = 0; i < pediaCards.Length; i++)
         {
-            print(pediaCards[i]);
             var cardObject = (GameObject)Instantiate(pediaCards[i], new Vector3(0, 0, 0), Quaternion.identity);
             cardObject.transform.parent = GameObject.Find("LayoutCards").transform;
             cardObject.transform.localPosition =
