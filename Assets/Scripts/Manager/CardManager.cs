@@ -12,7 +12,7 @@ public class CardManager : Singleton<CardManager>
     public List<CardController> myCards;
     public List<MainMeneCardController> mainCards;
     [SerializeField] GameObject[] startCards;
-
+    private Coroutine dealCardCoroutine;
     //타겟 상호작용 오브젝트 
     //[HideInInspector]
     public GameObject target;
@@ -29,7 +29,9 @@ public class CardManager : Singleton<CardManager>
 
     public void CardStart()
     {
-        StartCoroutine(DealCard());
+        if(dealCardCoroutine !=null)
+            StopCoroutine(dealCardCoroutine);
+        dealCardCoroutine=StartCoroutine(DealCard());
     }
 
     //시작 카드를 딜링해주는 메서드 

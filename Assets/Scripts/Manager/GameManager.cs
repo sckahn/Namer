@@ -186,7 +186,7 @@ public class GameManager : Singleton<GameManager>
 
     private void HandleInGame()
     {
-        LoadMap();
+        //LoadMap();
         //load new scene 
         //LoadScene(Scenes.InGame,LoadSceneMode.Single);
         //instantiate player
@@ -313,7 +313,7 @@ public class GameManager : Singleton<GameManager>
     //DemoScene에서 하면 왜됌?
     //근데 씬불러올때는 안되네;
     [ContextMenu("LoadMapTest")]
-    void LoadMap()
+    public void LoadMap()
     {
         // LoadPlayerPrefabs();
         if(curLevel == -3)
