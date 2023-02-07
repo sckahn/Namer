@@ -88,8 +88,11 @@ public class GameDataManager : Singleton<GameDataManager>
         if (userID != "")
         {
             frontFileName = level <= userDataDic[userID].clearLevel ? userID : "";
+            UpdateUserData(level, userID, false);
         }
-
+        
+        SetCardEncyclopedia(level, levelDataDic[level].cardView);
+        
         SaveLoadFile loadFile = new SaveLoadFile();
         StreamReader tileMapData = loadFile.ReadCsvFile(filePath + sceneName, frontFileName + tileMapFileName);
         StreamReader objectMapData = loadFile.ReadCsvFile(filePath + sceneName, frontFileName + objectMapFileName);
@@ -98,9 +101,8 @@ public class GameDataManager : Singleton<GameDataManager>
         MapCreator mapCreator = gameObject.AddComponent<MapCreator>();
         initTiles = mapCreator.CreateTileMap(tileMapData);
         initObjects = mapCreator.CreateObjectMap(objectMapData, objectInfoDic);
-        
-        SetCardEncyclopedia(level, levelDataDic[level].cardView);
-        UpdateUserData(level, userID, false);
+
+        GetMainCardEncyclopedia("000000");
     }
     
 #endregion
@@ -126,7 +128,9 @@ public class GameDataManager : Singleton<GameDataManager>
         
         if (!userDataDic.ContainsKey(userID))
         {
-            userDataDic.Add(userID, userDataDic["000000"]);
+            SUserData userData = UserDataDic["000000"];
+            userData.userID = userID;
+            userDataDic.Add(userID, userData);
         }
         
         SaveLoadFile saveFile = new SaveLoadFile();
@@ -230,9 +234,18 @@ public class GameDataManager : Singleton<GameDataManager>
         return GetCardPrefabs(CardEncyclopedia[level]);
     }
 
-    public GameObject[] GetMainCardEncyclopedia(string userID)
+    public void GetMainCardEncyclopedia(string userID)
     {
-        return GetCardPrefabs(UserDataDic[userID].cardView);
+        foreach (var adjective in UserDataDic[userID].cardView.adjectiveRead)
+        {
+            Debug.Log(adjective);
+        }
+        
+        foreach (var adjective in UserDataDic[userID].cardView.nameRead)
+        {
+            Debug.Log(adjective);
+        }
+        // return GetCardPrefabs(UserDataDic[userID].cardView);
     }
     
     public GameObject[] GetCardPrefabs(SCardView cardView)
