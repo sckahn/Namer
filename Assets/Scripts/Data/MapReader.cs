@@ -57,7 +57,7 @@ public class MapReader : MonoBehaviour
             {
                 for (int z = minZ; z <= maxZ; z++)
                 {
-                    Ray ray = new Ray(new Vector3(x, y + 0.5f, z - 1.5f), transform.forward);
+                    Ray ray = new Ray(new Vector3(x, y + 0.5f, z - 1f), transform.forward);
                     RaycastHit hit;
 
                     if (Physics.Raycast(ray, out hit, 1f))
