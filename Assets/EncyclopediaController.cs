@@ -16,7 +16,6 @@ public class EncyclopediaController : MonoBehaviour
 
     private void OnEnable()
     {
-        print("OnEnable");
         gameDataManager = GameDataManager.GetInstance;
         gameDataManager.GetCardData();
         gameDataManager.GetUserAndLevelData();
@@ -30,18 +29,21 @@ public class EncyclopediaController : MonoBehaviour
 
     private void EncyclopediaInit()
     {
-        print("Init");
-        GameDataManager.GetInstance.GetMainCardEncyclopedia("000000");
-        //pediaCards = GameDataManager.GetInstance.GetMainCardEncyclopedia("000000");
+        pediaCards = GameDataManager.GetInstance.GetMainCardEncyclopedia("000000");
 
-        //for (int i = 0; i < pediaCards.Length; i++)
-        //{
-        //    print(pediaCards[i]); 
-        //    var cardObject = (GameObject)Instantiate(pediaCards[i], new Vector3(0, 0, 0), Quaternion.identity);
-        //    cardObject.transform.parent = GameObject.Find("LayoutCards").transform;
-        //    cardObject.transform.localPosition = new Vector3(-0.9f, 0, 0);
+        maxHeight = 0.5f + (float) 0.5 * (pediaCards.Length / 4);
 
-        //}
+        for (int i = 0; i < pediaCards.Length; i++)
+        {
+            print(pediaCards[i]);
+            var cardObject = (GameObject)Instantiate(pediaCards[i], new Vector3(0, 0, 0), Quaternion.identity);
+            cardObject.transform.parent = GameObject.Find("LayoutCards").transform;
+            cardObject.transform.localPosition =
+                new Vector3(-0.9f + (0.6f * (i % 4)),
+                -0.7f * (int) (i / 4), 0);
+            cardObject.transform.localRotation = new Quaternion(0, 0, 0, 0);
+
+        }
 
     }
 

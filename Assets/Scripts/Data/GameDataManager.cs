@@ -230,18 +230,9 @@ public class GameDataManager : Singleton<GameDataManager>
         return GetCardPrefabs(CardEncyclopedia[level]);
     }
 
-    public void GetMainCardEncyclopedia(string userID)
+    public GameObject[] GetMainCardEncyclopedia(string userID)
     {
-        foreach (var adjective in UserDataDic[userID].cardView.adjectiveRead)
-        {
-            Debug.Log(adjective);
-        }
-
-        foreach (var adjective in UserDataDic[userID].cardView.nameRead)
-        {
-            Debug.Log(adjective);
-        }
-        // return GetCardPrefabs(UserDataDic[userID].cardView);
+         return GetCardPrefabs(UserDataDic[userID].cardView);
     }
     
     public GameObject[] GetCardPrefabs(SCardView cardView)

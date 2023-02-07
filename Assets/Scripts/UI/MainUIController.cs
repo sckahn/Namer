@@ -27,6 +27,7 @@ public class MainUIController : MonoBehaviour
     [SerializeField] GameObject[] mainMenuGrounds;
     [SerializeField] GameObject encyclopedia;
     [SerializeField] GameObject mainMenucards;
+    [SerializeField] GameObject titlePanel;
     [SerializeField] GameObject mainRose;
     GameObject levelInformationTxt;
 
@@ -171,7 +172,7 @@ public class MainUIController : MonoBehaviour
     {
         state = MainMenuState.Encyclopedia;
         encyclopedia.SetActive(true);
-        title.SetActive(false);
+        titlePanel.SetActive(false);
         mainMenucards.SetActive(false);
         mainRose.SetActive(false);
         mainRose.transform.GetChild(0).gameObject.SetActive(false);
@@ -198,7 +199,7 @@ public class MainUIController : MonoBehaviour
     {
         state = MainMenuState.Main;
         encyclopedia.SetActive(false);
-        title.SetActive(true);
+        titlePanel.SetActive(true);
         mainMenucards.SetActive(true);
         mainRose.SetActive(true);
         CardManager.GetInstance.isEncyclopedia = false;

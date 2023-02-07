@@ -802,7 +802,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &183012291
 GameObject:
@@ -2429,7 +2429,7 @@ RectTransform:
   - {fileID: 183012292}
   - {fileID: 1802502975}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2499,6 +2499,7 @@ MonoBehaviour:
   - {fileID: 7046714}
   encyclopedia: {fileID: 872287249}
   mainMenucards: {fileID: 1216206864}
+  titlePanel: {fileID: 2046814367}
   mainRose: {fileID: 129132252}
   titleMovingTime: 3
   cameraMovingTime: 3
@@ -3594,7 +3595,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 66.272, y: 119.397, z: 29.926}
 --- !u!1001 &711781999
 PrefabInstance:
@@ -6396,7 +6397,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7383990406325896298, guid: 382cc99d15274495bb9ce05f6b3173e6, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7383990406325896298, guid: 382cc99d15274495bb9ce05f6b3173e6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9053,7 +9054,7 @@ Transform:
   - {fileID: 1244022253}
   - {fileID: 1515865090}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1727689404
 PrefabInstance:

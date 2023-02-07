@@ -5,7 +5,7 @@ public class CardController : MonoBehaviour
 {
     // [SerializeField] private CardData cardData;
     [SerializeField] private ECardType cardType;
-    [SerializeField] private EName name;
+    [SerializeField] private EName nameType;
     [SerializeField] private EAdjective[] adjectives;
     
     public PRS originPRS;
@@ -109,7 +109,7 @@ public class CardController : MonoBehaviour
         {
             if (cardType == ECardType.Name)
             {
-               target.GetComponent<InteractiveObject>().AddName(name);
+               target.GetComponent<InteractiveObject>().AddName(nameType);
             }
             else if (cardType == ECardType.Adjective)
             {
