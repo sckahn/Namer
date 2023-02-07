@@ -14,8 +14,6 @@ public class CameraController : MonoBehaviour
         FrontAtAll
     }
 
-    Vector3 mainCamPos;
-
     // 둘 다 게임 매니저에서 관리 필요
     bool topViewOn = false;
     int normalCamPirority;
@@ -39,12 +37,16 @@ public class CameraController : MonoBehaviour
 
     public void Init()
     {
+        // 카메라 키 설정 
         if (cameraKey == KeyCode.None) cameraKey = KeyCode.Q;
+
+        // 각 캠의 우선순위 설정 
         playerNormalViewCam.Priority = (int)PriorityOrder.normal;
         playerTopViewCam.Priority = (int)PriorityOrder.BehingByNormal;
         targetCam.Priority = (int)PriorityOrder.BehindAtAll;
         normalCamPirority = playerNormalViewCam.Priority;
-        mainCamPos = Camera.main.transform.position;
+
+        // 모든 팔로우 캠이 플레이어를 따라다니도록 설정 
         player = GameObject.Find("Player").transform;
         playerNormalViewCam.Follow = player;
         playerTopViewCam.Follow = player;
@@ -72,12 +74,6 @@ public class CameraController : MonoBehaviour
         //    isOn = Input.GetKey(cameraKey);
         //    playerTopViewCam.Priority = (isOn ? (int)PriorityOrder.FrontByNormal : (int)PriorityOrder.BehingByNormal);
         //}
-
-        if (mainCamPos != Camera.main.transform.position)
-        {
-            mainCamPos = Camera.main.transform.position;
-            //CardManager.GetInstance.CardAlignment(0f);
-        }
 
         // 토글로 탑뷰 하기
         if (Input.GetKeyDown(cameraKey))
