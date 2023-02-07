@@ -1,4 +1,3 @@
-using System.CodeDom.Compiler;
 using UnityEngine;
 using System.Collections;
 
@@ -13,8 +12,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject interactobj;
     public float moveSpeed = 3;
     public int rotateSpeed = 10;
+    public Vector3 InputVector;
     private Dir targetDir;
-
+    
     [SerializeField] [Range(0.1f, 5f)] private float rootmotionSpeed;
     // TODO KeyMapping ?
 
@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
         myanimator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         playerEntity = GetComponent<PlayerEntity>();
+        GameManager.GetInstance.KeyAction += MoveKeyInput;
     }
 
     private void PlayerMove(Vector3 inputVec)
@@ -48,10 +49,10 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(inputVec), Time.deltaTime * rotateSpeed);
         }
     }
-        
-    private Vector3 PlayerInput()
+    
+    public void MoveKeyInput()
     {
-        return new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        InputVector = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
     }
 
     private void PlayInteraction()
@@ -80,27 +81,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        // TODO GameManager한테 인풋 받을 수 있는 변수 가져오기
-        // GameManager.GetInstance.GetCheckSurrounding.CheckCharacterCurrentTile(this.gameObject);
         DetectManager.GetInstance.CheckCharacterCurrentTile(this.gameObject);
-        
-        // GameManager.GetInstance.GetCheckSurrounding.CheckForwardObj(this.gameObject);
         DetectManager.GetInstance.CheckForwardObj(this.gameObject);
-        // interactobj = GameManager.GetInstance.GetCheckSurrounding.forwardObjectInfo;
         interactobj = DetectManager.GetInstance.forwardObjectInfo;
         
         // 인터렉션 중에는 이동 또는 다른 인터렉션 불가
+        // 플레이어 인풋이 막힌 경우 동작하지 않도록 변경
         if (GameManager.GetInstance.isPlayerCanInput && !GameManager.GetInstance.isPlayerDoInteraction)
         {
             // 이동 함수 + 인터렉션
-            PlayerMove(PlayerInput());
+            PlayerMove(InputVector);
             PlayInteraction();
         }
-    }
-
-    public void PushRootmotionEvent()
-    {
-        StartCoroutine(PushRootmotion());    
     }
 
     // 방향만 맞춰주면 되는 경우
@@ -197,5 +189,13 @@ public class PlayerMovement : MonoBehaviour
 
         yield return null;
     }
+
+    #region AnimationEvent Function
+    public void PushRootmotionEvent()
+    {
+        StartCoroutine(PushRootmotion());    
+    }
+    #endregion
+
 }
 
