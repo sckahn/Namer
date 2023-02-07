@@ -1,8 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -15,7 +12,6 @@ public class FlammableAdj : IAdjective
     #region 잘타는 꾸밈 카드 맴버변수
     private GameObject fireEffect;
     private ParticleSystem fire;
-    private bool isOnFire;
     private bool isContact;
     #endregion
 
@@ -53,7 +49,7 @@ public class FlammableAdj : IAdjective
         isContact = true;
         ObjectOnFire(thisObject.gameObject);
 
-        SoundManager.Instance.Play(SoundManager.Instance.effectClips[0]);
+        SoundManager.GetInstance.Play(SoundManager.GetInstance.effectClips[0]);
 
     }
 
@@ -69,9 +65,7 @@ public class FlammableAdj : IAdjective
         if (isContact)
         {
             isContact = false;
-            isOnFire = true;
             targetObj.StartCoroutine(OnFire(targetObj.gameObject));
-            isOnFire = false;
             // targetObj.gameObject.SetActive(false);
             // print("Boom");
         }
@@ -89,8 +83,8 @@ public class FlammableAdj : IAdjective
 
     GameObject FindEffect(String prefabName)
     {
-        string path = "Assets/Prefabs/Effect/" + prefabName + ".prefab";
-        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+        string path = "Prefabs/Interaction/Effect/" + prefabName;
+        GameObject prefab = Resources.Load<GameObject>(path); 
         if (prefab == null)
         {
             Debug.LogError("Prefab not found: " + prefabName);

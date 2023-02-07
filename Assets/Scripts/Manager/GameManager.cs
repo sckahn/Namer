@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,9 +35,6 @@ public class GameManager : Singleton<GameManager>
     {
         this.gameObject.AddComponent<StateMachineRunner>();
         isPlayerDoInteraction = false;
-        
-        GameObject nameData = Resources.Load("NameData") as GameObject;
-        Instantiate(nameData, Vector3.zero, Quaternion.identity);
     }
 
     private void Update()

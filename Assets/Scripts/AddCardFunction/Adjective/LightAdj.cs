@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -93,8 +90,8 @@ public class LightAdj : IAdjective
     }
     GameObject FindEffect(String prefabName)
     {
-        string path = "Assets/Prefabs/Effect/" + prefabName + ".prefab";
-        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+        string path = "Prefabs/Interaction/Effect/" + prefabName;
+        GameObject prefab = Resources.Load<GameObject>(path); 
         if (prefab == null)
         {
             Debug.LogError("Prefab not found: " + prefabName);

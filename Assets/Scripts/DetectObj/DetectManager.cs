@@ -1,15 +1,11 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Palmmedia.ReportGenerator.Core.Reporting.Builders;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEngine.WSA;
 
 // Partial class로 파일을 나눠서 관리하도록 했습니다.
 // DetectManager.cs & DetectManager.Detect.cs & DetectManager.GetAdjacent.cs
+
+// TODO 코드 정리 해주세요.
 public partial class DetectManager : Singleton<DetectManager>
 {
     private GameObject[,,] currentObjects;
@@ -39,18 +35,24 @@ public partial class DetectManager : Singleton<DetectManager>
     public void Init(int level)
     {
         levelInfos = FindObjectOfType<LevelInfos>();
+        
         GameObject player = GameObject.Find("Player");
         if (player != null) player.SetActive(false);
+        
         gameDataManager = GameDataManager.GetInstance;
+        gameDataManager.GetCardData();
         gameDataManager.GetUserAndLevelData();
+
         if (levelInfos.IsCreateMode)
         {
-            gameDataManager.CreateFile();
+            gameDataManager.CreateFile(levelInfos.LevelNumber);
         }
         else
         {
-            string levelName = gameDataManager.LevelDataDic[level].levelName;
-            gameDataManager.CreateMap(levelName);
+            SPosition position = gameDataManager.LevelDataDic[level].playerPosition;
+            player.transform.position = new Vector3(position.x, position.y, position.z);
+            
+            gameDataManager.CreateMap(level);
             SetMapData();
             if (player != null) player.SetActive(true);
         }

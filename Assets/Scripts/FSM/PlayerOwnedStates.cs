@@ -1,6 +1,3 @@
-using Unity.VisualScripting;
-using UnityEngine;
-
 namespace PlayerOwnedStates
 {
 	public class IdleState : IState<PlayerEntity>

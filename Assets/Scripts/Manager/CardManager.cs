@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,7 +19,6 @@ public class CardManager : Singleton<CardManager>
 
     public bool isPickCard = false;
     public bool ableCardCtr = true;
-    public bool isEncyclopedia = false;
 
     private void Start()
     {
@@ -32,26 +30,39 @@ public class CardManager : Singleton<CardManager>
         StartCoroutine(DealCard());
     }
 
-
     //시작 카드를 딜링해주는 메서드 
     IEnumerator DealCard()
     {
         var scene = SceneManager.GetActiveScene();
         yield return new WaitForSeconds(0.1f);
-        for (int i = 0; i < startCards.Length; i++)
+        
+        if(scene.name == "MainScene")
         {
-            if(scene.name == "MainScene")
+            for (int i = 0; i < startCards.Length; i++)
             {
                 MainMenuAddCard(startCards[i]);
+                yield return new WaitForSeconds(0.5f);
             }
-            else
-            {
-                AddCard(startCards[i]);
-            }
-
-            yield return new WaitForSeconds(0.5f);
         }
-
+        else
+        {
+            GameDataManager gameData = GameDataManager.GetInstance;
+            int level = FindObjectOfType<LevelInfos>().LevelNumber;
+            GameObject[] cards = gameData.GetCardPrefabs(gameData.LevelDataDic[level].cardView);
+            
+            for (int i = 0; i < cards.Length; i++)
+            {
+                AddCard(cards[i]);
+                yield return new WaitForSeconds(0.5f);
+            }
+            
+            // 테스트 시 위의 코드를 주석처리하고, 아래의 함수를 사용해주세요.
+            // for (int i = 0; i < startCards.Length; i++)
+            // {
+            //     AddCard(startCards[i]);
+            //     yield return new WaitForSeconds(0.5f);
+            // }
+        }
     }
 
     //카드를 생성하는 메서드 
@@ -60,11 +71,6 @@ public class CardManager : Singleton<CardManager>
     {
         var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position, Quaternion.identity);
         var card = cardObject.GetComponent<CardController>();
-        var scene = SceneManager.GetActiveScene();
-        if (scene.name != "MainScene")
-        {
-            cardObject.transform.parent = Camera.main.transform;
-        }
         myCards.Add(card);
         CardAlignment();
     }
@@ -73,7 +79,6 @@ public class CardManager : Singleton<CardManager>
     {
         var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position, Quaternion.identity);
         var card = cardObject.GetComponent<MainMeneCardController>();
-        cardObject.transform.parent = GameObject.Find("MainMenuCards").transform;
         mainCards.Add(card);
         MainCardAlignment();
     }
@@ -87,7 +92,7 @@ public class CardManager : Singleton<CardManager>
         for (int i = 0; i < myCards.Count; i++)
         {
             var targetCard = myCards[i];
-
+            
             targetCard.originPRS = originCardPRSs[i];
             targetCard.originPRS.rot = cardHolderPoint.transform.rotation;
             targetCard.MoveTransform(targetCard.originPRS, true, 2f);

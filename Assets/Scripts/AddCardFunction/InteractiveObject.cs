@@ -1,5 +1,3 @@
-    using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -18,6 +16,8 @@ public class InteractiveObject : MonoBehaviour
     private EName checkName;
     private int checkAdjCount;
     private bool[] initAdj;
+    
+    private LevelInfos levelInfos;
 
     public bool[] GetCheckAdj()
     {
@@ -40,10 +40,10 @@ public class InteractiveObject : MonoBehaviour
     public IAdjective[] Adjectives { get { return  adjectives; } }
     
     // manager to get card data 
-    private CardDataManager cardData;
+    private GameDataManager cardData;
 
     // object's information
-    public ObjectInfo objectInfo;
+    public SObjectInfo objectInfo = new SObjectInfo();
     
     public int GetObjectID()
     {
@@ -62,6 +62,8 @@ public class InteractiveObject : MonoBehaviour
 
     private void OnEnable()
     {
+        levelInfos = FindObjectOfType<LevelInfos>();
+        
         if (!gameObject.CompareTag("InteractObj"))
         {
             Debug.Log("태그를 InteractObj로 설정해주세요!");
@@ -101,7 +103,7 @@ public class InteractiveObject : MonoBehaviour
     {
         if (cardData == null)
         {
-            if (objectInfo.objectID >= 0)
+            if (!levelInfos.IsCreateMode)
             {
                 objectName = objectInfo.nameType;
                 for (int i = 0; i < objectInfo.adjectives.Length; i++)
@@ -111,7 +113,7 @@ public class InteractiveObject : MonoBehaviour
                 }
             }
 
-            cardData = CardDataManager.GetInstance;
+            cardData = GameDataManager.GetInstance;
             currentObjectName = cardData.Names[objectName].uiText;
             InitCard();
         }
@@ -209,7 +211,10 @@ public class InteractiveObject : MonoBehaviour
             return;
         }
         //수정한 부분
-        DetectManager.GetInstance.StartDetector(new List<GameObject>() { this.gameObject });
+        
+        
+        if(!levelInfos.IsCreateMode)
+            DetectManager.GetInstance.StartDetector(new List<GameObject>() { this.gameObject });
         //수정한 부분 
 
         EAdjective[] addAdjectives = cardData.Names[(EName)addedName].adjectives;
@@ -225,7 +230,8 @@ public class InteractiveObject : MonoBehaviour
         addNameText = cardData.Names[(EName)addedName].uiText;
 
         //수정한 부분
-        DetectManager.GetInstance.StartDetector(new List<GameObject>() { this.gameObject });
+        if(!levelInfos.IsCreateMode)
+            DetectManager.GetInstance.StartDetector(new List<GameObject>() { this.gameObject });
         //수정한 부분
     }
 
@@ -284,8 +290,7 @@ public class InteractiveObject : MonoBehaviour
         {
             foreach (var adjective in subtractAdjectives)
             {
-                if (adjective == null) continue;
-
+                // if (adjective == null) continue;
                 SubtractAdjective(adjective, false);
             }
         }

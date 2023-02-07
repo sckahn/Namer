@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : Singleton<SoundManager>
 {
-    public static SoundManager Instance;
     public AudioSource sound;
     
     public List<AudioClip> effectClips = new List<AudioClip> ();
@@ -12,13 +10,7 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(this);
-            BgmPlay();
-        }
-        else Destroy(this.gameObject);
+        BgmPlay();
     }
 
     public void BgmPlay()
@@ -30,8 +22,6 @@ public class SoundManager : MonoBehaviour
 
     public void Play(AudioClip clip)
     {
-        //sound.clip = clip;
-        Debug.Log(clip.name);
         sound.PlayOneShot(clip);
     }
 }
