@@ -273,12 +273,22 @@ public class GameDataManager : Singleton<GameDataManager>
         List<GameObject> cards = new List<GameObject>();
         for (int i = 0; i < nameReads.Count; i++)
         {
+            if ((int)nameReads[i] > names.Count - 1)
+            {
+                continue;
+            }
+            
             GameObject cardPrefab = Resources.Load("Prefabs/Cards/01. NameCard/" + names[nameReads[i]].cardPrefabName) as GameObject;
             cards.Add(cardPrefab);
         }
 
         for (int i = 0; i < adjectiveReads.Count; i++)
         {
+            if ((int)adjectiveReads[i] > adjectives.Count - 1)
+            {
+                continue;
+            }
+            
             GameObject cardPrefab = Resources.Load("Prefabs/Cards/02. AdjustCard/" + adjectives[adjectiveReads[i]].cardPrefabName) as GameObject;
             cards.Add(cardPrefab);
         }

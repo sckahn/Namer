@@ -81,22 +81,6 @@
             <카드프리팹이름>CrystalCard</카드프리팹이름>
             <설명> </설명>
         </Row >
-        <Row  index="11">
-            <이름명>Watermelon</이름명>
-            <UI표시텍스트>수박</UI표시텍스트>
-            <우선순위>10</우선순위>
-            <보유꾸밈성질 />
-            <카드프리팹이름 />
-            <설명> </설명>
-        </Row >
-        <Row  index="12">
-            <이름명>Card</이름명>
-            <UI표시텍스트>카드</UI표시텍스트>
-            <우선순위>11</우선순위>
-            <보유꾸밈성질>Obtainable</보유꾸밈성질>
-            <카드프리팹이름 />
-            <설명> </설명>
-        </Row >
     </worksheet>
     <worksheet name="Adjective">
         <Row  index="1">
@@ -138,7 +122,7 @@
             <이름명>Climbable</이름명>
             <UI표시텍스트>오름</UI표시텍스트>
             <우선순위>5</우선순위>
-            <카드프리팹이름>ClimableCard</카드프리팹이름>
+            <카드프리팹이름>ClimbableCard</카드프리팹이름>
             <설명> </설명>
         </Row >
         <Row  index="7">

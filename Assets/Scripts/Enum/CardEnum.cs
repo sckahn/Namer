@@ -16,8 +16,6 @@ public enum EName
     Sun,
     Balloon,
     Crystal,
-    Watermelon,
-    Card,
 }
 
 public enum EAdjectiveType
