@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EncyclopediaController : MonoBehaviour
@@ -10,21 +11,34 @@ public class EncyclopediaController : MonoBehaviour
     [SerializeField] float wheelSpeed = 0.1f;
     [SerializeField] float maxHeight = 1f;
     [SerializeField] Scrollbar scrollbar;
+    [SerializeField] UnityEngine.UI.Button returnBtn;
     GameObject[] pediaCards;
+    IngameCanvasController canvasController;
 
     GameDataManager gameDataManager;
 
     private void Start()
     {
-        gameDataManager = GameDataManager.GetInstance;
-        gameDataManager.GetCardData();
-        gameDataManager.GetUserAndLevelData();
-        EncyclopediaInit();
+       Init();
     }
 
     void Update()
     {
         ScrollWheel();
+    }
+
+    private void Init()
+    {
+        gameDataManager = GameDataManager.GetInstance;
+        gameDataManager.GetCardData();
+        gameDataManager.GetUserAndLevelData();
+        EncyclopediaInit();
+
+        if (SceneManager.GetActiveScene().name != "MainScene")
+        {
+            canvasController = GameObject.Find("IngameCanvas").gameObject.GetComponent<IngameCanvasController>();
+            returnBtn.onClick.AddListener(canvasController.EncyclopediaClose);
+        }
     }
 
     private void EncyclopediaInit()
