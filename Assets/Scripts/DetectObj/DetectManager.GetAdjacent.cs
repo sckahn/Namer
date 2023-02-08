@@ -470,7 +470,7 @@ public partial class DetectManager : Singleton<DetectManager>
 
     #region Get or Change Array Data
     // 맵 배열에서 Vector3의 값에 해당하는 게임 오브젝트들을 가져오는 메서드 
-    private Dictionary<Vector3, GameObject> GetArrayObjects(params Vector3[] blocks)
+    public Dictionary<Vector3, GameObject> GetArrayObjects(params Vector3[] blocks)
     {
         Dictionary<Vector3, GameObject> returnDict = new Dictionary<Vector3, GameObject>();
         foreach (Vector3 block in blocks)

@@ -93,7 +93,7 @@ public struct SLevelData
 {
     public int level;
     public string sceneName;
-    public string scenario;
+    public Scenario[] scenario;
     public SPosition playerPosition;
     public SCardView cardView;
 }
@@ -104,6 +104,7 @@ public struct SCardView
     public List<EAdjective> adjectiveRead;
 }
 
+[Serializable]
 public struct SPosition
 {
     public float x;
