@@ -232,6 +232,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoseSprite
       objectReference: {fileID: 0}
+    - target: {fileID: 6460080778222183648, guid: c172fbe93e4863f46a661cb376658be7, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c172fbe93e4863f46a661cb376658be7, type: 3}
 --- !u!1 &646003461445240510 stripped

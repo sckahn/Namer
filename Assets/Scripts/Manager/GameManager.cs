@@ -11,7 +11,8 @@ public enum GameStates
     InGame,
     Pause,
     Lose,
-    Victory
+    Victory,
+    Encyclopedia
 }
 
 public class GameManager : Singleton<GameManager>
@@ -155,6 +156,8 @@ public class GameManager : Singleton<GameManager>
             case GameStates.Lose:
                 HandleLost();
                 break;
+            case GameStates.Encyclopedia:
+                break;
         }
     }
     public void ChangeGameState(GameStates newState)
@@ -281,6 +284,8 @@ public class GameManager : Singleton<GameManager>
     [ContextMenu("DeleteCard")]
     void DeleteCurrentCard()
     {
+        GameObject buttons = buttons = GameObject.Find("IngameCanvas").transform.GetChild(1).gameObject;
+        buttons.SetActive(false);
         CardManager cardManager = CardManager.GetInstance;
         var currentDeck = cardManager.myCards;
         foreach (var eachCard in currentDeck)
