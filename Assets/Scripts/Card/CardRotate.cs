@@ -30,6 +30,10 @@ public class CardRotate : MonoBehaviour
 
     void Update()
     {
+        originRotation = new Vector3(
+            this.gameObject.transform.rotation.eulerAngles.x,
+            originRotation.y,
+            originRotation.z);
         rotationCounter += Time.deltaTime;
         transform.eulerAngles = originRotation + 
              new Vector3(Mathf.Sin(rotationCounter * rotationSpeedV) * angleV, Mathf.Sin(rotationCounter * rotationSpeedH) * angleH, 0);

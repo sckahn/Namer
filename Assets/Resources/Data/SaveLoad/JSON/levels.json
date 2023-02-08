@@ -24,213 +24,259 @@
     "level" : 0,
     "sceneName" : "Tutorial",
     "scenario": [
-      {
-        "type": 0,
-        "requirePos": {
-          "x": 0.0,
-          "y": 2.0,
-          "z": 0.0
+        {
+            "type": 1,
+            "requirePos": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "targetObj": {
+                "x": 8.0,
+                "y": 3.0,
+                "z": 3.0
+            },
+            "nextPos": {
+                "x": 0.0,
+                "y": 2.0,
+                "z": 2.0
+            },
+            "requiredName": "장미",
+            "isDialog": false,
+            "message": "",
+            "funcName": "MoveObject",
+            "isFocus": false
         },
-        "targetObj": {
-          "x": 8.0,
-          "y": 3.0,
-          "z": 3.0
+        {
+            "type": 0,
+            "requirePos": {
+                "x": 0.0,
+                "y": 2.0,
+                "z": 1.0
+            },
+            "targetObj": {
+                "x": 0.0,
+                "y": 2.0,
+                "z": 2.0
+            },
+            "nextPos": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "requiredName": "",
+            "isDialog": true,
+            "message": "장미:어린 왕자의 후드에는 신기한 힘이 있어.",
+            "funcName": "",
+            "isFocus": true
         },
-        "nextPos": {
-          "x": 0.0,
-          "y": 2.0,
-          "z": 2.0
+        {
+            "type": 2,
+            "requirePos": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "targetObj": {
+                "x": 0.0,
+                "y": 2.0,
+                "z": 2.0
+            },
+            "nextPos": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "requiredName": "",
+            "isDialog": true,
+            "message": "장미:땅 아래에 뭍혀있는 저 식물이 보이니?",
+            "funcName": "",
+            "isFocus": false
         },
-        "requiredName": "장미",
-        "isDialog": false,
-        "message": "",
-        "funcName": "MoveObject",
-        "isFocus": false
-      },
-      {
-        "type": 0,
-        "requirePos": {
-          "x": 0.0,
-          "y": 2.0,
-          "z": 1.0
+        {
+            "type": 2,
+            "requirePos": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "targetObj": {
+                "x": 0.0,
+                "y": 2.0,
+                "z": 2.0
+            },
+            "nextPos": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "requiredName": "",
+            "isDialog": true,
+            "message": "장미:위로 올라가서 그 식물이 ‘길쭉’하다고 상상해봐!",
+            "funcName": "FocusOff",
+            "isFocus": false
         },
-        "targetObj": {
-          "x": 0.0,
-          "y": 2.0,
-          "z": 2.0
+        {
+            "type": 1,
+            "requirePos": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "targetObj": {
+                "x": 2.0,
+                "y": 1.0,
+                "z": 2.0
+            },
+            "nextPos": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "requiredName": "길쭉",
+            "isDialog": true,
+            "message": "장미:잘했어!",
+            "funcName": "",
+            "isFocus": false
         },
-        "nextPos": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
+        {
+            "type": 0,
+            "requirePos": {
+                "x": 2.0,
+                "y": 3.0,
+                "z": 2.0
+            },
+            "targetObj": {
+                "x": 0.0,
+                "y": 2.0,
+                "z": 2.0
+            },
+            "nextPos": {
+                "x": 8.0,
+                "y": 3.0,
+                "z": 3.0
+            },
+            "requiredName": "",
+            "isDialog": false,
+            "message": "",
+            "funcName": "MoveObject",
+            "isFocus": false
         },
-        "requiredName": "",
-        "isDialog": true,
-        "message": "어린 왕자의 후드에는 신기한 힘이 있어.",
-        "funcName": "",
-        "isFocus": true
-      },
-      {
-        "type": 2,
-        "requirePos": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
+        {
+            "type": 0,
+            "requirePos": {
+                "x": 3.0,
+                "y": 3.0,
+                "z": 2.0
+            },
+            "targetObj": {
+                "x": 8.0,
+                "y": 3.0,
+                "z": 3.0
+            },
+            "nextPos": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "requiredName": "",
+            "isDialog": true,
+            "message": "장미:이제는 바위를 어떻게든 치워서 나한테 와봐.",
+            "funcName": "",
+            "isFocus": true
         },
-        "targetObj": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
+        {
+            "type": 2,
+            "requirePos": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "targetObj": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "nextPos": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "requiredName": "",
+            "isDialog": true,
+            "message": "장미:이번에는 어떤 성질이 아니라 바위가 다른 물체가 된다고 생각해봐.",
+            "funcName": "",
+            "isFocus": false
         },
-        "nextPos": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
+        {
+            "type": 2,
+            "requirePos": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "targetObj": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "nextPos": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "requiredName": "",
+            "isDialog": true,
+            "message": "장미:뭔가 길고, 잘 탈 것 같은 …물체면 좋을 것 같네?",
+            "funcName": "FocusOff",
+            "isFocus": false
         },
-        "requiredName": "",
-        "isDialog": true,
-        "message": "땅 아래에 뭍혀있는 저 식물이 보이니?",
-        "funcName": "FocusOff",
-        "isFocus": false
-      },
-      {
-        "type": 2,
-        "requirePos": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
+        {
+            "type": 1,
+            "requirePos": {
+                "x": 7.0,
+                "y": 3.0,
+                "z": 3.0
+            },
+            "targetObj": {
+                "x": 7.0,
+                "y": 3.0,
+                "z": 3.0
+            },
+            "nextPos": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "requiredName": "나무",
+            "isDialog": true,
+            "message": "장미:좋아! 잘했어!!",
+            "funcName": "",
+            "isFocus": false
         },
-        "targetObj": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "nextPos": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "requiredName": "",
-        "isDialog": true,
-        "message": "위로 올라가서 그 식물이 ‘길쭉’하다고 상상해봐!",
-        "funcName": "",
-        "isFocus": false
-      },
-      {
-        "type": 0,
-        "requirePos": {
-          "x": 2.0,
-          "y": 3.0,
-          "z": 2.0
-        },
-        "targetObj": {
-          "x": 0.0,
-          "y": 2.0,
-          "z": 2.0
-        },
-        "nextPos": {
-          "x": 8.0,
-          "y": 3.0,
-          "z": 3.0
-        },
-        "requiredName": "",
-        "isDialog": true,
-        "message": "잘했어! ",
-        "funcName": "MoveObject",
-        "isFocus": false
-      },
-      {
-        "type": 0,
-        "requirePos": {
-          "x": 3.0,
-          "y": 3.0,
-          "z": 2.0
-        },
-        "targetObj": {
-          "x": 8.0,
-          "y": 3.0,
-          "z": 3.0
-        },
-        "nextPos": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "requiredName": "",
-        "isDialog": true,
-        "message": "이제는 바위를 어떻게든 치워서 나한테 와봐.",
-        "funcName": "",
-        "isFocus": true
-      },
-      {
-        "type": 2,
-        "requirePos": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "targetObj": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "nextPos": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "requiredName": "",
-        "isDialog": true,
-        "message": "이번에는 어떤 성질이 아니라 바위가 다른 물체가 된다고 생각해봐.",
-        "funcName": "",
-        "isFocus": false
-      },
-      {
-        "type": 2,
-        "requirePos": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "targetObj": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "nextPos": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "requiredName": "",
-        "isDialog": true,
-        "message": "뭔가 길고, 잘 탈 것 같은 …그런 물체면 좋을 것 같네?",
-        "funcName": "FocusOff",
-        "isFocus": false
-      },
-      {
-        "type": 0,
-        "requirePos": {
-          "x": 7.0,
-          "y": 3.0,
-          "z": 3.0
-        },
-        "targetObj": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "nextPos": {
-          "x": 0.0,
-          "y": 0.0,
-          "z": 0.0
-        },
-        "requiredName": "",
-        "isDialog": true,
-        "message": "좋아! 잘했어!!",
-        "funcName": "",
-        "isFocus": false
-      }
+        {
+            "type": 0,
+            "requirePos": {
+                "x": 7.0,
+                "y": 3.0,
+                "z": 3.0
+            },
+            "targetObj": {
+                "x": 7.0,
+                "y": 3.0,
+                "z": 3.0
+            },
+            "nextPos": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "requiredName": "",
+            "isDialog": true,
+            "message": "[System]장미에게 도달해서 스페이스바를 누르세요.",
+            "funcName": "",
+            "isFocus": false
+        }
     ],
     "playerPosition": {
       "x": 0.0,

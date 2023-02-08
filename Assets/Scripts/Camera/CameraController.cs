@@ -15,12 +15,9 @@ public class CameraController : MonoBehaviour
     }
 
     // 둘 다 게임 매니저에서 관리 필요
-    bool topViewOn = false;
+    bool isTopView = false;
     int normalCamPirority;
     Transform player;
-
-    // 키 값도 인풋 매니저나 게임 매니저에서 관리 필요 -> 후에 컨트롤러 설정에서 쉽게 변경하도록 하기 
-    [SerializeField] KeyCode cameraKey;
 
     // 카메라들 프리팹에서 넣어놓기 
     [SerializeField] CinemachineVirtualCamera playerTopViewCam;
@@ -32,14 +29,12 @@ public class CameraController : MonoBehaviour
 
     void Awake()
     {
+        GameManager.GetInstance.KeyAction += CheckCameraSwitch;
         Init();
     }
 
     public void Init()
     {
-        // 카메라 키 설정 
-        if (cameraKey == KeyCode.None) cameraKey = KeyCode.Q;
-
         // 각 캠의 우선순위 설정 
         playerNormalViewCam.Priority = (int)PriorityOrder.normal;
         playerTopViewCam.Priority = (int)PriorityOrder.BehingByNormal;
@@ -50,13 +45,21 @@ public class CameraController : MonoBehaviour
         player = GameObject.Find("Player").transform;
         playerNormalViewCam.Follow = player;
         playerTopViewCam.Follow = player;
+
+        FocusOff();
     }
 
-    public void FocusOn(Transform target)
+    public void FocusOn(Transform target, bool canMove = true)
     {
         targetCam.LookAt = target;
         targetCam.Follow = target;
         targetCam.Priority = (int)PriorityOrder.FrontAtAll;
+        // 카드가 잠시 안 보이도록 변경 
+
+        if (!canMove)
+        {
+            GameManager.GetInstance.isPlayerCanInput = false;
+        }
     }
 
     public void FocusOff()
@@ -64,22 +67,15 @@ public class CameraController : MonoBehaviour
         targetCam.Priority = (int)PriorityOrder.BehindAtAll;
         targetCam.LookAt = null;
         targetCam.Follow = null;
+        GameManager.GetInstance.isPlayerCanInput = true;
     }
 
-    void Update()
+    private void CheckCameraSwitch()
     {
-        // 누르고 있는 동안 탑뷰로 하기 
-        //if (isOn != Input.GetKey(cameraKey))
-        //{
-        //    isOn = Input.GetKey(cameraKey);
-        //    playerTopViewCam.Priority = (isOn ? (int)PriorityOrder.FrontByNormal : (int)PriorityOrder.BehingByNormal);
-        //}
-
-        // 토글로 탑뷰 하기
-        if (Input.GetKeyDown(cameraKey))
+        if (Input.GetKeyDown(GameManager.GetInstance.cameraKey) && GameManager.GetInstance.currentState != GameStates.Encyclopedia)
         {
-            topViewOn = !topViewOn;
-            playerTopViewCam.Priority = (topViewOn ? (int)PriorityOrder.FrontByNormal : (int)PriorityOrder.BehingByNormal);
+            isTopView = !isTopView;
+            playerTopViewCam.Priority = (isTopView ? (int)PriorityOrder.FrontByNormal : (int)PriorityOrder.BehingByNormal);
         }
     }
 
@@ -96,5 +92,5 @@ public class CameraController : MonoBehaviour
     {
         FocusOff();
     }
-    #endregion
+#endregion
 }

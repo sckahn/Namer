@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
+using System;
 
 public enum ERequireType
 {
@@ -33,9 +35,28 @@ public class ScenarioManager : Singleton<ScenarioManager>
     private int scenarioCount = 0;
     private Transform player;
     private CameraController cameraController;
+    private float scenarioTime = 20f;
 
-    public void InitScenario()
+    public GameObject logBox;
+    public Text logText;
+    public GameObject dialogBox;
+    public Text dialogText;
+
+    public void Init()
     {
+        curScenario = new Scenario();
+        curScenario.type = ERequireType.Null;
+        logBox = GameObject.Find("IngameCanvas").transform.Find("SystemLog").gameObject;
+        logText = logBox.GetComponentInChildren<Text>();
+        logBox.SetActive(false);
+        dialogBox = GameObject.Find("IngameCanvas").transform.Find("Dialog").gameObject;
+        dialogText = dialogBox.GetComponentInChildren<Text>();
+        dialogBox.SetActive(false);
+
+        scenarioCount = 0;
+        scenarios = new Queue<Scenario>();
+        scenarioTime = 20f;
+
         cameraController = Camera.main.transform.parent.GetComponent<CameraController>();
         foreach (Scenario scenario in GameDataManager.GetInstance.LevelDataDic[GameManager.GetInstance.Level].scenario)
         {
@@ -44,25 +65,60 @@ public class ScenarioManager : Singleton<ScenarioManager>
         }
 
         player = GameObject.Find("Player").transform;
+        NextScenario();
+        StartScenario();
+    }
+
+    private void SystemLog(string message)
+    {
+        logBox.SetActive(true);
+        logText.text = message;
+        logBox.GetComponent<LogText>().SetTime();
+    }
+
+    private void LogError(string message)
+    {
+        string errorText = $"<color=red>{message}</color>";
+        SystemLog(errorText);
+    }
+
+    private void Log(string message, string objName)
+    {
+        string dialogMessage = $"<color=red>[{objName}]</color>\n{message}";
+        dialogBox.SetActive(true);
+        dialogText.text = dialogMessage;
+        dialogBox.GetComponent<LogText>().SetTime();
+    }
+
+    private void StartScenario()
+    {
+        scenarioCount = scenarios.Count;
+        DoScenario();
+    }
+
+    private void NextScenario()
+    {
         if (scenarios.Count != 0)
-        {
             curScenario = scenarios.Dequeue();
-        }
         else
         {
             curScenario = new Scenario();
             curScenario.type = ERequireType.Null;
         }
-
-        // 테스트 완료 후, JSON 파일 저장하는 함수
-        // SaveLoadFile saveFile = new SaveLoadFile();
-        // saveFile.CreateJsonFile(scenarioList.ToList(), "Assets/Resources/Data/SaveLoad", "Level0" + GameManager.GetInstance.Level + "Scenario.json");
+        scenarioTime = 20f;
     }
 
-    public void Init()
+    [ContextMenu("SaveNewScenario")]
+    public void SaveScenario()
     {
-        scenarioCount = 0;
-        scenarios = new Queue<Scenario>();
+        //테스트 완료 후, JSON 파일 저장하는 함수
+        if (scenarioList == null || scenarioList.Length == 0)
+        {
+            SystemLog("[에러]리스트에 추가할 시나리오를 1개 이상 추가하세요.");
+            return;
+        }
+        SaveLoadFile saveFile = new SaveLoadFile();
+        saveFile.CreateJsonFile(scenarioList.ToList(), "Assets/Resources/Data/SaveLoad", "Level0" + GameManager.GetInstance.Level + "Scenario.json");
     }
 
     private void DoScenario()
@@ -70,32 +126,53 @@ public class ScenarioManager : Singleton<ScenarioManager>
         if (cameraController == null) cameraController = Camera.main.transform.parent.GetComponent<CameraController>();
         if (curScenario.isDialog)
         {
-            if (curScenario.message != null)
+            if (curScenario.message != null && curScenario.message != "")
             {
+                Vector3 curScenarioPos = new Vector3(curScenario.targetObj.x, curScenario.targetObj.y, curScenario.targetObj.z);
+                Dictionary<Vector3, GameObject> objDict = DetectManager.GetInstance.GetArrayObjects(curScenarioPos);
+                Vector3 vec = Vector3Int.FloorToInt(curScenarioPos);
                 if (curScenario.isFocus)
-                { 
-                    Vector3 curScenarioPos = new Vector3(curScenario.targetObj.x, curScenario.targetObj.y, curScenario.targetObj.z);
-                    Dictionary<Vector3, GameObject> objDict = DetectManager.GetInstance.GetArrayObjects(curScenarioPos);
-                    Vector3 vec = Vector3Int.FloorToInt(curScenarioPos);
-                    cameraController.FocusOn(objDict[vec].transform);
+                {
+                    if (objDict[vec] == null)
+                    {
+                        LogError("[에러]json의 targetObj x, y, z에 해당하는 \n오브젝트가 없습니다.");
+                        return;
+                    }
+                    cameraController.FocusOn(objDict[vec].transform, false);
                 }
-                Debug.Log(curScenario.message);
+
+                if (curScenario.message.Contains("[System]"))
+                {
+                    SystemLog(curScenario.message.Replace("[System]", ""));
+                }
+                else
+                {
+                    if (!curScenario.message.Contains(":"))
+                    {
+                        LogError("[에러]json의 message에 ':'으로 이름과 메세지를 \n구분하세요.");
+                        return;
+                    }
+                    string[] curMessage = curScenario.message.Split(":");
+                    Log(curMessage[1], curMessage[0]);
+                }
             }
         }
 
         if (curScenario.funcName != null && curScenario.funcName != "")
         {
-            Invoke(curScenario.funcName, 0);
+            try
+            {
+                Invoke(curScenario.funcName, 0);
+            }
+            catch (NullReferenceException e)
+            {
+                LogError("[에러]json에 실제로 존재하는 함수명을 입력하세요.");
+                return;
+            }
         }
         else
         {
-            if (scenarios.Count != 0)
-                curScenario = scenarios.Dequeue();
-            else
-            {
-                curScenario = new Scenario();
-                curScenario.type = ERequireType.Null;
-            }
+            NextScenario();
         }
     }
 
@@ -103,13 +180,7 @@ public class ScenarioManager : Singleton<ScenarioManager>
     {
         cameraController.FocusOff();
 
-        if (scenarios.Count != 0)
-            curScenario = scenarios.Dequeue();
-        else
-        {
-            curScenario = new Scenario();
-            curScenario.type = ERequireType.Null;
-        }
+        NextScenario();
     }
 
     private void MoveObject()
@@ -120,13 +191,7 @@ public class ScenarioManager : Singleton<ScenarioManager>
         DetectManager.GetInstance.SwapBlockInMap(curScenarioPos, nextScenarioPos);
         target.transform.position = nextScenarioPos;
 
-        if (scenarios.Count != 0)
-            curScenario = scenarios.Dequeue();
-        else
-        {
-            curScenario = new Scenario();
-            curScenario.type = ERequireType.Null;
-        }
+        NextScenario();
     }
 
     private InteractiveObject GetIObj()
@@ -138,17 +203,18 @@ public class ScenarioManager : Singleton<ScenarioManager>
         return objDict[vec].GetComponent<InteractiveObject>();
     }
 
-    private void StartScenario()
+    private void Update()
     {
-        scenarioCount = scenarios.Count;
-        DoScenario();
-    }
+        if (scenarioTime > 0) scenarioTime -= Time.deltaTime;
+        else
+        {
+            LogError("R키를 꾹 눌러서 재시작 할 수 있습니다.");
+            scenarioTime = 10f;
+        }
 
-    private void FixedUpdate()
-    {
         if (curScenario.type != ERequireType.Null && scenarioCount != scenarios.Count)
         {
-            switch(curScenario.type)
+            switch (curScenario.type)
             {
                 case (ERequireType.PlayerPos):
                     Vector3 playerPos = new Vector3(Mathf.Round(player.position.x), Mathf.Round(player.position.y), Mathf.Round(player.position.z));
@@ -162,18 +228,19 @@ public class ScenarioManager : Singleton<ScenarioManager>
                     InteractiveObject tarObj = GetIObj();
                     if (tarObj == null) return;
                     string objName = tarObj.GetCurrentName();
+                    if (objName == null) return;
                     if (objName.Contains(curScenario.requiredName))
                     {
                         StartScenario();
                     }
                     break;
                 case (ERequireType.MouseClick):
-                    if (Input.GetMouseButton(0))
+                    if (Input.GetMouseButtonDown(0))
                     {
                         StartScenario();
                     }
                     break;
             }
-        }    
+        }
     }
 }
