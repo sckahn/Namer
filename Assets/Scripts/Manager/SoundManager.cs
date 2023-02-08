@@ -59,13 +59,11 @@ public class SoundManager : Singleton<SoundManager>
     {
         if (isMuted)
         {
-            Debug.Log("UnMute");
             audioMixer.SetFloat("Master", 0);
             isMuted = !isMuted;
         }
         else 
         {
-            Debug.Log("Mute");
             audioMixer.SetFloat("Master", -80);
             isMuted = !isMuted;
         }
