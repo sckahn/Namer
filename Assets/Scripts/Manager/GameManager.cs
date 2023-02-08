@@ -29,6 +29,11 @@ public class GameManager : Singleton<GameManager>
     public bool isPlayerCanInput;
     #endregion
 
+    #region Camera variable
+    [Header("Camera Variable")]
+    public bool canSwitchCam;
+    #endregion
+
     #region Input Delegate
 
     public Action KeyAction;
@@ -40,14 +45,13 @@ public class GameManager : Singleton<GameManager>
     public KeyCode interactionKey;
     public KeyCode showNameKey;
     public KeyCode pauseKey;
+    public KeyCode cameraKey;
     #endregion
-    
+
     [Header("Manager Prefabs")]
     [SerializeField] private List<GameObject> managerPrefabs;
 
     public float curTimeScale { get; private set; }
-    
-   
     
     private void Awake()
     {
@@ -100,6 +104,7 @@ public class GameManager : Singleton<GameManager>
         interactionKey = KeyCode.Space;
         showNameKey = KeyCode.Tab;
         pauseKey = KeyCode.Escape;
+        cameraKey = KeyCode.Q;
         KeyAction = null;
         #endregion
 
