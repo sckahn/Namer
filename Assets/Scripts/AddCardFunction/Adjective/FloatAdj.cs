@@ -52,6 +52,11 @@ public class FloatAdj : IAdjective
         GravityOn(thisObject.gameObject);
     }
 
+    public IAdjective DeepCopy()
+    {
+        return new FloatAdj();
+    }
+
     IEnumerator FloatObj(GameObject obj)
     {
         var rb = obj.GetComponent<Rigidbody>();
