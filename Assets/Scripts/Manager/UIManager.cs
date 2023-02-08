@@ -7,13 +7,13 @@ public class UIManager : Singleton<UIManager>
 
     public bool isShowNameKeyPressed;
     public bool isPauseKeyPressed;
-    
+
     void Start()
     {
         isShowNameKeyPressed = false;
         GameManager.GetInstance.KeyAction += UIInputKeyCheck;
     }
-    
+
     void Update()
     {
         UIOnOff();
@@ -45,19 +45,19 @@ public class UIManager : Singleton<UIManager>
         }
         #endregion
     }
-    
+
     void UIOnOff()
     {
-        if (isPauseKeyPressed && 
-            GameManager.GetInstance.currentState != GameStates.Pause && 
+        if (isPauseKeyPressed &&
+            GameManager.GetInstance.currentState != GameStates.Pause &&
             GameManager.GetInstance.currentState != GameStates.Lobby)
         {
             pauseUIPanel.SetActive(true);
             GameManager.GetInstance.ChangeGameState(GameStates.Pause);
             GameManager.GetInstance.SetTimeScale(0);
         }
-        
-        else if (isPauseKeyPressed && 
+
+        else if (isPauseKeyPressed &&
                  GameManager.GetInstance.currentState == GameStates.Pause &&
                  GameManager.GetInstance.currentState != GameStates.Lobby)
         {
