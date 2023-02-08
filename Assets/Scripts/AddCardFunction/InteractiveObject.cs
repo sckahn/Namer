@@ -334,6 +334,8 @@ public class InteractiveObject : MonoBehaviour
     //오브젝트 현재 이름 팝업을 띄움 
     void PopUpNameOn()
     {
+        if (GameManager.GetInstance.currentState == GameStates.Encyclopedia)
+            return;
         popUpName.SetActive(true);
     }
 
