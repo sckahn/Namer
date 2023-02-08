@@ -275,7 +275,7 @@ public class GameDataManager : Singleton<GameDataManager>
         {
             if ((int)nameReads[i] > names.Count - 1)
             {
-                continue;
+                Debug.LogError("입력할 수 있는 네임 카드 번호를 벗어났어요!");
             }
             
             GameObject cardPrefab = Resources.Load("Prefabs/Cards/01. NameCard/" + names[nameReads[i]].cardPrefabName) as GameObject;
@@ -286,7 +286,7 @@ public class GameDataManager : Singleton<GameDataManager>
         {
             if ((int)adjectiveReads[i] > adjectives.Count - 1)
             {
-                continue;
+                Debug.LogError("입력할 수 있는 꾸밈 성질 카드 번호를 벗어났어요!");
             }
             
             GameObject cardPrefab = Resources.Load("Prefabs/Cards/02. AdjustCard/" + adjectives[adjectiveReads[i]].cardPrefabName) as GameObject;
