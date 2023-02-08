@@ -32,16 +32,22 @@ public class SoundManager : Singleton<SoundManager>
         sfxSound.PlayOneShot(clip);
     }
 
+    public void SetMasterVolume()
+    {
+        FindSlider();
+        audiomixer.SetFloat("Master", Mathf.Log10(sliders[0].value) * 20);
+    }
+
     public void SetBgmVolume()
     {
         FindSlider();
-        audiomixer.SetFloat("BGM", Mathf.Log10(sliders[0].value) * 20);
+        audiomixer.SetFloat("BGM", Mathf.Log10(sliders[1].value) * 20);
     }   
     
     public void SetSfxVolume()
     {
         FindSlider();
-        audiomixer.SetFloat("SFX", Mathf.Log10(sliders[1].value) * 20);
+        audiomixer.SetFloat("SFX", Mathf.Log10(sliders[2].value) * 20);
     }
     [ContextMenu("soundoff")]
     public void SoundOff()
