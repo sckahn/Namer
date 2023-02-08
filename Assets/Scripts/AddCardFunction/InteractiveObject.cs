@@ -16,8 +16,6 @@ public class InteractiveObject : MonoBehaviour
     private EName checkName;
     private int checkAdjCount;
     private bool[] initAdj;
-    
-    private LevelInfos levelInfos;
 
     public bool[] GetCheckAdj()
     {
@@ -55,15 +53,11 @@ public class InteractiveObject : MonoBehaviour
         return objectName;
         // return objectInfo.nameType;
     }
-    
-    public UnityEvent Execute { get; set; }
-    public UnityEvent InteractPlayer { get; set; }
-    public UnityEvent InteractOtherObject { get; set; }
+
+    private UnityEvent unityEvent;
 
     private void OnEnable()
     {
-        levelInfos = FindObjectOfType<LevelInfos>();
-        
         if (!gameObject.CompareTag("InteractObj"))
         {
             Debug.Log("태그를 InteractObj로 설정해주세요!");
@@ -103,14 +97,11 @@ public class InteractiveObject : MonoBehaviour
     {
         if (cardData == null)
         {
-            if (!levelInfos.IsCreateMode)
+            objectName = objectInfo.nameType;
+            for (int i = 0; i < objectInfo.adjectives.Length; i++)
             {
-                objectName = objectInfo.nameType;
-                for (int i = 0; i < objectInfo.adjectives.Length; i++)
-                {
-                    int adjIndex = (int)objectInfo.adjectives[i];
-                    checkAdj[adjIndex] = true;
-                }
+                int adjIndex = (int)objectInfo.adjectives[i];
+                checkAdj[adjIndex] = true;
             }
 
             cardData = GameDataManager.GetInstance;
@@ -210,12 +201,6 @@ public class InteractiveObject : MonoBehaviour
             Debug.Log("Card의 Name 정보를 확인해주세요!");
             return;
         }
-        //수정한 부분
-        
-        
-        if(!levelInfos.IsCreateMode)
-            DetectManager.GetInstance.StartDetector(new List<GameObject>() { this.gameObject });
-        //수정한 부분 
 
         EAdjective[] addAdjectives = cardData.Names[(EName)addedName].adjectives;
         if (addAdjectives != null)
@@ -228,11 +213,6 @@ public class InteractiveObject : MonoBehaviour
         
         objectName = (EName)addedName;
         addNameText = cardData.Names[(EName)addedName].uiText;
-
-        //수정한 부분
-        if(!levelInfos.IsCreateMode)
-            DetectManager.GetInstance.StartDetector(new List<GameObject>() { this.gameObject });
-        //수정한 부분
     }
 
     public void AddAdjective(EAdjective[] addAdjectives)
@@ -242,10 +222,6 @@ public class InteractiveObject : MonoBehaviour
             Debug.Log("Card의 Adjective 정보를 채워주세요!");
             return;
         }
-
-        //수정한 부분
-        DetectManager.GetInstance.StartDetector(new List<GameObject>() { this.gameObject });
-        //수정한 부분 
 
         foreach (var addAdjective in addAdjectives)
         {
@@ -257,10 +233,10 @@ public class InteractiveObject : MonoBehaviour
     {
         SAdjectiveInfo adjectiveInfo = cardData.Adjectives[addAdjective];
         int adjIndex = adjectiveInfo.priority;
-
+        
         if (adjectives[adjIndex] == null)
         {
-            adjectives[adjIndex] = adjectiveInfo.adjective;
+            adjectives[adjIndex] = adjectiveInfo.adjective.DeepCopy();
             checkAdj[adjIndex] = true;
         }
 
@@ -268,7 +244,7 @@ public class InteractiveObject : MonoBehaviour
         {
             addAdjectiveTexts[adjIndex] = adjectiveInfo.uiText;
         }
-
+        
         switch (adjectives[adjIndex].GetAdjectiveType())
         {
             case (EAdjectiveType.Normal): // normal
@@ -322,37 +298,6 @@ public class InteractiveObject : MonoBehaviour
         }
 
         return false;
-    }
-
-    public void Interact(GameObject go)
-    {
-        if (go.tag == "Player")
-        {
-            foreach (var adjective in adjectives)
-            {
-                if (adjective != null)
-                {
-                    adjective.Execute(this, go);
-                }
-            }
-        }
-
-        else if (go.tag == "Object")
-        {
-            foreach (var specificity in adjectives)
-            {
-                if (specificity != null)
-                {
-                    specificity.Execute(this, go.GetComponent<InteractiveObject>());
-                }
-            }
-        }
-    }
-    
-    private void OnCollisionEnter(Collision collision)
-    {
-        //Debug.Log(collision.transform.name);
-        //Interact(collision.gameObject);
     }
 
     //카드를 선택한 상태에서 오브젝트를 호버링하면 카드의 타겟으로 설정
