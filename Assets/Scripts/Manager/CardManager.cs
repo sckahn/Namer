@@ -16,6 +16,7 @@ public class CardManager : Singleton<CardManager>
     //타겟 상호작용 오브젝트 
     //[HideInInspector]
     public GameObject target;
+    GameObject buttons;
 
     public bool isPickCard = false;
     public bool ableCardCtr = true;
@@ -24,7 +25,13 @@ public class CardManager : Singleton<CardManager>
     private void Start()
     {
         if(SceneManager.GetActiveScene().name=="MainScene")
+        {
             CardStart();
+        } else
+        {
+            CardStart();
+            buttons = GameObject.Find("IngameCanvas").transform.GetChild(1).gameObject;
+        }
     }
 
     public void CardStart()
@@ -59,13 +66,16 @@ public class CardManager : Singleton<CardManager>
                 AddCard(cards[i]);
                 yield return new WaitForSeconds(0.5f);
             }
-            
+
+            buttons.SetActive(true);
             // 테스트 시 위의 코드를 주석처리하고, 아래의 함수를 사용해주세요.
             // for (int i = 0; i < startCards.Length; i++)
             // {
             //     AddCard(startCards[i]);
             //     yield return new WaitForSeconds(0.5f);
             // }
+
+
         }
     }
 
