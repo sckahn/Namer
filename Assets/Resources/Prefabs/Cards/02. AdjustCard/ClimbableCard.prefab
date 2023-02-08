@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2721935581099869929}
   - component: {fileID: -1313255419992942935}
   m_Layer: 0
-  m_Name: ClimableCard
+  m_Name: ClimbableCard
   m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

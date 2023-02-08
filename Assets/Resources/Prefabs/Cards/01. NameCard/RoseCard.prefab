@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 453746082420174526}
   - component: {fileID: 9179835326793320750}
   m_Layer: 0
-  m_Name: NameStonelCard
+  m_Name: RoseCard
   m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
