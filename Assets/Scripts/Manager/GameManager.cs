@@ -321,6 +321,7 @@ public class GameManager : Singleton<GameManager>
    
         DetectManager.GetInstance.Init(curLevel);
         CardManager.GetInstance.CardStart(); // 여기서 문제네 
+        ScenarioManager.GetInstance.InitScenario();
     }
     //load scene with loading card -> get level data from level card
 

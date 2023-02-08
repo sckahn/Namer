@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum ERequireType
@@ -14,9 +15,9 @@ public enum ERequireType
 public struct Scenario
 {
     public ERequireType type;
-    public Vector3 requirePos;
-    public Vector3 targetObj;
-    public Vector3 nextPos;
+    public SPosition requirePos;
+    public SPosition targetObj;
+    public SPosition nextPos;
     public string requiredName;
     public bool isDialog;
     public string message;
@@ -33,10 +34,10 @@ public class ScenarioManager : Singleton<ScenarioManager>
     private Transform player;
     private CameraController cameraController;
 
-    private void Start()
+    public void InitScenario()
     {
         cameraController = Camera.main.transform.parent.GetComponent<CameraController>();
-        foreach (Scenario scenario in scenarioList)
+        foreach (Scenario scenario in GameDataManager.GetInstance.LevelDataDic[GameManager.GetInstance.Level].scenario)
         {
             scenarios.Enqueue(scenario);
             scenarioCount++;
@@ -52,6 +53,10 @@ public class ScenarioManager : Singleton<ScenarioManager>
             curScenario = new Scenario();
             curScenario.type = ERequireType.Null;
         }
+
+        // 테스트 완료 후, JSON 파일 저장하는 함수
+        // SaveLoadFile saveFile = new SaveLoadFile();
+        // saveFile.CreateJsonFile(scenarioList.ToList(), "Assets/Resources/Data/SaveLoad", "Level0" + GameManager.GetInstance.Level + "Scenario.json");
     }
 
     public void Init()
@@ -69,8 +74,9 @@ public class ScenarioManager : Singleton<ScenarioManager>
             {
                 if (curScenario.isFocus)
                 { 
-                    Dictionary<Vector3, GameObject> objDict = DetectManager.GetInstance.GetArrayObjects(curScenario.targetObj);
-                    Vector3 vec = Vector3Int.FloorToInt(curScenario.targetObj);
+                    Vector3 curScenarioPos = new Vector3(curScenario.targetObj.x, curScenario.targetObj.y, curScenario.targetObj.z);
+                    Dictionary<Vector3, GameObject> objDict = DetectManager.GetInstance.GetArrayObjects(curScenarioPos);
+                    Vector3 vec = Vector3Int.FloorToInt(curScenarioPos);
                     cameraController.FocusOn(objDict[vec].transform);
                 }
                 Debug.Log(curScenario.message);
@@ -108,9 +114,11 @@ public class ScenarioManager : Singleton<ScenarioManager>
 
     private void MoveObject()
     {
-        GameObject target = DetectManager.GetInstance.GetArrayObjects(curScenario.targetObj)[curScenario.targetObj];
-        DetectManager.GetInstance.SwapBlockInMap(curScenario.targetObj, curScenario.nextPos);
-        target.transform.position = curScenario.nextPos;
+        Vector3 curScenarioPos = new Vector3(curScenario.targetObj.x, curScenario.targetObj.y, curScenario.targetObj.z);
+        Vector3 nextScenarioPos = new Vector3(curScenario.nextPos.x, curScenario.nextPos.y, curScenario.nextPos.z);
+        GameObject target = DetectManager.GetInstance.GetArrayObjects(curScenarioPos)[curScenarioPos];
+        DetectManager.GetInstance.SwapBlockInMap(curScenarioPos, nextScenarioPos);
+        target.transform.position = nextScenarioPos;
 
         if (scenarios.Count != 0)
             curScenario = scenarios.Dequeue();
@@ -123,9 +131,10 @@ public class ScenarioManager : Singleton<ScenarioManager>
 
     private InteractiveObject GetIObj()
     {
-        Dictionary<Vector3, GameObject> objDict = DetectManager.GetInstance.GetArrayObjects(curScenario.targetObj);
+        Vector3 curScenarioPos = new Vector3(curScenario.targetObj.x, curScenario.targetObj.y, curScenario.targetObj.z);
+        Dictionary<Vector3, GameObject> objDict = DetectManager.GetInstance.GetArrayObjects(curScenarioPos);
         if (objDict.Keys.Count <= 0) return null;
-        Vector3 vec = Vector3Int.FloorToInt(curScenario.targetObj);
+        Vector3 vec = Vector3Int.FloorToInt(curScenarioPos);
         return objDict[vec].GetComponent<InteractiveObject>();
     }
 
@@ -143,7 +152,8 @@ public class ScenarioManager : Singleton<ScenarioManager>
             {
                 case (ERequireType.PlayerPos):
                     Vector3 playerPos = new Vector3(Mathf.Round(player.position.x), Mathf.Round(player.position.y), Mathf.Round(player.position.z));
-                    if (playerPos == curScenario.requirePos)
+                    Vector3 requireScenarioPos = new Vector3(curScenario.requirePos.x, curScenario.requirePos.y, curScenario.requirePos.z);
+                    if (playerPos == requireScenarioPos)
                     {
                         StartScenario();
                     }
