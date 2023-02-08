@@ -335,8 +335,30 @@ public class GameManager : Singleton<GameManager>
         player.name = "Player";
     }
 
+    #region SceneTester
 
- 
+    private GameObject levelInfos;
+
+    [ContextMenu("TestLevelLoad")]
+    public void ForTester()
+    { 
+        levelInfos = GameObject.Find("LevelInfos");
+       int testlevel= levelInfos.GetComponent<LevelInfos>().LevelNumber;
+       ChangeGameState(GameStates.InGame);
+       setLevel(testlevel);
+       LoadMap();
+    }
+
+    void setLevel(int level)
+    {
+        curLevel = level;
+    }
+
+
+    #endregion
+
+
+
 
 
     #endregion

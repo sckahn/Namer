@@ -61,9 +61,10 @@ public class LongAdj : IAdjective
 
     public void Abandon(InteractiveObject thisObject)
     {
+        ShrinkObject(thisObject.gameObject);
         // 이렇게 할지 말지 고민중 
-        DetectManager.GetInstance.OnObjectScaleChanged(new Vector3(1, 1, 1), thisObject.transform);
-        thisObject.gameObject.transform.localScale = new Vector3(1, 1, 1);
+        // DetectManager.GetInstance.OnObjectScaleChanged(new Vector3(1, 1, 1), thisObject.transform);
+        // thisObject.gameObject.transform.localScale = new Vector3(1, 1, 1);
     }
 
     [ContextMenu("objScaling")]
@@ -89,13 +90,28 @@ public class LongAdj : IAdjective
         targetScale = new Vector3(targetObj.transform.localScale.x, goalScale, targetObj.transform.localScale.z);
     }
 
+    void SetShrinkScale(GameObject targetObj)
+    {
+        if (targetObj.transform.lossyScale.y == 1) return;
+        goalScale = targetObj.transform.localScale.y - growScale;
+        targetScale = new Vector3(targetObj.transform.localScale.x, goalScale, targetObj.transform.localScale.z);
+    }
+
+    void ShrinkObject(GameObject targetObj)
+    {
+        SetShrinkScale(targetObj);
+        DetectManager.GetInstance.OnObjectScaleChanged(targetScale, targetObj.transform);
+        InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(ScaleObj(targetObj.gameObject));
+    }
+
     private bool CheckGrowable(GameObject targetObj)
     {
         //1. check if it is growable
         //2. after grow update object arr 
         
         // var test = GameManager.GetInstance.GetCheckSurrounding.GetTransformsAtDirOrNull(targetObj, Dir.up);
-        var upperNeighbor = DetectManager.GetInstance.GetAdjacentObjectWithDir(targetObj, Dir.up);
+        // var upperNeighbor = DetectManager.GetInstance.GetAdjacentObjectWithDir(targetObj, Dir.up);
+        var upperNeighbor = DetectManager.GetInstance.GetAdjacentObjectWithDir(targetObj, Dir.up, targetObj.transform.lossyScale);
 
         if (upperNeighbor != null)
         {
