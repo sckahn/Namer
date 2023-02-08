@@ -45,6 +45,8 @@ public class CameraController : MonoBehaviour
         player = GameObject.Find("Player").transform;
         playerNormalViewCam.Follow = player;
         playerTopViewCam.Follow = player;
+
+        FocusOff();
     }
 
     public void FocusOn(Transform target, bool canMove = true)
@@ -52,6 +54,7 @@ public class CameraController : MonoBehaviour
         targetCam.LookAt = target;
         targetCam.Follow = target;
         targetCam.Priority = (int)PriorityOrder.FrontAtAll;
+        // 카드가 잠시 안 보이도록 변경 
 
         if (!canMove)
         {
@@ -69,24 +72,12 @@ public class CameraController : MonoBehaviour
 
     private void CheckCameraSwitch()
     {
+        // todo 도감 state일 때에는 막기 (PR후에 수정)
         if (Input.GetKeyDown(GameManager.GetInstance.cameraKey) && GameManager.GetInstance.currentState == GameStates.InGame)
         {
             isTopView = !isTopView;
             playerTopViewCam.Priority = (isTopView ? (int)PriorityOrder.FrontByNormal : (int)PriorityOrder.BehingByNormal);
         }
-    }
-
-    void Update()
-    {
-        // 누르고 있는 동안 탑뷰로 하기 
-        //if (isOn != Input.GetKey(cameraKey))
-        //{
-        //    isOn = Input.GetKey(cameraKey);
-        //    playerTopViewCam.Priority = (isOn ? (int)PriorityOrder.FrontByNormal : (int)PriorityOrder.BehingByNormal);
-        //}
-
-        // 토글로 탑뷰 하기
-
     }
 
 #region Test

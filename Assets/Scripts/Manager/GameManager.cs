@@ -31,6 +31,7 @@ public class GameManager : Singleton<GameManager>
 
     #region Camera variable
     [Header("Camera Variable")]
+    public CameraController cameraController;
     public bool canSwitchCam;
     #endregion
 
@@ -312,6 +313,9 @@ public class GameManager : Singleton<GameManager>
         DeleteCurrentMap();
         LoadMap(curLevel);
         GetNewCardDeck();
+        if (cameraController == null) cameraController = GameObject.Find("Cameras").GetComponent<CameraController>();
+        cameraController.Init();
+        ScenarioManager.GetInstance.Init();
     }
 
     
@@ -325,8 +329,10 @@ public class GameManager : Singleton<GameManager>
             curLevel=GetCurrentLevel();
    
         DetectManager.GetInstance.Init(curLevel);
-        CardManager.GetInstance.CardStart(); // 여기서 문제네 
-        ScenarioManager.GetInstance.InitScenario();
+        CardManager.GetInstance.CardStart(); // 여기서 문제네
+        if (cameraController == null) cameraController = GameObject.Find("Cameras").GetComponent<CameraController>();
+        cameraController.Init();
+        ScenarioManager.GetInstance.Init();
     }
     //load scene with loading card -> get level data from level card
 
