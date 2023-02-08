@@ -47,7 +47,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.99, y: 1, z: 0.99}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &7919637602639550970
 MonoBehaviour:
@@ -66,11 +66,6 @@ MonoBehaviour:
   checkAdj: 0000000000000000000000000000000000000000
   countAdj: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   popUpName: {fileID: 7993888700980680295}
-  objectInfo:
-    prefabName: 
-    objectID: 0
-    nameType: 0
-    adjectives: 
 --- !u!54 &2068797990707484769
 Rigidbody:
   m_ObjectHideFlags: 0
