@@ -9,8 +9,8 @@ public class SoundManager : Singleton<SoundManager>
     public AudioSource bgmSound;
     public AudioSource sfxSound;
 
-    public Slider bgmSlider;
-    public Slider sfxSlider;
+    public Slider[] sliders;
+    //public Slider sfxSlider;
     
     public List<AudioClip> effectClips = new List<AudioClip> ();
     public List<AudioClip> bgmClips = new List<AudioClip> ();
@@ -34,11 +34,30 @@ public class SoundManager : Singleton<SoundManager>
 
     public void SetBgmVolume()
     {
-        audiomixer.SetFloat("BGM", Mathf.Log10(bgmSlider.value) * 20);
+        FindSlider();
+        audiomixer.SetFloat("BGM", Mathf.Log10(sliders[0].value) * 20);
     }   
     
     public void SetSfxVolume()
     {
-        audiomixer.SetFloat("SFX", Mathf.Log10(sfxSlider.value) * 20);
+        FindSlider();
+        audiomixer.SetFloat("SFX", Mathf.Log10(sliders[1].value) * 20);
+    }
+    [ContextMenu("soundoff")]
+    public void SoundOff()
+    {
+        transform.GetChild(0).gameObject.SetActive(false);
+        transform.GetChild(1).gameObject.SetActive(false);
+    }
+    [ContextMenu("soundon")]
+    public void SoundOn()
+    {
+        transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(1).gameObject.SetActive(true);
+    }
+
+    void FindSlider()
+    {
+        sliders = GameObject.Find("IngameCanvas").transform.GetComponentsInChildren<Slider>();
     }
 }
