@@ -1599,6 +1599,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3262066696000909193}
     m_Modifications:
+    - target: {fileID: 1457537320443010739, guid: a2e3417d9723009458a27f75e82abd63, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1457537320443010739, guid: a2e3417d9723009458a27f75e82abd63, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2625901015695942102, guid: 09c0184ae5229764f9de6e8bcbfef7e9, type: 3}
+    - target: {fileID: 1457537320443010739, guid: a2e3417d9723009458a27f75e82abd63, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetSound
+      objectReference: {fileID: 0}
+    - target: {fileID: 1457537320443010739, guid: a2e3417d9723009458a27f75e82abd63, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SoundManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1457537320443010739, guid: a2e3417d9723009458a27f75e82abd63, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3870221727886132248, guid: a2e3417d9723009458a27f75e82abd63, type: 3}
       propertyPath: m_RootOrder
       value: 3

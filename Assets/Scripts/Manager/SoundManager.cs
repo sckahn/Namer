@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SoundManager : Singleton<SoundManager>
 {
-    public AudioMixer audiomixer; 
+    public AudioMixer audioMixer; 
     public AudioSource bgmSound;
     public AudioSource sfxSound;
 
@@ -14,6 +14,8 @@ public class SoundManager : Singleton<SoundManager>
     
     public List<AudioClip> effectClips = new List<AudioClip> ();
     public List<AudioClip> bgmClips = new List<AudioClip> ();
+
+    public bool isMuted;
 
     private void Awake()
     {
@@ -34,32 +36,39 @@ public class SoundManager : Singleton<SoundManager>
 
     public void SetMasterVolume()
     {
+        if (isMuted) return;
         FindSlider();
-        audiomixer.SetFloat("Master", Mathf.Log10(sliders[0].value) * 20);
+        audioMixer.SetFloat("Master", Mathf.Log10(sliders[0].value) * 20);
     }
 
     public void SetBgmVolume()
     {
+        if (isMuted) return;
         FindSlider();
-        audiomixer.SetFloat("BGM", Mathf.Log10(sliders[1].value) * 20);
+        audioMixer.SetFloat("BGM", Mathf.Log10(sliders[1].value) * 20);
     }   
     
     public void SetSfxVolume()
     {
+        if (isMuted) return;
         FindSlider();
-        audiomixer.SetFloat("SFX", Mathf.Log10(sliders[2].value) * 20);
+        audioMixer.SetFloat("SFX", Mathf.Log10(sliders[2].value) * 20);
     }
-    [ContextMenu("soundoff")]
-    public void SoundOff()
+
+    public void SetSound()
     {
-        transform.GetChild(0).gameObject.SetActive(false);
-        transform.GetChild(1).gameObject.SetActive(false);
-    }
-    [ContextMenu("soundon")]
-    public void SoundOn()
-    {
-        transform.GetChild(0).gameObject.SetActive(true);
-        transform.GetChild(1).gameObject.SetActive(true);
+        if (isMuted)
+        {
+            Debug.Log("UnMute");
+            audioMixer.SetFloat("Master", 0);
+            isMuted = !isMuted;
+        }
+        else 
+        {
+            Debug.Log("Mute");
+            audioMixer.SetFloat("Master", -80);
+            isMuted = !isMuted;
+        }
     }
 
     void FindSlider()
