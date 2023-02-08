@@ -72,8 +72,7 @@ public class CameraController : MonoBehaviour
 
     private void CheckCameraSwitch()
     {
-        // todo 도감 state일 때에는 막기 (PR후에 수정)
-        if (Input.GetKeyDown(GameManager.GetInstance.cameraKey) && GameManager.GetInstance.currentState == GameStates.InGame)
+        if (Input.GetKeyDown(GameManager.GetInstance.cameraKey) && GameManager.GetInstance.currentState != GameStates.Encyclopedia)
         {
             isTopView = !isTopView;
             playerTopViewCam.Priority = (isTopView ? (int)PriorityOrder.FrontByNormal : (int)PriorityOrder.BehingByNormal);
