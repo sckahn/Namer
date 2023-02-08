@@ -14,7 +14,7 @@ public class EncyclopediaController : MonoBehaviour
 
     GameDataManager gameDataManager;
 
-    private void OnEnable()
+    private void Start()
     {
         gameDataManager = GameDataManager.GetInstance;
         gameDataManager.GetCardData();
