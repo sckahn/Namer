@@ -5,15 +5,17 @@ using UnityEngine.UI;
 
 public class SoundManager : Singleton<SoundManager>
 {
-    public AudioMixer audiomixer; 
+    public AudioMixer audioMixer; 
     public AudioSource bgmSound;
     public AudioSource sfxSound;
 
-    public Slider bgmSlider;
-    public Slider sfxSlider;
+    public Slider[] sliders;
+    //public Slider sfxSlider;
     
     public List<AudioClip> effectClips = new List<AudioClip> ();
     public List<AudioClip> bgmClips = new List<AudioClip> ();
+
+    public bool isMuted;
 
     private void Awake()
     {
@@ -32,13 +34,43 @@ public class SoundManager : Singleton<SoundManager>
         sfxSound.PlayOneShot(clip);
     }
 
+    public void SetMasterVolume()
+    {
+        if (isMuted) return;
+        FindSlider();
+        audioMixer.SetFloat("Master", Mathf.Log10(sliders[0].value) * 20);
+    }
+
     public void SetBgmVolume()
     {
-        audiomixer.SetFloat("BGM", Mathf.Log10(bgmSlider.value) * 20);
+        if (isMuted) return;
+        FindSlider();
+        audioMixer.SetFloat("BGM", Mathf.Log10(sliders[1].value) * 20);
     }   
     
     public void SetSfxVolume()
     {
-        audiomixer.SetFloat("SFX", Mathf.Log10(sfxSlider.value) * 20);
+        if (isMuted) return;
+        FindSlider();
+        audioMixer.SetFloat("SFX", Mathf.Log10(sliders[2].value) * 20);
+    }
+
+    public void SetSound()
+    {
+        if (isMuted)
+        {
+            audioMixer.SetFloat("Master", 0);
+            isMuted = !isMuted;
+        }
+        else 
+        {
+            audioMixer.SetFloat("Master", -80);
+            isMuted = !isMuted;
+        }
+    }
+
+    void FindSlider()
+    {
+        sliders = GameObject.Find("IngameCanvas").transform.GetComponentsInChildren<Slider>();
     }
 }
