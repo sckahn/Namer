@@ -36,6 +36,10 @@ public class GameManager : Singleton<GameManager>
     public bool canSwitchCam;
     #endregion
 
+    #region Scenario variable
+    public ScenarioController scenarioController;
+    #endregion
+
     #region Input Delegate
 
     public Action KeyAction;
@@ -163,6 +167,7 @@ public class GameManager : Singleton<GameManager>
                 HandleLost();
                 break;
             case GameStates.Encyclopedia:
+                HandleEncyclopedia();
                 break;
         }
     }
@@ -184,6 +189,11 @@ public class GameManager : Singleton<GameManager>
     {
         currentState = previousState;
         UpdateGameState();
+    }
+
+    private void HandleEncyclopedia()
+    {
+        scenarioController.LogOnOff(false);
     }
 
     private void HandleLost()
@@ -208,6 +218,8 @@ public class GameManager : Singleton<GameManager>
         //instantiate player
         //instantiate objects
         //instantiate cards
+
+        scenarioController.LogOnOff(true);
     }
 
     void HandleLobby()
@@ -249,7 +261,6 @@ public class GameManager : Singleton<GameManager>
     {
         // DetectManager.GetInstance.Init(level);
         DetectManager.GetInstance.Init(level);
-
     }
 
     int GetCurrentLevel()
@@ -326,7 +337,7 @@ public class GameManager : Singleton<GameManager>
         LoadMap(curLevel);
         GetNewCardDeck();
         cameraController.Init();
-        ScenarioManager.GetInstance.Init();
+        scenarioController.Init();
     }
 
     
@@ -341,7 +352,7 @@ public class GameManager : Singleton<GameManager>
    
         DetectManager.GetInstance.Init(curLevel);
         CardManager.GetInstance.CardStart(); // 여기서 문제네
-        ScenarioManager.GetInstance.Init();
+        scenarioController.Init();
     }
     //load scene with loading card -> get level data from level card
 
