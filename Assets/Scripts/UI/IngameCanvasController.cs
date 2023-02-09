@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class IngameCanvasController : MonoBehaviour
+public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     GameObject encyclopedia;
     [SerializeField] GameObject buttons;
@@ -64,5 +65,14 @@ public class IngameCanvasController : MonoBehaviour
     public void GameOptionPanelOn()
     {
         gameOptionPanel.SetActive(true);
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        GameManager.GetInstance.scenarioController.isUI = true;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        GameManager.GetInstance.scenarioController.isUI = false;
     }
 }
