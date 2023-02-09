@@ -48,6 +48,6 @@ public class IngameCanvasController : MonoBehaviour
         {
             CardManager.GetInstance.myCards[i].gameObject.SetActive(true);
         }
-        GameManager.GetInstance.ReturnPreviousState();
+        GameManager.GetInstance.ChangeGameState(GameStates.InGame);
     }
 }
