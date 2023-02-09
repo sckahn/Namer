@@ -45,4 +45,9 @@ public class ClimbableAdj : IAdjective
     {
         
     }
+    
+    public IAdjective DeepCopy()
+    {
+        return new ClimbableAdj();
+    }
 }

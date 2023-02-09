@@ -65,15 +65,13 @@ public class PlayerMovement : MonoBehaviour
                 
                 if (interactobj.CompareTag("InteractObj"))
                 {
-                    if (interactobj.GetComponent<InteractiveObject>().GetCheckAdj()[(int)EAdjective.Movable])
+                    foreach (var adjective in interactobj.GetComponent<InteractiveObject>().Adjectives)
                     {
+                        if (adjective != null)
+                        {
+                            adjective.Execute(interactobj.GetComponent<InteractiveObject>(), this.gameObject);
+                        }
                     }
-                    
-                    else if (interactobj.GetComponent<InteractiveObject>().GetCheckAdj()[(int)EAdjective.Win])
-                    {
-                    }
-                    
-                    interactobj.GetComponent<InteractiveObject>().Interact(this.gameObject);
                 }
             }
         }

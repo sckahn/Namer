@@ -57,6 +57,11 @@ public class FlammableAdj : IAdjective
     {
         
     }
+    
+    public IAdjective DeepCopy()
+    {
+        return new FlammableAdj();
+    }
 
     [ContextMenu("Flammable Testing")]
     private void ObjectOnFire(InteractiveObject targetObj)

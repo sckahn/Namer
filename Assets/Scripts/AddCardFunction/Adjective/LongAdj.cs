@@ -66,6 +66,11 @@ public class LongAdj : IAdjective
         // DetectManager.GetInstance.OnObjectScaleChanged(new Vector3(1, 1, 1), thisObject.transform);
         // thisObject.gameObject.transform.localScale = new Vector3(1, 1, 1);
     }
+    
+    public IAdjective DeepCopy()
+    {
+        return new LongAdj();
+    }
 
     [ContextMenu("objScaling")]
     public void ObjectScaling(InteractiveObject targetObj)
