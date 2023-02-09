@@ -19,14 +19,20 @@ public class CameraController : MonoBehaviour
     public bool isFocused = false;
     int normalCamPirority;
     Transform player;
+    CinemachineComponentBase normalcamOption;
+    CinemachineComponentBase topcamOption;
 
-    // 카메라들 프리팹에서 넣어놓기 
+    // 카메라들 프리팹에서 넣어놓기
+    [Header("Cams")]
     [SerializeField] CinemachineVirtualCamera playerTopViewCam;
     [SerializeField] CinemachineVirtualCamera playerNormalViewCam;
     [SerializeField] CinemachineVirtualCamera targetCam;
 
-    // test
-    [SerializeField] Transform targetObj;
+    [Header("Zoom settings")]
+    [SerializeField] float originDistance = 10f;
+    [SerializeField][Range(1f, 10f)] float scrollSpeed = 2.5f;
+    [SerializeField][Range(0f, 100f)] float maxZoomIn = 5f;
+    [SerializeField][Range(0f, 100f)] float maxZoomOut = 20f;
 
     void Awake()
     {
@@ -43,6 +49,12 @@ public class CameraController : MonoBehaviour
         playerTopViewCam.Priority = (int)PriorityOrder.BehingByNormal;
         targetCam.Priority = (int)PriorityOrder.BehindAtAll;
         normalCamPirority = playerNormalViewCam.Priority;
+
+        // 카메라 distance init
+        normalcamOption = playerNormalViewCam.GetCinemachineComponent(CinemachineCore.Stage.Body);
+        topcamOption = playerTopViewCam.GetCinemachineComponent(CinemachineCore.Stage.Body);
+        (normalcamOption as CinemachineFramingTransposer).m_CameraDistance = originDistance;
+        (topcamOption as CinemachineFramingTransposer).m_CameraDistance = originDistance;
 
         // 모든 팔로우 캠이 플레이어를 따라다니도록 설정 
         player = GameObject.Find("Player").transform;
@@ -89,18 +101,40 @@ public class CameraController : MonoBehaviour
         }
     }
 
-#region Test
-    [ContextMenu("FocusOn")]
-    public void TestFocusOn()
+    void Update()
     {
-        if (targetObj == null) return;
-        FocusOn(targetObj);
-    }
+        if (GameManager.GetInstance.currentState != GameStates.InGame) return;
+        float scroll = Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
+        if (scroll != 0)
+        {
+            if (scroll < 0)
+            {
+                if (normalcamOption is CinemachineFramingTransposer)
+                {
+                    float curScroll = (normalcamOption as CinemachineFramingTransposer).m_CameraDistance;
+                    (normalcamOption as CinemachineFramingTransposer).m_CameraDistance = (curScroll + scroll >= maxZoomIn) ? (curScroll + scroll) : maxZoomIn;
+                }
 
-    [ContextMenu("FocusOff")]
-    public void TestFocusOff()
-    {
-        FocusOff();
+                if (topcamOption is CinemachineFramingTransposer)
+                {
+                    float curScroll = (topcamOption as CinemachineFramingTransposer).m_CameraDistance;
+                    (topcamOption as CinemachineFramingTransposer).m_CameraDistance = (curScroll + scroll >= maxZoomIn) ? (curScroll + scroll) : maxZoomIn;
+                }
+            }
+            else
+            {
+                if (normalcamOption is CinemachineFramingTransposer)
+                {
+                    float curScroll = (normalcamOption as CinemachineFramingTransposer).m_CameraDistance;
+                    (normalcamOption as CinemachineFramingTransposer).m_CameraDistance = (curScroll + scroll <= maxZoomOut) ? (curScroll + scroll) : maxZoomOut;
+                }
+
+                if (topcamOption is CinemachineFramingTransposer)
+                {
+                    float curScroll = (topcamOption as CinemachineFramingTransposer).m_CameraDistance;
+                    (topcamOption as CinemachineFramingTransposer).m_CameraDistance = (curScroll + scroll <= maxZoomOut) ? (curScroll + scroll) : maxZoomOut;
+                }
+            }
+        }
     }
-#endregion
 }
