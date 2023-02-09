@@ -30,6 +30,8 @@ public class CameraController : MonoBehaviour
     void Awake()
     {
         GameManager.GetInstance.KeyAction += CheckCameraSwitch;
+        if (GameManager.GetInstance.cameraController == null)
+            GameManager.GetInstance.cameraController = GameObject.Find("Cameras").GetComponent<CameraController>();
         Init();
     }
 

@@ -325,7 +325,6 @@ public class GameManager : Singleton<GameManager>
         DeleteCurrentMap();
         LoadMap(curLevel);
         GetNewCardDeck();
-        if (cameraController == null) cameraController = GameObject.Find("Cameras").GetComponent<CameraController>();
         cameraController.Init();
         ScenarioManager.GetInstance.Init();
     }
@@ -342,8 +341,6 @@ public class GameManager : Singleton<GameManager>
    
         DetectManager.GetInstance.Init(curLevel);
         CardManager.GetInstance.CardStart(); // 여기서 문제네
-        if (cameraController == null) cameraController = GameObject.Find("Cameras").GetComponent<CameraController>();
-        cameraController.Init();
         ScenarioManager.GetInstance.Init();
     }
     //load scene with loading card -> get level data from level card

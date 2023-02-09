@@ -62,7 +62,7 @@ public class LoadingSceneController : MonoBehaviour
     private void OnDestroy()
     {
         UIManager.GetInstance.ingameCanvas = GameObject.Find("IngameCanvas");
-        UIManager.GetInstance.pauseUIPanel = UIManager.GetInstance.ingameCanvas.transform.GetChild(0).gameObject;
+        UIManager.GetInstance.pauseUIPanel = UIManager.GetInstance.ingameCanvas.transform.Find("PauseUI Panel").gameObject;
         GameManager.GetInstance.ChangeGameState(GameStates.InGame);
         GameManager.GetInstance.LoadMap();
     }
