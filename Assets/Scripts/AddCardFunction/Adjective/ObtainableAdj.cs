@@ -45,4 +45,9 @@ public class ObtainableAdj : IAdjective
     {
         
     }
+    
+    public IAdjective DeepCopy()
+    {
+        return new ObtainableAdj();
+    }
 }

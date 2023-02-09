@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public interface IAdjective
@@ -12,4 +13,5 @@ public interface IAdjective
     public void Execute(InteractiveObject thisObject, InteractiveObject otherObject);
 
     public void Abandon(InteractiveObject thisObject);
+    public IAdjective DeepCopy();
 }

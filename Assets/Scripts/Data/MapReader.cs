@@ -104,16 +104,11 @@ public class MapReader : MonoBehaviour
         objectInfo.nameType = interObj.GetObjectName();
 
         List<EAdjective> adjectives = new List<EAdjective>();
-        for (int i = 0; i < interObj.GetCheckAdj().Length; i++)
+        for (int i = 0; i < interObj.Adjectives.Length; i++)
         {
-            if (interObj.GetCheckAdj()[i])
+            if (interObj.Adjectives[i] != null)
             {
-                if (GameDataManager.GetInstance.Adjectives.Count == 0)
-                {
-                    GameDataManager.GetInstance.GetCardData();
-                }
-                
-                EAdjective adjective = GameDataManager.GetInstance.Adjectives.FirstOrDefault(item => item.Value.priority == i).Key;
+                EAdjective adjective = interObj.Adjectives[i].GetAdjectiveName();
                 adjectives.Add(adjective);
             }
         }

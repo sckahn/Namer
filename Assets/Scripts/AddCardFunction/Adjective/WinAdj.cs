@@ -47,6 +47,11 @@ public class WinAdj : IAdjective
     {
         
     }
+    
+    public IAdjective DeepCopy()
+    {
+        return new WinAdj();
+    }
 
     void CallWin()
     {
