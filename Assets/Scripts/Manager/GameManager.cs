@@ -11,7 +11,8 @@ public enum GameStates
     InGame,
     Pause,
     Lose,
-    Victory
+    Victory,
+    Encyclopedia
 }
 
 public class GameManager : Singleton<GameManager>
@@ -29,6 +30,12 @@ public class GameManager : Singleton<GameManager>
     public bool isPlayerCanInput;
     #endregion
 
+    #region Camera variable
+    [Header("Camera Variable")]
+    public CameraController cameraController;
+    public bool canSwitchCam;
+    #endregion
+
     #region Input Delegate
 
     public Action KeyAction;
@@ -40,14 +47,13 @@ public class GameManager : Singleton<GameManager>
     public KeyCode interactionKey;
     public KeyCode showNameKey;
     public KeyCode pauseKey;
+    public KeyCode cameraKey;
     #endregion
-    
+
     [Header("Manager Prefabs")]
     [SerializeField] private List<GameObject> managerPrefabs;
 
     public float curTimeScale { get; private set; }
-    
-   
     
     private void Awake()
     {
@@ -100,6 +106,7 @@ public class GameManager : Singleton<GameManager>
         interactionKey = KeyCode.Space;
         showNameKey = KeyCode.Tab;
         pauseKey = KeyCode.Escape;
+        cameraKey = KeyCode.Q;
         KeyAction = null;
         #endregion
 
@@ -154,6 +161,8 @@ public class GameManager : Singleton<GameManager>
                 break;
             case GameStates.Lose:
                 HandleLost();
+                break;
+            case GameStates.Encyclopedia:
                 break;
         }
     }
@@ -281,6 +290,8 @@ public class GameManager : Singleton<GameManager>
     [ContextMenu("DeleteCard")]
     void DeleteCurrentCard()
     {
+        GameObject buttons = buttons = GameObject.Find("IngameCanvas").transform.GetChild(1).gameObject;
+        buttons.SetActive(false);
         CardManager cardManager = CardManager.GetInstance;
         var currentDeck = cardManager.myCards;
         foreach (var eachCard in currentDeck)
@@ -307,6 +318,9 @@ public class GameManager : Singleton<GameManager>
         DeleteCurrentMap();
         LoadMap(curLevel);
         GetNewCardDeck();
+        if (cameraController == null) cameraController = GameObject.Find("Cameras").GetComponent<CameraController>();
+        cameraController.Init();
+        ScenarioManager.GetInstance.Init();
     }
 
     
@@ -320,7 +334,10 @@ public class GameManager : Singleton<GameManager>
             curLevel=GetCurrentLevel();
    
         DetectManager.GetInstance.Init(curLevel);
-        CardManager.GetInstance.CardStart(); // 여기서 문제네 
+        CardManager.GetInstance.CardStart(); // 여기서 문제네
+        if (cameraController == null) cameraController = GameObject.Find("Cameras").GetComponent<CameraController>();
+        cameraController.Init();
+        ScenarioManager.GetInstance.Init();
     }
     //load scene with loading card -> get level data from level card
 

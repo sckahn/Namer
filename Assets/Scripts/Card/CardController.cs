@@ -46,11 +46,14 @@ public class CardController : MonoBehaviour
         highlight.SetActive(true);
 
 
-        if (CardManager.GetInstance.isEncyclopedia)
+        if (CardManager.GetInstance.isEncyclopedia || GameManager.GetInstance.currentState == GameStates.Encyclopedia)
         {
             Encyclopedia.SetActive(true);
             return;
         }
+
+        if (GameManager.GetInstance.currentState == GameStates.Encyclopedia)
+            return;
 
         cr.enabled = true;
     }
@@ -60,7 +63,7 @@ public class CardController : MonoBehaviour
     {
         if (!CardManager.GetInstance.ableCardCtr) return;
         highlight.SetActive(false);
-        if (CardManager.GetInstance.isEncyclopedia)
+        if (CardManager.GetInstance.isEncyclopedia || GameManager.GetInstance.currentState == GameStates.Encyclopedia)
         {
             Encyclopedia.SetActive(false);
             return;
@@ -73,7 +76,7 @@ public class CardController : MonoBehaviour
     private void OnMouseDown()
     {
         if (GameManager.GetInstance.currentState == GameStates.Pause) return;
-        if (CardManager.GetInstance.isEncyclopedia) return;
+        if (CardManager.GetInstance.isEncyclopedia || GameManager.GetInstance.currentState == GameStates.Encyclopedia) return;
         if (!CardManager.GetInstance.ableCardCtr) return;
         CardManager.GetInstance.isPickCard = true;
         //transform.DOMove(Input.mousePosition , 5f);
