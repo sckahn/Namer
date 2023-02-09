@@ -159,6 +159,11 @@ public class MovableAdj : IAdjective
     {
         
     }
+    
+    public IAdjective DeepCopy()
+    {
+        return new MovableAdj();
+    }
 
     IEnumerator MoveObj(GameObject obj)
     {

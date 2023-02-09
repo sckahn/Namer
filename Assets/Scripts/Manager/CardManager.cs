@@ -17,10 +17,14 @@ public class CardManager : Singleton<CardManager>
     //[HideInInspector]
     public GameObject target;
     GameObject buttons;
-
-    public bool isPickCard = false;
+    
+    public bool isPickCard = false; 
     public bool ableCardCtr = true;
     public bool isEncyclopedia = false;
+
+    // 마우스로 선택한 카드
+    public GameObject pickCard;
+    public bool ableAddCard = true;
 
     private void Start()
     {

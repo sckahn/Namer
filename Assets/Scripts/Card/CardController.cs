@@ -1,12 +1,13 @@
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Serialization;
 
 public class CardController : MonoBehaviour
 {
     // [SerializeField] private CardData cardData;
     [SerializeField] private ECardType cardType;
     [SerializeField] private EName nameType;
-    [SerializeField] private EAdjective[] adjectives;
+    [SerializeField] private EAdjective adjectiveType;
     
     public PRS originPRS;
     GameObject cardHolder;
@@ -15,6 +16,11 @@ public class CardController : MonoBehaviour
     [SerializeField] GameObject highlight;
     [SerializeField] GameObject Encyclopedia;
     CardRotate cr;
+
+    public EAdjective GetAdjectiveTypeOfCard()
+    {
+        return adjectiveType;
+    }
 
     private void Start()
     {
@@ -83,6 +89,8 @@ public class CardController : MonoBehaviour
         //transform.DOScale(new Vector3(0, 0, 0), 5f);
         bc.enabled = false;
         frontCover.SetActive(false);
+
+        CardManager.GetInstance.pickCard = gameObject;
     }
 
     //카드 선택 커서 상태에서 상호작용 오브젝트 위에서 마우스를 놓으면 속성 부여,
@@ -91,7 +99,7 @@ public class CardController : MonoBehaviour
     {
         if (!CardManager.GetInstance.ableCardCtr) return;
         CardManager.GetInstance.isPickCard = false;
-        if (CardManager.GetInstance.target != null)
+        if (CardManager.GetInstance.target != null && CardManager.GetInstance.ableAddCard)
         {
             CastCard(CardManager.GetInstance.target);
             CardManager.GetInstance.target = null;
@@ -103,6 +111,7 @@ public class CardController : MonoBehaviour
         {
             bc.enabled = true;
             frontCover.SetActive(true);
+            CardManager.GetInstance.ableAddCard = true;
         }
     }
 
@@ -112,11 +121,11 @@ public class CardController : MonoBehaviour
         {
             if (cardType == ECardType.Name)
             {
-               target.GetComponent<InteractiveObject>().AddName(nameType);
+                target.GetComponent<InteractiveObject>().AddName(nameType);
             }
             else if (cardType == ECardType.Adjective)
             {
-               target.GetComponent<InteractiveObject>().AddAdjective(adjectives);
+                target.GetComponent<InteractiveObject>().AddAdjective(adjectiveType);
             }
         }
     }

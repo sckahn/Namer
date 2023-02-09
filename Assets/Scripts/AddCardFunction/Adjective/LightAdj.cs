@@ -68,6 +68,10 @@ public class LightAdj : IAdjective
         }
     }
 
+    public IAdjective DeepCopy()
+    {
+        return new LightAdj();
+    }
 
     private void LetThereBeLight(GameObject targetObj)
     {
