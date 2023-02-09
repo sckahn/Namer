@@ -77,8 +77,6 @@ public class MainMeneCardController : MonoBehaviour
         if (GameManager.GetInstance.currentState == GameStates.Pause) return;
         if (!CardManager.GetInstance.ableCardCtr) return;
         CardManager.GetInstance.isPickCard = true;
-        //transform.DOMove(Input.mousePosition , 5f);
-        //transform.DOScale(new Vector3(0, 0, 0), 5f);
         bc.enabled = false;
         frontCover.SetActive(false);
     }
@@ -93,7 +91,11 @@ public class MainMeneCardController : MonoBehaviour
         {
             MainCastCard(this.gameObject.name);
             CardManager.GetInstance.target = null;
-            Invoke("CardReturn", 1f);
+
+            if (this.name != "OptionCard(Clone)")
+            {
+                Invoke("CardReturn", 1f);
+            }
         }
         else if (bc != null)
         {
@@ -101,7 +103,7 @@ public class MainMeneCardController : MonoBehaviour
         }
     }
 
-    void CardReturn()
+    public void CardReturn()
     {
         bc.enabled = true;
         frontCover.SetActive(true);
@@ -120,7 +122,7 @@ public class MainMeneCardController : MonoBehaviour
                 mainUIController.EncyclopediaScene();
                 break;
             case "OptionCard(Clone)":
-                print("OptionCard");
+                mainUIController.OptionPanelOpen();
                 break;
             case "CreditCard(Clone)":
                 mainUIController.CreditScene();

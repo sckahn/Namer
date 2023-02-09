@@ -8,6 +8,7 @@ public class IngameCanvasController : MonoBehaviour
     [SerializeField] GameObject buttons;
     [SerializeField] GameObject pediaBtn;
     [SerializeField] GameObject optionBtn;
+    [SerializeField] GameObject gameOptionPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -32,11 +33,7 @@ public class IngameCanvasController : MonoBehaviour
         GameManager.GetInstance.isPlayerCanInput = false;
         encyclopedia.SetActive(true);
         buttons.SetActive(false);
-
-        for (int i = 0; i < CardManager.GetInstance.myCards.Count; i++)
-        {
-            CardManager.GetInstance.myCards[i].gameObject.SetActive(false);
-        }
+        CardManager.GetInstance.CardsHide();
     }
 
     public void EncyclopediaClose()
@@ -44,10 +41,28 @@ public class IngameCanvasController : MonoBehaviour
         GameManager.GetInstance.isPlayerCanInput = true;
         encyclopedia.SetActive(false);
         buttons.SetActive(true);
-        for (int i = 0; i < CardManager.GetInstance.myCards.Count; i++)
-        {
-            CardManager.GetInstance.myCards[i].gameObject.SetActive(true);
-        }
+        CardManager.GetInstance.CardsReveal();
         GameManager.GetInstance.ChangeGameState(GameStates.InGame);
+    }
+
+    public void OptionBtn()
+    {
+        UIManager.GetInstance.UIOn();
+    }
+
+    public void StartBtn()
+    {
+        UIManager.GetInstance.UIOff();
+    }
+
+    public void RestartBtn()
+    {
+        UIManager.GetInstance.UIOff();
+        GameManager.GetInstance.Reset();
+    }
+
+    public void GameOptionPanelOn()
+    {
+        gameOptionPanel.SetActive(true);
     }
 }

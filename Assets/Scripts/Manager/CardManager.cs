@@ -186,8 +186,24 @@ public class CardManager : Singleton<CardManager>
         return results;
     }
 
-}
+    public void CardsHide()
+    {
+        for (int i = 0; i< myCards.Count; i++)
+        {
+            myCards[i].gameObject.SetActive(false);
+        }
+    }
 
+    public void CardsReveal()
+    {
+        for (int i = 0; i < myCards.Count; i++)
+        {
+            myCards[i].gameObject.SetActive(true);
+        }
+    }
+
+
+}
 public class PRS
 {
     public Vector3 pos;
