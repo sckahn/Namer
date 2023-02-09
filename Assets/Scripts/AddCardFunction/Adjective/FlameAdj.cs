@@ -45,4 +45,9 @@ public class FlameAdj : IAdjective
     {
         
     }
+    
+    public IAdjective DeepCopy()
+    {
+        return new FlameAdj();
+    }
 }

@@ -45,4 +45,9 @@ public class NullAdj : IAdjective
     {
         
     }
+    
+    public IAdjective DeepCopy()
+    {
+        return new NullAdj();
+    }
 }
