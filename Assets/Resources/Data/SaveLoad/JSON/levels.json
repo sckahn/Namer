@@ -91,7 +91,7 @@
             "isDialog": true,
             "message": "장미:땅 아래에 뭍혀있는 저 식물이 보이니?",
             "funcName": "",
-            "isFocus": false
+            "isFocus": true
         },
         {
             "type": 2,
@@ -113,7 +113,7 @@
             "requiredName": "",
             "isDialog": true,
             "message": "장미:위로 올라가서 그 식물이 ‘길쭉’하다고 상상해봐!",
-            "funcName": "FocusOff",
+            "funcName": "",
             "isFocus": false
         },
         {
@@ -193,9 +193,9 @@
                 "z": 0.0
             },
             "targetObj": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": 8.0,
+                "y": 3.0,
+                "z": 3.0
             },
             "nextPos": {
                 "x": 0.0,
@@ -206,7 +206,7 @@
             "isDialog": true,
             "message": "장미:이번에는 어떤 성질이 아니라 바위가 다른 물체가 된다고 생각해봐.",
             "funcName": "",
-            "isFocus": false
+            "isFocus": true
         },
         {
             "type": 2,
@@ -228,7 +228,7 @@
             "requiredName": "",
             "isDialog": true,
             "message": "장미:뭔가 길고, 잘 탈 것 같은 …물체면 좋을 것 같네?",
-            "funcName": "FocusOff",
+            "funcName": "",
             "isFocus": false
         },
         {

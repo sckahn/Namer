@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour
 
     // 둘 다 게임 매니저에서 관리 필요
     bool isTopView = false;
+    public bool isFocused = false;
     int normalCamPirority;
     Transform player;
 
@@ -48,6 +49,8 @@ public class CameraController : MonoBehaviour
         playerNormalViewCam.Follow = player;
         playerTopViewCam.Follow = player;
 
+        isTopView = false;
+
         FocusOff();
     }
 
@@ -56,12 +59,15 @@ public class CameraController : MonoBehaviour
         targetCam.LookAt = target;
         targetCam.Follow = target;
         targetCam.Priority = (int)PriorityOrder.FrontAtAll;
-        // 카드가 잠시 안 보이도록 변경 
+
+        // todo 카드가 잠시 안 보이도록 변경
 
         if (!canMove)
         {
             GameManager.GetInstance.isPlayerCanInput = false;
         }
+
+        isFocused = true;
     }
 
     public void FocusOff()
@@ -70,6 +76,8 @@ public class CameraController : MonoBehaviour
         targetCam.LookAt = null;
         targetCam.Follow = null;
         GameManager.GetInstance.isPlayerCanInput = true;
+
+        isFocused = false;
     }
 
     private void CheckCameraSwitch()
