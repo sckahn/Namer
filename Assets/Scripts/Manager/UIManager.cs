@@ -55,6 +55,7 @@ public class UIManager : Singleton<UIManager>
             pauseUIPanel.SetActive(true);
             GameManager.GetInstance.ChangeGameState(GameStates.Pause);
             GameManager.GetInstance.SetTimeScale(0);
+            SoundManager.GetInstance.sfxSound.Pause();
         }
 
         else if (isPauseKeyPressed &&
@@ -64,6 +65,7 @@ public class UIManager : Singleton<UIManager>
             pauseUIPanel.SetActive(false);
             GameManager.GetInstance.ReturnPreviousState();
             GameManager.GetInstance.SetTimeScale(1);
+            SoundManager.GetInstance.sfxSound.UnPause();
         }
     }
 }
