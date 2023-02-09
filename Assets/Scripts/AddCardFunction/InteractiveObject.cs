@@ -1,250 +1,146 @@
-using System.Collections.Generic;
 using System.Linq;
+using Unity.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class InteractiveObject : MonoBehaviour
 {
-    // Todo 테스트 완료 후, 삭제할 예정
-    #region Test Field
-    [SerializeField] private bool setInit;
-    [SerializeField] private EName objectName;
-    [SerializeField] private bool[] checkAdj = new bool[20];
-    [SerializeField] private int[] countAdj = new int[20];
+    [ReadOnly][SerializeField] private EName objectName;
+    [Range(0, 2)][SerializeField] private int[] countAdj = new int[20];
+    [SerializeField] GameObject popUpName;
 
-    private EName initName;
-    private EName checkName;
-    private int checkAdjCount;
-    private bool[] initAdj;
+    // Todo 테스트 완료 후, Test 관련 코드 삭제 예정
+    #region [Test] Change Count To Inspector
+    
+        private int[] initCountAdj = new int[20];
+        private bool isCard = false;
 
-    public bool[] GetCheckAdj()
-    {
-        return checkAdj;
-    }
     #endregion
 
-    [SerializeField] GameObject popUpName;
-    
-    // object's basic value
-    private Vector3 currentPosition;
-
     // object's name = adjective card's ui texts + name card's ui text
-    private string currentObjectName;
     private string addNameText;
-    private string[] addAdjectiveTexts = new string[20];
+    private string[] addAdjectiveTexts;
+    private int[] countNameAdj;
+    
+    // Max Value of Adjective Count
+    private int maxAdjCount = 2;
 
     // added adjective functions(interface)
-    private IAdjective[] adjectives = new IAdjective[20];
+    private IAdjective[] adjectives;
     public IAdjective[] Adjectives { get { return  adjectives; } }
     
-    // manager to get card data 
-    private GameDataManager cardData;
-
     // object's information
-    public SObjectInfo objectInfo = new SObjectInfo();
-    
+    public SObjectInfo objectInfo;
     public int GetObjectID()
     {
         return objectInfo.objectID;
     }
-    
     public EName GetObjectName()
     {
         return objectName;
-        // return objectInfo.nameType;
     }
-
-    private UnityEvent unityEvent;
-
+    
+    // manager to get card data 
+    private GameDataManager gameData;
+    
     private void OnEnable()
     {
         if (!gameObject.CompareTag("InteractObj"))
         {
-            Debug.Log("태그를 InteractObj로 설정해주세요!");
+            Debug.LogError("태그를 InteractObj로 설정해주세요!");
         }
         
-        currentPosition = gameObject.transform.position;
-        initName = objectName;
-        initAdj = checkAdj;
+        gameData = GameDataManager.GetInstance;
+        addAdjectiveTexts = new string[gameData.Adjectives.Count];
+        countNameAdj = new int[gameData.Adjectives.Count];
+        adjectives = new IAdjective[gameData.Adjectives.Count];
     }
 
-    private void InitCard(bool setInit = false)
+    private void Start()
     {
-        if (setInit)
-        {
-            SubtractName(objectName);
-            objectName = initName;
-        }
+        objectName = objectInfo.nameType;
+        addNameText = gameData.Names[objectName].uiText;
         
-        for (int i = 0; i < initAdj.Length; i++)
-        {
-            if (initAdj[i])
-            {
-                EAdjective adjective = cardData.Adjectives.FirstOrDefault(item => item.Value.priority == i).Key;
-                SetAdjective(adjective);
-            }
-        }
-        
-        checkName = initName;
-        checkAdjCount = checkAdj.Count(a => a);
-        addNameText = cardData.Names[initName].uiText;
+        SetAdjectiveFromData(gameData.Names[objectName].adjectives);
+        SetAdjectiveFromData(objectInfo.adjectives);
 
-        AddName(objectName);
+        // Test
+        countAdj.CopyTo(initCountAdj, 0);
+        //
     }
 
-    #region Run When Inspector Data Change & Test
+    private void SetAdjectiveFromData(EAdjective[] addedAdjectives)
+    {
+        if (addedAdjectives == null || addedAdjectives.Length <= 0)
+        {
+            return;
+        }
+
+        for (int i = 0; i < addedAdjectives.Length; i++)
+        {
+            int adjIndex = (int)addedAdjectives[i];
+            if (countAdj[adjIndex] >= maxAdjCount)
+            {
+                Debug.LogError("같은 꾸밈 성질은 2개만 부여할 수 있어요");
+            }
+            
+            adjectives[adjIndex] = gameData.Adjectives[addedAdjectives[i]].adjective.DeepCopy();
+            adjectives[adjIndex].SetCount(1);
+            ++countAdj[adjIndex];
+        }
+    }
+
+#region Run When Inspector Data Change & Test
     private void Update()
     {
-        if (cardData == null)
-        {
-            objectName = objectInfo.nameType;
-            for (int i = 0; i < objectInfo.adjectives.Length; i++)
-            {
-                int adjIndex = (int)objectInfo.adjectives[i];
-                checkAdj[adjIndex] = true;
-            }
-
-            cardData = GameDataManager.GetInstance;
-            currentObjectName = cardData.Names[objectName].uiText;
-            InitCard();
-        }
         AllPopUpNameCtr();
-
-        // set init
-        if (setInit)
-        {
-            InitCard(setInit);
-            setInit = false;
-        }
-        
-        // change name
-        // if (objectName != checkName)
-        // {
-        //     ChangeName(objectName);
-        // }
-        
-        // change adjective
-        int currentCheckAdj = checkAdj.Count(a => a);
-        if (currentCheckAdj != checkAdjCount)
-        {
-            ChangeAdjective();
-        }
+        AdjectiveTest();
     }
 
-    // Use When data type of objectName is string
-
-    private void ChangeName(EName changeName)
+    private void AdjectiveTest()
     {
-        SubtractName(checkName);
-        
-        checkName = changeName;
-        addNameText = cardData.Names[changeName].uiText;
-        checkAdjCount = checkAdj.Count(a => a);
-        
-        AddName(changeName);
-    }
-    
-    private void ChangeAdjective()
-    {
-        checkAdjCount = checkAdj.Count(a => a);
-        
-        for (int i = 0; i < cardData.Adjectives.Count; i++)
+        if (!isCard && countAdj.Sum() != initCountAdj.Sum())
         {
-            if (checkAdj[i] && adjectives[i] == null)
+            for (int i = 0; i < countAdj.Length; i++)
             {
-                EAdjective adjective = cardData.Adjectives.FirstOrDefault(item => item.Value.priority == i).Key;
-                SetAdjective(adjective);
-            }
-
-            if (!checkAdj[i] && adjectives[i] != null)
-            {
-                EAdjective adjective = cardData.Adjectives.FirstOrDefault(item => item.Value.priority == i).Key;
-                SubtractAdjective(adjective);
-            }
-        }
-    }
-
-#endregion
-    
-    public string GetCurrentName()
-    {
-        if (cardData == null)
-        {
-            return currentObjectName;
-        }
-        
-        currentObjectName = null;
-        int currentCheckAdj = checkAdj.Count(a => a);
-        
-        if (currentCheckAdj != 0)
-        {
-            for (int i = 0; i < cardData.Adjectives.Count; i++)
-            {
-                if (addAdjectiveTexts[i] != null)
+                if (countAdj[i] < initCountAdj[i])
                 {
-                    currentObjectName += addAdjectiveTexts[i] + " ";
+                    int diff = initCountAdj[i] - countAdj[i];
+                    while (diff > 0)
+                    {
+                        TestSubtractAdjective((EAdjective)i);
+                        diff--;
+                    }
+            
+                    initCountAdj[i] = countAdj[i];
+                }
+                else if (countAdj[i] > initCountAdj[i])
+                {
+                    int diff = countAdj[i] - initCountAdj[i];
+                    while (diff > 0)
+                    {
+                        TestSetAdjective((EAdjective)i);
+                        diff--;
+                    }
+            
+                    initCountAdj[i] = countAdj[i];
                 }
             }
         }
-        currentObjectName += addNameText;
-        
-        return currentObjectName;
     }
-
-    public void AddName(EName? addedName)
+    
+    private void TestSetAdjective(EAdjective addAdjective)
     {
-        SubtractName(objectName);
-        
-        // Check Error
-        if (addedName == null)
-        {
-            Debug.Log("Card의 Name 정보를 확인해주세요!");
-            return;
-        }
-
-        EAdjective[] addAdjectives = cardData.Names[(EName)addedName].adjectives;
-        if (addAdjectives != null)
-        {
-            foreach (EAdjective addAdjective in addAdjectives)
-            {
-                SetAdjective(addAdjective, false);
-            }
-        }
-        
-        objectName = (EName)addedName;
-        addNameText = cardData.Names[(EName)addedName].uiText;
-    }
-
-    public void AddAdjective(EAdjective[] addAdjectives)
-    {
-        if (addAdjectives == null)
-        {
-            Debug.Log("Card의 Adjective 정보를 채워주세요!");
-            return;
-        }
-
-        foreach (var addAdjective in addAdjectives)
-        {
-            SetAdjective(addAdjective);
-        }
-    }
-
-    private void SetAdjective(EAdjective addAdjective, bool isAdjective = true)
-    {
-        SAdjectiveInfo adjectiveInfo = cardData.Adjectives[addAdjective];
-        int adjIndex = adjectiveInfo.priority;
-        
+        int adjIndex = (int)addAdjective;
+        SAdjectiveInfo adjectiveInfo = gameData.Adjectives[addAdjective];
         if (adjectives[adjIndex] == null)
         {
             adjectives[adjIndex] = adjectiveInfo.adjective.DeepCopy();
-            checkAdj[adjIndex] = true;
         }
 
-        if (isAdjective)
-        {
-            addAdjectiveTexts[adjIndex] = adjectiveInfo.uiText;
-        }
+        adjectives[adjIndex].SetCount(1);
+        addAdjectiveTexts[adjIndex] = adjectiveInfo.uiText;
         
+        // Todo 다른 곳으로 이동해야하는 IAdjective 함수?
         switch (adjectives[adjIndex].GetAdjectiveType())
         {
             case (EAdjectiveType.Normal): // normal
@@ -254,19 +150,130 @@ public class InteractiveObject : MonoBehaviour
             case (EAdjectiveType.Contradict): // contradict
                 break;
         }
-       
+        //
+    }
+    
+    private void TestSubtractAdjective(EAdjective subtractAdjective)
+    {
+        int adjIndex = (int)subtractAdjective;
+        if (adjectives[adjIndex] == null)
+        { 
+            return;
+        }
+        
+        // Todo 다른 곳으로 이동해야하는 IAdjective 함수?
+        adjectives[adjIndex].Abandon(this);
+        //
+        
+        if (countAdj[adjIndex] == 0)
+        {
+            adjectives[adjIndex] = null;
+        }
+        else
+        {
+            adjectives[adjIndex].SetCount(-1);
+        }
+        
+        if (countAdj[adjIndex] - countNameAdj[adjIndex] == 0)
+        {
+            addAdjectiveTexts[adjIndex] = null;
+        }
+    }
+
+#endregion
+
+    public void AddName(EName? addedName)
+    {
+        // Test
+        isCard = true;
+        //
+        
+        SubtractName(objectName);
+        
+        // Check Error
+        if (addedName == null)
+        {
+            Debug.LogError("Card의 Name 정보를 확인해주세요!");
+            return;
+        }
+        
+        EAdjective[] addAdjectives = gameData.Names[(EName)addedName].adjectives;
+        if (addAdjectives != null)
+        {
+            foreach (EAdjective addAdjective in addAdjectives)
+            {
+                SetAdjective(addAdjective, false);
+            }
+        }
+        
+        objectName = (EName)addedName;
+        addNameText = gameData.Names[(EName)addedName].uiText;
+    }
+
+    public void AddAdjective(EAdjective addAdjective)
+    {
+        // Test
+        isCard = true;
+        //
+        
+        if (addAdjective == EAdjective.Null)
+        {
+            Debug.Log("Null 꾸밈 성질 카드가 맞으시죠? 확인 부탁해요!");
+        }
+        
+        SetAdjective(addAdjective);
+    }
+
+    private void SetAdjective(EAdjective addAdjective, bool isAdjective = true)
+    {
+        int adjIndex = (int)addAdjective;
+
+        SAdjectiveInfo adjectiveInfo = gameData.Adjectives[addAdjective];
+        if (adjectives[adjIndex] == null)
+        {
+            adjectives[adjIndex] = adjectiveInfo.adjective.DeepCopy();
+        }
+
+        if (isAdjective)
+        {
+            addAdjectiveTexts[adjIndex] = adjectiveInfo.uiText;
+        }
+        else
+        {
+            ++countNameAdj[adjIndex];
+        }
+        
+        adjectives[adjIndex].SetCount(1);
         ++countAdj[adjIndex];
+        // Test
+        ++initCountAdj[adjIndex];
+        //
+        
+        // Todo 다른 곳으로 이동해야하는 IAdjective 함수?
+        switch (adjectives[adjIndex].GetAdjectiveType())
+        {
+            case (EAdjectiveType.Normal): // normal
+            case (EAdjectiveType.Repeat): // repeat
+                adjectives[adjIndex].Execute(this);
+                break;
+            case (EAdjectiveType.Contradict): // contradict
+                break;
+        }
+        //
+        
+        // Test
+        isCard = false;
+        //
     }
 
     private void SubtractName(EName subtractName)
     {
-        EAdjective[] subtractAdjectives = cardData.Names[subtractName].adjectives;
+        EAdjective[] subtractAdjectives = gameData.Names[subtractName].adjectives;
 
         if (subtractAdjectives != null)
         {
             foreach (var adjective in subtractAdjectives)
             {
-                // if (adjective == null) continue;
                 SubtractAdjective(adjective, false);
             }
         }
@@ -274,30 +281,86 @@ public class InteractiveObject : MonoBehaviour
 
     private void SubtractAdjective(EAdjective subtractAdjective, bool isAdjective = true)
     {
-        int adjIndex = cardData.Adjectives[subtractAdjective].priority;
+        int adjIndex = (int)subtractAdjective;
         if (adjectives[adjIndex] == null)
         { 
             return;
         }
+        
+        // Todo 다른 곳으로 이동해야하는 IAdjective 함수?
         adjectives[adjIndex].Abandon(this);
-        adjectives[adjIndex] = null;
+        //
+        
         --countAdj[adjIndex];
-        checkAdj[adjIndex] = false;
-
+        // Test
+        --initCountAdj[adjIndex];
+        //
+        if (countAdj[adjIndex] == 0)
+        {
+            adjectives[adjIndex] = null;
+        }
+        else
+        {
+            adjectives[adjIndex].SetCount(-1);
+        }
+        
         if (isAdjective)
         {
-            addAdjectiveTexts[adjIndex] = null;
+            if (countAdj[adjIndex] - countNameAdj[adjIndex] == 0)
+            {
+                addAdjectiveTexts[adjIndex] = null;
+            }
         }
+        else
+        {
+            --countNameAdj[adjIndex];
+        }
+        
+        // Test
+        isCard = false;
+        //
     }
-
-    public bool CheckAdj(IAdjective checkAdjective)
+    
+    public bool CheckAdjective(EAdjective checkAdjective)
     {
-        if (adjectives.Contains(checkAdjective))
+        if (adjectives[(int)checkAdjective] != null)
         {
             return true;
         }
 
         return false;
+    }
+
+    public bool CheckCountAdjective(EAdjective checkAdjective)
+    {
+        if (countAdj[(int)checkAdjective] >= 2)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+#region Method for UI
+    
+    // 오브젝트 이름을 리턴하는 함수
+    public string GetCurrentName()
+    {
+        string currentObjectName = null;
+        
+        for (int i = 0; i < gameData.Adjectives.Count; i++)
+        {
+            if (addAdjectiveTexts[i] != null)
+            {
+                for (int j = 0; j < countAdj[i] - countNameAdj[i]; j++)
+                {
+                    currentObjectName += addAdjectiveTexts[i] + " ";
+                }
+            }
+        }
+        currentObjectName += addNameText;
+        
+        return currentObjectName;
     }
 
     //카드를 선택한 상태에서 오브젝트를 호버링하면 카드의 타겟으로 설정
@@ -310,6 +373,12 @@ public class InteractiveObject : MonoBehaviour
         if (this.gameObject.CompareTag("InteractObj") && CardManager.GetInstance.isPickCard)
         {
             CardManager.GetInstance.target = this.gameObject;
+            
+            if (!CheckCountAdjective(CardManager.GetInstance.pickCard.GetComponent<CardController>().GetAdjectiveTypeOfCard()))
+            {
+                CardManager.GetInstance.ableAddCard = false;
+                return;
+            }
         }
         if (this.gameObject.CompareTag("InteractObj"))
         {
@@ -357,4 +426,6 @@ public class InteractiveObject : MonoBehaviour
              PopUpNameOff();
          }
      }
+#endregion
+
 }

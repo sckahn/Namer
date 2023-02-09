@@ -67,7 +67,7 @@ public class FloatAdj : IAdjective
         if (obj != null) yield return null;
         Vector3 startPos = obj.transform.position;
         //Debug.Log(startPos);
-        while (obj != null && obj.GetComponent<InteractiveObject>().CheckAdj(this) && currentTime < movingSpeed)
+        while (obj != null && obj.GetComponent<InteractiveObject>().CheckAdjective(adjectiveName) && currentTime < movingSpeed)
         {
             currentTime += Time.deltaTime;
             obj.transform.localPosition = Vector3.Lerp(startPos, startPos + Vector3.up, currentTime / movingSpeed);
@@ -81,7 +81,7 @@ public class FloatAdj : IAdjective
         if (obj != null) yield return null;
         Vector3 currentPos = obj.transform.GetChild(0).localPosition;
         
-        while (obj != null && obj.GetComponent<InteractiveObject>().CheckAdj(this))
+        while (obj != null && obj.GetComponent<InteractiveObject>().CheckAdjective(adjectiveName))
         {
             currentTime += Time.deltaTime * speed;
             obj.transform.GetChild(0).
