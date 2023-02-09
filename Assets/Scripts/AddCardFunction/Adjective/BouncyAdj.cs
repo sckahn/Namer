@@ -75,7 +75,12 @@ public class BouncyAdj : IAdjective
     {
         
     }
-
+    
+    public IAdjective DeepCopy()
+    {
+        return new BouncyAdj();
+    }
+    
     private void Bounce()
     {
         rigid.velocity = Vector3.zero;
