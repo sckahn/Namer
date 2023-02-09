@@ -19,7 +19,7 @@ public class LogText : MonoBehaviour
 
     void Update()
     {
-        curTime -= Time.deltaTime;
+        curTime -= Time.unscaledDeltaTime;
         if (curTime <= 0)
         {
             this.gameObject.SetActive(false);

@@ -27,7 +27,7 @@ public struct Scenario
     public bool isFocus;
 }
 
-public class ScenarioManager : Singleton<ScenarioManager>
+public class ScenarioManager : Singleton<ScenarioManager> // 컴포넌트로 사용해도 될 것 같음 
 {
     public Scenario[] scenarioList;
     public Queue<Scenario> scenarios = new Queue<Scenario>();
@@ -41,6 +41,12 @@ public class ScenarioManager : Singleton<ScenarioManager>
     public Text logText;
     public GameObject dialogBox;
     public Text dialogText;
+
+    private void Awake()
+    {
+        // todo init을 게임 매니저에서 하지 않아도 되도록 수정해보기 
+        //Init();
+    }
 
     public void Init()
     {
