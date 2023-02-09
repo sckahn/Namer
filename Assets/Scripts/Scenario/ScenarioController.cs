@@ -27,37 +27,63 @@ public struct Scenario
     public bool isFocus;
 }
 
-public class ScenarioManager : Singleton<ScenarioManager> // 컴포넌트로 사용해도 될 것 같음 
+public class ScenarioController : MonoBehaviour
 {
-    public Scenario[] scenarioList;
-    public Queue<Scenario> scenarios = new Queue<Scenario>();
-    public Scenario curScenario;
+    [Header("시나리오 추가할 때에 넣는 부분")]
+    [SerializeField] Scenario[] scenarioList;
+    private static Queue<Scenario> scenarios = new Queue<Scenario>();
+    private Scenario curScenario;
     private int scenarioCount = 0;
     private Transform player;
     private CameraController cameraController;
     private float scenarioTime = 20f;
 
-    public GameObject logBox;
-    public Text logText;
-    public GameObject dialogBox;
-    public Text dialogText;
+    [Header("필수로 등록해야 하는 부분")]
+    [SerializeField] GameObject logBox;
+    [SerializeField] Text logText;
+    [SerializeField] GameObject dialogBox;
+    [SerializeField] Text dialogText;
+
+    [System.NonSerialized] public bool logOpened = false;
+    [System.NonSerialized] public bool dialogOpened = false;
+    [System.NonSerialized] public bool isUI = false;
 
     private void Awake()
     {
-        // todo init을 게임 매니저에서 하지 않아도 되도록 수정해보기 
-        //Init();
+        GameManager.GetInstance.scenarioController = this;
+    }
+
+    public void LogOnOff(bool isOn)
+    {
+        switch (isOn)
+        {
+            case (true):
+                logBox.SetActive(logOpened);
+                dialogBox.SetActive(dialogOpened);
+                break;
+            case (false):
+                logOpened = logBox.activeSelf;
+                dialogOpened = dialogBox.activeSelf;
+                logBox.SetActive(false);
+                dialogBox.SetActive(false);
+                break;
+        }
     }
 
     public void Init()
     {
         curScenario = new Scenario();
         curScenario.type = ERequireType.Null;
-        logBox = GameObject.Find("IngameCanvas").transform.Find("SystemLog").gameObject;
-        logText = logBox.GetComponentInChildren<Text>();
+        //logBox = GameObject.Find("IngameCanvas").transform.Find("SystemLog").gameObject;
+        //logText = logBox.GetComponentInChildren<Text>();
         logBox.SetActive(false);
-        dialogBox = GameObject.Find("IngameCanvas").transform.Find("Dialog").gameObject;
-        dialogText = dialogBox.GetComponentInChildren<Text>();
+        logOpened = false;
+        //dialogBox = GameObject.Find("IngameCanvas").transform.Find("Dialog").gameObject;
+        //dialogText = dialogBox.GetComponentInChildren<Text>();
         dialogBox.SetActive(false);
+        dialogOpened = false;
+
+        isUI = false;
 
         scenarioCount = 0;
         scenarios = new Queue<Scenario>();
@@ -134,17 +160,24 @@ public class ScenarioManager : Singleton<ScenarioManager> // 컴포넌트로 사
         {
             if (curScenario.message != null && curScenario.message != "")
             {
-                Vector3 curScenarioPos = new Vector3(curScenario.targetObj.x, curScenario.targetObj.y, curScenario.targetObj.z);
-                Dictionary<Vector3, GameObject> objDict = DetectManager.GetInstance.GetArrayObjects(curScenarioPos);
-                Vector3 vec = Vector3Int.FloorToInt(curScenarioPos);
                 if (curScenario.isFocus)
                 {
+                    Vector3 curScenarioPos = new Vector3(curScenario.targetObj.x, curScenario.targetObj.y, curScenario.targetObj.z);
+                    Dictionary<Vector3, GameObject> objDict = DetectManager.GetInstance.GetArrayObjects(curScenarioPos);
+                    Vector3 vec = Vector3Int.FloorToInt(curScenarioPos);
                     if (objDict[vec] == null)
                     {
                         LogError("[에러]json의 targetObj x, y, z에 해당하는 \n오브젝트가 없습니다.");
                         return;
                     }
                     cameraController.FocusOn(objDict[vec].transform, false);
+                }
+                else
+                {
+                    if (cameraController.isFocused)
+                    {
+                        cameraController.FocusOff();
+                    }
                 }
 
                 if (curScenario.message.Contains("[System]"))
@@ -173,6 +206,7 @@ public class ScenarioManager : Singleton<ScenarioManager> // 컴포넌트로 사
             catch (NullReferenceException e)
             {
                 LogError("[에러]json에 실제로 존재하는 함수명을 입력하세요.");
+                Debug.LogError(e);
                 return;
             }
         }
@@ -180,13 +214,6 @@ public class ScenarioManager : Singleton<ScenarioManager> // 컴포넌트로 사
         {
             NextScenario();
         }
-    }
-
-    private void FocusOff()
-    {
-        cameraController.FocusOff();
-
-        NextScenario();
     }
 
     private void MoveObject()
@@ -211,6 +238,7 @@ public class ScenarioManager : Singleton<ScenarioManager> // 컴포넌트로 사
 
     private void Update()
     {
+        if (GameManager.GetInstance.currentState != GameStates.InGame) return;
         if (scenarioTime > 0) scenarioTime -= Time.deltaTime;
         else
         {
@@ -241,7 +269,7 @@ public class ScenarioManager : Singleton<ScenarioManager> // 컴포넌트로 사
                     }
                     break;
                 case (ERequireType.MouseClick):
-                    if (Input.GetMouseButtonDown(0))
+                    if (Input.GetMouseButtonDown(0) && !isUI)
                     {
                         StartScenario();
                     }
