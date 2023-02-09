@@ -302,14 +302,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caa7135eb62f09d429e732e7e34a4a35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audiomixer: {fileID: 24100000, guid: 04307301639f31d498c473f487464529, type: 2}
+  audioMixer: {fileID: 24100000, guid: 04307301639f31d498c473f487464529, type: 2}
   bgmSound: {fileID: 448975938}
   sfxSound: {fileID: 1161400631}
-  bgmSlider: {fileID: 0}
-  sfxSlider: {fileID: 0}
+  sliders:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   effectClips:
   - {fileID: 8300000, guid: fc014a50987fa46e093e12658b52ab98, type: 3}
   - {fileID: 8300000, guid: ed00552589f014a9287ec81b83b91e62, type: 3}
   - {fileID: 8300000, guid: 2315c56a2fafb405b9bb63f1c08c7f32, type: 3}
   - {fileID: 8300000, guid: 68751f4c568fe4551a2303fa45f8cf55, type: 3}
   bgmClips: []
+  isMuted: 0
