@@ -397,6 +397,7 @@ public class InteractiveObject : MonoBehaviour
         if (this.gameObject.CompareTag("InteractObj"))
         {
             PopUpNameOff();
+            CardManager.GetInstance.ableAddCard = true;
         }
     }
 
