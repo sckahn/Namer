@@ -33,7 +33,14 @@ public class ObtainableAdj : IAdjective
 
     public void Execute(InteractiveObject thisObject, GameObject player)
     {
-        //Debug.Log("Obtainable : this Object -> Player");
+        if (thisObject.GetObjectName() != EName.Null)
+        {
+            ObtainNameCard(thisObject, thisObject.GetObjectName());
+        }
+        else
+        {
+            ObtainAdjectiveCard(thisObject, thisObject.Adjectives);
+        }
     }
     
     public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
@@ -46,8 +53,32 @@ public class ObtainableAdj : IAdjective
         
     }
     
+    // Method of Adjective
     public IAdjective DeepCopy()
     {
         return new ObtainableAdj();
+    }
+    
+    private void ObtainNameCard(InteractiveObject thisObject, EName nameType)
+    {
+        GameObject cardPrefab = Resources.Load("Prefabs/Cards/01. NameCard/" + GameDataManager.GetInstance.Names[nameType].cardPrefabName) as GameObject;
+        CardManager.GetInstance.AddCard(cardPrefab);
+        
+        GameObject.Destroy(thisObject.gameObject, 0.5f);
+    }
+    
+    private void ObtainAdjectiveCard(InteractiveObject thisObject, IAdjective[] adjectives)
+    {
+        foreach (IAdjective adjective in adjectives)
+        {
+            if (adjective != null && adjective.GetAdjectiveName() != EAdjective.Obtainable)
+            {
+                GameObject cardPrefab = Resources.Load("Prefabs/Cards/02. AdjustCard/" + GameDataManager.GetInstance.Adjectives[adjective.GetAdjectiveName()].cardPrefabName) as GameObject;
+                CardManager.GetInstance.AddCard(cardPrefab);
+                break;
+            }
+        }
+        
+        GameObject.Destroy(thisObject.gameObject, 0.5f);
     }
 }
