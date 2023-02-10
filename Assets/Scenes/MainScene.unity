@@ -5188,6 +5188,7 @@ MonoBehaviour:
   isPlayerCanInput: 0
   cameraController: {fileID: 0}
   canSwitchCam: 0
+  scenarioController: {fileID: 0}
   restartKey: 114
   interactionKey: 32
   showNameKey: 9
@@ -8420,6 +8421,8 @@ MonoBehaviour:
   isPickCard: 0
   ableCardCtr: 1
   isEncyclopedia: 0
+  pickCard: {fileID: 0}
+  ableAddCard: 1
 --- !u!64 &1651018103
 MeshCollider:
   m_ObjectHideFlags: 0

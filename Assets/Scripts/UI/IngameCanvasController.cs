@@ -10,6 +10,7 @@ public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPoin
     [SerializeField] GameObject pediaBtn;
     [SerializeField] GameObject optionBtn;
     [SerializeField] GameObject gameOptionPanel;
+    [SerializeField] GameObject topPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +35,7 @@ public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPoin
         GameManager.GetInstance.isPlayerCanInput = false;
         encyclopedia.SetActive(true);
         buttons.SetActive(false);
+        topPanel.SetActive(false);
         CardManager.GetInstance.CardsHide();
     }
 
@@ -43,6 +45,7 @@ public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPoin
         encyclopedia.SetActive(false);
         buttons.SetActive(true);
         CardManager.GetInstance.CardsReveal();
+        topPanel.SetActive(true);
         GameManager.GetInstance.ChangeGameState(GameStates.InGame);
     }
 
@@ -69,7 +72,7 @@ public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPoin
     public void OnPointerEnter(PointerEventData eventData)
     {
         GameManager.GetInstance.scenarioController.isUI = true;
-    }
+    } 
 
     public void OnPointerExit(PointerEventData eventData)
     {
