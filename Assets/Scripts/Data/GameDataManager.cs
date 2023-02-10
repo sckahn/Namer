@@ -251,15 +251,15 @@ public class GameDataManager : Singleton<GameDataManager>
     // Create Card Prefabs
     public GameObject[] GetIngameCardEncyclopedia(int level)
     {
-        return GetCardPrefabs(CardEncyclopedia[level]);
+        return GetCardPrefabs(CardEncyclopedia[level], true);
     }
 
     public GameObject[] GetMainCardEncyclopedia(string userID)
     {
-        return GetCardPrefabs(UserDataDic[userID].cardView);
+        return GetCardPrefabs(UserDataDic[userID].cardView, true);
     }
     
-    public GameObject[] GetCardPrefabs(SCardView cardView)
+    public GameObject[] GetCardPrefabs(SCardView cardView, bool isEncyclopedia)
     {
         if (cardView.nameRead.Count == 0 && cardView.adjectiveRead.Count == 0)
         {
@@ -280,15 +280,26 @@ public class GameDataManager : Singleton<GameDataManager>
             
             GameObject cardPrefab = Resources.Load("Prefabs/Cards/01. NameCard/" + names[nameReads[i]].cardPrefabName) as GameObject;
             cards.Add(cardPrefab);
+
+            if (isEncyclopedia && Names[nameReads[i]].adjectives != null)
+            {
+                adjectiveReads.AddRange(Names[nameReads[i]].adjectives);
+            }
         }
 
+        if (isEncyclopedia)
+        {
+            adjectiveReads = adjectiveReads.Distinct().ToList();
+            adjectiveReads = adjectiveReads.OrderBy(item => Adjectives[item].priority).ToList();
+        }
+        
         for (int i = 0; i < adjectiveReads.Count; i++)
         {
             if ((int)adjectiveReads[i] > adjectives.Count - 1)
             {
                 Debug.LogError("입력할 수 있는 꾸밈 성질 카드 번호를 벗어났어요!");
             }
-            
+
             GameObject cardPrefab = Resources.Load("Prefabs/Cards/02. AdjustCard/" + adjectives[adjectiveReads[i]].cardPrefabName) as GameObject;
             cards.Add(cardPrefab);
         }
