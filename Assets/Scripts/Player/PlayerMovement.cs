@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject interactobj;
     public float moveSpeed = 3;
     public int rotateSpeed = 10;
-    public Vector3 InputVector;
+    public Vector3 inputVector;
     private Dir targetDir;
     
     [SerializeField] [Range(0.1f, 5f)] private float rootmotionSpeed;
@@ -52,25 +53,23 @@ public class PlayerMovement : MonoBehaviour
     
     public void MoveKeyInput()
     {
-        InputVector = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        inputVector = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
     }
 
     private void PlayInteraction()
     {
         if (Input.GetKeyDown(GameManager.GetInstance.interactionKey))
         {
-            if (interactobj)
+            if (interactobj && interactobj.CompareTag("InteractObj"))
             {
                 targetDir = DetectManager.GetInstance.objDir;
-                
-                if (interactobj.CompareTag("InteractObj"))
+                InteractionSequencer.GetInstance.playerActionTargetObject = interactobj.GetComponent<InteractiveObject>();
+
+                foreach (var e in InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives)
                 {
-                    foreach (var adjective in interactobj.GetComponent<InteractiveObject>().Adjectives)
+                    if (e != null)
                     {
-                        if (adjective != null)
-                        {
-                            adjective.Execute(interactobj.GetComponent<InteractiveObject>(), this.gameObject);
-                        }
+                        e.Execute(InteractionSequencer.GetInstance.playerActionTargetObject, this.gameObject);
                     }
                 }
             }
@@ -82,13 +81,13 @@ public class PlayerMovement : MonoBehaviour
         DetectManager.GetInstance.CheckCharacterCurrentTile(this.gameObject);
         DetectManager.GetInstance.CheckForwardObj(this.gameObject);
         interactobj = DetectManager.GetInstance.forwardObjectInfo;
-        
+
         // 인터렉션 중에는 이동 또는 다른 인터렉션 불가
         // 플레이어 인풋이 막힌 경우 동작하지 않도록 변경
-        if (GameManager.GetInstance.isPlayerCanInput && !GameManager.GetInstance.isPlayerDoInteraction)
+        if (GameManager.GetInstance.isPlayerCanInput && !GameManager.GetInstance.isPlayerDoAction)
         {
             // 이동 함수 + 인터렉션
-            PlayerMove(InputVector);
+            PlayerMove(inputVector);
             PlayInteraction();
         }
     }

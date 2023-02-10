@@ -25,8 +25,7 @@ public class GameManager : Singleton<GameManager>
     #endregion
 
     #region Player variable
-    [Header("Player Variable")]
-    public bool isPlayerDoInteraction;
+    public bool isPlayerDoAction; // Action = PlayerInteraction + Addcard
     public bool isPlayerCanInput;
     #endregion
 
@@ -64,7 +63,7 @@ public class GameManager : Singleton<GameManager>
         DontDestroyOnLoad(this.gameObject);
         Init();
     }
-
+    
     private void Init()
     {
         #region StateMachine Runner
@@ -77,7 +76,7 @@ public class GameManager : Singleton<GameManager>
         #endregion
         
         #region Player variable
-        isPlayerDoInteraction = false;
+        isPlayerDoAction = false;
         isPlayerCanInput = true;
         #endregion
 

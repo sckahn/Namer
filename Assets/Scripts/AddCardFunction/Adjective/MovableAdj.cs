@@ -41,7 +41,7 @@ public class MovableAdj : IAdjective
     public void Execute(InteractiveObject thisObject, GameObject player)
     {
         if (isRoll) return;
-
+        
         // CheckSurrounding check = GameManager.GetInstance.GetCheckSurrounding;
         DetectManager detectManager = DetectManager.GetInstance;
         int maxX = detectManager.GetMaxX;
