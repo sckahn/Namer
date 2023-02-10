@@ -88,7 +88,8 @@ public class FloatAdj : IAdjective
                 localPosition = new Vector3(obj.transform.GetChild(0).localPosition.x, currentPos.y + Mathf.Sin(currentTime) * length, obj.transform.GetChild(0).localPosition.z);
             yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd();
         }
-        Abandon(obj.GetComponent<InteractiveObject>());
+        if(obj != null)
+            Abandon(obj.GetComponent<InteractiveObject>());
     }
 
     void GravityOn(GameObject gameObject)
