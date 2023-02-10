@@ -664,6 +664,14 @@ PrefabInstance:
       propertyPath: maxZoomIn
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4426741327379167428, guid: cf04884e10e114691a8e254f0ff75f96, type: 3}
+      propertyPath: maxZoomOut
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4426741327379167428, guid: cf04884e10e114691a8e254f0ff75f96, type: 3}
+      propertyPath: scrollSpeed
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4426741327379167430, guid: cf04884e10e114691a8e254f0ff75f96, type: 3}
       propertyPath: m_Name
       value: Cameras

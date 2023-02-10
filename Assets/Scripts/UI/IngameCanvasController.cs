@@ -54,6 +54,15 @@ public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPoin
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        foreach (GameObject obj in eventData.hovered)
+        {
+            if (obj.name == "Dialog")
+            {
+                OnPointerExit(eventData);
+                return;
+            }
+        }
+
         GameManager.GetInstance.scenarioController.isUI = true;
     }
 
