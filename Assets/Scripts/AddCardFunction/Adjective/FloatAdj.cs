@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FloatAdj : IAdjective
@@ -75,6 +76,9 @@ public class FloatAdj : IAdjective
         }
 
         DetectManager.GetInstance.SwapBlockInMap(startPos,startPos + Vector3.up);
+        //---------수정한부분
+        DetectManager.GetInstance.StartDetector();
+        //------------
         //Debug.Log(obj.transform.position);
 
         yield return new WaitForSeconds(0.2f);
