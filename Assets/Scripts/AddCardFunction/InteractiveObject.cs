@@ -60,7 +60,7 @@ public class InteractiveObject : MonoBehaviour
         objectName = objectInfo.nameType;
         addNameText = gameData.Names[objectName].uiText;
         
-        SetAdjectiveFromData(gameData.Names[objectName].adjectives);
+        SetAdjectiveFromData(gameData.Names[objectName].adjectives, false);
         SetAdjectiveFromData(objectInfo.adjectives);
 
         // Test
@@ -68,7 +68,7 @@ public class InteractiveObject : MonoBehaviour
         //
     }
 
-    private void SetAdjectiveFromData(EAdjective[] addedAdjectives)
+    private void SetAdjectiveFromData(EAdjective[] addedAdjectives, bool isAdjective = true)
     {
         if (addedAdjectives == null || addedAdjectives.Length <= 0)
         {
@@ -78,7 +78,7 @@ public class InteractiveObject : MonoBehaviour
         for (int i = 0; i < addedAdjectives.Length; i++)
         {
             int adjIndex = (int)addedAdjectives[i];
-            if (countAdj[adjIndex] >= maxAdjCount)
+            if (isAdjective && countAdj[adjIndex] - countNameAdj[adjIndex] >= maxAdjCount)
             {
                 Debug.LogError("같은 꾸밈 성질은 2개만 부여할 수 있어요");
             }
@@ -86,6 +86,11 @@ public class InteractiveObject : MonoBehaviour
             adjectives[adjIndex] = gameData.Adjectives[addedAdjectives[i]].adjective.DeepCopy();
             adjectives[adjIndex].SetCount(1);
             ++countAdj[adjIndex];
+
+            if (!isAdjective)
+            {
+                ++countNameAdj[adjIndex];
+            }
         }
     }
 
@@ -295,7 +300,7 @@ public class InteractiveObject : MonoBehaviour
         // Test
         --initCountAdj[adjIndex];
         //
-        if (countAdj[adjIndex] == 0)
+        if (countAdj[adjIndex] <= 0)
         {
             adjectives[adjIndex] = null;
         }
@@ -330,7 +335,7 @@ public class InteractiveObject : MonoBehaviour
 
         return false;
     }
-
+    
     public bool CheckCountAdjective(EAdjective checkAdjective)
     {
         if (countAdj[(int)checkAdjective] >= 2)
@@ -397,6 +402,7 @@ public class InteractiveObject : MonoBehaviour
         if (this.gameObject.CompareTag("InteractObj"))
         {
             PopUpNameOff();
+            CardManager.GetInstance.ableAddCard = true;
         }
     }
 

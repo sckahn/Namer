@@ -63,7 +63,7 @@ public class CardManager : Singleton<CardManager>
         {
             GameDataManager gameData = GameDataManager.GetInstance;
             int level = GameManager.GetInstance.Level;
-            GameObject[] cards = gameData.GetCardPrefabs(gameData.LevelDataDic[level].cardView);
+            GameObject[] cards = gameData.GetCardPrefabs(gameData.LevelDataDic[level].cardView, false);
             
             for (int i = 0; i < cards.Length; i++)
             {
@@ -85,7 +85,7 @@ public class CardManager : Singleton<CardManager>
 
     //카드를 생성하는 메서드 
     [ContextMenu("AddCard")]
-    void AddCard(GameObject cardPrefab)
+    public void AddCard(GameObject cardPrefab)
     {
         var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position, Quaternion.identity);
         var card = cardObject.GetComponent<CardController>();
@@ -190,8 +190,24 @@ public class CardManager : Singleton<CardManager>
         return results;
     }
 
-}
+    public void CardsHide()
+    {
+        for (int i = 0; i< myCards.Count; i++)
+        {
+            myCards[i].gameObject.SetActive(false);
+        }
+    }
 
+    public void CardsReveal()
+    {
+        for (int i = 0; i < myCards.Count; i++)
+        {
+            myCards[i].gameObject.SetActive(true);
+        }
+    }
+
+
+}
 public class PRS
 {
     public Vector3 pos;
