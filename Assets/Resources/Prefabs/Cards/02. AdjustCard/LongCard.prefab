@@ -81,7 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardType: 1
   nameType: 0
-  adjectiveType: 6
+  adjectiveType: 7
   frontCover: {fileID: 8780169716584442077}
   bc: {fileID: 3201817411243718055}
   highlight: {fileID: 7814245775451451617}
