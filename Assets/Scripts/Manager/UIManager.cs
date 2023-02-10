@@ -52,18 +52,28 @@ public class UIManager : Singleton<UIManager>
             GameManager.GetInstance.currentState != GameStates.Pause &&
             GameManager.GetInstance.currentState != GameStates.Lobby)
         {
-            pauseUIPanel.SetActive(true);
-            GameManager.GetInstance.ChangeGameState(GameStates.Pause);
-            GameManager.GetInstance.SetTimeScale(0);
+            UIOn();
         }
 
         else if (isPauseKeyPressed &&
                  GameManager.GetInstance.currentState == GameStates.Pause &&
                  GameManager.GetInstance.currentState != GameStates.Lobby)
         {
-            pauseUIPanel.SetActive(false);
-            GameManager.GetInstance.ReturnPreviousState();
-            GameManager.GetInstance.SetTimeScale(1);
+            UIOff();
         }
     }
+
+    public void UIOn()
+    {
+        pauseUIPanel.SetActive(true);
+        GameManager.GetInstance.ChangeGameState(GameStates.Pause);
+        GameManager.GetInstance.SetTimeScale(0);
+    }
+    public void UIOff()
+    {
+        pauseUIPanel.SetActive(false);
+        GameManager.GetInstance.ReturnPreviousState();
+        GameManager.GetInstance.SetTimeScale(1);
+    }
+
 }
