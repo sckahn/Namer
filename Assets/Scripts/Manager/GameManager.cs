@@ -119,6 +119,11 @@ public class GameManager : Singleton<GameManager>
         SetTimeScale(1);
     }
 
+    private void Start()
+    {
+        KeyAction += Reset;
+    }
+
     public void SetTimeScale(float timeScale)
     {
         curTimeScale = timeScale;
@@ -127,15 +132,15 @@ public class GameManager : Singleton<GameManager>
 
     #region ResetUIVariable
     private Coroutine loadingCoroutine;
+    private Coroutine subLoadingCoroutine;
     private float resetLoadValue = 0f;
-    [Range(0.1f,0.9f)]public float fillSpeed = 0.5f;
+    [Range(0.1f,0.9f)] float fillSpeed = 0.5f;
     #endregion
     
     private void Update()
     {
 
 
-        Reset();
         DetectInputkey();
 
         #region Exceptions
@@ -242,13 +247,15 @@ public class GameManager : Singleton<GameManager>
         if (Input.GetKeyDown(restartKey))
         {
             UIManager.GetInstance.ingameCanvas.GetComponent<IngameCanvasController>().TurnOnAndOffLoadingImg(true);
+            if(subLoadingCoroutine != null)
+                StopCoroutine(subLoadingCoroutine);
             loadingCoroutine = StartCoroutine(AddResetLoad());
         }
 
         if (Input.GetKeyUp(restartKey))
         {
             StopCoroutine(loadingCoroutine);
-            StartCoroutine(SubResetLoad());
+            subLoadingCoroutine = StartCoroutine(SubResetLoad());
         }
            
     }
