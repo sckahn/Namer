@@ -56,6 +56,7 @@ public class UIManager : Singleton<UIManager>
             GameManager.GetInstance.ChangeGameState(GameStates.Pause);
             GameManager.GetInstance.SetTimeScale(0);
             SoundManager.GetInstance.sfxSound.Pause();
+            SoundManager.GetInstance.FindToggle();
         }
 
         else if (isPauseKeyPressed &&
