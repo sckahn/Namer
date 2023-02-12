@@ -56,35 +56,8 @@ public class SoundManager : Singleton<SoundManager>
         audioMixer.SetFloat("SFX", Mathf.Log10(sliders[2].value) * 20);
     }
 
-    //public void SetSound()
-    //{
-    //    if (isMuted)
-    //    {
-    //        audioMixer.SetFloat("Master", 0);
-    //        isMuted = !isMuted;
-    //    }
-    //    else
-    //    {
-    //        audioMixer.SetFloat("Master", -80);
-    //        isMuted = !isMuted;
-    //    }
-    //}
-    [ContextMenu("Mute")]
     public void SetSound()
     {
-        //if (isMuted)
-        //{
-        //    audioMixer.SetFloat("Master", 0);
-        //    isMuted = !isMuted;
-        //}
-        //else 
-        //{
-        //    audioMixer.SetFloat("Master", -80);
-        //    isMuted = !isMuted;
-        //}
-        Debug.Log("mute");
-        Debug.Log(bgmSound.mute);
-        Debug.Log(sfxSound.mute);
         bgmSound.mute = !bgmSound.mute;
         sfxSound.mute = !sfxSound.mute;
     }
