@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Text;
 using UnityEditor;
+using UnityEngine.UI;
 
 public enum GameStates
 {
@@ -119,16 +121,27 @@ public class GameManager : Singleton<GameManager>
         SetTimeScale(1);
     }
 
+    private void Start()
+    {
+        KeyAction += Reset;
+    }
+
     public void SetTimeScale(float timeScale)
     {
         curTimeScale = timeScale;
         Time.timeScale = timeScale;
     }
 
+    #region ResetUIVariable
+    private Coroutine loadingCoroutine;
+    private Coroutine subLoadingCoroutine;
+    private float resetLoadValue = 0f;
+    [Range(0.1f,0.9f)] float fillSpeed = 0.5f;
+    #endregion
+    
     private void Update()
     {
-        if(Input.GetKeyDown(restartKey))
-            Reset();
+
 
         DetectInputkey();
 
@@ -232,8 +245,21 @@ public class GameManager : Singleton<GameManager>
     
     public void Reset()
     {
-        if (currentState != GameStates.InGame) return;
-            ResetCurrentLvl();
+        if(currentState != GameStates.InGame) return;
+        if (Input.GetKeyDown(restartKey))
+        {
+            UIManager.GetInstance.ingameCanvas.GetComponent<IngameCanvasController>().TurnOnAndOffLoadingImg(true);
+            if(subLoadingCoroutine != null)
+                StopCoroutine(subLoadingCoroutine);
+            loadingCoroutine = StartCoroutine(AddResetLoad());
+        }
+
+        if (Input.GetKeyUp(restartKey))
+        {
+            StopCoroutine(loadingCoroutine);
+            subLoadingCoroutine = StartCoroutine(SubResetLoad());
+        }
+           
     }
 
     public void LoadScene(Scenes scenes, LoadSceneMode loadSceneMode)
@@ -359,14 +385,14 @@ public class GameManager : Singleton<GameManager>
     //load scene with loading card -> get level data from level card
 
     //TODO Change PlayerPrefabs to Resources or set it to inspector
-    void LoadPlayerPrefabs()
-    {
-        string prefabFilePath = "Assets/Prefabs/Characters/Player/Player.prefab";
-        //Assets/Prefabs/Characters/Player/Player.prefab
-        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabFilePath);
-         player = Instantiate(prefab);
-        player.name = "Player";
-    }
+    // void LoadPlayerPrefabs()
+    // {
+    //     string prefabFilePath = "Assets/Prefabs/Characters/Player/Player.prefab";
+    //     //Assets/Prefabs/Characters/Player/Player.prefab
+    //     GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabFilePath);
+    //      player = Instantiate(prefab);
+    //     player.name = "Player";
+    // }
 
     #region SceneTester
 
@@ -392,7 +418,38 @@ public class GameManager : Singleton<GameManager>
 
 
 
+    IEnumerator AddResetLoad()
+    {
+        while (resetLoadValue < 1f)
+        {
+            resetLoadValue += Time.deltaTime * fillSpeed;
+            UIManager.GetInstance.ingameCanvas.GetComponent<IngameCanvasController>().SetLoadingImage(resetLoadValue);
+            yield return null;
+        }
 
+        if (resetLoadValue > 1f)
+        {
+            UIManager.GetInstance.ingameCanvas.GetComponent<IngameCanvasController>().TurnOnAndOffLoadingImg(false);
+        }
+        ResetCurrentLvl();
+        
+    }
+
+    IEnumerator SubResetLoad()
+    {
+        while (resetLoadValue > 0f)
+        {
+            resetLoadValue -= Time.deltaTime;
+            UIManager.GetInstance.ingameCanvas.GetComponent<IngameCanvasController>().SetLoadingImage(resetLoadValue);
+            if (resetLoadValue <= 0f)
+            {
+                UIManager.GetInstance.ingameCanvas.GetComponent<IngameCanvasController>().TurnOnAndOffLoadingImg(false);
+            }
+            yield return null;
+        }
+    }
+    
+    
 
     #endregion
 }

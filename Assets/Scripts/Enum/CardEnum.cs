@@ -29,6 +29,7 @@ public enum EAdjective
 {
     Null,
     Win,
+    Obtainable,
     Flammable,
     Flame, 
     Movable, 
@@ -37,6 +38,5 @@ public enum EAdjective
     Float,
     Bouncy,
     Light,
-    Obtainable,
 }
 
