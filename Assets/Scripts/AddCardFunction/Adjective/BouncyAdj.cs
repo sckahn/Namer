@@ -78,10 +78,15 @@ public class BouncyAdj : MonoBehaviour, IAdjective
     }
 
     // 해당 방향에 (몇 간격까지) 블럭이 존재하는지 체크하는 메서드 
-    bool CheckExistBlock(GameObject thisObj, Dir dir, int length = 1)
+    bool CheckExistBlock(GameObject thisObj, Dir dir, int length = 0)
     {
-        // detectManager의 메서드를 이용해서 해당 방향에 존재하는 타일, 오브젝트를 검출 
-        var checkedObj = DetectManager.GetInstance.GetAdjacentObjectWithDir(thisObj, dir, length);
+        // detectManager의 메서드를 이용해서 해당 방향에 존재하는 타일, 오브젝트를 검출
+        // 일단 y축으로만 검사 가능하도록 만들어 놓았음
+        GameObject checkedObj;
+        if (dir == Dir.up)
+            checkedObj = DetectManager.GetInstance.GetAdjacentObjectWithDir(thisObj, dir, (int)thisObj.transform.lossyScale.y + length);
+        else
+            checkedObj = DetectManager.GetInstance.GetAdjacentObjectWithDir(thisObj, dir, 1);
 
         // null이 아니면, true
         // null이면, false
@@ -159,7 +164,7 @@ public class BouncyAdj : MonoBehaviour, IAdjective
         {
             // 위에 오브젝트가 있는지 체크
             // 위가 안 막혀있다면...
-            if (CheckExistPlayer(obj, Dir.up) ? !CheckExistBlock(obj, Dir.up, 2) : !CheckExistBlock(obj, Dir.up))
+            if (CheckExistPlayer(obj, Dir.up) ? !CheckExistBlock(obj, Dir.up, 1) : !CheckExistBlock(obj, Dir.up))
             {
                 // 위로(bouncyDir = 1) 이동하기 
                 bouncyDir = 1;
@@ -274,7 +279,5 @@ public class BouncyAdj : MonoBehaviour, IAdjective
             }
             yield return new WaitForEndOfFrame();
         }
-
-        Debug.Log($"{prePos} and {thisObject.transform.position}");
     }
 }
