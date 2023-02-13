@@ -31,6 +31,7 @@ public class FlowAdj : IAdjective
     public void Execute(InteractiveObject thisObject)
     {
         //Debug.Log("this is Null");
+        thisObject.gameObject.layer = 4;
     }
 
     public void Execute(InteractiveObject thisObject, GameObject player)
@@ -45,11 +46,11 @@ public class FlowAdj : IAdjective
     
     public void Abandon(InteractiveObject thisObject)
     {
-        
+        thisObject.gameObject.layer = 0;
     }
     
     public IAdjective DeepCopy()
     {
-        return new NullAdj();
+        return new FlowAdj();
     }
 }
