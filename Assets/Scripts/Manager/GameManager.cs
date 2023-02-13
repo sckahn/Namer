@@ -52,6 +52,7 @@ public class GameManager : Singleton<GameManager>
     public KeyCode showNameKey;
     public KeyCode pauseKey;
     public KeyCode cameraKey;
+    public KeyCode cardToggleKey;
     #endregion
 
     [Header("Manager Prefabs")]
@@ -111,6 +112,7 @@ public class GameManager : Singleton<GameManager>
         showNameKey = KeyCode.Tab;
         pauseKey = KeyCode.Escape;
         cameraKey = KeyCode.Q;
+        cardToggleKey = KeyCode.E;
         KeyAction = null;
         #endregion
 

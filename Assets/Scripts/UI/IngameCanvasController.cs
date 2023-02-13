@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPoin
     [SerializeField] GameObject gameOptionPanel;
     [SerializeField] GameObject topPanel;
 
+    bool isCardVisible = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +28,24 @@ public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPoin
     // Update is called once per frame
     void Update()
     {
-        
+        CardsToggle();
+    }
+
+    private void CardsToggle()
+    {
+        if (Input.GetKeyDown(GameManager.GetInstance.cardToggleKey) && CardManager.GetInstance.isCardDealingDone)
+        {
+            if (isCardVisible)
+            {
+                CardManager.GetInstance.CardsDown();
+                isCardVisible = false;
+            }
+            else
+            {
+                CardManager.GetInstance.CardsUp();
+                isCardVisible = true;
+            }
+        }
     }
 
     public void EncyclopediaOpen()

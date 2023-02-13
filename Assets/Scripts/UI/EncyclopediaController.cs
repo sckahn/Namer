@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -77,7 +74,6 @@ public class EncyclopediaController : MonoBehaviour
         float wheelInput = Input.GetAxis("Mouse ScrollWheel");
         if (wheelInput > 0)
         {
-            // 휠을 밀어 돌렸을 때의 처리 ↑
             layoutGroup.transform.localPosition -= new Vector3(0, wheelSpeed, 0);
             scrollbar.value = layoutGroup.transform.localPosition.y / maxHeight;
             if (layoutGroup.transform.localPosition.y <= 0f)
@@ -87,7 +83,6 @@ public class EncyclopediaController : MonoBehaviour
         }
         else if (wheelInput < 0)
         {
-            // 휠을 당겨 올렸을 때의 처리 ↓
             layoutGroup.transform.localPosition += new Vector3(0, wheelSpeed, 0);
             scrollbar.value = layoutGroup.transform.localPosition.y / maxHeight;
             if (layoutGroup.transform.localPosition.y >= maxHeight)
