@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 public class SoundManager : Singleton<SoundManager>
 {
-    public AudioMixer audioMixer; 
+    public AudioMixer audioMixer;
     public AudioSource bgmSound;
     public AudioSource sfxSound;
 
     public Slider[] sliders;
+    Toggle muteToggle;
     //public Slider sfxSlider;
     
     public List<AudioClip> effectClips = new List<AudioClip> ();
@@ -57,20 +58,20 @@ public class SoundManager : Singleton<SoundManager>
 
     public void SetSound()
     {
-        if (isMuted)
-        {
-            audioMixer.SetFloat("Master", 0);
-            isMuted = !isMuted;
-        }
-        else 
-        {
-            audioMixer.SetFloat("Master", -80);
-            isMuted = !isMuted;
-        }
+        bgmSound.mute = !bgmSound.mute;
+        sfxSound.mute = !sfxSound.mute;
     }
 
     void FindSlider()
     {
         sliders = GameObject.Find("IngameCanvas").transform.GetComponentsInChildren<Slider>();
+    }
+
+    public void FindToggle()
+    {
+        muteToggle = GameObject.Find("IngameCanvas").transform.GetComponentInChildren<Toggle>(true);
+        muteToggle.onValueChanged.AddListener(delegate {
+            SetSound();
+            });
     }
 }

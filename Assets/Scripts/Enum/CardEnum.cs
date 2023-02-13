@@ -30,6 +30,7 @@ public enum EAdjective
     Null,
     Win,
     Obtainable,
+    Extinguisher,
     Flammable,
     Flame, 
     Movable, 
@@ -37,6 +38,9 @@ public enum EAdjective
     Long,
     Float,
     Bouncy,
+    Fragile,
     Light,
+    Flow,
+    Freeze,
 }
 
