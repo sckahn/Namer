@@ -383,14 +383,14 @@ public class GameManager : Singleton<GameManager>
     //load scene with loading card -> get level data from level card
 
     //TODO Change PlayerPrefabs to Resources or set it to inspector
-    void LoadPlayerPrefabs()
-    {
-        string prefabFilePath = "Assets/Prefabs/Characters/Player/Player.prefab";
-        //Assets/Prefabs/Characters/Player/Player.prefab
-        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabFilePath);
-         player = Instantiate(prefab);
-        player.name = "Player";
-    }
+    // void LoadPlayerPrefabs()
+    // {
+    //     string prefabFilePath = "Assets/Prefabs/Characters/Player/Player.prefab";
+    //     //Assets/Prefabs/Characters/Player/Player.prefab
+    //     GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabFilePath);
+    //      player = Instantiate(prefab);
+    //     player.name = "Player";
+    // }
 
     #region SceneTester
 
