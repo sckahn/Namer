@@ -60,7 +60,7 @@ public class InteractiveObject : MonoBehaviour
         objectName = objectInfo.nameType;
         addNameText = gameData.Names[objectName].uiText;
         
-        SetAdjectiveFromData(gameData.Names[objectName].adjectives);
+        SetAdjectiveFromData(gameData.Names[objectName].adjectives, false);
         SetAdjectiveFromData(objectInfo.adjectives);
 
         // Test
@@ -68,7 +68,7 @@ public class InteractiveObject : MonoBehaviour
         //
     }
 
-    private void SetAdjectiveFromData(EAdjective[] addedAdjectives)
+    private void SetAdjectiveFromData(EAdjective[] addedAdjectives, bool isAdjective = true)
     {
         if (addedAdjectives == null || addedAdjectives.Length <= 0)
         {
@@ -78,7 +78,7 @@ public class InteractiveObject : MonoBehaviour
         for (int i = 0; i < addedAdjectives.Length; i++)
         {
             int adjIndex = (int)addedAdjectives[i];
-            if (countAdj[adjIndex] >= maxAdjCount)
+            if (isAdjective && countAdj[adjIndex] - countNameAdj[adjIndex] >= maxAdjCount)
             {
                 Debug.LogError("같은 꾸밈 성질은 2개만 부여할 수 있어요");
             }
@@ -86,6 +86,11 @@ public class InteractiveObject : MonoBehaviour
             adjectives[adjIndex] = gameData.Adjectives[addedAdjectives[i]].adjective.DeepCopy();
             adjectives[adjIndex].SetCount(1);
             ++countAdj[adjIndex];
+
+            if (!isAdjective)
+            {
+                ++countNameAdj[adjIndex];
+            }
         }
     }
 
@@ -295,7 +300,7 @@ public class InteractiveObject : MonoBehaviour
         // Test
         --initCountAdj[adjIndex];
         //
-        if (countAdj[adjIndex] == 0)
+        if (countAdj[adjIndex] <= 0)
         {
             adjectives[adjIndex] = null;
         }
@@ -330,7 +335,7 @@ public class InteractiveObject : MonoBehaviour
 
         return false;
     }
-
+    
     public bool CheckCountAdjective(EAdjective checkAdjective)
     {
         if (countAdj[(int)checkAdjective] >= 2)
@@ -368,7 +373,7 @@ public class InteractiveObject : MonoBehaviour
     bool isHoverling = false;
     private void OnMouseOver()
     {
-        if (GameManager.GetInstance.currentState == GameStates.Pause) return;
+        if (GameManager.GetInstance.CurrentState == GameStates.Pause) return;
         isHoverling = true;
         if (this.gameObject.CompareTag("InteractObj") && CardManager.GetInstance.isPickCard)
         {
@@ -390,7 +395,7 @@ public class InteractiveObject : MonoBehaviour
     //오브젝트의 이름을 화면에서 가림 
     private void OnMouseExit()
     {
-        if (GameManager.GetInstance.currentState == GameStates.Pause) return;
+        if (GameManager.GetInstance.CurrentState == GameStates.Pause) return;
         isHoverling = false;
         CardManager.GetInstance.target = null;
         popUpName.SetActive(false);
@@ -404,7 +409,7 @@ public class InteractiveObject : MonoBehaviour
     //오브젝트 현재 이름 팝업을 띄움 
     void PopUpNameOn()
     {
-        if (GameManager.GetInstance.currentState == GameStates.Encyclopedia)
+        if (GameManager.GetInstance.CurrentState == GameStates.Encyclopedia)
             return;
         popUpName.SetActive(true);
     }

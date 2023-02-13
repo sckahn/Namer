@@ -1,29 +1,36 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
     #region components
     private Rigidbody rb;
-    private Animator myanimator;
     public PlayerEntity playerEntity;
     #endregion
 
     public GameObject interactobj;
-    public float moveSpeed = 3;
-    public int rotateSpeed = 10;
-    public Vector3 InputVector;
+    public float moveSpeed;
+    public int rotateSpeed;
+    public Vector3 inputVector;
     private Dir targetDir;
-    
+
     [SerializeField] [Range(0.1f, 5f)] private float rootmotionSpeed;
+    [SerializeField] [Range(0.5f, 5f)] private float interactionDelay;
     // TODO KeyMapping ?
 
     private void Start()
     {
-        myanimator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         playerEntity = GetComponent<PlayerEntity>();
         GameManager.GetInstance.KeyAction += MoveKeyInput;
+
+        #region Init Variable
+        rootmotionSpeed = 1f;
+        interactionDelay = 2f;
+        moveSpeed = 3f;
+        rotateSpeed = 10;
+        #endregion
     }
 
     private void PlayerMove(Vector3 inputVec)
@@ -52,25 +59,24 @@ public class PlayerMovement : MonoBehaviour
     
     public void MoveKeyInput()
     {
-        InputVector = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        inputVector = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
     }
 
     private void PlayInteraction()
     {
         if (Input.GetKeyDown(GameManager.GetInstance.interactionKey))
         {
-            if (interactobj)
+            if (interactobj && interactobj.CompareTag("InteractObj"))
             {
                 targetDir = DetectManager.GetInstance.objDir;
-                
-                if (interactobj.CompareTag("InteractObj"))
+                InteractionSequencer.GetInstance.playerActionTargetObject = interactobj.GetComponent<InteractiveObject>();
+
+                foreach (var e in InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives)
                 {
-                    foreach (var adjective in interactobj.GetComponent<InteractiveObject>().Adjectives)
+                    if (e != null)
                     {
-                        if (adjective != null)
-                        {
-                            adjective.Execute(interactobj.GetComponent<InteractiveObject>(), this.gameObject);
-                        }
+                        GameManager.GetInstance.isPlayerDoAction = true;
+                        e.Execute(InteractionSequencer.GetInstance.playerActionTargetObject, this.gameObject);
                     }
                 }
             }
@@ -79,16 +85,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        
+        
         DetectManager.GetInstance.CheckCharacterCurrentTile(this.gameObject);
         DetectManager.GetInstance.CheckForwardObj(this.gameObject);
         interactobj = DetectManager.GetInstance.forwardObjectInfo;
-        
+
         // 인터렉션 중에는 이동 또는 다른 인터렉션 불가
         // 플레이어 인풋이 막힌 경우 동작하지 않도록 변경
-        if (GameManager.GetInstance.isPlayerCanInput && !GameManager.GetInstance.isPlayerDoInteraction)
+        if (GameManager.GetInstance.isPlayerCanInput && !GameManager.GetInstance.isPlayerDoAction)
         {
             // 이동 함수 + 인터렉션
-            PlayerMove(InputVector);
+            PlayerMove(inputVector);
             PlayInteraction();
         }
     }
@@ -182,10 +190,11 @@ public class PlayerMovement : MonoBehaviour
         {
             moveTime += Time.deltaTime * rootmotionSpeed; 
             transform.position = Vector3.Lerp(curPos, destinationPos, moveTime + 0.1f);
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
-        yield return null;
+        yield return new WaitForSeconds(interactionDelay);
+        GameManager.GetInstance.isPlayerDoAction = false;
     }
 
     #region AnimationEvent Function

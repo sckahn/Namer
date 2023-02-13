@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FloatAdj : IAdjective
@@ -71,10 +72,13 @@ public class FloatAdj : IAdjective
         {
             currentTime += Time.deltaTime;
             obj.transform.localPosition = Vector3.Lerp(startPos, startPos + Vector3.up, currentTime / movingSpeed);
-            yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd();
+            yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd(this);
         }
 
         DetectManager.GetInstance.SwapBlockInMap(startPos,startPos + Vector3.up);
+        //---------수정한부분
+        DetectManager.GetInstance.StartDetector();
+        //------------
         //Debug.Log(obj.transform.position);
 
         yield return new WaitForSeconds(0.2f);
@@ -86,9 +90,10 @@ public class FloatAdj : IAdjective
             currentTime += Time.deltaTime * speed;
             obj.transform.GetChild(0).
                 localPosition = new Vector3(obj.transform.GetChild(0).localPosition.x, currentPos.y + Mathf.Sin(currentTime) * length, obj.transform.GetChild(0).localPosition.z);
-            yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd();
+            yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd(this);
         }
-        Abandon(obj.GetComponent<InteractiveObject>());
+        if(obj != null)
+            Abandon(obj.GetComponent<InteractiveObject>());
     }
 
     void GravityOn(GameObject gameObject)
