@@ -15,7 +15,7 @@ public class MainMenuObject : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (GameManager.GetInstance.currentState == GameStates.Pause) return;
+        if (GameManager.GetInstance.CurrentState == GameStates.Pause) return;
         isHoverling = true;
         if (this.gameObject.CompareTag("InteractObj") && CardManager.GetInstance.isPickCard)
         {
@@ -31,7 +31,7 @@ public class MainMenuObject : MonoBehaviour
     //오브젝트의 이름을 화면에서 가림 
     private void OnMouseExit()
     {
-        if (GameManager.GetInstance.currentState == GameStates.Pause) return;
+        if (GameManager.GetInstance.CurrentState == GameStates.Pause) return;
         isHoverling = false;
         CardManager.GetInstance.target = null;
         popUpName.SetActive(false);

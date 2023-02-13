@@ -49,15 +49,15 @@ public class UIManager : Singleton<UIManager>
     void UIOnOff()
     {
         if (isPauseKeyPressed &&
-            GameManager.GetInstance.currentState != GameStates.Pause &&
-            GameManager.GetInstance.currentState != GameStates.Lobby)
+            GameManager.GetInstance.CurrentState != GameStates.Pause &&
+            GameManager.GetInstance.CurrentState != GameStates.Lobby)
         {
             UIOn();
         }
 
         else if (isPauseKeyPressed &&
-                 GameManager.GetInstance.currentState == GameStates.Pause &&
-                 GameManager.GetInstance.currentState != GameStates.Lobby)
+                 GameManager.GetInstance.CurrentState == GameStates.Pause &&
+                 GameManager.GetInstance.CurrentState != GameStates.Lobby)
         {
             UIOff();
         }
