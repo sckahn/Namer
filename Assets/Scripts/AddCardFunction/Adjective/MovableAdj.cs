@@ -41,7 +41,7 @@ public class MovableAdj : IAdjective
     public void Execute(InteractiveObject thisObject, GameObject player)
     {
         if (isRoll) return;
-
+        
         // CheckSurrounding check = GameManager.GetInstance.GetCheckSurrounding;
         DetectManager detectManager = DetectManager.GetInstance;
         int maxX = detectManager.GetMaxX;
@@ -59,8 +59,8 @@ public class MovableAdj : IAdjective
             }
             target = thisObject.transform.position + Vector3.right;
             detectManager.SwapBlockInMap(prevLocatio, target);
-            InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(MoveObj(thisObject.gameObject));
             player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Push);
+            InteractionSequencer.GetInstance.PlayerActionQueue.Enqueue(MoveObj(thisObject.gameObject));
 
             // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
         
@@ -77,8 +77,8 @@ public class MovableAdj : IAdjective
             target = thisObject.transform.position + Vector3.left;
             detectManager.SwapBlockInMap(prevLocatio, target);
             // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
-            InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(MoveObj(thisObject.gameObject));
             player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Push);
+            InteractionSequencer.GetInstance.PlayerActionQueue.Enqueue(MoveObj(thisObject.gameObject));
 
             return;
         }
@@ -92,8 +92,8 @@ public class MovableAdj : IAdjective
             target = thisObject.transform.position + Vector3.forward;
             detectManager.SwapBlockInMap(prevLocatio, target);
             // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
-            InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(MoveObj(thisObject.gameObject));
             player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Push);
+            InteractionSequencer.GetInstance.PlayerActionQueue.Enqueue(MoveObj(thisObject.gameObject));
 
             return;
         }
@@ -108,8 +108,8 @@ public class MovableAdj : IAdjective
             detectManager.SwapBlockInMap(prevLocatio, target);
         
             // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
-            InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(MoveObj(thisObject.gameObject));
             player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Push);
+            InteractionSequencer.GetInstance.PlayerActionQueue.Enqueue(MoveObj(thisObject.gameObject));
 
             return;
         }
@@ -167,6 +167,7 @@ public class MovableAdj : IAdjective
 
     IEnumerator MoveObj(GameObject obj)
     {
+        yield return new WaitForSeconds(0.3f);
         currentTime = 0;
         Vector3 startPos = obj.transform.localPosition;
         isRoll = true;

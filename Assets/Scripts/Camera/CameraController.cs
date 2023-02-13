@@ -94,7 +94,7 @@ public class CameraController : MonoBehaviour
 
     private void CheckCameraSwitch()
     {
-        if (Input.GetKeyDown(GameManager.GetInstance.cameraKey) && GameManager.GetInstance.currentState != GameStates.Encyclopedia)
+        if (Input.GetKeyDown(GameManager.GetInstance.cameraKey) && GameManager.GetInstance.CurrentState != GameStates.Encyclopedia)
         {
             isTopView = !isTopView;
             playerTopViewCam.Priority = (isTopView ? (int)PriorityOrder.FrontByNormal : (int)PriorityOrder.BehingByNormal);
@@ -103,7 +103,7 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.GetInstance.currentState != GameStates.InGame) return;
+        if (GameManager.GetInstance.CurrentState != GameStates.InGame) return;
         float scroll = Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
         if (scroll != 0)
         {

@@ -29,6 +29,7 @@ public class MainUIController : MonoBehaviour
     [SerializeField] GameObject mainMenucards;
     [SerializeField] GameObject titlePanel;
     [SerializeField] GameObject mainRose;
+    [SerializeField] GameObject optionPanel;
     GameObject levelInformationTxt;
 
     [SerializeField] float titleMovingTime = 1f;
@@ -228,5 +229,19 @@ public class MainUIController : MonoBehaviour
         pauseBtn.SetActive(true);
     }
 
+    public void OptionPanelOpen()
+    {
+        optionPanel.SetActive(true);
+        CardManager.GetInstance.ableCardCtr = false;
+    }
 
+    public void OptionPanelClose()
+    {
+        optionPanel.SetActive(false);
+        CardManager.GetInstance.ableCardCtr = true;
+        MainMeneCardController card =
+            GameObject.Find("MainMenuCards").transform.Find("OptionCard(Clone)").
+            GetComponent<MainMeneCardController>();
+        card.CardReturn();
+    }
 }

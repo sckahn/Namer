@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class WinAdj : IAdjective
@@ -34,7 +35,7 @@ public class WinAdj : IAdjective
     public void Execute(InteractiveObject thisObject, GameObject player)
     {
         player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Victory);
-        CallWin();
+        InteractionSequencer.GetInstance.SequentialQueue.Enqueue(CallWin());
         //Debug.Log("Win : this Object -> Player");
     }
     
@@ -53,9 +54,10 @@ public class WinAdj : IAdjective
         return new WinAdj();
     }
 
-    void CallWin()
+    IEnumerator CallWin()
     {
         GameManager.GetInstance.Win();
+        yield return null;
     }
 
     
