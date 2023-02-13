@@ -2497,7 +2497,7 @@ MonoBehaviour:
   mainMenucards: {fileID: 1216206864}
   titlePanel: {fileID: 2046814367}
   mainRose: {fileID: 129132252}
-  optionPanel: {fileID: 597477332}
+  optionPanel: {fileID: 0}
   titleMovingTime: 3
   cameraMovingTime: 3
   levelSelectMovingTime: 1
@@ -2790,11 +2790,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8080661086940691767, guid: 65ef400e7f24d4b5797ef372639a1895, type: 3}
   m_PrefabInstance: {fileID: 591779158}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &597477332 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6400162452588348612, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
-  m_PrefabInstance: {fileID: 1749551600}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &601629751
 PrefabInstance:
@@ -5165,6 +5160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1154774481}
   - component: {fileID: 1154774480}
+  - component: {fileID: 1154774482}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -5184,7 +5180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3a9cfcd83c3941bd8f6f64dd52b575d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayerDoInteraction: 0
+  isPlayerDoAction: 0
   isPlayerCanInput: 0
   cameraController: {fileID: 0}
   canSwitchCam: 0
@@ -5213,6 +5209,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1154774482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154774479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9205aa7cfce8843c5ab321dd5dd63bef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerActionTargetObject: {fileID: 0}
 --- !u!1001 &1164167185
 PrefabInstance:
   m_ObjectHideFlags: 0

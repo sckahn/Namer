@@ -238,7 +238,7 @@ public class ScenarioController : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.GetInstance.currentState != GameStates.InGame) return;
+        if (GameManager.GetInstance.CurrentState != GameStates.InGame) return;
         if (scenarioTime > 0) scenarioTime -= Time.deltaTime;
         else
         {

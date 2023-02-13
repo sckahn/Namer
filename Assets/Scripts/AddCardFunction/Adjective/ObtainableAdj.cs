@@ -36,10 +36,12 @@ public class ObtainableAdj : IAdjective
         if (thisObject.GetObjectName() != EName.Null)
         {
             ObtainNameCard(thisObject, thisObject.GetObjectName());
+            player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Obtain);
         }
         else
         {
             ObtainAdjectiveCard(thisObject, thisObject.Adjectives);
+            player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Obtain);
         }
     }
     

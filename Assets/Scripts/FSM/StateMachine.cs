@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class StateMachine<T> where T : class
 {
 	private	T			ownerEntity;	
@@ -20,8 +22,8 @@ public class StateMachine<T> where T : class
 		if ( globalState != null )
 		{
 			globalState.Execute(ownerEntity);
-		}
-
+		} ;
+		
 		if ( currentState != null )
 		{
 			currentState.Execute(ownerEntity);
@@ -38,7 +40,7 @@ public class StateMachine<T> where T : class
 		if ( currentState != null )
 		{
 			previousState = currentState;
-			currentState.Exit(ownerEntity);
+			currentState.Exit(ownerEntity);	
 		}
 
 		currentState = newState;
