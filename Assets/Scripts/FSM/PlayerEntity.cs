@@ -7,7 +7,6 @@ public class PlayerEntity : BaseGameEntity
 {	
 	private	Dictionary<PlayerStates, IState<PlayerEntity>> states;
 	private	StateMachine<PlayerEntity> stateMachine;
-
     #region components
     private Rigidbody rb;
     public Animator myAnimator;
@@ -19,6 +18,7 @@ public class PlayerEntity : BaseGameEntity
         myAnimator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         FindObjectOfType<StateMachineRunner>().entitys.Add(this);
+        GameManager.GetInstance.localPlayerEntity = this;
     }
 
     public override void Setup()

@@ -6,25 +6,31 @@ public class PlayerMovement : MonoBehaviour
 {
     #region components
     private Rigidbody rb;
-    private Animator myanimator;
     public PlayerEntity playerEntity;
     #endregion
 
     public GameObject interactobj;
-    public float moveSpeed = 3;
-    public int rotateSpeed = 10;
+    public float moveSpeed;
+    public int rotateSpeed;
     public Vector3 inputVector;
     private Dir targetDir;
-    
+
     [SerializeField] [Range(0.1f, 5f)] private float rootmotionSpeed;
+    [SerializeField] [Range(0.5f, 5f)] private float interactionDelay;
     // TODO KeyMapping ?
 
     private void Start()
     {
-        myanimator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         playerEntity = GetComponent<PlayerEntity>();
         GameManager.GetInstance.KeyAction += MoveKeyInput;
+
+        #region Init Variable
+        rootmotionSpeed = 1f;
+        interactionDelay = 2f;
+        moveSpeed = 3f;
+        rotateSpeed = 10;
+        #endregion
     }
 
     private void PlayerMove(Vector3 inputVec)
@@ -69,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     if (e != null)
                     {
+                        GameManager.GetInstance.isPlayerDoAction = true;
                         e.Execute(InteractionSequencer.GetInstance.playerActionTargetObject, this.gameObject);
                     }
                 }
@@ -78,6 +85,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        
+        
         DetectManager.GetInstance.CheckCharacterCurrentTile(this.gameObject);
         DetectManager.GetInstance.CheckForwardObj(this.gameObject);
         interactobj = DetectManager.GetInstance.forwardObjectInfo;
@@ -181,10 +190,11 @@ public class PlayerMovement : MonoBehaviour
         {
             moveTime += Time.deltaTime * rootmotionSpeed; 
             transform.position = Vector3.Lerp(curPos, destinationPos, moveTime + 0.1f);
-            yield return new WaitForEndOfFrame();
+            yield return null;
         }
 
-        yield return null;
+        yield return new WaitForSeconds(interactionDelay);
+        GameManager.GetInstance.isPlayerDoAction = false;
     }
 
     #region AnimationEvent Function

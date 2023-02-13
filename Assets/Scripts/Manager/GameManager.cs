@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Text;
 using UnityEditor;
+using UnityEngine.Serialization;
 
 public enum GameStates
 {
@@ -18,13 +19,12 @@ public enum GameStates
 public class GameManager : Singleton<GameManager>
 {
     #region GameStates
-    public GameStates currentState { get; private set; }
-
+    public GameStates CurrentState { get; private set; }
     private GameStates previousState;
-
     #endregion
 
     #region Player variable
+    public PlayerEntity localPlayerEntity;
     public bool isPlayerDoAction; // Action = PlayerInteraction + Addcard
     public bool isPlayerCanInput;
     #endregion
@@ -71,8 +71,8 @@ public class GameManager : Singleton<GameManager>
         #endregion
 
         #region GameStates
-        currentState = GameStates.Lobby;
-        previousState = currentState;
+        CurrentState = GameStates.Lobby;
+        previousState = CurrentState;
         #endregion
         
         #region Player variable
@@ -128,7 +128,6 @@ public class GameManager : Singleton<GameManager>
             Reset();
 
         DetectInputkey();
-
         #region Exceptions
         if ((int)(Time.timeScale * 10000) != (int)(curTimeScale * 10000))
         {
@@ -149,7 +148,7 @@ public class GameManager : Singleton<GameManager>
     
     private void UpdateGameState()
     {
-        switch (currentState)
+        switch (CurrentState)
         {
             case GameStates.Lobby: 
                 HandleLobby();
@@ -172,21 +171,21 @@ public class GameManager : Singleton<GameManager>
     }
     public void ChangeGameState(GameStates newState)
     {
-        if (currentState == newState)
+        if (CurrentState == newState)
         {
             UpdateGameState();
             Debug.Log("바꾸려는 State가 이전의 State와 같습니다. 의도하신 상황이 맞나요?");
             return;
         }
         
-        previousState = currentState;
-        currentState = newState;
+        previousState = CurrentState;
+        CurrentState = newState;
         UpdateGameState();
     }
 
     public void ReturnPreviousState()
     {
-        currentState = previousState;
+        CurrentState = previousState;
         UpdateGameState();
     }
 
@@ -229,7 +228,7 @@ public class GameManager : Singleton<GameManager>
     
     public void Reset()
     {
-        if (currentState != GameStates.InGame) return;
+        if (CurrentState != GameStates.InGame) return;
             ResetCurrentLvl();
     }
 
@@ -356,14 +355,14 @@ public class GameManager : Singleton<GameManager>
     //load scene with loading card -> get level data from level card
 
     //TODO Change PlayerPrefabs to Resources or set it to inspector
-    void LoadPlayerPrefabs()
-    {
-        string prefabFilePath = "Assets/Prefabs/Characters/Player/Player.prefab";
-        //Assets/Prefabs/Characters/Player/Player.prefab
-        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabFilePath);
-         player = Instantiate(prefab);
-        player.name = "Player";
-    }
+    // void LoadPlayerPrefabs()
+    // {
+    //     string prefabFilePath = "Assets/Prefabs/Characters/Player/Player.prefab";
+    //     //Assets/Prefabs/Characters/Player/Player.prefab
+    //     GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabFilePath);
+    //      player = Instantiate(prefab);
+    //     player.name = "Player";
+    // }
 
     #region SceneTester
 
