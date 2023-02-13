@@ -18,7 +18,7 @@ public class BouncyAdj : MonoBehaviour, IAdjective
     float bounciness = 4f;      // lerp 이동의 빠르기 
 
     int bouncyDir = 1;          // 위아래 bouncy 이동 방향 
-    float addValue = 0;         // 이동 정도 
+    float addValue = 0;         // 이동 정도
 
     private Transform player;   // 플레이어 transform 
     private float playerRadius; // 플레이어 capsule collider의 반지름 값 
@@ -28,13 +28,7 @@ public class BouncyAdj : MonoBehaviour, IAdjective
     // todo Test를 위함이 아니라면, 반드시 Start의 내용을 지워주세요 
     private void Start()
     {
-        var rb = gameObject.GetComponent<Rigidbody>();
-        rb.useGravity = false;
-        rb.isKinematic = true;
-        player = GameObject.Find("Player").transform;
-        playerRadius = player.lossyScale.x * player.GetComponent<CapsuleCollider>().radius;
-
-        StartCoroutine(BounceCoroutine(gameObject));
+        //StartCoroutine(BounceObj(gameObject));
     }
 
     public EAdjective GetAdjectiveName()
@@ -59,13 +53,8 @@ public class BouncyAdj : MonoBehaviour, IAdjective
 
     public void Execute(InteractiveObject thisObject)
     {
-        // 즉시 rigidBody을 kinematic 해서 중력 영향 없이 1칸 뛸 수 있도록 만듦
-        var rb = thisObject.gameObject.GetComponent<Rigidbody>();
-        rb.useGravity = false;
-        rb.isKinematic = true;
-
-        thisObject.StartCoroutine(BounceCoroutine(thisObject.gameObject));
-        // InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(BounceCoroutine(thisObject.gameObject));
+        //thisObject.StartCoroutine(BounceObj(thisObject.gameObject));
+        InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(BounceObj(thisObject.gameObject));
     }
 
     public void Execute(InteractiveObject thisObject, GameObject player)
@@ -80,7 +69,7 @@ public class BouncyAdj : MonoBehaviour, IAdjective
 
     public void Abandon(InteractiveObject thisObject)
     {
-        this.isBouncy = false;
+        InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(AbandonBouncy(thisObject));
     }
 
     public IAdjective DeepCopy()
@@ -177,7 +166,7 @@ public class BouncyAdj : MonoBehaviour, IAdjective
                 // 최대 위로 1칸까지 이동하기 때문에 다시 0으로 초기화 
                 addValue = 0;
                 // 먼저 배열을 이동시켜서 위로 이동 중에 다른 블럭이 이동해 배열에 두 오브젝트가 겹치는 현상 방지
-                DetectManager.GetInstance.SwapBlockInMap(obj.transform.position, obj.transform.position + Vector3.up);
+                DetectManager.GetInstance.SwapBlockInMap(Vector3Int.RoundToInt(obj.transform.position), Vector3Int.RoundToInt(obj.transform.position) + Vector3.up);
             }
             // 천장이 오브젝트로 막혀있다면...
             else
@@ -194,12 +183,20 @@ public class BouncyAdj : MonoBehaviour, IAdjective
             // 아래에 아무 것도 없으면, 무조건 아래로 떨어지게 됨 
             bouncyDir = -1;
             addValue = 0;
-            DetectManager.GetInstance.SwapBlockInMap(obj.transform.position, obj.transform.position + Vector3.down);
+            DetectManager.GetInstance.SwapBlockInMap(Vector3Int.RoundToInt(obj.transform.position), Vector3Int.RoundToInt(obj.transform.position) + Vector3.down);
         }
     }
 
-    private IEnumerator BounceCoroutine(GameObject obj)
+    private IEnumerator BounceObj(GameObject obj)
     {
+        // 즉시 rigidBody을 kinematic 해서 중력 영향 없이 1칸 뛸 수 있도록 만듦
+        var rb = obj.GetComponent<Rigidbody>();
+        rb.useGravity = false;
+        rb.isKinematic = true;
+
+        player = GameObject.Find("Player").transform;
+        playerRadius = player.lossyScale.x * player.GetComponent<CapsuleCollider>().radius;
+
         // 변수 초기화 
         addValue = 0;
         bouncyDir = 1;
@@ -211,6 +208,19 @@ public class BouncyAdj : MonoBehaviour, IAdjective
         // Abandon() 전까지는 계속 bounce를 하게 됨 
         while (isBouncy)
         {
+            // obj가 사라지는 경우 동작 정지 
+            if (obj == null)
+            {
+                isBouncy = false;
+                //DetectManager.GetInstance.ChangeValueInMap(Vector3Int.RoundToInt(obj.transform.position), null);
+                yield return null;
+            }
+            else if (!obj.GetComponent<InteractiveObject>().CheckAdjective(EAdjective.Bouncy))
+            {
+                isBouncy = false;
+                yield return null;
+            }
+
             // 위로 혹은 아래로 1칸만큼 도달했을 때에 검출 시작
             // (= 배열로 먼저 이동시킨 지점에 도달했을 때)
             if (addValue >= 1)
@@ -236,5 +246,35 @@ public class BouncyAdj : MonoBehaviour, IAdjective
             // 계속 반복 (repeat Adj)
             yield return new WaitForEndOfFrame();
         }
+    }
+
+    private IEnumerator AbandonBouncy(InteractiveObject thisObject)
+    {        
+        isBouncy = false;
+
+        // 즉시 rigidBody을 원상복귀 
+        var rb = thisObject.GetComponent<Rigidbody>();
+        rb.isKinematic = false;
+        rb.useGravity = true;
+
+        Vector3 playerPos = new Vector3(thisObject.transform.position.x, thisObject.transform.position.y, thisObject.transform.position.z);
+        Vector3 prePos = Vector3Int.RoundToInt(playerPos);
+
+        var dict = DetectManager.GetInstance.GetArrayObjects(prePos + Vector3.up);
+        if (dict[prePos + Vector3.up] == thisObject.gameObject)
+        {
+            DetectManager.GetInstance.SwapBlockInMap(prePos, prePos + Vector3.up);
+        }
+
+        while (!CheckExistBlock(thisObject.gameObject, Dir.down) && !CheckExistPlayer(thisObject.gameObject, Dir.down))
+        {
+            if (prePos != Vector3Int.RoundToInt(thisObject.transform.position))
+            {
+                DetectManager.GetInstance.SwapBlockInMap(prePos, Vector3Int.RoundToInt(thisObject.transform.position));
+            }
+            yield return new WaitForEndOfFrame();
+        }
+
+        Debug.Log($"{prePos} and {thisObject.transform.position}");
     }
 }
