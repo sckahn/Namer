@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Text;
 using UnityEditor;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public enum GameStates
 {
@@ -122,11 +124,17 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = timeScale;
     }
 
+    #region ResetUIVariable
+    private Coroutine loadingCoroutine;
+    private float resetLoadValue = 0f;
+    [Range(0.1f,0.9f)]public float fillSpeed = 0.5f;
+    #endregion
+    
     private void Update()
     {
-        if(Input.GetKeyDown(restartKey))
-            Reset();
 
+
+        Reset();
         DetectInputkey();
         #region Exceptions
         if ((int)(Time.timeScale * 10000) != (int)(curTimeScale * 10000))
@@ -228,8 +236,18 @@ public class GameManager : Singleton<GameManager>
     
     public void Reset()
     {
-        if (CurrentState != GameStates.InGame) return;
-            ResetCurrentLvl();
+        if(CurrentState != GameStates.InGame) return;
+        if (Input.GetKeyDown(restartKey))
+        {
+            UIManager.GetInstance.ingameCanvas.GetComponent<IngameCanvasController>().TurnOnAndOffLoadingImg(true);
+            loadingCoroutine = StartCoroutine(AddResetLoad());
+        }
+
+        if (Input.GetKeyUp(restartKey))
+        {
+            StopCoroutine(loadingCoroutine);
+            StartCoroutine(SubResetLoad());
+        }
     }
 
     public void LoadScene(Scenes scenes, LoadSceneMode loadSceneMode)
@@ -388,7 +406,38 @@ public class GameManager : Singleton<GameManager>
 
 
 
+    IEnumerator AddResetLoad()
+    {
+        while (resetLoadValue < 1f)
+        {
+            resetLoadValue += Time.deltaTime * fillSpeed;
+            UIManager.GetInstance.ingameCanvas.GetComponent<IngameCanvasController>().SetLoadingImage(resetLoadValue);
+            yield return null;
+        }
 
+        if (resetLoadValue > 1f)
+        {
+            UIManager.GetInstance.ingameCanvas.GetComponent<IngameCanvasController>().TurnOnAndOffLoadingImg(false);
+        }
+        ResetCurrentLvl();
+        
+    }
+
+    IEnumerator SubResetLoad()
+    {
+        while (resetLoadValue > 0f)
+        {
+            resetLoadValue -= Time.deltaTime;
+            UIManager.GetInstance.ingameCanvas.GetComponent<IngameCanvasController>().SetLoadingImage(resetLoadValue);
+            if (resetLoadValue <= 0f)
+            {
+                UIManager.GetInstance.ingameCanvas.GetComponent<IngameCanvasController>().TurnOnAndOffLoadingImg(false);
+            }
+            yield return null;
+        }
+    }
+    
+    
 
     #endregion
 }

@@ -13,7 +13,6 @@ public class LongAdj : IAdjective
     #region LongAdjMember
 
     private int growScale = 1;
-    private float shrinkScale = 0.5f;
     private float goalScale;
     private float growingSpeed = 1f;
     private float currentTime;

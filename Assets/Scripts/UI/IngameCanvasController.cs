@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -11,6 +12,10 @@ public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPoin
     [SerializeField] GameObject optionBtn;
     [SerializeField] GameObject gameOptionPanel;
     [SerializeField] GameObject topPanel;
+
+    #region ResetRelatedVal
+    [SerializeField] GameObject LoadingImg;
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -78,4 +83,15 @@ public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPoin
     {
         GameManager.GetInstance.scenarioController.isUI = false;
     }
+
+    public void SetLoadingImage(float fillValue)
+    {
+        LoadingImg.GetComponent<Image>().fillAmount = fillValue;
+    }
+
+    public void TurnOnAndOffLoadingImg(bool switchTurn)
+    {
+        LoadingImg.SetActive(switchTurn);
+    }
+
 }

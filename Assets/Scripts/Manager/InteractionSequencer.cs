@@ -94,7 +94,7 @@ public class InteractionSequencer : Singleton<InteractionSequencer>
         
         yield return new WaitUntil(() => GameManager.GetInstance.isPlayerDoAction == false);
         //수정한 부분
-        DetectManager.GetInstance.StartDetector();
+        // DetectManager.GetInstance.StartDetector();
         //수정한 부분 
     }
     
