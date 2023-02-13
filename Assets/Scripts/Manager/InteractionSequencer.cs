@@ -9,7 +9,8 @@ public class FunctionComparer : IComparer<IEnumerator>
     enum EnumeratorFunctionName
     {
         MoveObj,
-        SetGrowScale
+        SetGrowScale,
+        BounceObj
     }
 
     public int Compare(IEnumerator functionA, IEnumerator functionB)
