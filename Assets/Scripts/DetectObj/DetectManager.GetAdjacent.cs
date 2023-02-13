@@ -197,7 +197,9 @@ public partial class DetectManager : Singleton<DetectManager>
     {
         // 예외처리 - 배열 갱신 실패 
         if (!CheckValueInMap(indicatedObj))
+        {
             return null;
+        }
 
         GameObject returnObj = null;
         switch (dir)
@@ -523,22 +525,52 @@ public partial class DetectManager : Singleton<DetectManager>
     // 예외 처리용 함수 
     public bool CheckValueInMap(GameObject curObject)
     {
-        Vector3 block = curObject.transform.position;
-        int x = Mathf.RoundToInt(block.x);
-        int y = Mathf.RoundToInt(block.y);
-        int z = Mathf.RoundToInt(block.z);
+        Vector3 block = Vector3Int.RoundToInt(curObject.transform.position);
+        int x = (int) block.x;
+        int y = (int) block.y;
+        int z = (int) block.z;
 
         if (currentObjects[x, y, z] != curObject)
         {
-            //Debug.LogError("배열을 제대로 갱신 하세요!");
-            //if (curObject != null)
-                //Debug.LogError("Error Object : " + curObject.name, curObject);
+            Vector3 preVec = FindObjectInArray(curObject);
+            if (preVec.x == -1)
+            {
+                ChangeValueInMap(block, curObject);
+                Debug.LogWarning($"({block.x}, {block.y}, {block.z})에 {curObject.name}이 없어서 새로 추가했습니다.");
+                Debug.LogWarning("갱신을 잘 해주세요.");
+            }
+            else
+            {
+                SwapBlockInMap(preVec, block);
+                Debug.LogWarning($"갱신 전 위치 ({preVec.x}, {preVec.y}, {preVec.z})에서 ({block.x}, {block.y}, {block.z})으로 {curObject.name}을 저장했습니다.");
+                Debug.LogWarning("갱신을 잘 해주세요. (중력으로 아래로 떨어졌을 때에는 이 오류를 무시해주세요.)");
+            }
+
             return false;
         }
         else
         {
             return true;
         }
+    }
+
+    private Vector3 FindObjectInArray(GameObject target)
+    {
+        for (int x = 0; x < currentObjects.GetLength(0); x++)
+        {
+            for (int y = 0; y < currentObjects.GetLength(1); y++)
+            {
+                for (int z = 0; z < currentObjects.GetLength(2); z++)
+                {
+                    if (currentObjects[x,y,z] == target)
+                    {
+                        return new Vector3(x, y, z);
+                    }
+                }
+            }
+        }
+
+        return new Vector3(-1, -1, -1);
     }
     #endregion
 
