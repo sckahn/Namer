@@ -71,7 +71,8 @@ public class FlammableAdj : IAdjective
         {
             isContact = false;
             //코루튼 InteractionSequncer로 변경
-            InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(OnFire(targetObj.gameObject));
+            // InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(OnFire(targetObj.gameObject));
+            InteractionSequencer.GetInstance.SequentialQueue.Enqueue(OnFire(targetObj.gameObject));
             // targetObj.StartCoroutine(OnFire(targetObj.gameObject));
             // targetObj.gameObject.SetActive(false);
             // print("Boom");
@@ -86,7 +87,8 @@ public class FlammableAdj : IAdjective
             
             // targetObj.GetComponent<InteractiveObject>().StartCoroutine(OnFire(targetObj.gameObject));
             //코루튼 InteractionSequncer로 변경
-            InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(OnFire(targetObj.gameObject));
+            // InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(OnFire(targetObj.gameObject));
+            InteractionSequencer.GetInstance.SequentialQueue.Enqueue(OnFire(targetObj));
         }
     }
 
