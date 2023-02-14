@@ -43,6 +43,7 @@ public class ScenarioController : MonoBehaviour
     [SerializeField] Text logText;
     [SerializeField] GameObject dialogBox;
     [SerializeField] Text dialogText;
+    GameObject popUpTouchUI;
 
     [System.NonSerialized] public bool logOpened = false;
     [System.NonSerialized] public bool dialogOpened = false;
@@ -83,6 +84,8 @@ public class ScenarioController : MonoBehaviour
         dialogBox.SetActive(false);
         dialogOpened = false;
 
+        popUpTouchUI = dialogBox.transform.Find("PopUpTouch").gameObject;
+
         isUI = false;
 
         scenarioCount = 0;
@@ -114,10 +117,11 @@ public class ScenarioController : MonoBehaviour
         SystemLog(errorText);
     }
 
-    private void Log(string message, string objName)
+    private void Log(string message, string objName, bool isClick = false)
     {
         string dialogMessage = $"<color=red>[{objName}]</color>\n{message}";
         dialogBox.SetActive(true);
+        popUpTouchUI.SetActive(isClick);
         dialogText.text = dialogMessage;
         dialogBox.GetComponent<LogText>().SetTime();
     }
@@ -192,7 +196,7 @@ public class ScenarioController : MonoBehaviour
                         return;
                     }
                     string[] curMessage = curScenario.message.Split(":");
-                    Log(curMessage[1], curMessage[0]);
+                    Log(curMessage[1], curMessage[0], scenarios.Peek().type == ERequireType.MouseClick);
                 }
             }
         }
@@ -233,12 +237,13 @@ public class ScenarioController : MonoBehaviour
         Dictionary<Vector3, GameObject> objDict = DetectManager.GetInstance.GetArrayObjects(curScenarioPos);
         if (objDict.Keys.Count <= 0) return null;
         Vector3 vec = Vector3Int.FloorToInt(curScenarioPos);
+        if (objDict[vec] == null) return null;
         return objDict[vec].GetComponent<InteractiveObject>();
     }
 
     private void Update()
     {
-        if (GameManager.GetInstance.currentState != GameStates.InGame) return;
+        if (GameManager.GetInstance.CurrentState != GameStates.InGame) return;
         if (scenarioTime > 0) scenarioTime -= Time.deltaTime;
         else
         {

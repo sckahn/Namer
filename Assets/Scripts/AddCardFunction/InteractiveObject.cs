@@ -8,6 +8,9 @@ public class InteractiveObject : MonoBehaviour
     [Range(0, 2)][SerializeField] private int[] countAdj = new int[20];
     [SerializeField] GameObject popUpName;
 
+    // Todo 후에 체크하는 로직이 다른 곳으로 이동하면, 수정 예정
+    Vector3 objectPos;
+
     // Todo 테스트 완료 후, Test 관련 코드 삭제 예정
     #region [Test] Change Count To Inspector
     
@@ -97,6 +100,13 @@ public class InteractiveObject : MonoBehaviour
 #region Run When Inspector Data Change & Test
     private void Update()
     {
+        // todo 후에 배열 포지션 체크하는 로직이 이동하면, 수정 예정
+        if (objectPos != Vector3Int.RoundToInt(this.gameObject.transform.position))
+        {
+            DetectManager.GetInstance.CheckValueInMap(this.gameObject);
+            objectPos = Vector3Int.RoundToInt(this.gameObject.transform.position);
+        }
+
         AllPopUpNameCtr();
         AdjectiveTest();
     }
@@ -373,7 +383,7 @@ public class InteractiveObject : MonoBehaviour
     bool isHoverling = false;
     private void OnMouseOver()
     {
-        if (GameManager.GetInstance.currentState == GameStates.Pause) return;
+        if (GameManager.GetInstance.CurrentState == GameStates.Pause) return;
         isHoverling = true;
         if (this.gameObject.CompareTag("InteractObj") && CardManager.GetInstance.isPickCard)
         {
@@ -395,7 +405,7 @@ public class InteractiveObject : MonoBehaviour
     //오브젝트의 이름을 화면에서 가림 
     private void OnMouseExit()
     {
-        if (GameManager.GetInstance.currentState == GameStates.Pause) return;
+        if (GameManager.GetInstance.CurrentState == GameStates.Pause) return;
         isHoverling = false;
         CardManager.GetInstance.target = null;
         popUpName.SetActive(false);
@@ -409,7 +419,7 @@ public class InteractiveObject : MonoBehaviour
     //오브젝트 현재 이름 팝업을 띄움 
     void PopUpNameOn()
     {
-        if (GameManager.GetInstance.currentState == GameStates.Encyclopedia)
+        if (GameManager.GetInstance.CurrentState == GameStates.Encyclopedia)
             return;
         popUpName.SetActive(true);
     }

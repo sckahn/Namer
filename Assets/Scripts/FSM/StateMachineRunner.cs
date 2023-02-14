@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class StateMachineRunner : MonoBehaviour
 {	
-	private	List<BaseGameEntity> entitys;
+	public	List<BaseGameEntity> entitys;
 
 	private void Start()
 	{

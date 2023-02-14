@@ -1,9 +1,10 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class WinAdj : IAdjective
+public class FreezeAdj : IAdjective
 {
-    private EAdjective adjectiveName = EAdjective.Win;
+    private EAdjective adjectiveName = EAdjective.Freeze;
     private EAdjectiveType adjectiveType = EAdjectiveType.Normal;
     private int count = 0;
     
@@ -29,21 +30,19 @@ public class WinAdj : IAdjective
     
     public void Execute(InteractiveObject thisObject)
     {
-        //Debug.Log("this is Win");
+        //Debug.Log("this is Null");
     }
 
     public void Execute(InteractiveObject thisObject, GameObject player)
     {
-        player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Victory);
-        InteractionSequencer.GetInstance.SequentialQueue.Enqueue(CallWin());
-        //Debug.Log("Win : this Object -> Player");
+        //Debug.Log("Null : this Object -> Player");
     }
     
     public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
-        //Debug.Log("Win : this Object -> other Object");
+        //Debug.Log("Null : this Object -> other Object");
     }
-
+    
     public void Abandon(InteractiveObject thisObject)
     {
         
@@ -51,14 +50,6 @@ public class WinAdj : IAdjective
     
     public IAdjective DeepCopy()
     {
-        return new WinAdj();
+        return new NullAdj();
     }
-
-    IEnumerator CallWin()
-    {
-        GameManager.GetInstance.Win();
-        yield return null;
-    }
-
-    
 }

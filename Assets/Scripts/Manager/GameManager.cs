@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Text;
 using UnityEditor;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public enum GameStates
@@ -20,15 +21,13 @@ public enum GameStates
 public class GameManager : Singleton<GameManager>
 {
     #region GameStates
-    public GameStates currentState { get; private set; }
-
+    public GameStates CurrentState { get; private set; }
     private GameStates previousState;
-
     #endregion
 
     #region Player variable
-    [Header("Player Variable")]
-    public bool isPlayerDoInteraction;
+    public PlayerEntity localPlayerEntity;
+    public bool isPlayerDoAction; // Action = PlayerInteraction + Addcard
     public bool isPlayerCanInput;
     #endregion
 
@@ -67,7 +66,7 @@ public class GameManager : Singleton<GameManager>
         DontDestroyOnLoad(this.gameObject);
         Init();
     }
-
+    
     private void Init()
     {
         #region StateMachine Runner
@@ -75,12 +74,12 @@ public class GameManager : Singleton<GameManager>
         #endregion
 
         #region GameStates
-        currentState = GameStates.Lobby;
-        previousState = currentState;
+        CurrentState = GameStates.Lobby;
+        previousState = CurrentState;
         #endregion
         
         #region Player variable
-        isPlayerDoInteraction = false;
+        isPlayerDoAction = false;
         isPlayerCanInput = true;
         #endregion
 
@@ -144,7 +143,6 @@ public class GameManager : Singleton<GameManager>
 
 
         DetectInputkey();
-
         #region Exceptions
         if ((int)(Time.timeScale * 10000) != (int)(curTimeScale * 10000))
         {
@@ -165,7 +163,7 @@ public class GameManager : Singleton<GameManager>
     
     private void UpdateGameState()
     {
-        switch (currentState)
+        switch (CurrentState)
         {
             case GameStates.Lobby: 
                 HandleLobby();
@@ -188,21 +186,21 @@ public class GameManager : Singleton<GameManager>
     }
     public void ChangeGameState(GameStates newState)
     {
-        if (currentState == newState)
+        if (CurrentState == newState)
         {
             UpdateGameState();
             Debug.Log("바꾸려는 State가 이전의 State와 같습니다. 의도하신 상황이 맞나요?");
             return;
         }
         
-        previousState = currentState;
-        currentState = newState;
+        previousState = CurrentState;
+        CurrentState = newState;
         UpdateGameState();
     }
 
     public void ReturnPreviousState()
     {
-        currentState = previousState;
+        CurrentState = previousState;
         UpdateGameState();
     }
 
@@ -245,7 +243,7 @@ public class GameManager : Singleton<GameManager>
     
     public void Reset()
     {
-        if(currentState != GameStates.InGame) return;
+        if(CurrentState != GameStates.InGame) return;
         if (Input.GetKeyDown(restartKey))
         {
             UIManager.GetInstance.ingameCanvas.GetComponent<IngameCanvasController>().TurnOnAndOffLoadingImg(true);
@@ -259,7 +257,6 @@ public class GameManager : Singleton<GameManager>
             StopCoroutine(loadingCoroutine);
             subLoadingCoroutine = StartCoroutine(SubResetLoad());
         }
-           
     }
 
     public void LoadScene(Scenes scenes, LoadSceneMode loadSceneMode)
