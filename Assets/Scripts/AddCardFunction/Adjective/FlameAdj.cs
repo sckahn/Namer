@@ -42,7 +42,6 @@ public class FlameAdj : IAdjective
     
     public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
-        // Debug.Log(111);
         // Debug.Log("Flame : this Object -> other Object");
              // thisObject.SubtractAdjective(EAdjective.Flame);
          if(sprayObj == null)
@@ -56,27 +55,21 @@ public class FlameAdj : IAdjective
              //그러니까 서로의 위치를 확인해서 그위치로 쏘게해야함.
              SetSprayDirection(otherObject.gameObject, thisObject.gameObject);
              //
-             InteractionSequencer.GetInstance.SequentialQueue.Enqueue(IWaitForParticleToFinish(thisObject));
+             InteractionSequencer.GetInstance.SequentialQueue.Enqueue(Extinquish(thisObject));
              
          }
         
     }
 
     #region FlameOut
-    IEnumerator IWaitForParticleToFinish(InteractiveObject thisObject)
+    IEnumerator Extinquish(InteractiveObject thisObject)
     {
         sprayObj.GetComponent<ParticleSystem>().Play();
         yield return new WaitUntil(() => !sprayObj.GetComponent<ParticleSystem>().isPlaying);
         EradicateFlame(thisObject);
     }
 
-    IEnumerator IExtinquish(InteractiveObject thisObject, InteractiveObject otherObject)
-    {
-        SetSprayDirection(otherObject.gameObject, thisObject.gameObject);
-        sprayObj.GetComponent<ParticleSystem>().Play();
-       
-        yield return null;
-    } 
+    
     void GetSpray(GameObject otherObject)
     {
         var waterSprayPrefabs = Resources.Load<GameObject>("Prefabs/Interaction/Effect/WaterSpray");

@@ -10,7 +10,10 @@ public class FunctionComparer : IComparer<IEnumerator>
     {
         MoveObj,
         SetGrowScale,
-        BounceObj
+        BounceObj,
+        Extinquish, // ExthinguisherAdj 검출시 -> FlameAdj에 있는  Excute 에 있는 함수 , obj<->obj
+        OnFire // Flame검출시 -> FlammableAdj에 있는 Excute 있는 함수, obj<->obj
+        
     }
 
     public int Compare(IEnumerator functionA, IEnumerator functionB)

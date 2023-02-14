@@ -50,6 +50,6 @@ public class ExtinguisherAdj : IAdjective
     
     public IAdjective DeepCopy()
     {
-        return new NullAdj();
+        return new ExtinguisherAdj();
     }
 }

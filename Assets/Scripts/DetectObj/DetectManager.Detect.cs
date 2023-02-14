@@ -221,8 +221,6 @@ public partial class DetectManager : Singleton<DetectManager>
 
                 var checkNeighborObj = IsInfluencer(adjacentObjects[i].GetComponent<InteractiveObject>());
                 var checkMovedObj = IsInfluencer(gameObject.GetComponent<InteractiveObject>());
-
-
                 // Neighbor 가 주차자인경우
                 // movedObj 가 주체자인경우
                 //neighbor 가 게체자인경우
@@ -478,7 +476,6 @@ public partial class DetectManager : Singleton<DetectManager>
                 if (influenceAdjs[i].GetAdjectiveName() == EAdjective.Extinguisher &&
                          influencedAdjs[j].GetAdjectiveName() == EAdjective.Flame)
                 {
-                    
                     if (!eachAdjDict.ContainsKey(influence))
                     {
                         eachAdjDict.Add(influence, new List<IAdjective>());
