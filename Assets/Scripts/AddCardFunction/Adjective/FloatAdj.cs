@@ -107,17 +107,14 @@ public class FloatAdj : IAdjective
         }
     }
 
-    IEnumerator GravityOn(GameObject thisObject)
+    IEnumerator GravityOn(GameObject gameObject)
     {
         yield return null;
-        if (thisObject != null)
+        if (gameObject != null)
         {
-            if (!thisObject.GetComponent<InteractiveObject>().CheckAdjective(EAdjective.Bouncy))
-            {
-                var rb = thisObject.GetComponent<Rigidbody>();
-                rb.isKinematic = false;
-                rb.useGravity = true;
-            }
+            var rb = gameObject.GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+            rb.useGravity = true;
         }
     }
 }

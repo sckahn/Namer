@@ -24,21 +24,15 @@ public class CameraController : MonoBehaviour
 
     // 카메라들 프리팹에서 넣어놓기
     [Header("Cams")]
-    CinemachineVirtualCamera[] playerTopCams;
-    CinemachineVirtualCamera[] playerNormalCams;
     [SerializeField] CinemachineVirtualCamera playerTopViewCam;
-    [SerializeField] CinemachineVirtualCamera playerTopViewCamZoomIn;
-    [SerializeField] CinemachineVirtualCamera playerTopViewCamZoomOut;
     [SerializeField] CinemachineVirtualCamera playerNormalViewCam;
-    [SerializeField] CinemachineVirtualCamera playerNormalViewCamZoomIn;
-    [SerializeField] CinemachineVirtualCamera playerNormalViewCamZoomOut;
     [SerializeField] CinemachineVirtualCamera targetCam;
 
-    CinemachineVirtualCamera curCam;
-
     [Header("Zoom settings")]
-    [SerializeField][Range(0, 2)] int zoomValue = 1;
-    bool canZoom = true;
+    [SerializeField] float originDistance = 10f;
+    [SerializeField][Range(1f, 10f)] float scrollSpeed = 2.5f;
+    [SerializeField][Range(0f, 100f)] float maxZoomIn = 5f;
+    [SerializeField][Range(0f, 100f)] float maxZoomOut = 20f;
 
     void Awake()
     {
@@ -51,19 +45,16 @@ public class CameraController : MonoBehaviour
     public void Init()
     {
         // 각 캠의 우선순위 설정 
-        playerNormalViewCam.Priority = (int)PriorityOrder.BehingByNormal;
-        playerNormalViewCamZoomIn.Priority = (int)PriorityOrder.BehingByNormal;
-        playerNormalViewCamZoomOut.Priority = (int)PriorityOrder.BehingByNormal;
+        playerNormalViewCam.Priority = (int)PriorityOrder.normal;
         playerTopViewCam.Priority = (int)PriorityOrder.BehingByNormal;
-        playerTopViewCamZoomIn.Priority = (int)PriorityOrder.BehingByNormal;
-        playerTopViewCamZoomOut.Priority = (int)PriorityOrder.BehingByNormal;
         targetCam.Priority = (int)PriorityOrder.BehindAtAll;
         normalCamPirority = playerNormalViewCam.Priority;
 
-        playerTopCams = new CinemachineVirtualCamera[] { playerTopViewCamZoomOut, playerTopViewCam, playerTopViewCamZoomIn };
-        playerNormalCams = new CinemachineVirtualCamera[] { playerNormalViewCamZoomOut, playerNormalViewCam, playerNormalViewCamZoomIn };
-
-        SetPriority();
+        // 카메라 distance init
+        normalcamOption = playerNormalViewCam.GetCinemachineComponent(CinemachineCore.Stage.Body);
+        topcamOption = playerTopViewCam.GetCinemachineComponent(CinemachineCore.Stage.Body);
+        (normalcamOption as CinemachineFramingTransposer).m_CameraDistance = originDistance;
+        (topcamOption as CinemachineFramingTransposer).m_CameraDistance = originDistance;
 
         // 모든 팔로우 캠이 플레이어를 따라다니도록 설정 
         player = GameObject.Find("Player").transform;
@@ -71,7 +62,6 @@ public class CameraController : MonoBehaviour
         playerTopViewCam.Follow = player;
 
         isTopView = false;
-        canZoom = true;
 
         FocusOff();
     }
@@ -108,47 +98,49 @@ public class CameraController : MonoBehaviour
         isFocused = false;
     }
 
-    private void SetPriority()
-    {
-        curCam = isTopView ? playerTopCams[zoomValue] : playerNormalCams[zoomValue];
-        curCam.Priority = (int)PriorityOrder.normal;
-    }
-
     private void CheckCameraSwitch()
     {
         if (Input.GetKeyDown(GameManager.GetInstance.cameraKey) && GameManager.GetInstance.CurrentState != GameStates.Encyclopedia)
         {
-            curCam.Priority = (int)PriorityOrder.BehingByNormal;
             isTopView = !isTopView;
-            SetPriority();
+            playerTopViewCam.Priority = (isTopView ? (int)PriorityOrder.FrontByNormal : (int)PriorityOrder.BehingByNormal);
         }
-    }
-
-    private IEnumerator ZoomInOut()
-    {
-        canZoom = false;
-        curCam.Priority = (int)PriorityOrder.BehingByNormal;
-        SetPriority();
-        yield return new WaitForSecondsRealtime(0.3f);
-        canZoom = true;
     }
 
     void Update()
     {
         if (GameManager.GetInstance.CurrentState != GameStates.InGame) return;
-
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-
-        if (scroll == 0 || !canZoom) return;
-        if (scroll < 0) // zoom in
+        float scroll = Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
+        if (scroll != 0)
         {
-            zoomValue = zoomValue >= 2 ? 2 : zoomValue + 1;
-            StartCoroutine(ZoomInOut());
-        }
-        else            // zoom out
-        {
-            zoomValue = zoomValue <= 0 ? 0 : zoomValue - 1;
-            StartCoroutine(ZoomInOut());
+            if (scroll < 0)
+            {
+                if (normalcamOption is CinemachineFramingTransposer)
+                {
+                    float curScroll = (normalcamOption as CinemachineFramingTransposer).m_CameraDistance;
+                    (normalcamOption as CinemachineFramingTransposer).m_CameraDistance = (curScroll + scroll >= maxZoomIn) ? (curScroll + scroll) : maxZoomIn;
+                }
+
+                if (topcamOption is CinemachineFramingTransposer)
+                {
+                    float curScroll = (topcamOption as CinemachineFramingTransposer).m_CameraDistance;
+                    (topcamOption as CinemachineFramingTransposer).m_CameraDistance = (curScroll + scroll >= maxZoomIn) ? (curScroll + scroll) : maxZoomIn;
+                }
+            }
+            else
+            {
+                if (normalcamOption is CinemachineFramingTransposer)
+                {
+                    float curScroll = (normalcamOption as CinemachineFramingTransposer).m_CameraDistance;
+                    (normalcamOption as CinemachineFramingTransposer).m_CameraDistance = (curScroll + scroll <= maxZoomOut) ? (curScroll + scroll) : maxZoomOut;
+                }
+
+                if (topcamOption is CinemachineFramingTransposer)
+                {
+                    float curScroll = (topcamOption as CinemachineFramingTransposer).m_CameraDistance;
+                    (topcamOption as CinemachineFramingTransposer).m_CameraDistance = (curScroll + scroll <= maxZoomOut) ? (curScroll + scroll) : maxZoomOut;
+                }
+            }
         }
     }
 }

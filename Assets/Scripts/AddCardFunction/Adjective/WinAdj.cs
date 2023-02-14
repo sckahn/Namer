@@ -6,7 +6,9 @@ public class WinAdj : IAdjective
     private EAdjective adjectiveName = EAdjective.Win;
     private EAdjectiveType adjectiveType = EAdjectiveType.Normal;
     private int count = 0;
-    
+    GameObject stageClearPanel;
+
+
     public EAdjective GetAdjectiveName()
     {
         return adjectiveName;
@@ -34,8 +36,11 @@ public class WinAdj : IAdjective
 
     public void Execute(InteractiveObject thisObject, GameObject player)
     {
+        player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Victory);
         InteractionSequencer.GetInstance.SequentialQueue.Enqueue(CallWin());
-        Debug.Log("");
+
+        thisObject.StartCoroutine(OpenClearPanel());
+
         //Debug.Log("Win : this Object -> Player");
     }
     
@@ -56,11 +61,16 @@ public class WinAdj : IAdjective
 
     IEnumerator CallWin()
     {
-        Debug.Log("");
         GameManager.GetInstance.Win();
-        GameManager.GetInstance.localPlayerEntity.ChangeState(PlayerStates.Victory);
         yield return null;
     }
 
-    
+    IEnumerator OpenClearPanel()
+    {
+        stageClearPanel =
+            GameObject.Find("IngameCanvas").transform.
+            Find("StageClearPanel").gameObject;
+        yield return new WaitForSeconds(2f);
+        stageClearPanel.SetActive(true);
+    }
 }

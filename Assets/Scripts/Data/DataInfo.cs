@@ -84,9 +84,9 @@ public struct SUserData
     public string userID;
     public string nickName;
     public int clearLevel;
-    public List<string> levelNames;
-    public List<int> levelScore;
+    public List<SLevelName> levelNames;
     public SCardView cardView;
+    public SGameSetting gameSetting;
 }
 
 public struct SLevelData
@@ -98,10 +98,55 @@ public struct SLevelData
     public SCardView cardView;
 }
 
+public struct SLevelName
+{
+    public int level;
+    public string levelName;
+
+    public SLevelName(int level, string levelName)
+    {
+        this.level = level;
+        this.levelName = levelName;
+    }
+}
+
 public struct SCardView
 {
     public List<EName> nameRead;
     public List<EAdjective> adjectiveRead;
+
+    public SCardView(List<EName> nameRead, List<EAdjective> adjectiveRead)
+    {
+        this.nameRead = nameRead;
+        this.adjectiveRead = adjectiveRead;
+    }
+}
+
+public struct SGameSetting
+{
+    public int resolution;
+    public int maxFrame;
+    public float volume;
+    public float backgroundVolume;
+    public float soundEffects;
+    public bool isfullScreen;
+    public bool isborderlessFullScreen;
+    public bool isMute;
+    public bool isMuteInBackground;
+
+    public SGameSetting(int resolution, int maxFrame, float volume, float backgroundVolume, float soundEffects,
+        bool isfullScreen, bool isborderlessFullScreen, bool isMute, bool isMuteInBackground)
+    {
+        this.resolution = resolution;
+        this.maxFrame = maxFrame;
+        this.volume = volume;
+        this.backgroundVolume = backgroundVolume;
+        this.soundEffects = soundEffects;
+        this.isfullScreen = isfullScreen;
+        this.isborderlessFullScreen = isborderlessFullScreen;
+        this.isMute = isMute;
+        this.isMuteInBackground = isMuteInBackground;
+    }
 }
 
 [Serializable]

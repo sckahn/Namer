@@ -38,7 +38,7 @@
             },
             "nextPos": {
                 "x": 0.0,
-                "y": 3.0,
+                "y": 2.0,
                 "z": 2.0
             },
             "requiredName": "장미",
@@ -56,7 +56,7 @@
             },
             "targetObj": {
                 "x": 0.0,
-                "y": 3.0,
+                "y": 2.0,
                 "z": 2.0
             },
             "nextPos": {
@@ -66,7 +66,7 @@
             },
             "requiredName": "",
             "isDialog": true,
-            "message": "장미:어린 왕자의 후드에는 신기한 힘이 있어.\n지금부터 알려줄게!",
+            "message": "장미:어린 왕자의 후드에는 신기한 힘이 있어.",
             "funcName": "",
             "isFocus": true
         },
@@ -79,7 +79,7 @@
             },
             "targetObj": {
                 "x": 0.0,
-                "y": 3.0,
+                "y": 2.0,
                 "z": 2.0
             },
             "nextPos": {
@@ -89,7 +89,7 @@
             },
             "requiredName": "",
             "isDialog": true,
-            "message": "장미:저기 땅 아래 박힌 돌이 보이니?",
+            "message": "장미:땅 아래에 뭍혀있는 저 식물이 보이니?",
             "funcName": "",
             "isFocus": true
         },
@@ -102,7 +102,7 @@
             },
             "targetObj": {
                 "x": 0.0,
-                "y": 3.0,
+                "y": 2.0,
                 "z": 2.0
             },
             "nextPos": {
@@ -112,30 +112,7 @@
             },
             "requiredName": "",
             "isDialog": true,
-            "message": "장미:돌 위로 올라가서 돌이 ‘길쭉’하다고 상상해봐!",
-            "funcName": "",
-            "isFocus": false
-        },
-        {
-            "type": 1,
-            "requirePos": {
-                "x": 0.0,
-                "y": 3.0,
-                "z": 2.0
-            },
-            "targetObj": {
-                "x": 0.0,
-                "y": 3.0,
-                "z": 2.0
-            },
-            "nextPos": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "requiredName": "",
-            "isDialog": true,
-            "message": "[System]돌 위로 올라가서 '길쭉' 카드를 돌에 부여하세요",
+            "message": "장미:위로 올라가서 그 식물이 ‘길쭉’하다고 상상해봐!",
             "funcName": "",
             "isFocus": false
         },
@@ -171,7 +148,7 @@
             },
             "targetObj": {
                 "x": 0.0,
-                "y": 3.0,
+                "y": 2.0,
                 "z": 2.0
             },
             "nextPos": {
@@ -257,29 +234,6 @@
         {
             "type": 1,
             "requirePos": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "targetObj": {
-                "x": 8.0,
-                "y": 3.0,
-                "z": 3.0
-            },
-            "nextPos": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "requiredName": "장미",
-            "isDialog": true,
-            "message": "[System]알맞은 바위에 '나무' 카드를 부여하세요",
-            "funcName": "",
-            "isFocus": false
-        },
-        {
-            "type": 1,
-            "requirePos": {
                 "x": 7.0,
                 "y": 3.0,
                 "z": 3.0
@@ -352,8 +306,8 @@
         2
       ],
       "adjectiveRead": [
-        7,
-        3
+        8,
+        4
       ]
     }
   },
@@ -371,8 +325,8 @@
         8
       ],
       "adjectiveRead": [
-        7,
-        5
+        8,
+        6
       ]
     }
   },
