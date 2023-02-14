@@ -8,8 +8,14 @@ public class FunctionComparer : IComparer<IEnumerator>
 {
     enum EnumeratorFunctionName
     {
+        CallWin,
+        ObtainableObj,
+        Extinquish,
+        OnFire,
         MoveObj,
-        SetGrowScale,
+        Climb,
+        ScaleObj,
+        FloatObj,
         BounceObj
     }
 
@@ -105,59 +111,43 @@ public class InteractionSequencer : Singleton<InteractionSequencer>
         while (true)
         {
             // Player Action이 진행되면 다른 Coroutine을 잠시 멈추게 한다. (PlayerActionQueue이외의 다른 Queue를 Dequeue 하지 않음)
-            if (PlayerActionQueue.Count > 0)
+            while (PlayerActionQueue.Count > 0)
             {
-                GameManager.GetInstance.isPlayerDoAction = true;
-                
+                if (PlayerActionQueue.Count > 1)
+                {
+                    Queue<IEnumerator> paQueue =
+                        new Queue<IEnumerator>(PlayerActionQueue.OrderBy(x => x, new FunctionComparer()));
+                    yield return StartCoroutine(paQueue.Dequeue());
+                }
                 
                 yield return StartCoroutine(PlayerActionQueue.Dequeue());
-                
-                // ConcurrentCoroutines
-                // 어떤 코루틴이 먼저 실행 될지 몰라도 되는 코루틴들 (1, 2 코루틴들)
-                // 1. One-Off 코루틴 다 꺼내기
-                while (CoroutineQueue.Count > 0)
-                {
-                    // (input-parameters) => { <sequence-of-statements> }
-                    StartCoroutine(CoroutineQueue.Dequeue());
-                    yield return null;
-                }
-                
-                // 2. 순차 코루틴 꺼내기 
-                while (SequentialQueue.Count > 0)
-                {
-                    if (SequentialQueue.Count > 1)
-                    {
-                        // Queue Sorting
-                        Queue<IEnumerator> sortedSequentialQueue =
-                            new Queue<IEnumerator>(SequentialQueue.OrderBy(x => x, new FunctionComparer()));
-                        yield return StartCoroutine(sortedSequentialQueue.Dequeue());
-                    }
-                    
-                    yield return StartCoroutine(SequentialQueue.Dequeue());
-                }
             }
 
-            else
+            PlayerActionQueue.Clear();
+                
+            // ConcurrentCoroutines
+            // 어떤 코루틴이 먼저 실행 될지 몰라도 되는 코루틴들 (1, 2 코루틴들)
+            // 1. One-Off 코루틴 다 꺼내기
+            while (CoroutineQueue.Count > 0)
             {
-                while (CoroutineQueue.Count > 0)
+                // (input-parameters) => { <sequence-of-statements> }
+                StartCoroutine(CoroutineQueue.Dequeue());
+                yield return null;
+            }
+            
+            // 2. 순차 코루틴 꺼내기 
+            while (SequentialQueue.Count > 0)
+            {
+                if (SequentialQueue.Count > 1)
                 {
-                    StartCoroutine(CoroutineQueue.Dequeue());
-                    yield return null;
+                    // Queue Sorting
+                    Queue<IEnumerator> sortedSequentialQueue =
+                        new Queue<IEnumerator>(SequentialQueue.OrderBy(x => x, new FunctionComparer()));
+                    yield return StartCoroutine(sortedSequentialQueue.Dequeue());
                 }
                 
-                while (SequentialQueue.Count > 0)
-                {
-                    if (SequentialQueue.Count > 1)
-                    {
-                        Queue<IEnumerator> sortedSequentialQueue =
-                            new Queue<IEnumerator>(SequentialQueue.OrderBy(x => x, new FunctionComparer()));
-                        yield return StartCoroutine(sortedSequentialQueue.Dequeue());
-                    }
-                    
-                    yield return StartCoroutine(SequentialQueue.Dequeue());
-                }
+                yield return StartCoroutine(SequentialQueue.Dequeue());
             }
-
             yield return null;
         }
     }

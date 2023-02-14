@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ObtainableAdj : IAdjective
@@ -33,18 +34,9 @@ public class ObtainableAdj : IAdjective
 
     public void Execute(InteractiveObject thisObject, GameObject player)
     {
-        if (thisObject.GetObjectName() != EName.Null)
-        {
-            ObtainNameCard(thisObject, thisObject.GetObjectName());
-            player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Obtain);
-        }
-        else
-        {
-            ObtainAdjectiveCard(thisObject, thisObject.Adjectives);
-            player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Obtain);
-        }
+        InteractionSequencer.GetInstance.PlayerActionQueue.Enqueue(ObtainableObj(thisObject, player));
     }
-    
+
     public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
         //Debug.Log("Obtainable : this Object -> other Object");
@@ -59,6 +51,24 @@ public class ObtainableAdj : IAdjective
     public IAdjective DeepCopy()
     {
         return new ObtainableAdj();
+    }
+    
+    private IEnumerator ObtainableObj(InteractiveObject thisObject, GameObject player)
+    {
+        yield return new WaitForSeconds(0.3f);
+        
+        if (thisObject.GetObjectName() != EName.Null)
+        {
+            ObtainNameCard(thisObject, thisObject.GetObjectName());
+            GameManager.GetInstance.isPlayerDoAction = true;
+            player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Obtain);
+        }
+        else
+        {
+            ObtainAdjectiveCard(thisObject, thisObject.Adjectives);
+            GameManager.GetInstance.isPlayerDoAction = true;
+            player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Obtain);
+        }
     }
     
     private void ObtainNameCard(InteractiveObject thisObject, EName nameType)

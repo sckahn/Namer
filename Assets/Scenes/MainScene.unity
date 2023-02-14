@@ -1883,63 +1883,6 @@ MonoBehaviour:
   - {fileID: 1755439320}
   levelSelectMovingTime: 1.5
   cardDealingSpeed: 0.2
---- !u!1001 &396760049
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5481165786977658627, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
-      propertyPath: m_Name
-      value: GameDataManager
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
 --- !u!1001 &411583547
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5195,6 +5138,7 @@ MonoBehaviour:
   managerPrefabs:
   - {fileID: 2625901015695942100, guid: 09c0184ae5229764f9de6e8bcbfef7e9, type: 3}
   - {fileID: 1763381806119774454, guid: 9adce53c6d0ef4c3a98f6b4a37ba52d4, type: 3}
+  - {fileID: 5481165786977658627, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
   userId: 000000
 --- !u!4 &1154774481
 Transform:
@@ -5667,7 +5611,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1241083171 stripped
 GameObject:
@@ -8438,6 +8382,7 @@ MonoBehaviour:
   ableCardCtr: 1
   isEncyclopedia: 0
   isCardDealingDone: 0
+  isCardsHide: 0
   pickCard: {fileID: 0}
   ableAddCard: 1
 --- !u!64 &1651018103

@@ -103,13 +103,13 @@ public class StageClearPanelController : MonoBehaviour
     {
         if (isNamingDone && isRewardDone)
         {
-            stageClearOKBtn.SetActive(true);
+            StageUIOKBtn();
         }
     }
 
     public void StageUIOKBtn()
     {
-        GameDataManager.GetInstance.UpdateUserData();
+        GameDataManager.GetInstance.UpdateUserData(true);
         this.gameObject.SetActive(false);
     }
 }

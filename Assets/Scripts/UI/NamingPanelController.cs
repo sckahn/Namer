@@ -22,10 +22,4 @@ public class NamingPanelController : MonoBehaviour
     {
         cardController.currentLevelName = inputTxt.text;
     }
-
-    [ContextMenu("Victory")]
-    public void VictoryState()
-    {
-        GameManager.GetInstance.ChangeGameState(GameStates.Victory);
-    }
 }

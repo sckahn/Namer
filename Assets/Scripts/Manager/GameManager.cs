@@ -27,6 +27,7 @@ public class GameManager : Singleton<GameManager>
 
     #region Player variable
     public PlayerEntity localPlayerEntity;
+    public PlayerMovement localPlayerMovement;
     public bool isPlayerDoAction; // Action = PlayerInteraction + Addcard
     public bool isPlayerCanInput;
     #endregion
