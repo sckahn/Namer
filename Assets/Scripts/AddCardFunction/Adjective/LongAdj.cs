@@ -139,8 +139,9 @@ public class LongAdj : IAdjective
             currentTime += Time.deltaTime;
             targetObj.transform.localScale = Vector3.Lerp(startScale, targetScale, currentTime / growingSpeed);
             yield return null;
-           
         }
+
+        targetObj.transform.localScale = targetScale;
         //수정한 부분
         DetectManager.GetInstance.StartDetector(new List<GameObject>() { targetObj });
         //수정한 부분 

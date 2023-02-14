@@ -53,7 +53,7 @@ public class MovableAdj : IAdjective
         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z) && direction.x > 0)
         {
             // if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.right) !=null ) return;
-            if (neihbors.ContainsKey(Dir.right) || thisObject.transform.position.x >= maxX - 1)
+            if (neihbors.ContainsKey(Dir.right) || thisObject.transform.position.x >= maxX)
             {
                 return;
             }
@@ -85,7 +85,7 @@ public class MovableAdj : IAdjective
         else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.z) && direction.z > 0)
         {
             // if (check.GetTransformsAtDirOrNull(thisObject.gameObject, Dir.forward) != null) return;
-            if (neihbors.ContainsKey(Dir.forward) || thisObject.transform.position.z >= maxZ - 1)
+            if (neihbors.ContainsKey(Dir.forward) || thisObject.transform.position.z >= maxZ)
             {
                 return;
             }
