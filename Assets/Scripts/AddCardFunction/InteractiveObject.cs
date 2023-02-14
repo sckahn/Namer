@@ -101,7 +101,6 @@ public class InteractiveObject : MonoBehaviour
     private void Update()
     {
         // todo 후에 배열 포지션 체크하는 로직이 이동하면, 수정 예정
-        if (GameManager.GetInstance.CurrentState != GameStates.InGame) return;
         if (objectPos != Vector3Int.RoundToInt(this.gameObject.transform.position))
         {
             DetectManager.GetInstance.CheckValueInMap(this.gameObject);
@@ -385,8 +384,6 @@ public class InteractiveObject : MonoBehaviour
     private void OnMouseOver()
     {
         if (GameManager.GetInstance.CurrentState == GameStates.Pause) return;
-        if (GameManager.GetInstance.CurrentState == GameStates.Victory &&
-            this.name != "PlanetObj") return;
         isHoverling = true;
         if (this.gameObject.CompareTag("InteractObj") && CardManager.GetInstance.isPickCard)
         {

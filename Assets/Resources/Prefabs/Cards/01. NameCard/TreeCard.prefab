@@ -49,13 +49,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardType: 0
   nameType: 5
-  adjectiveType: 0
+  adjectives: 
   frontCover: {fileID: 4230330137778533953}
   bc: {fileID: 453746082420174526}
   highlight: {fileID: 3395023830973034109}
   Encyclopedia: {fileID: 2155044647775482130}
-  UIText: {fileID: 7636341369278244097}
-  NameAdjUIText: {fileID: 8594268537692688563}
 --- !u!65 &453746082420174526
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -207,28 +205,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 885227088834717407, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
   m_PrefabInstance: {fileID: 5468066845115952840}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7636341369278244097 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2457775549880798153, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
-  m_PrefabInstance: {fileID: 5468066845115952840}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8594268537692688563 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4370321639461043835, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
-  m_PrefabInstance: {fileID: 5468066845115952840}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6325892128368188168
 PrefabInstance:
   m_ObjectHideFlags: 0

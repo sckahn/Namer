@@ -1,6 +1,5 @@
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.UI;
 using PlayerOwnedStates;
 using UnityEngine.Serialization;
 
@@ -17,8 +16,6 @@ public class CardController : MonoBehaviour
     [SerializeField] BoxCollider bc;
     [SerializeField] GameObject highlight;
     [SerializeField] GameObject Encyclopedia;
-    [SerializeField] private Text UIText;
-    [SerializeField] private Text NameAdjUIText;
     CardRotate cr;
 
     public EAdjective GetAdjectiveTypeOfCard()
@@ -30,53 +27,6 @@ public class CardController : MonoBehaviour
     {
         cr = this.gameObject.GetComponent<CardRotate>();
         cardHolder = FindObjectOfType<CardManager>().gameObject;
-
-        SetUIText();
-    }
-
-    private void SetUIText()
-    {
-        if (UIText == null || (cardType == ECardType.Name && NameAdjUIText == null))
-        {
-            Debug.LogError("인스펙터창에서 UI 텍스트를 확인 후 넣어주세요!");
-        }
-        
-        GameDataManager gameDataManager = GameDataManager.GetInstance;
-        if (cardType == ECardType.Name)
-        {
-            UIText.text = gameDataManager.Names[nameType].uiText;
-            NameAdjUIText.text = "";
-            
-            if (gameDataManager.Names[nameType].adjectives != null)
-            {
-                EAdjective[] adjectives = gameDataManager.Names[nameType].adjectives;
-                string delimiter = ", ";
-                for (int i = 0; i < adjectives.Length; i++)
-                {
-                    NameAdjUIText.text += gameDataManager.Adjectives[adjectives[i]].uiText + delimiter;
-                }
-                
-                NameAdjUIText.text = NameAdjUIText.text.TrimEnd(',', ' ');
-            }
-            else
-            {
-                NameAdjUIText.text = "순수";
-            }
-        }
-        else if (cardType == ECardType.Adjective)
-        {
-            UIText.text = gameDataManager.Adjectives[adjectiveType].uiText;
-        }
-
-        Text contentText = Encyclopedia.GetComponentInChildren<Text>();
-        if (cardType == ECardType.Name)
-        {
-            contentText.text = gameDataManager.Names[nameType].contentText;
-        }
-        else if (cardType == ECardType.Adjective)
-        {
-            contentText.text = gameDataManager.Adjectives[adjectiveType].contentText;
-        }
     }
 
     public void MoveTransform(PRS prs, bool useDotween, float dotweenTime = 0)
@@ -166,29 +116,8 @@ public class CardController : MonoBehaviour
         }
     }
 
-    public string currentLevelName = "";
     public void CastCard(GameObject target)
     {
-        if(target && GameManager.GetInstance.CurrentState == GameStates.Victory)
-        {
-            PlanetObjController planetObjController;
-            StageClearPanelController stageClearPanelController;
-            GameDataManager.GetInstance.SetLevelName(currentLevelName);
-            planetObjController =
-                Camera.main.transform.
-                Find("ClearRig").transform.
-                Find("NamingRig").transform.
-                Find("PlanetObj").transform.
-                Find("PopUpName").GetComponent<PlanetObjController>();
-            planetObjController.UpdateTxt();
-
-            stageClearPanelController =
-                GameObject.Find("IngameCanvas").transform.
-                Find("StageClearPanel").GetComponent<StageClearPanelController>();
-
-            stageClearPanelController.NamingDone();
-        }
-
         if (target)
         {
             GameManager.GetInstance.localPlayerMovement.addCardTarget = target;

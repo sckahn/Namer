@@ -1883,6 +1883,63 @@ MonoBehaviour:
   - {fileID: 1755439320}
   levelSelectMovingTime: 1.5
   cardDealingSpeed: 0.2
+--- !u!1001 &396760049
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478308730698983310, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5481165786977658627, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
+      propertyPath: m_Name
+      value: GameDataManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
 --- !u!1001 &411583547
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2440,7 +2497,7 @@ MonoBehaviour:
   mainMenucards: {fileID: 1216206864}
   titlePanel: {fileID: 2046814367}
   mainRose: {fileID: 129132252}
-  optionPanel: {fileID: 1257051108}
+  optionPanel: {fileID: 0}
   titleMovingTime: 3
   cameraMovingTime: 3
   levelSelectMovingTime: 1
@@ -5123,7 +5180,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3a9cfcd83c3941bd8f6f64dd52b575d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localPlayerEntity: {fileID: 0}
   isPlayerDoAction: 0
   isPlayerCanInput: 0
   cameraController: {fileID: 0}
@@ -5134,11 +5190,9 @@ MonoBehaviour:
   showNameKey: 9
   pauseKey: 27
   cameraKey: 0
-  cardToggleKey: 0
   managerPrefabs:
   - {fileID: 2625901015695942100, guid: 09c0184ae5229764f9de6e8bcbfef7e9, type: 3}
   - {fileID: 1763381806119774454, guid: 9adce53c6d0ef4c3a98f6b4a37ba52d4, type: 3}
-  - {fileID: 5481165786977658627, guid: 70147e15044b94964979a2b2991a8d66, type: 3}
   userId: 000000
 --- !u!4 &1154774481
 Transform:
@@ -5611,7 +5665,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1241083171 stripped
 GameObject:
@@ -5693,11 +5747,6 @@ Transform:
   m_Father: {fileID: 1724532211}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1257051108 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6400162452588348612, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
-  m_PrefabInstance: {fileID: 1749551600}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1263663047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8381,8 +8430,6 @@ MonoBehaviour:
   isPickCard: 0
   ableCardCtr: 1
   isEncyclopedia: 0
-  isCardDealingDone: 0
-  isCardsHide: 0
   pickCard: {fileID: 0}
   ableAddCard: 1
 --- !u!64 &1651018103
@@ -9233,9 +9280,21 @@ PrefabInstance:
     m_TransformParent: {fileID: 552226259}
     m_Modifications:
     - target: {fileID: 1394141985, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394141985, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 552226260}
+    - target: {fileID: 1394141985, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OptionPanelClose
+      objectReference: {fileID: 0}
+    - target: {fileID: 1394141985, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainUIController, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6400162451370829607, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -9463,6 +9522,10 @@ PrefabInstance:
     - target: {fileID: 6400162452624949080, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400162452867930476, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
+      propertyPath: m_AllowSwitchOff
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6400162453224390232, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
       propertyPath: m_AnchorMax.y
@@ -9931,7 +9994,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1802502975}
   m_Layer: 5
-  m_Name: CreditButtons
+  m_Name: Buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
