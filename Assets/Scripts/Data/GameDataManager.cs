@@ -187,8 +187,8 @@ public class GameDataManager : Singleton<GameDataManager>
         
         return "";
     }
-    
-    public void UpdateUserData(bool isLevelClear, SGameSetting gameSetting)
+
+    public void UpdateUserData(bool isLevelClear, SGameSetting? gameSetting = null)
     {
         string userID = GameManager.GetInstance.userId;
         int level = GameManager.GetInstance.Level;
@@ -200,7 +200,10 @@ public class GameDataManager : Singleton<GameDataManager>
         }
         else
         {
-            userData.gameSetting = gameSetting;
+            if (gameSetting != null)
+            {
+                userData.gameSetting = (SGameSetting)gameSetting;
+            }
         }
         userDataDic[userID] = userData;
 
