@@ -3,7 +3,12 @@
     "userID": "000000",
     "nickName": "이름 없음",
     "clearLevel": -1,
-    "levelNames": [],
+    "levelNames": [
+      {
+        "level": 0,
+        "levelName": ""
+      }
+    ],
     "cardView": {
       "nameRead": [
         1
