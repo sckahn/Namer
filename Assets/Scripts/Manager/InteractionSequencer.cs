@@ -8,12 +8,15 @@ public class FunctionComparer : IComparer<IEnumerator>
 {
     enum EnumeratorFunctionName
     {
+        CallWin,
+        ObtainableObj,
+        Extinquish,
+        OnFire,
         MoveObj,
-        SetGrowScale,
-        BounceObj,
-        Extinquish, // ExthinguisherAdj 검출시 -> FlameAdj에 있는  Excute 에 있는 함수 , obj<->obj
-        OnFire // Flame검출시 -> FlammableAdj에 있는 Excute 있는 함수, obj<->obj
-        
+        Climb,
+        ScaleObj,
+        FloatObj,
+        BounceObj
     }
 
     public int Compare(IEnumerator functionA, IEnumerator functionB)
@@ -110,10 +113,8 @@ public class InteractionSequencer : Singleton<InteractionSequencer>
             // Player Action이 진행되면 다른 Coroutine을 잠시 멈추게 한다. (PlayerActionQueue이외의 다른 Queue를 Dequeue 하지 않음)
             if (PlayerActionQueue.Count > 0)
             {
-                GameManager.GetInstance.isPlayerDoAction = true;
-                
-                
-                yield return StartCoroutine(PlayerActionQueue.Dequeue());
+                Queue<IEnumerator> SortedPlayerAction = new Queue<IEnumerator>(PlayerActionQueue.OrderBy(x => x, new FunctionComparer()));
+                yield return StartCoroutine(SortedPlayerAction.Peek());
                 
                 // ConcurrentCoroutines
                 // 어떤 코루틴이 먼저 실행 될지 몰라도 되는 코루틴들 (1, 2 코루틴들)

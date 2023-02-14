@@ -37,7 +37,7 @@ public class FlameAdj : IAdjective
 
     public void Execute(InteractiveObject thisObject, GameObject player)
     {
-        //Debug.Log("Flame : this Object -> Player");
+        GameManager.GetInstance.isPlayerDoAction = false;
     }
     
     public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
