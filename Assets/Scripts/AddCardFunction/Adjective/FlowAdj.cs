@@ -7,7 +7,7 @@ public class FlowAdj : IAdjective
     private EAdjective adjectiveName = EAdjective.Flow;
     private EAdjectiveType adjectiveType = EAdjectiveType.Normal;
     private int count = 0;
-    
+
     public EAdjective GetAdjectiveName()
     {
         return adjectiveName;
@@ -43,6 +43,7 @@ public class FlowAdj : IAdjective
     public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
         //Debug.Log("Null : this Object -> other Object");
+        InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(AbandonFlow(thisObject));
     }
     
     public void Abandon(InteractiveObject thisObject)
