@@ -159,6 +159,8 @@ public class BouncyAdj : IAdjective
 
     private void TryBouncy(GameObject obj)
     {
+        if (obj == null) return;
+
         // 아래에 무언가가 있는지 체크 
         if (CheckExistPlayer(obj, Dir.down) || CheckExistBlock(obj, Dir.down))
         {
@@ -231,7 +233,7 @@ public class BouncyAdj : IAdjective
                 yield return null;
             }
 
-            if (!obj.GetComponent<InteractiveObject>().CheckAdjective(EAdjective.Float))
+            if (obj != null && !obj.GetComponent<InteractiveObject>().CheckAdjective(EAdjective.Float))
             {
                 // 위로 혹은 아래로 1칸만큼 도달했을 때에 검출 시작
                 // (= 배열로 먼저 이동시킨 지점에 도달했을 때)
@@ -239,6 +241,9 @@ public class BouncyAdj : IAdjective
                 {
                     // 정확히 1칸을 맞추기 위해서 RoundToInt로 위치 조절
                     obj.transform.position = Vector3Int.RoundToInt(obj.transform.position);
+
+                    DetectManager.GetInstance.StartDetector(new List<GameObject> { obj });
+
                     // 가장 최고점 높이에 도달한 경우에는 플레이어가 들어갈 시간을 잠깐 줌 
                     if (bouncyDir == 1)
                     {
@@ -246,7 +251,7 @@ public class BouncyAdj : IAdjective
                     }
 
                     // 검출 후 bounce 시작 
-                    TryBouncy(obj);
+                    if (obj != null) TryBouncy(obj);
                 }
 
                 // 높이를 증감할 value를 시간에 따라 증가 (0 ~ 1)
@@ -254,7 +259,7 @@ public class BouncyAdj : IAdjective
 
                 // 아래로 이동하는 중에 플레이어가 개입할 경우 플레이어를 밀쳐내는 로직
                 // 아래로 이동하는 중인가? 
-                if (bouncyDir == -1)
+                if (obj != null && bouncyDir == -1)
                 {
                     // 아래에 플레이어가 개입해있는가?
                     if (CheckExistPlayer(obj, Dir.down))
@@ -273,11 +278,11 @@ public class BouncyAdj : IAdjective
                 }
 
                 //실제로 물체의 포지션을 변경하는 코드
-                obj.transform.position = Vector3.Lerp(obj.transform.position, obj.transform.position + new Vector3(0, addValue * bouncyDir, 0), Time.deltaTime * bounciness);
+                if (obj != null) obj.transform.position = Vector3.Lerp(obj.transform.position, obj.transform.position + new Vector3(0, addValue * bouncyDir, 0), Time.deltaTime * bounciness);
 
             }
             // 계속 반복 (repeat Adj)
-            yield return new WaitForEndOfFrame();
+            yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd(this);
         }
     }
 
