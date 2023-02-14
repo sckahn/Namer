@@ -59,6 +59,7 @@ public class MovableAdj : IAdjective
             }
             target = thisObject.transform.position + Vector3.right;
             detectManager.SwapBlockInMap(prevLocatio, target);
+            GameManager.GetInstance.isPlayerDoAction = true;
             player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Push);
             InteractionSequencer.GetInstance.PlayerActionQueue.Enqueue(MoveObj(thisObject.gameObject));
 
@@ -77,6 +78,7 @@ public class MovableAdj : IAdjective
             target = thisObject.transform.position + Vector3.left;
             detectManager.SwapBlockInMap(prevLocatio, target);
             // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
+            GameManager.GetInstance.isPlayerDoAction = true;
             player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Push);
             InteractionSequencer.GetInstance.PlayerActionQueue.Enqueue(MoveObj(thisObject.gameObject));
 
@@ -92,6 +94,7 @@ public class MovableAdj : IAdjective
             target = thisObject.transform.position + Vector3.forward;
             detectManager.SwapBlockInMap(prevLocatio, target);
             // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
+            GameManager.GetInstance.isPlayerDoAction = true;
             player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Push);
             InteractionSequencer.GetInstance.PlayerActionQueue.Enqueue(MoveObj(thisObject.gameObject));
 
@@ -108,6 +111,7 @@ public class MovableAdj : IAdjective
             detectManager.SwapBlockInMap(prevLocatio, target);
         
             // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
+            GameManager.GetInstance.isPlayerDoAction = true;
             player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Push);
             InteractionSequencer.GetInstance.PlayerActionQueue.Enqueue(MoveObj(thisObject.gameObject));
 
