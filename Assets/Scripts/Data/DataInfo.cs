@@ -84,8 +84,7 @@ public struct SUserData
     public string userID;
     public string nickName;
     public int clearLevel;
-    public List<string> levelNames;
-    public List<int> levelScore;
+    public List<SLevelName> levelNames;
     public SCardView cardView;
 }
 
@@ -98,10 +97,28 @@ public struct SLevelData
     public SCardView cardView;
 }
 
+public struct SLevelName
+{
+    public int level;
+    public string levelName;
+
+    public SLevelName(int level, string levelName)
+    {
+        this.level = level;
+        this.levelName = levelName;
+    }
+}
+
 public struct SCardView
 {
     public List<EName> nameRead;
     public List<EAdjective> adjectiveRead;
+
+    public SCardView(List<EName> nameRead, List<EAdjective> adjectiveRead)
+    {
+        this.nameRead = nameRead;
+        this.adjectiveRead = adjectiveRead;
+    }
 }
 
 [Serializable]

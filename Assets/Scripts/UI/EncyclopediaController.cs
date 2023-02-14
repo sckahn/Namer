@@ -42,11 +42,12 @@ public class EncyclopediaController : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "MainScene")
         {
-            pediaCards = GameDataManager.GetInstance.GetMainCardEncyclopedia("000000");
+            pediaCards = GameDataManager.GetInstance.GetMainCardEncyclopedia();
         }
         else
         {
-            pediaCards = GameDataManager.GetInstance.GetIngameCardEncyclopedia(GameManager.GetInstance.Level);
+            pediaCards = GameDataManager.GetInstance.GetRewardCardEncyclopedia();
+            GameDataManager.GetInstance.UpdateUserData();
         }
 
         if (pediaCards == null) return;
