@@ -294,7 +294,7 @@ public class InteractiveObject : MonoBehaviour
         }
     }
 
-    private void SubtractAdjective(EAdjective subtractAdjective, bool isAdjective = true)
+    public void SubtractAdjective(EAdjective subtractAdjective, bool isAdjective = true)
     {
         int adjIndex = (int)subtractAdjective;
         if (adjectives[adjIndex] == null)
