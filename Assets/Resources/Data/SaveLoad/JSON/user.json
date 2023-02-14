@@ -28,41 +28,5 @@
       "isMute": false,
       "isMuteInBackground": false
     }
-  },
-  {
-    "userID": "111111",
-    "nickName": "이름 없음",
-    "clearLevel": 0,
-    "levelNames": [
-      {
-        "level": 0,
-        "levelName": "새행성"
-      }
-    ],
-    "cardView": {
-      "nameRead": [
-        1,
-        3,
-        4,
-        5
-      ],
-      "adjectiveRead": [
-        1,
-        4,
-        5,
-        8
-      ]
-    },
-    "gameSetting": {
-      "resolution": 0,
-      "maxFrame": 0,
-      "volume": 0.5,
-      "backgroundVolume": 0.5,
-      "soundEffects": 0.5,
-      "isfullScreen": false,
-      "isborderlessFullScreen": false,
-      "isMute": false,
-      "isMuteInBackground": false
-    }
   }
 ]
