@@ -50,7 +50,7 @@ public class FloatAdj : IAdjective
 
     public void Abandon(InteractiveObject thisObject)
     {
-        GravityOn(thisObject.gameObject);
+        InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(GravityOn(thisObject.gameObject));
     }
 
     public IAdjective DeepCopy()
@@ -60,6 +60,11 @@ public class FloatAdj : IAdjective
 
     IEnumerator FloatObj(GameObject obj)
     {
+        if (DetectManager.GetInstance.GetAdjacentObjectWithDir(obj,Dir.up).GetComponent<InteractiveObject>())
+        {
+            yield break;
+        }
+
         var rb = obj.GetComponent<Rigidbody>();
         rb.isKinematic = true;
         rb.useGravity = false;
@@ -97,8 +102,9 @@ public class FloatAdj : IAdjective
             Abandon(obj.GetComponent<InteractiveObject>());
     }
 
-    void GravityOn(GameObject gameObject)
+    IEnumerator GravityOn(GameObject gameObject)
     {
+        yield return null;
         if (gameObject != null)
         {
             var rb = gameObject.GetComponent<Rigidbody>();
