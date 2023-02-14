@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Serialization;
@@ -9,7 +10,8 @@ public class PlayerMovement : MonoBehaviour
     public PlayerEntity playerEntity;
     #endregion
 
-    public GameObject interactobj;
+    public GameObject interactObj;
+    public GameObject addCardTarget;
     public float moveSpeed;
     public int rotateSpeed;
     public Vector3 inputVector;
@@ -24,7 +26,8 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerEntity = GetComponent<PlayerEntity>();
         GameManager.GetInstance.KeyAction += MoveKeyInput;
-
+        GameManager.GetInstance.localPlayerMovement = this;
+        
         #region Init Variable
         rootmotionSpeed = 1f;
         interactionDelay = 2f;
@@ -66,16 +69,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(GameManager.GetInstance.interactionKey))
         {
-            if (interactobj && interactobj.CompareTag("InteractObj"))
+            if (interactObj && interactObj.CompareTag("InteractObj"))
             {
                 targetDir = DetectManager.GetInstance.objDir;
-                InteractionSequencer.GetInstance.playerActionTargetObject = interactobj.GetComponent<InteractiveObject>();
+                InteractionSequencer.GetInstance.playerActionTargetObject = interactObj.GetComponent<InteractiveObject>();
 
                 foreach (var e in InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives)
                 {
                     if (e != null)
                     {
-                        GameManager.GetInstance.isPlayerDoAction = true;
                         e.Execute(InteractionSequencer.GetInstance.playerActionTargetObject, this.gameObject);
                     }
                 }
@@ -89,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
         
         DetectManager.GetInstance.CheckCharacterCurrentTile(this.gameObject);
         DetectManager.GetInstance.CheckForwardObj(this.gameObject);
-        interactobj = DetectManager.GetInstance.forwardObjectInfo;
+        interactObj = DetectManager.GetInstance.forwardObjectInfo;
 
         // 인터렉션 중에는 이동 또는 다른 인터렉션 불가
         // 플레이어 인풋이 막힌 경우 동작하지 않도록 변경
@@ -158,10 +160,11 @@ public class PlayerMovement : MonoBehaviour
         yield return null;
     }
 
+    #region Animation Rootmotion
     public IEnumerator PushRootmotion()
     {
         yield return SetRotationBeforeInteraction();
-        
+
         Vector3 targetPos = Vector3.zero;
         
         switch (targetDir)
@@ -197,12 +200,117 @@ public class PlayerMovement : MonoBehaviour
         GameManager.GetInstance.isPlayerDoAction = false;
     }
 
+    public IEnumerator ClimbRootmotion()
+    {
+        yield return SetRotationBeforeInteraction();
+        var position = transform.position;
+        position = new Vector3((float)Math.Round(position.x, 1),
+            (float)Math.Round(position.y, 1), (float)Math.Round(position.z, 1));
+        transform.position = position;
+
+        Vector3 targetPos = Vector3.zero;
+        var curPos = position;
+        
+        switch (targetDir)
+        {
+            case Dir.right :
+                targetPos = Vector3.right;
+                break;
+            case Dir.down :
+                targetPos = Vector3.back;
+                break;
+            case Dir.left :
+                targetPos = Vector3.left;
+                break;
+            case Dir.up :
+                targetPos = Vector3.forward;
+                break;
+            default :
+                Debug.LogError("잘못된 타겟 방향값입니다...!");
+                break;
+        }
+
+        float moveTime = 0;
+        Vector3 target1 = curPos + Vector3.up * 0.5f;
+        yield return new WaitForSeconds(1f);
+
+        while (moveTime < 1)
+        {
+            moveTime += Time.deltaTime * rootmotionSpeed;
+            if (transform.position.y > target1.y)
+            {
+                yield return null;
+            }
+            else
+            {
+                transform.position = Vector3.Lerp(curPos, target1, moveTime);
+            }
+            yield return null;
+        }
+
+        transform.position = target1;
+        moveTime = 0;
+        curPos = transform.position;
+        
+        while (moveTime < 1)
+        {
+            moveTime += Time.deltaTime * rootmotionSpeed; 
+            transform.position = Vector3.Lerp(curPos, curPos + targetPos * 0.5f, moveTime);
+            yield return null;
+        }
+
+        curPos = transform.position;
+        moveTime = 0;
+        Vector3 target2 = curPos + Vector3.up * 0.55f;
+        while (moveTime < 1f)
+        {
+            moveTime += Time.deltaTime * rootmotionSpeed; 
+            if (transform.position.y > target2.y)
+            {
+                yield return null;
+            }
+            else
+            {
+                transform.position = Vector3.Lerp(curPos, target2, moveTime);
+            }
+            yield return null;
+        }
+
+        //transform.position = target2;
+        
+        
+        yield return new WaitForSeconds(interactionDelay);
+        GameManager.GetInstance.isPlayerDoAction = false;
+    }
+
+    public IEnumerator AddcardRootmotion()
+    {
+        transform.rotation = Quaternion.Euler(new Vector3(0, addCardTarget.transform.position.y, 0));
+
+        yield return new WaitForSeconds(interactionDelay);
+        
+        yield return null;
+        GameManager.GetInstance.isPlayerDoAction = false;
+    }
+    #endregion
+
     #region AnimationEvent Function
     public void PushRootmotionEvent()
     {
         StartCoroutine(PushRootmotion());    
     }
+
+    public void ClimbRootmotionEvent()
+    {
+        StartCoroutine(ClimbRootmotion());
+    }
+
+    public void AddCardRootmotionEvent()
+    {
+        StartCoroutine(AddcardRootmotion());
+    }
     #endregion
 
 }
+
 
