@@ -127,10 +127,9 @@ public class GameDataManager : Singleton<GameDataManager>
         
         if (!userDataDic.ContainsKey(userID))
         {
-            SUserData userData = UserDataDic["000000"];
-            userData.userID = userID;
+            SUserData userData = new SUserData(userID);
             userDataDic.Add(userID, userData);
-
+            
             SaveLoadFile saveFile = new SaveLoadFile();
             saveFile.UpdateDicDataToJsonFile(userDataDic, filePath + "SaveLoad", userDataFileName);
         }
@@ -330,8 +329,8 @@ public class GameDataManager : Singleton<GameDataManager>
             }
         }
         
-        nameReads = nameReads.OrderBy(item => Names[item].priority).ToHashSet();
-        adjectiveReads = adjectiveReads.OrderBy(item => Adjectives[item].priority).ToHashSet();
+        nameReads = Enumerable.ToHashSet(nameReads.OrderBy(item => Names[item].priority));
+        adjectiveReads = Enumerable.ToHashSet(adjectiveReads.OrderBy(item => Adjectives[item].priority));
 
         // update user data
         SUserData userData = UserDataDic[userID];

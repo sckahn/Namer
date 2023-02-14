@@ -87,6 +87,18 @@ public struct SUserData
     public List<SLevelName> levelNames;
     public SCardView cardView;
     public SGameSetting gameSetting;
+
+    public SUserData(string userID)
+    {
+        this.userID = userID;
+        this.nickName = "";
+        this.clearLevel = -1;
+        this.levelNames = new List<SLevelName>();
+        this.cardView = new SCardView(new List<EName>(), new List<EAdjective>());
+        this.gameSetting = new SGameSetting(0, 0, 
+            0.5f, 0.5f, 0.5f, 
+            false, false, false, false);
+    }
 }
 
 public struct SLevelData

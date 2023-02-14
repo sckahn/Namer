@@ -298,7 +298,6 @@ public class GameManager : Singleton<GameManager>
     int GetCurrentLevel()
     {
         var gameDataManager = GameDataManager.GetInstance;
-        gameDataManager.GetUserAndLevelData();
         curLevel = gameDataManager.UserDataDic[userId].clearLevel;
         return curLevel;
     }
