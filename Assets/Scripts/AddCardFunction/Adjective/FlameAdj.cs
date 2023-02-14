@@ -55,15 +55,17 @@ public class FlameAdj : IAdjective
              //그러니까 서로의 위치를 확인해서 그위치로 쏘게해야함.
              SetSprayDirection(otherObject.gameObject, thisObject.gameObject);
              //
-             InteractionSequencer.GetInstance.SequentialQueue.Enqueue(Extinquish(thisObject));
+             InteractionSequencer.GetInstance.SequentialQueue.Enqueue(Extinquish(thisObject,otherObject));
              
          }
         
     }
 
     #region FlameOut
-    IEnumerator Extinquish(InteractiveObject thisObject)
+    IEnumerator Extinquish(InteractiveObject thisObject, InteractiveObject otherObject)
     {
+        int extinguishIdx = (int)EAdjective.Extinguisher;
+        if(otherObject.Adjectives[extinguishIdx] == null) yield break;
         sprayObj.GetComponent<ParticleSystem>().Play();
         yield return new WaitUntil(() => !sprayObj.GetComponent<ParticleSystem>().isPlaying);
         EradicateFlame(thisObject);
@@ -114,6 +116,8 @@ public class FlameAdj : IAdjective
     
     public void Abandon(InteractiveObject thisObject)
     {
+        if(sprayObj!= null)
+            GameObject.Destroy(sprayObj);
     }
     
     public IAdjective DeepCopy()

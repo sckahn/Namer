@@ -47,10 +47,7 @@ public class FlammableAdj : IAdjective
     {
         ParticleSetting(thisObject);
         isContact = true;
-        ObjectOnFire(thisObject.gameObject);
-
-        SoundManager.GetInstance.Play(SoundManager.GetInstance.effectClips[0]);
-
+        ObjectOnFire(thisObject.gameObject, otherObject.gameObject);
     }
 
     public void Abandon(InteractiveObject thisObject)
@@ -58,28 +55,12 @@ public class FlammableAdj : IAdjective
         
     }
     
-    public IAdjective DeepCopy()
+    public IAdjective DeepCopy() 
     {
         return new FlammableAdj();
     }
 
-    [ContextMenu("Flammable Testing")]
-    private void ObjectOnFire(InteractiveObject targetObj)
-    {
-        //LookUpFlame(targetObj.gameObject);
-        if (isContact)
-        {
-            isContact = false;
-            //코루튼 InteractionSequncer로 변경
-            // InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(OnFire(targetObj.gameObject));
-            InteractionSequencer.GetInstance.SequentialQueue.Enqueue(OnFire(targetObj.gameObject));
-            // targetObj.StartCoroutine(OnFire(targetObj.gameObject));
-            // targetObj.gameObject.SetActive(false);
-            // print("Boom");
-        }
-    }
-
-    private void ObjectOnFire(GameObject targetObj)
+    private void ObjectOnFire(GameObject targetObj,GameObject otherObject)
     {
         if (isContact)
         {
@@ -88,7 +69,7 @@ public class FlammableAdj : IAdjective
             // targetObj.GetComponent<InteractiveObject>().StartCoroutine(OnFire(targetObj.gameObject));
             //코루튼 InteractionSequncer로 변경
             // InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(OnFire(targetObj.gameObject));
-            InteractionSequencer.GetInstance.SequentialQueue.Enqueue(OnFire(targetObj));
+            InteractionSequencer.GetInstance.SequentialQueue.Enqueue(OnFire(targetObj, otherObject));
         }
     }
 
@@ -104,10 +85,12 @@ public class FlammableAdj : IAdjective
         return prefab;
     }
 
-    IEnumerator OnFire(GameObject thisObj)
+    IEnumerator OnFire(GameObject thisObj, GameObject otherObject)
     {
+        int flameIdx = (int)EAdjective.Flame;
+        if (otherObject.GetComponent<InteractiveObject>().Adjectives[flameIdx] == null) yield break;
         fire.Play();
-
+        SoundManager.GetInstance.Play(SoundManager.GetInstance.effectClips[0]);
         yield return new WaitForSeconds(2.5f);
 
         var ObjectMesh = thisObj.GetComponentInChildren<MeshRenderer>();
