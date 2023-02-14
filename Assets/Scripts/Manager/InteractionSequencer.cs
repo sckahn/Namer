@@ -9,8 +9,12 @@ public class FunctionComparer : IComparer<IEnumerator>
     enum EnumeratorFunctionName
     {
         CallWin,
+        ObtainableObj,
+        OnFire,
         MoveObj,
-        SetGrowScale,
+        Climb,
+        ScaleObj,
+        FloatObj,
         BounceObj
     }
 
