@@ -46,8 +46,7 @@ public class EncyclopediaController : MonoBehaviour
         }
         else
         {
-            pediaCards = GameDataManager.GetInstance.GetRewardCardEncyclopedia();
-            GameDataManager.GetInstance.UpdateUserData();
+            pediaCards = GameDataManager.GetInstance.GetIngameCardEncyclopedia();
         }
 
         if (pediaCards == null) return;
