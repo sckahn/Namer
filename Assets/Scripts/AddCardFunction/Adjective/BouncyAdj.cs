@@ -245,6 +245,26 @@ public class BouncyAdj : IAdjective
             // 높이를 증감할 value를 시간에 따라 증가 (0 ~ 1)
             addValue += Time.deltaTime * bounceSpeed;
 
+            // 아래로 이동하는 중에 플레이어가 개입할 경우 플레이어를 밀쳐내는 로직
+            // 아래로 이동하는 중인가? 
+            if (bouncyDir == -1)
+            {
+                // 아래에 플레이어가 개입해있는가?
+                if (CheckExistPlayer(obj, Dir.down))
+                {
+                    // 플레이어와 오브젝트간 방향을 구한 뒤에 그 방향으로 1만큼 떨어진 위치로 플레이어를 이동시킴 
+                    Vector3 playerDir = (obj.transform.position - player.position).normalized;
+                    playerDir.y = 0;
+                    Vector3 targetPos = Vector3Int.RoundToInt(player.position - playerDir);
+
+                    //player.GetComponent<Rigidbody>().MovePosition(targetPos);
+                    while (Vector3.Distance(player.position, targetPos) > 0.3f)
+                    {
+                        player.position = Vector3.MoveTowards(player.position, targetPos, 0.2f);
+                    }
+                }
+            }
+
             //실제로 물체의 포지션을 변경하는 코드
             obj.transform.position = Vector3.Lerp(obj.transform.position, obj.transform.position + new Vector3(0, addValue * bouncyDir, 0), Time.deltaTime * bounciness);
 
