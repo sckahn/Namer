@@ -49,6 +49,7 @@ public class EncyclopediaController : MonoBehaviour
             pediaCards = GameDataManager.GetInstance.GetIngameCardEncyclopedia(GameManager.GetInstance.Level);
         }
 
+        if (pediaCards == null) return;
         maxHeight = 0.5f + (float) 0.5 * (pediaCards.Length / 4);
 
         for (int i = 0; i < pediaCards.Length; i++)

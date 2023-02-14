@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SoundManager : Singleton<SoundManager>
@@ -9,13 +10,18 @@ public class SoundManager : Singleton<SoundManager>
     public AudioSource bgmSound;
     public AudioSource sfxSound;
 
-    public Slider[] sliders;
-    //public Slider sfxSlider;
-    
+    public Slider masterSlider;
+    public Slider BGMSlider;
+    public Slider SFXSlider;
+    public Toggle muteToggle;
+    public Toggle bgToggle;
+
     public List<AudioClip> effectClips = new List<AudioClip> ();
     public List<AudioClip> bgmClips = new List<AudioClip> ();
 
-    public bool isMuted;
+    public bool isMuteToggleOn;
+    public bool isBgToggleOn;
+
 
     private void Awake()
     {
@@ -36,41 +42,150 @@ public class SoundManager : Singleton<SoundManager>
 
     public void SetMasterVolume()
     {
-        if (isMuted) return;
         FindSlider();
-        audioMixer.SetFloat("Master", Mathf.Log10(sliders[0].value) * 20);
+        audioMixer.SetFloat("Master", Mathf.Log10(masterSlider.value) * 20);
     }
 
     public void SetBgmVolume()
     {
-        if (isMuted) return;
         FindSlider();
-        audioMixer.SetFloat("BGM", Mathf.Log10(sliders[1].value) * 20);
+        audioMixer.SetFloat("BGM", Mathf.Log10(BGMSlider.value) * 20);
     }   
     
     public void SetSfxVolume()
     {
-        if (isMuted) return;
         FindSlider();
-        audioMixer.SetFloat("SFX", Mathf.Log10(sliders[2].value) * 20);
+        audioMixer.SetFloat("SFX", Mathf.Log10(SFXSlider.value) * 20);
     }
 
     public void SetSound()
     {
-        if (isMuted)
+        isMuteToggleOn = !isMuteToggleOn;
+        bgmSound.mute = !bgmSound.mute;
+        sfxSound.mute = !sfxSound.mute;
+        print("SetSound");
+    }
+
+    public void SetBgMuteToggle()
+    {
+        isBgToggleOn = !isBgToggleOn;
+    }
+
+    public void FindToggle()
+    {
+        if (SceneManager.GetActiveScene().name == "MainScene")
         {
-            audioMixer.SetFloat("Master", 0);
-            isMuted = !isMuted;
+            muteToggle =
+            GameObject.Find("MainCanvas").transform.
+            Find("OptionPanel").transform.
+            Find("SoundPanel").transform.
+            Find("MutePanel").transform.
+            GetChild(0).GetComponent<Toggle>();
+            bgToggle =
+            GameObject.Find("MainCanvas").transform.
+            Find("OptionPanel").transform.
+            Find("SoundPanel").transform.
+            Find("MutePanel").transform.
+            GetChild(1).GetComponent<Toggle>();
+        } else
+        {
+            muteToggle =
+            GameObject.Find("IngameCanvas").transform.
+            Find("OptionPanel").transform.
+            Find("SoundPanel").transform.
+            Find("MutePanel").transform.
+            GetChild(0).GetComponent<Toggle>();
+            bgToggle = 
+            GameObject.Find("IngameCanvas").transform.
+            Find("OptionPanel").transform.
+            Find("SoundPanel").transform.
+            Find("MutePanel").transform.
+            GetChild(0).GetComponent<Toggle>();
         }
-        else 
+            isBgToggleOn = bgToggle.isOn;
+            muteToggle.onValueChanged.AddListener(delegate {
+                SetSound(); });
+            bgToggle.onValueChanged.AddListener(delegate {
+                SetBgMuteToggle(); ;
+            });
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        if (!isBgToggleOn) return;
+        if (pause)
         {
-            audioMixer.SetFloat("Master", -80);
-            isMuted = !isMuted;
+            if(!isMuteToggleOn)
+            {
+                bgmSound.mute = !bgmSound.mute;
+                sfxSound.mute = !sfxSound.mute;
+            }
+            else
+            {
+                return;
+            }
+        }
+        else
+        {
+            if (!isMuteToggleOn)
+            {
+                bgmSound.mute = !bgmSound.mute;
+                sfxSound.mute = !sfxSound.mute;
+            }
+            else
+            {
+                return;
+            }
         }
     }
 
     void FindSlider()
     {
-        sliders = GameObject.Find("IngameCanvas").transform.GetComponentsInChildren<Slider>();
+        if (SceneManager.GetActiveScene().name == "MainScene")
+        {
+            masterSlider =
+                GameObject.Find("MainCanvas").transform.
+                Find("OptionPanel").transform.
+                Find("SoundPanel").transform.
+                Find("FullVolume Panel").transform.
+                GetChild(1).GetComponent<Slider>();
+
+            BGMSlider =
+                GameObject.Find("MainCanvas").transform.
+                Find("OptionPanel").transform.
+                Find("SoundPanel").transform.
+                Find("BGMVolume Panel").transform.
+                GetChild(1).GetComponent<Slider>();
+
+            SFXSlider =
+                GameObject.Find("MainCanvas").transform.
+                Find("OptionPanel").transform.
+                Find("SoundPanel").transform.
+                Find("SfxVolume Panel").transform.
+                GetChild(1).GetComponent<Slider>();
+        }
+        else
+        {
+            masterSlider =
+                 GameObject.Find("IngameCanvas").transform.
+                 Find("OptionPanel").transform.
+                 Find("SoundPanel").transform.
+                 Find("FullVolume Panel").transform.
+                 GetChild(1).GetComponent<Slider>();
+
+            BGMSlider =
+                GameObject.Find("IngameCanvas").transform.
+                Find("OptionPanel").transform.
+                Find("SoundPanel").transform.
+                Find("BGMVolume Panel").transform.
+                GetChild(1).GetComponent<Slider>();
+
+            SFXSlider =
+                GameObject.Find("IngameCanvas").transform.
+                Find("OptionPanel").transform.
+                Find("SoundPanel").transform.
+                Find("SfxVolume Panel").transform.
+                GetChild(1).GetComponent<Slider>();
+        }
     }
 }

@@ -13,6 +13,7 @@ public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPoin
     [SerializeField] GameObject optionBtn;
     [SerializeField] GameObject gameOptionPanel;
     [SerializeField] GameObject topPanel;
+    Canvas canvas;
 
     bool isCardVisible = true;
     #region ResetRelatedVal
@@ -27,6 +28,9 @@ public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPoin
 
     void Init()
     {
+        canvas = this.gameObject.GetComponent<Canvas>();
+        canvas.worldCamera =
+            Camera.main.transform.Find("UICamera").gameObject.GetComponent<Camera>();
         encyclopedia = Camera.main.gameObject.transform.GetChild(2).gameObject;
     }
 

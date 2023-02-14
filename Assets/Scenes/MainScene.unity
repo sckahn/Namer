@@ -5194,6 +5194,7 @@ MonoBehaviour:
   showNameKey: 9
   pauseKey: 27
   cameraKey: 0
+  cardToggleKey: 0
   managerPrefabs:
   - {fileID: 2625901015695942100, guid: 09c0184ae5229764f9de6e8bcbfef7e9, type: 3}
   - {fileID: 1763381806119774454, guid: 9adce53c6d0ef4c3a98f6b4a37ba52d4, type: 3}
@@ -8421,6 +8422,7 @@ MonoBehaviour:
   isPickCard: 0
   ableCardCtr: 1
   isEncyclopedia: 0
+  isCardDealingDone: 0
   pickCard: {fileID: 0}
   ableAddCard: 1
 --- !u!64 &1651018103
@@ -9271,21 +9273,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 552226259}
     m_Modifications:
     - target: {fileID: 1394141985, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1394141985, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 552226260}
-    - target: {fileID: 1394141985, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OptionPanelClose
-      objectReference: {fileID: 0}
-    - target: {fileID: 1394141985, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MainUIController, Assembly-CSharp
-      objectReference: {fileID: 0}
     - target: {fileID: 6400162451370829607, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -9513,10 +9503,6 @@ PrefabInstance:
     - target: {fileID: 6400162452624949080, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6400162452867930476, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
-      propertyPath: m_AllowSwitchOff
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6400162453224390232, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
       propertyPath: m_AnchorMax.y
@@ -9985,7 +9971,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1802502975}
   m_Layer: 5
-  m_Name: Buttons
+  m_Name: CreditButtons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
