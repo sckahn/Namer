@@ -50,7 +50,7 @@ public class FloatAdj : IAdjective
 
     public void Abandon(InteractiveObject thisObject)
     {
-        GravityOn(thisObject.gameObject);
+        InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(GravityOn(thisObject.gameObject));
     }
 
     public IAdjective DeepCopy()
@@ -60,45 +60,56 @@ public class FloatAdj : IAdjective
 
     IEnumerator FloatObj(GameObject obj)
     {
-        var rb = obj.GetComponent<Rigidbody>();
-        rb.isKinematic = true;
-        rb.useGravity = false;
 
-        currentTime = 0;
-        if (obj != null) yield return null;
-        Vector3 startPos = obj.transform.position;
-        //Debug.Log(startPos);
-        DetectManager.GetInstance.SwapBlockInMap(startPos,startPos + Vector3.up);
-
-        while (obj != null && obj.GetComponent<InteractiveObject>().CheckAdjective(adjectiveName) && currentTime < movingSpeed)
+        if(DetectManager.GetInstance.GetAdjacentObjectWithDir(obj, Dir.up) == null)
         {
-            currentTime += Time.deltaTime;
-            obj.transform.localPosition = Vector3.Lerp(startPos, startPos + Vector3.up, currentTime / movingSpeed);
-            yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd(this);
+            var rb = obj.GetComponent<Rigidbody>();
+            rb.isKinematic = true;
+            rb.useGravity = false;
+
+            currentTime = 0;
+            if (obj != null) yield return null;
+            Vector3 startPos = obj.transform.position;
+            //Debug.Log(startPos);
+            DetectManager.GetInstance.SwapBlockInMap(startPos, startPos + Vector3.up);
+
+            while (obj != null && obj.GetComponent<InteractiveObject>().CheckAdjective(adjectiveName) && currentTime < movingSpeed)
+            {
+                currentTime += Time.deltaTime;
+                obj.transform.localPosition = Vector3.Lerp(startPos, startPos + Vector3.up, currentTime / movingSpeed);
+                yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd(this);
+            }
+
+            //---------수정한부분
+            DetectManager.GetInstance.StartDetector();
+            //------------
+            //Debug.Log(obj.transform.position);
+
+            yield return new WaitForSeconds(0.2f);
+            if (obj != null) yield return null;
+            Vector3 currentPos = obj.transform.GetChild(0).localPosition;
+
+            while (obj != null && obj.GetComponent<InteractiveObject>().CheckAdjective(adjectiveName))
+            {
+                currentTime += Time.deltaTime * speed;
+                obj.transform.GetChild(0).
+                    localPosition = new Vector3(obj.transform.GetChild(0).localPosition.x, currentPos.y + Mathf.Sin(currentTime) * length, obj.transform.GetChild(0).localPosition.z);
+                yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd(this);
+            }
+            if (obj != null)
+                Abandon(obj.GetComponent<InteractiveObject>());
         }
 
-        //---------수정한부분
-        DetectManager.GetInstance.StartDetector();
-        //------------
-        //Debug.Log(obj.transform.position);
 
-        yield return new WaitForSeconds(0.2f);
-        if (obj != null) yield return null;
-        Vector3 currentPos = obj.transform.GetChild(0).localPosition;
-        
-        while (obj != null && obj.GetComponent<InteractiveObject>().CheckAdjective(adjectiveName))
+        else if (DetectManager.GetInstance.GetAdjacentObjectWithDir(obj, Dir.up).GetComponent<InteractiveObject>())
         {
-            currentTime += Time.deltaTime * speed;
-            obj.transform.GetChild(0).
-                localPosition = new Vector3(obj.transform.GetChild(0).localPosition.x, currentPos.y + Mathf.Sin(currentTime) * length, obj.transform.GetChild(0).localPosition.z);
-            yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd(this);
+            yield break;
         }
-        if(obj != null)
-            Abandon(obj.GetComponent<InteractiveObject>());
     }
 
-    void GravityOn(GameObject gameObject)
+    IEnumerator GravityOn(GameObject gameObject)
     {
+        yield return null;
         if (gameObject != null)
         {
             var rb = gameObject.GetComponent<Rigidbody>();

@@ -1,6 +1,8 @@
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using PlayerOwnedStates;
+using UnityEngine.Serialization;
 
 public class CardController : MonoBehaviour
 {
@@ -189,6 +191,9 @@ public class CardController : MonoBehaviour
 
         if (target)
         {
+            GameManager.GetInstance.localPlayerMovement.addCardTarget = target;
+            GameManager.GetInstance.localPlayerEntity.ChangeState(PlayerStates.AddCard);
+            
             if (cardType == ECardType.Name)
             {
                 target.GetComponent<InteractiveObject>().AddName(nameType);

@@ -48,8 +48,8 @@ public class FreezeAdj : IAdjective
         
     }
     
-    public IAdjective DeepCopy()
-    {
-        return new NullAdj();
+    public IAdjective DeepCopy() 
+    { 
+           return new FreezeAdj();
     }
 }

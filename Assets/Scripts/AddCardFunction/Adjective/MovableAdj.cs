@@ -59,7 +59,7 @@ public class MovableAdj : IAdjective
             }
             target = thisObject.transform.position + Vector3.right;
             detectManager.SwapBlockInMap(prevLocatio, target);
-            player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Push);
+            GameManager.GetInstance.isPlayerDoAction = true;
             InteractionSequencer.GetInstance.PlayerActionQueue.Enqueue(MoveObj(thisObject.gameObject));
 
             // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
@@ -77,7 +77,7 @@ public class MovableAdj : IAdjective
             target = thisObject.transform.position + Vector3.left;
             detectManager.SwapBlockInMap(prevLocatio, target);
             // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
-            player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Push);
+            GameManager.GetInstance.isPlayerDoAction = true;
             InteractionSequencer.GetInstance.PlayerActionQueue.Enqueue(MoveObj(thisObject.gameObject));
 
             return;
@@ -92,7 +92,7 @@ public class MovableAdj : IAdjective
             target = thisObject.transform.position + Vector3.forward;
             detectManager.SwapBlockInMap(prevLocatio, target);
             // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
-            player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Push);
+            GameManager.GetInstance.isPlayerDoAction = true;
             InteractionSequencer.GetInstance.PlayerActionQueue.Enqueue(MoveObj(thisObject.gameObject));
 
             return;
@@ -108,16 +108,11 @@ public class MovableAdj : IAdjective
             detectManager.SwapBlockInMap(prevLocatio, target);
         
             // thisObject.StartCoroutine(MoveObj(thisObject.gameObject));
-            player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Push);
+            GameManager.GetInstance.isPlayerDoAction = true;
             InteractionSequencer.GetInstance.PlayerActionQueue.Enqueue(MoveObj(thisObject.gameObject));
 
             return;
         }
-        
-        
-        
-        
-
     }
 
 
@@ -171,7 +166,8 @@ public class MovableAdj : IAdjective
         currentTime = 0;
         Vector3 startPos = obj.transform.localPosition;
         isRoll = true;
-
+        
+        GameManager.GetInstance.localPlayerEntity.ChangeState(PlayerStates.Push);
         SoundManager.GetInstance.Play(SoundManager.GetInstance.effectClips[1]);
 
         while (currentTime < movingSpeed)
