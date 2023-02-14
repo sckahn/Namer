@@ -60,46 +60,51 @@ public class FloatAdj : IAdjective
 
     IEnumerator FloatObj(GameObject obj)
     {
-        if (DetectManager.GetInstance.GetAdjacentObjectWithDir(obj,Dir.up).GetComponent<InteractiveObject>())
+
+        if(DetectManager.GetInstance.GetAdjacentObjectWithDir(obj, Dir.up) == null)
+        {
+            var rb = obj.GetComponent<Rigidbody>();
+            rb.isKinematic = true;
+            rb.useGravity = false;
+
+            currentTime = 0;
+            if (obj != null) yield return null;
+            Vector3 startPos = obj.transform.position;
+            //Debug.Log(startPos);
+            DetectManager.GetInstance.SwapBlockInMap(startPos, startPos + Vector3.up);
+
+            while (obj != null && obj.GetComponent<InteractiveObject>().CheckAdjective(adjectiveName) && currentTime < movingSpeed)
+            {
+                currentTime += Time.deltaTime;
+                obj.transform.localPosition = Vector3.Lerp(startPos, startPos + Vector3.up, currentTime / movingSpeed);
+                yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd(this);
+            }
+
+            //---------수정한부분
+            DetectManager.GetInstance.StartDetector();
+            //------------
+            //Debug.Log(obj.transform.position);
+
+            yield return new WaitForSeconds(0.2f);
+            if (obj != null) yield return null;
+            Vector3 currentPos = obj.transform.GetChild(0).localPosition;
+
+            while (obj != null && obj.GetComponent<InteractiveObject>().CheckAdjective(adjectiveName))
+            {
+                currentTime += Time.deltaTime * speed;
+                obj.transform.GetChild(0).
+                    localPosition = new Vector3(obj.transform.GetChild(0).localPosition.x, currentPos.y + Mathf.Sin(currentTime) * length, obj.transform.GetChild(0).localPosition.z);
+                yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd(this);
+            }
+            if (obj != null)
+                Abandon(obj.GetComponent<InteractiveObject>());
+        }
+
+
+        else if (DetectManager.GetInstance.GetAdjacentObjectWithDir(obj, Dir.up).GetComponent<InteractiveObject>())
         {
             yield break;
         }
-
-        var rb = obj.GetComponent<Rigidbody>();
-        rb.isKinematic = true;
-        rb.useGravity = false;
-
-        currentTime = 0;
-        if (obj != null) yield return null;
-        Vector3 startPos = obj.transform.position;
-        //Debug.Log(startPos);
-        DetectManager.GetInstance.SwapBlockInMap(startPos,startPos + Vector3.up);
-
-        while (obj != null && obj.GetComponent<InteractiveObject>().CheckAdjective(adjectiveName) && currentTime < movingSpeed)
-        {
-            currentTime += Time.deltaTime;
-            obj.transform.localPosition = Vector3.Lerp(startPos, startPos + Vector3.up, currentTime / movingSpeed);
-            yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd(this);
-        }
-
-        //---------수정한부분
-        DetectManager.GetInstance.StartDetector();
-        //------------
-        //Debug.Log(obj.transform.position);
-
-        yield return new WaitForSeconds(0.2f);
-        if (obj != null) yield return null;
-        Vector3 currentPos = obj.transform.GetChild(0).localPosition;
-        
-        while (obj != null && obj.GetComponent<InteractiveObject>().CheckAdjective(adjectiveName))
-        {
-            currentTime += Time.deltaTime * speed;
-            obj.transform.GetChild(0).
-                localPosition = new Vector3(obj.transform.GetChild(0).localPosition.x, currentPos.y + Mathf.Sin(currentTime) * length, obj.transform.GetChild(0).localPosition.z);
-            yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd(this);
-        }
-        if(obj != null)
-            Abandon(obj.GetComponent<InteractiveObject>());
     }
 
     IEnumerator GravityOn(GameObject gameObject)
