@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99cb2f7e6737548f2a3a27f8b1305f59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentRewardCards: []
 --- !u!1 &529420550
 GameObject:
   m_ObjectHideFlags: 0
@@ -1864,6 +1865,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 529420551}
     m_Modifications:
+    - target: {fileID: 4037902826434829065, guid: e0fc5d2d4217742919e69d22f56ea4b2, type: 3}
+      propertyPath: m_FontData.m_MinSize
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4037902826434829065, guid: e0fc5d2d4217742919e69d22f56ea4b2, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 7859969301285110354, guid: e0fc5d2d4217742919e69d22f56ea4b2, type: 3}
       propertyPath: m_Name
       value: NamingCard
@@ -1918,6 +1927,47 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0fc5d2d4217742919e69d22f56ea4b2, type: 3}
+--- !u!114 &1712746235926365455 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1272123333056430625, guid: e0fc5d2d4217742919e69d22f56ea4b2, type: 3}
+  m_PrefabInstance: {fileID: 460379601606526766}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7743834699566728572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05e8cc538b00e4479865b8e759be81d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4497437916437830695 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4037902826434829065, guid: e0fc5d2d4217742919e69d22f56ea4b2, type: 3}
+  m_PrefabInstance: {fileID: 460379601606526766}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &7743834699566728572 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7859969301285110354, guid: e0fc5d2d4217742919e69d22f56ea4b2, type: 3}
+  m_PrefabInstance: {fileID: 460379601606526766}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1011559288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7743834699566728572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f23846bec510246faa41548d48786e2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputedText: {fileID: 4497437916437830695}
+  cardController: {fileID: 1712746235926365455}
 --- !u!4 &8390414493878982548 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8219954743941124282, guid: e0fc5d2d4217742919e69d22f56ea4b2, type: 3}
@@ -2008,15 +2058,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7932567354593375873, guid: 647a0498071d24128925850f6a25e445, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 64
+      value: 34.529
       objectReference: {fileID: 0}
     - target: {fileID: 7932567354593375873, guid: 647a0498071d24128925850f6a25e445, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 14
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7932567354593375873, guid: 647a0498071d24128925850f6a25e445, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 4.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7932567354593375876, guid: 647a0498071d24128925850f6a25e445, type: 3}
       propertyPath: m_Name
@@ -2079,9 +2129,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 529420551}
     m_Modifications:
+    - target: {fileID: 4076328278168770248, guid: 30a704a187a18406badefe9b409e5526, type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4076328278168770248, guid: 30a704a187a18406badefe9b409e5526, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 23
+      objectReference: {fileID: 0}
     - target: {fileID: 6134942478704490388, guid: 30a704a187a18406badefe9b409e5526, type: 3}
       propertyPath: m_Name
-      value: Planet
+      value: PlanetObj
       objectReference: {fileID: 0}
     - target: {fileID: 6802793900543241518, guid: 30a704a187a18406badefe9b409e5526, type: 3}
       propertyPath: m_RootOrder
@@ -2127,10 +2185,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 4.229
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8508229842743543193, guid: 30a704a187a18406badefe9b409e5526, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 30a704a187a18406badefe9b409e5526, type: 3}
 --- !u!4 &1464891381362187920 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6802793900543241518, guid: 30a704a187a18406badefe9b409e5526, type: 3}
   m_PrefabInstance: {fileID: 5349211968698659774}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5431079901328202944 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 99964937000152958, guid: 30a704a187a18406badefe9b409e5526, type: 3}
+  m_PrefabInstance: {fileID: 5349211968698659774}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1011559290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5431079901328202944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46dc05b2190274e968c65655c6e6e4c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 8263596282986898806}
+  cardController: {fileID: 1712746235926365455}
+--- !u!114 &8263596282986898806 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4076328278168770248, guid: 30a704a187a18406badefe9b409e5526, type: 3}
+  m_PrefabInstance: {fileID: 5349211968698659774}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

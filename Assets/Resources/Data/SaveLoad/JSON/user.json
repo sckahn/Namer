@@ -15,10 +15,8 @@
     "clearLevel": -1,
     "levelNames": [],
     "cardView": {
-      "nameRead": [
-      ],
-      "adjectiveRead": [
-      ]
+      "nameRead": [],
+      "adjectiveRead": []
     }
   }
 ]

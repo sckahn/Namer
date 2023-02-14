@@ -115,8 +115,29 @@ public class CardController : MonoBehaviour
         }
     }
 
+    public string currentLevelName = "";
     public void CastCard(GameObject target)
     {
+        if(target && GameManager.GetInstance.CurrentState == GameStates.Victory)
+        {
+            PlanetObjController planetObjController;
+            StageClearPanelController stageClearPanelController;
+            GameDataManager.GetInstance.SetLevelName(currentLevelName);
+            planetObjController =
+                Camera.main.transform.
+                Find("ClearRig").transform.
+                Find("NamingRig").transform.
+                Find("PlanetObj").transform.
+                Find("PopUpName").GetComponent<PlanetObjController>();
+            planetObjController.UpdateTxt();
+
+            stageClearPanelController =
+                GameObject.Find("IngameCanvas").transform.
+                Find("StageClearPanel").GetComponent<StageClearPanelController>();
+
+            stageClearPanelController.NamingDone();
+        }
+
         if (target)
         {
             if (cardType == ECardType.Name)

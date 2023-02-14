@@ -2497,7 +2497,7 @@ MonoBehaviour:
   mainMenucards: {fileID: 1216206864}
   titlePanel: {fileID: 2046814367}
   mainRose: {fileID: 129132252}
-  optionPanel: {fileID: 0}
+  optionPanel: {fileID: 1257051108}
   titleMovingTime: 3
   cameraMovingTime: 3
   levelSelectMovingTime: 1
@@ -5180,6 +5180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3a9cfcd83c3941bd8f6f64dd52b575d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localPlayerEntity: {fileID: 0}
   isPlayerDoAction: 0
   isPlayerCanInput: 0
   cameraController: {fileID: 0}
@@ -5748,6 +5749,11 @@ Transform:
   m_Father: {fileID: 1724532211}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1257051108 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6400162452588348612, guid: 4597bcf20aa4745f59816454757aff05, type: 3}
+  m_PrefabInstance: {fileID: 1749551600}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1263663047
 PrefabInstance:
   m_ObjectHideFlags: 0

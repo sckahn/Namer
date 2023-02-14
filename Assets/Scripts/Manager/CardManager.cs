@@ -23,6 +23,7 @@ public class CardManager : Singleton<CardManager>
     public bool ableCardCtr = true;
     public bool isEncyclopedia = false;
     public bool isCardDealingDone = false;
+    public bool isCardsHide = false;
 
     // 마우스로 선택한 카드
     public GameObject pickCard;
@@ -70,6 +71,10 @@ public class CardManager : Singleton<CardManager>
             
             for (int i = 0; i < cards.Length; i++)
             {
+                if (isCardsHide)
+                {
+                    cards[i].SetActive(false);
+                }
                 AddCard(cards[i]);
                 yield return new WaitForSeconds(0.5f);
             }
@@ -197,6 +202,7 @@ public class CardManager : Singleton<CardManager>
 
     public void CardsHide()
     {
+        isCardsHide = true;
         for (int i = 0; i< myCards.Count; i++)
         {
             myCards[i].gameObject.SetActive(false);
@@ -205,6 +211,7 @@ public class CardManager : Singleton<CardManager>
 
     public void CardsDown()
     {
+        isCardsHide = true;
         for (int i = 0; i < myCards.Count; i++)
         {
             myCards[i].gameObject.transform.
@@ -214,6 +221,7 @@ public class CardManager : Singleton<CardManager>
 
     public void CardsUp()
     {
+        isCardsHide = false;
         for (int i = 0; i < myCards.Count; i++)
         {
             myCards[i].gameObject.transform.
@@ -223,13 +231,12 @@ public class CardManager : Singleton<CardManager>
 
     public void CardsReveal()
     {
+        isCardsHide = false;
         for (int i = 0; i < myCards.Count; i++)
         {
             myCards[i].gameObject.SetActive(true);
         }
     }
-
-
 }
 public class PRS
 {

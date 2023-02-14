@@ -14,10 +14,10 @@ public class RewardRigController : MonoBehaviour
 
     int rightArrowCount;
 
-    void Start()
+    private void OnEnable()
     {
         Init();
-        RewardCardsInstantiate();
+        RewardCardsInstantiate();        
     }
 
     private void Init()
@@ -44,7 +44,7 @@ public class RewardRigController : MonoBehaviour
     private void RewardCardsInstantiate()
     {
 
-        rewardCards = GameDataManager.GetInstance.GetIngameCardEncyclopedia(GameManager.GetInstance.Level);
+        rewardCards = GameDataManager.GetInstance.GetRewardCardEncyclopedia();
         if (rewardCards == null) return;
         rewardPage = new bool[(rewardCards.Length / 5) + 1];
 
@@ -59,6 +59,7 @@ public class RewardRigController : MonoBehaviour
                 currentRewardCards.Add(cardObject);
                 cardObject.layer = 6;
                 ChangeChildrenLayer(cardObject.transform, 6);
+                cardObject.SetActive(true);
 
             }
             rightArrow.SetActive(false);
@@ -75,6 +76,7 @@ public class RewardRigController : MonoBehaviour
                 currentRewardCards.Add(cardObject);
                 cardObject.layer = 6;
                 ChangeChildrenLayer(cardObject.transform, 6);
+                cardObject.SetActive(true);
             }
             leftArrow.SetActive(false);
             rightArrow.SetActive(true);
@@ -108,6 +110,7 @@ public class RewardRigController : MonoBehaviour
                 currentRewardCards.Add(cardObject);
                 cardObject.layer = 6;
                 ChangeChildrenLayer(cardObject.transform, 6);
+                cardObject.SetActive(true);
             }
             rewardPage[rightArrowCount] = true;
             leftArrow.SetActive(true);

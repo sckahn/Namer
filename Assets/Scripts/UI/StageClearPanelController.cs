@@ -19,6 +19,7 @@ public class StageClearPanelController : MonoBehaviour
     GameObject namingRig;
     GameObject rewardRig;
 
+    bool isNamingDone, isRewardDone;
 
     void Start()
     {
@@ -67,12 +68,15 @@ public class StageClearPanelController : MonoBehaviour
     public void NamingDone()
     {
         nameOKBtn.SetActive(true);
+        nameCancleBtn.SetActive(false);
     }
 
     public void NameOKBtn()
     {
         namingRig.SetActive(false);
         namingPanel.SetActive(false);
+        isNamingDone = true;
+        ButtonsCheck();
         buttons.SetActive(true);
     }
 
@@ -91,6 +95,21 @@ public class StageClearPanelController : MonoBehaviour
         buttons.SetActive(true);
         rewardPanel.SetActive(false);
         rewardRig.SetActive(false);
+        isRewardDone = true;
+        ButtonsCheck();
     }
-  
+
+    public void ButtonsCheck()
+    {
+        if (isNamingDone && isRewardDone)
+        {
+            stageClearOKBtn.SetActive(true);
+        }
+    }
+
+    public void StageUIOKBtn()
+    {
+        GameDataManager.GetInstance.UpdateUserData();
+        this.gameObject.SetActive(false);
+    }
 }

@@ -1,8 +1,8 @@
 [
   {
-    "prefabName": "WatermelonObj",
+    "prefabName": "RockObj",
     "objectID": 0,
-    "nameType": 0,
+    "nameType": 3,
     "adjectives": []
   },
   {
