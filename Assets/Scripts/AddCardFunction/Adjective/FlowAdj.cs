@@ -31,7 +31,8 @@ public class FlowAdj : IAdjective
     public void Execute(InteractiveObject thisObject)
     {
         //Debug.Log("this is Null");
-        thisObject.gameObject.layer = 4;
+        //thisObject.gameObject.layer = 4;
+        InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(FlowObj(thisObject));
     }
 
     public void Execute(InteractiveObject thisObject, GameObject player)
@@ -46,7 +47,20 @@ public class FlowAdj : IAdjective
     
     public void Abandon(InteractiveObject thisObject)
     {
-        thisObject.gameObject.layer = 0;
+        InteractionSequencer.GetInstance.CoroutineQueue.Enqueue(AbandonFlow(thisObject));
+        //thisObject.gameObject.layer = 0;
+    }
+
+    IEnumerator FlowObj(InteractiveObject obj)
+    {
+        yield return null;
+        obj.gameObject.layer = 4;
+    }
+
+    IEnumerator AbandonFlow(InteractiveObject obj)
+    {
+        yield return null;
+        obj.gameObject.layer = 0;
     }
     
     public IAdjective DeepCopy()
