@@ -86,6 +86,7 @@ public struct SUserData
     public int clearLevel;
     public List<SLevelName> levelNames;
     public SCardView cardView;
+    public SGameSetting gameSetting;
 }
 
 public struct SLevelData
@@ -118,6 +119,33 @@ public struct SCardView
     {
         this.nameRead = nameRead;
         this.adjectiveRead = adjectiveRead;
+    }
+}
+
+public struct SGameSetting
+{
+    public int resolution;
+    public int maxFrame;
+    public float volume;
+    public float backgroundVolume;
+    public float soundEffects;
+    public bool isfullScreen;
+    public bool isborderlessFullScreen;
+    public bool isMute;
+    public bool isMuteInBackground;
+
+    public SGameSetting(int resolution, int maxFrame, float volume, float backgroundVolume, float soundEffects,
+        bool isfullScreen, bool isborderlessFullScreen, bool isMute, bool isMuteInBackground)
+    {
+        this.resolution = resolution;
+        this.maxFrame = maxFrame;
+        this.volume = volume;
+        this.backgroundVolume = backgroundVolume;
+        this.soundEffects = soundEffects;
+        this.isfullScreen = isfullScreen;
+        this.isborderlessFullScreen = isborderlessFullScreen;
+        this.isMute = isMute;
+        this.isMuteInBackground = isMuteInBackground;
     }
 }
 
