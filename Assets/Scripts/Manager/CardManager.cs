@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class CardManager : Singleton<CardManager>
 {
@@ -21,6 +22,8 @@ public class CardManager : Singleton<CardManager>
     public bool isPickCard = false; 
     public bool ableCardCtr = true;
     public bool isEncyclopedia = false;
+    public bool isCardDealingDone = false;
+    public bool isCardsHide = false;
 
     // 마우스로 선택한 카드
     public GameObject pickCard;
@@ -61,16 +64,23 @@ public class CardManager : Singleton<CardManager>
         }
         else
         {
+            isCardDealingDone = false;
             GameDataManager gameData = GameDataManager.GetInstance;
             int level = GameManager.GetInstance.Level;
             GameObject[] cards = gameData.GetCardPrefabs(gameData.LevelDataDic[level].cardView);
             
             for (int i = 0; i < cards.Length; i++)
             {
+                if (isCardsHide)
+                {
+                    cards[i].SetActive(false);
+                }
                 AddCard(cards[i]);
                 yield return new WaitForSeconds(0.5f);
             }
 
+            yield return new WaitForSeconds(1f);
+            isCardDealingDone = true;
             buttons.SetActive(true);
             // 테스트 시 위의 코드를 주석처리하고, 아래의 함수를 사용해주세요.
             // for (int i = 0; i < startCards.Length; i++)
@@ -192,21 +202,41 @@ public class CardManager : Singleton<CardManager>
 
     public void CardsHide()
     {
+        isCardsHide = true;
         for (int i = 0; i< myCards.Count; i++)
         {
             myCards[i].gameObject.SetActive(false);
         }
     }
 
+    public void CardsDown()
+    {
+        isCardsHide = true;
+        for (int i = 0; i < myCards.Count; i++)
+        {
+            myCards[i].gameObject.transform.
+                DOLocalMove(new Vector3(myCards[i].transform.localPosition.x, -1.5f, 1.496f), 1f);
+        }
+    }
+
+    public void CardsUp()
+    {
+        isCardsHide = false;
+        for (int i = 0; i < myCards.Count; i++)
+        {
+            myCards[i].gameObject.transform.
+                DOLocalMove(new Vector3(myCards[i].transform.localPosition.x, -0.5f, 1.496f), 1f);
+        }
+    }
+
     public void CardsReveal()
     {
+        isCardsHide = false;
         for (int i = 0; i < myCards.Count; i++)
         {
             myCards[i].gameObject.SetActive(true);
         }
     }
-
-
 }
 public class PRS
 {

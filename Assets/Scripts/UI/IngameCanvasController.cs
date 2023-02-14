@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,9 @@ public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPoin
     [SerializeField] GameObject optionBtn;
     [SerializeField] GameObject gameOptionPanel;
     [SerializeField] GameObject topPanel;
+    Canvas canvas;
 
+    bool isCardVisible = true;
     #region ResetRelatedVal
     [SerializeField] GameObject LoadingImg;
     #endregion
@@ -25,13 +28,33 @@ public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPoin
 
     void Init()
     {
+        canvas = this.gameObject.GetComponent<Canvas>();
+        canvas.worldCamera =
+            Camera.main.transform.Find("UICamera").gameObject.GetComponent<Camera>();
         encyclopedia = Camera.main.gameObject.transform.GetChild(2).gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        CardsToggle();
+    }
+
+    private void CardsToggle()
+    {
+        if (Input.GetKeyDown(GameManager.GetInstance.cardToggleKey) && CardManager.GetInstance.isCardDealingDone)
+        {
+            if (isCardVisible)
+            {
+                CardManager.GetInstance.CardsDown();
+                isCardVisible = false;
+            }
+            else
+            {
+                CardManager.GetInstance.CardsUp();
+                isCardVisible = true;
+            }
+        }
     }
 
     public void EncyclopediaOpen()
