@@ -10,6 +10,7 @@ public class FunctionComparer : IComparer<IEnumerator>
     {
         CallWin,
         ObtainableObj,
+        Extinquish,
         OnFire,
         MoveObj,
         Climb,
