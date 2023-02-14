@@ -60,11 +60,13 @@ public class ObtainableAdj : IAdjective
         if (thisObject.GetObjectName() != EName.Null)
         {
             ObtainNameCard(thisObject, thisObject.GetObjectName());
+            GameManager.GetInstance.isPlayerDoAction = true;
             player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Obtain);
         }
         else
         {
             ObtainAdjectiveCard(thisObject, thisObject.Adjectives);
+            GameManager.GetInstance.isPlayerDoAction = true;
             player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Obtain);
         }
     }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public enum PlayerStates { Idle = 0, Run, Push, Victory, Obtain, Climb, Walk, EndPoint }
+public enum PlayerStates { Idle = 0, Run, Push, Victory, Obtain, Climb, Walk, AddCard, EndPoint }
 
 public class PlayerEntity : BaseGameEntity
 {	
@@ -32,7 +32,8 @@ public class PlayerEntity : BaseGameEntity
 		states[PlayerStates.Victory] = new PlayerOwnedStates.WinState();
 		states[PlayerStates.Obtain] = new PlayerOwnedStates.ObtainState();
 		states[PlayerStates.Climb] = new PlayerOwnedStates.ClimbState();
-		states[PlayerStates.Walk] = new PlayerOwnedStates.Walk();
+		states[PlayerStates.Walk] = new PlayerOwnedStates.WalkState();
+		states[PlayerStates.AddCard] = new PlayerOwnedStates.AddCardState();
 
 		// stateMachine 할당 및 초기화
 		// stateMachine을 새로 entity 타입으로 할당한 후 초기값을 세팅해주세요
