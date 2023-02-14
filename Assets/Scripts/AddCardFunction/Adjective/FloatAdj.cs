@@ -68,6 +68,8 @@ public class FloatAdj : IAdjective
         if (obj != null) yield return null;
         Vector3 startPos = obj.transform.position;
         //Debug.Log(startPos);
+        DetectManager.GetInstance.SwapBlockInMap(startPos,startPos + Vector3.up);
+
         while (obj != null && obj.GetComponent<InteractiveObject>().CheckAdjective(adjectiveName) && currentTime < movingSpeed)
         {
             currentTime += Time.deltaTime;
@@ -75,7 +77,6 @@ public class FloatAdj : IAdjective
             yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd(this);
         }
 
-        DetectManager.GetInstance.SwapBlockInMap(startPos,startPos + Vector3.up);
         //---------수정한부분
         DetectManager.GetInstance.StartDetector();
         //------------

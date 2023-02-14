@@ -52,6 +52,11 @@ public class UIManager : Singleton<UIManager>
             GameManager.GetInstance.CurrentState != GameStates.Pause &&
             GameManager.GetInstance.CurrentState != GameStates.Lobby)
         {
+            pauseUIPanel.SetActive(true);
+            GameManager.GetInstance.ChangeGameState(GameStates.Pause);
+            GameManager.GetInstance.SetTimeScale(0);
+            SoundManager.GetInstance.sfxSound.Pause();
+            SoundManager.GetInstance.FindToggle();
             UIOn();
         }
 
@@ -59,6 +64,10 @@ public class UIManager : Singleton<UIManager>
                  GameManager.GetInstance.CurrentState == GameStates.Pause &&
                  GameManager.GetInstance.CurrentState != GameStates.Lobby)
         {
+            pauseUIPanel.SetActive(false);
+            GameManager.GetInstance.ReturnPreviousState();
+            GameManager.GetInstance.SetTimeScale(1);
+            SoundManager.GetInstance.sfxSound.UnPause();
             UIOff();
         }
     }

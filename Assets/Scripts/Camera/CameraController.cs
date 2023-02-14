@@ -72,11 +72,13 @@ public class CameraController : MonoBehaviour
         targetCam.Follow = target;
         targetCam.Priority = (int)PriorityOrder.FrontAtAll;
 
-        // todo 카드가 잠시 안 보이도록 변경
+        // zoom in 상태에서는 카드가 안 보이도록 함 
+        CardManager.GetInstance.CardsHide();
 
         if (!canMove)
         {
             GameManager.GetInstance.isPlayerCanInput = false;
+            GameManager.GetInstance.localPlayerEntity.ChangeState(PlayerStates.Idle);
         }
 
         isFocused = true;
@@ -87,6 +89,10 @@ public class CameraController : MonoBehaviour
         targetCam.Priority = (int)PriorityOrder.BehindAtAll;
         targetCam.LookAt = null;
         targetCam.Follow = null;
+
+        // zoom in 상태에서는 카드가 안 보이도록 함 
+        CardManager.GetInstance.CardsReveal();
+
         GameManager.GetInstance.isPlayerCanInput = true;
 
         isFocused = false;

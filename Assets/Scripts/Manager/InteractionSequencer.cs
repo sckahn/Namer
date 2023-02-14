@@ -9,7 +9,8 @@ public class FunctionComparer : IComparer<IEnumerator>
     enum EnumeratorFunctionName
     {
         MoveObj,
-        SetGrowScale
+        SetGrowScale,
+        BounceObj
     }
 
     public int Compare(IEnumerator functionA, IEnumerator functionB)
@@ -81,7 +82,7 @@ public class InteractionSequencer : Singleton<InteractionSequencer>
         // 플레이어가 인터렉션 하고 있는 오브젝트 --> 코루틴 정지하지 않음
         // 플레이어가 인터렉션 하고 있지 않는 오브젝트 --> 코루틴 정지 필요
         
-        if (currentInteractiveAdjectiveObject == null || playerActionTargetObject)
+        if (currentInteractiveAdjectiveObject == null || !playerActionTargetObject)
         {
             yield break;
         }
