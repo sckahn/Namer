@@ -221,8 +221,6 @@ public partial class DetectManager : Singleton<DetectManager>
 
                 var checkNeighborObj = IsInfluencer(adjacentObjects[i].GetComponent<InteractiveObject>());
                 var checkMovedObj = IsInfluencer(gameObject.GetComponent<InteractiveObject>());
-
-
                 // Neighbor 가 주차자인경우
                 // movedObj 가 주체자인경우
                 //neighbor 가 게체자인경우
@@ -261,19 +259,19 @@ public partial class DetectManager : Singleton<DetectManager>
                 // }
             }
         }
-        foreach (var item in influenceInfluencerPairDict)
-        {
-
-            foreach (var ite in item)
-            {
-
-                //Debug.Log(ite.Key, ite.Key.transform);
-                foreach (var adjs in ite.Value)
-                {
-                    //Debug.Log(adjs.GetAdjectiveName());
-                }
-            }
-        }
+        // foreach (var item in influenceInfluencerPairDict)
+        // {
+        //
+        //     foreach (var ite in item)
+        //     {
+        //
+        //         //Debug.Log(ite.Key, ite.Key.transform);
+        //         foreach (var adjs in ite.Value)
+        //         {
+        //             //Debug.Log(adjs.GetAdjectiveName());
+        //         }
+        //     }
+        // }
         return influenceInfluencerPairDict;
     }
     #endregion
@@ -418,7 +416,9 @@ public partial class DetectManager : Singleton<DetectManager>
         for (int i = 0; i < adjs.Length; i++)
         {
             if (adjs[i] == null) continue;
-            if (adjs[i].GetAdjectiveName() == EAdjective.Flame)
+            if (adjs[i].GetAdjectiveName() == EAdjective.Flame 
+                || adjs[i].GetAdjectiveName() == EAdjective.Extinguisher
+                ||adjs[i].GetAdjectiveName()==EAdjective.Freeze)
             {
                 return true;
             }
@@ -462,6 +462,36 @@ public partial class DetectManager : Singleton<DetectManager>
                 if (influenceAdjs[i] == influencedAdjs[j]) continue; // 둘이 같으면 넘기기
                 if (influenceAdjs[i].GetAdjectiveName() == EAdjective.Flame &&
                     influencedAdjs[j].GetAdjectiveName() == EAdjective.Flammable)
+                {
+                    if (!eachAdjDict.ContainsKey(influence))
+                    {
+                        eachAdjDict.Add(influence, new List<IAdjective>());
+                    }
+                    if (!eachAdjDict.ContainsKey(influenced))
+                    {
+                        eachAdjDict.Add(influenced, new List<IAdjective>());
+                    }
+
+                    eachAdjDict[influence].Add(influenceAdjs[i]);
+                    eachAdjDict[influenced].Add(influencedAdjs[j]);
+                }
+                if (influenceAdjs[i].GetAdjectiveName() == EAdjective.Extinguisher &&
+                         influencedAdjs[j].GetAdjectiveName() == EAdjective.Flame)
+                {
+                    if (!eachAdjDict.ContainsKey(influence))
+                    {
+                        eachAdjDict.Add(influence, new List<IAdjective>());
+                    }
+                    if (!eachAdjDict.ContainsKey(influenced))
+                    {
+                        eachAdjDict.Add(influenced, new List<IAdjective>());
+                    }
+
+                    eachAdjDict[influence].Add(influenceAdjs[i]);
+                    eachAdjDict[influenced].Add(influencedAdjs[j]);
+                }
+                if (influenceAdjs[i].GetAdjectiveName() == EAdjective.Freeze &&
+                    influencedAdjs[j].GetAdjectiveName() == EAdjective.Flow)
                 {
                     if (!eachAdjDict.ContainsKey(influence))
                     {

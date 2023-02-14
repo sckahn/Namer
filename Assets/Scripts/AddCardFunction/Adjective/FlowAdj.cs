@@ -62,6 +62,7 @@ public class FlowAdj : IAdjective
     {
         yield return null;
         obj.gameObject.layer = 0;
+        obj.SubtractAdjective(EAdjective.Flow);
     }
     
     public IAdjective DeepCopy()
