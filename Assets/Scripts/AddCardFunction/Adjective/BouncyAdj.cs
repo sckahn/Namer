@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BouncyAdj : MonoBehaviour, IAdjective
+public class BouncyAdj : IAdjective
 {
     private EAdjective adjectiveName = EAdjective.Bouncy;
     private EAdjectiveType adjectiveType = EAdjectiveType.Repeat;
