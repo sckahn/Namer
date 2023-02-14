@@ -15,6 +15,7 @@ public class PlanetObjController : MonoBehaviour
     {
         cardHolder = Camera.main.transform;
         interactiveObject = GetComponentInParent<InteractiveObject>();
+        nameText.text = GameDataManager.GetInstance.GetLevelName();
     }
 
     void Update()
