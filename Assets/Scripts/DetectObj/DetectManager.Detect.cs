@@ -416,7 +416,9 @@ public partial class DetectManager : Singleton<DetectManager>
         for (int i = 0; i < adjs.Length; i++)
         {
             if (adjs[i] == null) continue;
-            if (adjs[i].GetAdjectiveName() == EAdjective.Flame || adjs[i].GetAdjectiveName() == EAdjective.Extinguisher)
+            if (adjs[i].GetAdjectiveName() == EAdjective.Flame 
+                || adjs[i].GetAdjectiveName() == EAdjective.Extinguisher
+                ||adjs[i].GetAdjectiveName()==EAdjective.Freeze)
             {
                 return true;
             }
@@ -475,6 +477,21 @@ public partial class DetectManager : Singleton<DetectManager>
                 }
                 if (influenceAdjs[i].GetAdjectiveName() == EAdjective.Extinguisher &&
                          influencedAdjs[j].GetAdjectiveName() == EAdjective.Flame)
+                {
+                    if (!eachAdjDict.ContainsKey(influence))
+                    {
+                        eachAdjDict.Add(influence, new List<IAdjective>());
+                    }
+                    if (!eachAdjDict.ContainsKey(influenced))
+                    {
+                        eachAdjDict.Add(influenced, new List<IAdjective>());
+                    }
+
+                    eachAdjDict[influence].Add(influenceAdjs[i]);
+                    eachAdjDict[influenced].Add(influencedAdjs[j]);
+                }
+                if (influenceAdjs[i].GetAdjectiveName() == EAdjective.Freeze &&
+                    influencedAdjs[j].GetAdjectiveName() == EAdjective.Flow)
                 {
                     if (!eachAdjDict.ContainsKey(influence))
                     {
