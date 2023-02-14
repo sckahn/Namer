@@ -97,8 +97,6 @@ public class GameDataManager : Singleton<GameDataManager>
         MapCreator mapCreator = gameObject.AddComponent<MapCreator>();
         initTiles = mapCreator.CreateTileMap(tileMapData);
         initObjects = mapCreator.CreateObjectMap(objectMapData, objectInfoDic);
-        
-        Debug.Log(GetLevelName());
     }
     
 #endregion
