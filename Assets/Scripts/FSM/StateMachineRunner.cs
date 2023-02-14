@@ -31,5 +31,10 @@ public class StateMachineRunner : MonoBehaviour
 			}
 		}
 	}
+
+	public void DestroyEntity(BaseGameEntity entity)
+	{
+		Destroy(entity);
+	}
 }
 
