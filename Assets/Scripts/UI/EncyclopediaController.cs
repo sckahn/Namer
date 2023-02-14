@@ -14,7 +14,7 @@ public class EncyclopediaController : MonoBehaviour
 
     GameDataManager gameDataManager;
 
-    private void Start()
+    private void OnEnable()
     {
        Init();
     }
@@ -27,8 +27,6 @@ public class EncyclopediaController : MonoBehaviour
     private void Init()
     {
         gameDataManager = GameDataManager.GetInstance;
-        gameDataManager.GetCardData();
-        gameDataManager.GetUserAndLevelData();
         EncyclopediaInit();
 
         if (SceneManager.GetActiveScene().name != "MainScene")

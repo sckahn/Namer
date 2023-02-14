@@ -168,32 +168,47 @@ public class GameDataManager : Singleton<GameDataManager>
             UserDataDic[userID].levelNames.Add(new SLevelName(level, levelName));
         }
     }
+
+    public string GetLevelName()
+    {
+        string userID = GameManager.GetInstance.userId;
+        int level = GameManager.GetInstance.Level;
+
+        if (UserDataDic[userID].levelNames != null)
+        {
+            foreach (var levelName in UserDataDic[userID].levelNames)
+            {
+                if (levelName.level == level)
+                {
+                    return levelName.levelName;
+                }
+            }
+        }
+        
+        return "";
+    }
     
-    public void UpdateUserData()
+    public void UpdateUserData(bool isLevelClear, SGameSetting gameSetting)
     {
         string userID = GameManager.GetInstance.userId;
         int level = GameManager.GetInstance.Level;
 
         SUserData userData = userDataDic[userID];
-        userData.clearLevel = level;
+        if (isLevelClear)
+        {
+            userData.clearLevel = level;
+        }
+        else
+        {
+            userData.gameSetting = gameSetting;
+        }
         userDataDic[userID] = userData;
-        
-        // if (userData.cardView.nameRead == null)
-        // {
-        //     userData.cardView.nameRead = new List<EName>();
-        // }
-        // if (userData.cardView.adjectiveRead == null)
-        // {
-        //     userData.cardView.adjectiveRead = new List<EAdjective>();
-        // }
-        // userData.cardView.nameRead.AddRange(CardEncyclopedia[level].nameRead);
-        // userData.cardView.nameRead = userData.cardView.nameRead.Distinct().ToList();
-        // userData.cardView.adjectiveRead.AddRange(CardEncyclopedia[level].adjectiveRead);
-        // userData.cardView.adjectiveRead = userData.cardView.adjectiveRead.Distinct().ToList();
-        // userDataDic[userID] = userData;
-        
-        SaveLoadFile saveFile = new SaveLoadFile();
-        saveFile.UpdateDicDataToJsonFile(userDataDic, filePath + "SaveLoad", userDataFileName);
+
+        if (isLevelClear)
+        {
+            SaveLoadFile saveFile = new SaveLoadFile();
+            saveFile.UpdateDicDataToJsonFile(userDataDic, filePath + "SaveLoad", userDataFileName);
+        }
     }
 
     public void UpdateLevelData(int level, SLevelData levelData)
