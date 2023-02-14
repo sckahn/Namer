@@ -74,11 +74,13 @@ public class PlayerMovement : MonoBehaviour
                 targetDir = DetectManager.GetInstance.objDir;
                 InteractionSequencer.GetInstance.playerActionTargetObject = interactObj.GetComponent<InteractiveObject>();
 
-                foreach (var e in InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives)
+                for (int i = 0; i < InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives.Length; ++i)
                 {
-                    if (e != null)
+                    if (InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives[i] != null)
                     {
-                        e.Execute(InteractionSequencer.GetInstance.playerActionTargetObject, this.gameObject);
+                        InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives[i].Execute(
+                            InteractionSequencer.GetInstance.playerActionTargetObject, this.gameObject);
+                        break;
                     }
                 }
             }

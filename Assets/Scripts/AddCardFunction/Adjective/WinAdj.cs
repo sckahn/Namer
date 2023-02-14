@@ -34,8 +34,8 @@ public class WinAdj : IAdjective
 
     public void Execute(InteractiveObject thisObject, GameObject player)
     {
-        player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Victory);
         InteractionSequencer.GetInstance.SequentialQueue.Enqueue(CallWin());
+        Debug.Log("");
         //Debug.Log("Win : this Object -> Player");
     }
     
@@ -56,7 +56,9 @@ public class WinAdj : IAdjective
 
     IEnumerator CallWin()
     {
+        Debug.Log("");
         GameManager.GetInstance.Win();
+        GameManager.GetInstance.localPlayerEntity.ChangeState(PlayerStates.Victory);
         yield return null;
     }
 

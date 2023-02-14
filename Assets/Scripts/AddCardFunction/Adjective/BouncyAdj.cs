@@ -249,7 +249,7 @@ public class BouncyAdj : IAdjective
             obj.transform.position = Vector3.Lerp(obj.transform.position, obj.transform.position + new Vector3(0, addValue * bouncyDir, 0), Time.deltaTime * bounciness);
 
             // 계속 반복 (repeat Adj)
-            yield return new WaitForEndOfFrame();
+            yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd(this);
         }
     }
 
