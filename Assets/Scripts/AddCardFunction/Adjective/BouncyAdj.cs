@@ -185,7 +185,7 @@ public class BouncyAdj : IAdjective
         }
         else
         {
-            // 아래에 아무 것도 없으면, 무조건 아래로 떨어지게 됨 
+            // 아래에 아무 것도 없으면, 무조건 아래로 떨어지게 됨
             bouncyDir = -1;
             addValue = 0;
             DetectManager.GetInstance.SwapBlockInMap(Vector3Int.RoundToInt(obj.transform.position), Vector3Int.RoundToInt(obj.transform.position) + Vector3.down);
@@ -207,6 +207,11 @@ public class BouncyAdj : IAdjective
         bouncyDir = 1;
         isBouncy = true;
 
+        while (obj.GetComponent<InteractiveObject>().CheckAdjective(EAdjective.Float))
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
         // 처음부터 bounce가 안 되는 상황일 수 있으므로 TryBouncy로 체크 후 bounce 시작 
         TryBouncy(obj);
 
@@ -226,48 +231,51 @@ public class BouncyAdj : IAdjective
                 yield return null;
             }
 
-            // 위로 혹은 아래로 1칸만큼 도달했을 때에 검출 시작
-            // (= 배열로 먼저 이동시킨 지점에 도달했을 때)
-            if (addValue >= 1)
+            if (!obj.GetComponent<InteractiveObject>().CheckAdjective(EAdjective.Float))
             {
-                // 정확히 1칸을 맞추기 위해서 RoundToInt로 위치 조절
-                obj.transform.position = Vector3Int.RoundToInt(obj.transform.position);
-                // 가장 최고점 높이에 도달한 경우에는 플레이어가 들어갈 시간을 잠깐 줌 
-                if (bouncyDir == 1)
+                // 위로 혹은 아래로 1칸만큼 도달했을 때에 검출 시작
+                // (= 배열로 먼저 이동시킨 지점에 도달했을 때)
+                if (addValue >= 1)
                 {
-                    yield return new WaitForSeconds(0.3f);
+                    // 정확히 1칸을 맞추기 위해서 RoundToInt로 위치 조절
+                    obj.transform.position = Vector3Int.RoundToInt(obj.transform.position);
+                    // 가장 최고점 높이에 도달한 경우에는 플레이어가 들어갈 시간을 잠깐 줌 
+                    if (bouncyDir == 1)
+                    {
+                        yield return new WaitForSeconds(0.3f);
+                    }
+
+                    // 검출 후 bounce 시작 
+                    TryBouncy(obj);
                 }
 
-                // 검출 후 bounce 시작 
-                TryBouncy(obj);
-            }
+                // 높이를 증감할 value를 시간에 따라 증가 (0 ~ 1)
+                addValue += Time.deltaTime * bounceSpeed;
 
-            // 높이를 증감할 value를 시간에 따라 증가 (0 ~ 1)
-            addValue += Time.deltaTime * bounceSpeed;
-
-            // 아래로 이동하는 중에 플레이어가 개입할 경우 플레이어를 밀쳐내는 로직
-            // 아래로 이동하는 중인가? 
-            if (bouncyDir == -1)
-            {
-                // 아래에 플레이어가 개입해있는가?
-                if (CheckExistPlayer(obj, Dir.down))
+                // 아래로 이동하는 중에 플레이어가 개입할 경우 플레이어를 밀쳐내는 로직
+                // 아래로 이동하는 중인가? 
+                if (bouncyDir == -1)
                 {
-                    // 플레이어와 오브젝트간 방향을 구한 뒤에 그 방향으로 1만큼 떨어진 위치로 플레이어를 이동시킴 
-                    Vector3 playerDir = (obj.transform.position - player.position).normalized;
-                    playerDir.y = 0;
-                    Vector3 targetPos = Vector3Int.RoundToInt(player.position - playerDir);
-
-                    //player.GetComponent<Rigidbody>().MovePosition(targetPos);
-                    while (Vector3.Distance(player.position, targetPos) > 0.3f)
+                    // 아래에 플레이어가 개입해있는가?
+                    if (CheckExistPlayer(obj, Dir.down))
                     {
-                        player.position = Vector3.MoveTowards(player.position, targetPos, 0.2f);
+                        // 플레이어와 오브젝트간 방향을 구한 뒤에 그 방향으로 1만큼 떨어진 위치로 플레이어를 이동시킴 
+                        Vector3 playerDir = (obj.transform.position - player.position).normalized;
+                        playerDir.y = 0;
+                        Vector3 targetPos = Vector3Int.RoundToInt(player.position - playerDir);
+
+                        //player.GetComponent<Rigidbody>().MovePosition(targetPos);
+                        while (Vector3.Distance(player.position, targetPos) > 0.3f)
+                        {
+                            player.position = Vector3.MoveTowards(player.position, targetPos, 0.2f);
+                        }
                     }
                 }
+
+                //실제로 물체의 포지션을 변경하는 코드
+                obj.transform.position = Vector3.Lerp(obj.transform.position, obj.transform.position + new Vector3(0, addValue * bouncyDir, 0), Time.deltaTime * bounciness);
+
             }
-
-            //실제로 물체의 포지션을 변경하는 코드
-            obj.transform.position = Vector3.Lerp(obj.transform.position, obj.transform.position + new Vector3(0, addValue * bouncyDir, 0), Time.deltaTime * bounciness);
-
             // 계속 반복 (repeat Adj)
             yield return new WaitForEndOfFrame();
         }
@@ -277,27 +285,32 @@ public class BouncyAdj : IAdjective
     {        
         isBouncy = false;
 
-        // 즉시 rigidBody을 원상복귀 
-        var rb = thisObject.GetComponent<Rigidbody>();
-        rb.isKinematic = false;
-        rb.useGravity = true;
-
-        Vector3 playerPos = new Vector3(thisObject.transform.position.x, thisObject.transform.position.y, thisObject.transform.position.z);
-        Vector3 prePos = Vector3Int.RoundToInt(playerPos);
-
-        var dict = DetectManager.GetInstance.GetArrayObjects(prePos + Vector3.up);
-        if (dict[prePos + Vector3.up] == thisObject.gameObject)
+        // 즉시 rigidBody을 원상복귀
+        if (!thisObject.CheckAdjective(EAdjective.Float))
         {
-            DetectManager.GetInstance.SwapBlockInMap(prePos, prePos + Vector3.up);
+            var rb = thisObject.GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+            rb.useGravity = true;
         }
 
-        while (!CheckExistBlock(thisObject.gameObject, Dir.down) && !CheckExistPlayer(thisObject.gameObject, Dir.down))
-        {
-            if (prePos != Vector3Int.RoundToInt(thisObject.transform.position))
-            {
-                DetectManager.GetInstance.SwapBlockInMap(prePos, Vector3Int.RoundToInt(thisObject.transform.position));
-            }
-            yield return new WaitForEndOfFrame();
-        }
+        //Vector3 playerPos = new Vector3(thisObject.transform.position.x, thisObject.transform.position.y, thisObject.transform.position.z);
+        //Vector3 prePos = Vector3Int.RoundToInt(playerPos);
+
+        //var dict = DetectManager.GetInstance.GetArrayObjects(prePos + Vector3.up);
+        //if (dict[prePos + Vector3.up] == thisObject.gameObject)
+        //{
+        //    DetectManager.GetInstance.SwapBlockInMap(prePos, prePos + Vector3.up);
+        //}
+
+        //while (!CheckExistBlock(thisObject.gameObject, Dir.down) && !CheckExistPlayer(thisObject.gameObject, Dir.down))
+        //{
+        //    if (prePos != Vector3Int.RoundToInt(thisObject.transform.position))
+        //    {
+        //        DetectManager.GetInstance.SwapBlockInMap(prePos, Vector3Int.RoundToInt(thisObject.transform.position));
+        //    }
+        //    yield return new WaitForEndOfFrame();
+        //}
+
+        yield return null;
     }
 }
