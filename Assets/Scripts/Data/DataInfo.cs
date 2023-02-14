@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using System.Text;
 
@@ -94,7 +95,7 @@ public struct SUserData
         this.nickName = "";
         this.clearLevel = -1;
         this.levelNames = new List<SLevelName>();
-        this.cardView = new SCardView(new List<EName>(), new List<EAdjective>());
+        this.cardView = new SCardView(new[] { EName.Rose }.ToList(), new[] { EAdjective.Win }.ToList());
         this.gameSetting = new SGameSetting(0, 0, 
             0.5f, 0.5f, 0.5f, 
             false, false, false, false);

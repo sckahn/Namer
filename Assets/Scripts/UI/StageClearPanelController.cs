@@ -109,7 +109,7 @@ public class StageClearPanelController : MonoBehaviour
 
     public void StageUIOKBtn()
     {
-        GameDataManager.GetInstance.UpdateUserData(true);
+        GameDataManager.GetInstance.UpdateUserData();
         this.gameObject.SetActive(false);
     }
 }

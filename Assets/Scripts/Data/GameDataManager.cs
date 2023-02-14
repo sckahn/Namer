@@ -129,7 +129,7 @@ public class GameDataManager : Singleton<GameDataManager>
         {
             SUserData userData = new SUserData(userID);
             userDataDic.Add(userID, userData);
-            
+
             SaveLoadFile saveFile = new SaveLoadFile();
             saveFile.UpdateDicDataToJsonFile(userDataDic, filePath + "SaveLoad", userDataFileName);
         }
@@ -187,31 +187,31 @@ public class GameDataManager : Singleton<GameDataManager>
         return "";
     }
 
-    public void UpdateUserData(bool isLevelClear, SGameSetting? gameSetting = null)
+    public void UpdateUserData()
     {
         string userID = GameManager.GetInstance.userId;
         int level = GameManager.GetInstance.Level;
 
         SUserData userData = userDataDic[userID];
-        if (isLevelClear)
-        {
-            userData.clearLevel = level;
-        }
-        else
-        {
-            if (gameSetting != null)
-            {
-                userData.gameSetting = (SGameSetting)gameSetting;
-            }
-        }
+        userData.clearLevel = level;
         userDataDic[userID] = userData;
 
-        if (isLevelClear)
-        {
-            SaveLoadFile saveFile = new SaveLoadFile();
-            saveFile.UpdateDicDataToJsonFile(userDataDic, filePath + "SaveLoad", userDataFileName);
-        }
+        SaveLoadFile saveFile = new SaveLoadFile();
+        saveFile.UpdateDicDataToJsonFile(userDataDic, filePath + "SaveLoad", userDataFileName);
     }
+
+    public void UpdateGameSetting(SGameSetting gameSetting)
+    {
+        string userID = GameManager.GetInstance.userId;
+        
+        SUserData userData = userDataDic[userID];
+        userData.gameSetting = gameSetting;
+        userDataDic[userID] = userData;
+        
+        SaveLoadFile saveFile = new SaveLoadFile();
+        saveFile.UpdateDicDataToJsonFile(userDataDic, filePath + "SaveLoad", userDataFileName);
+    }
+    
 
     public void UpdateLevelData(int level, SLevelData levelData)
     {
