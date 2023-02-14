@@ -115,9 +115,10 @@ public class GameManager : Singleton<GameManager>
         KeyAction = null;
         #endregion
 
-        #region Get User and Level Data & Set UserID "111111"
+        #region Get User, Level and Card Data & Set UserID "111111"
         GameDataManager.GetInstance.GetUserAndLevelData();
         GameDataManager.GetInstance.AddUserData("111111");
+        GameDataManager.GetInstance.GetCardData();
         #endregion
 
         SetTimeScale(1);
