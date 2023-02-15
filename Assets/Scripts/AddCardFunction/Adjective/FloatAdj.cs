@@ -118,7 +118,8 @@ public class FloatAdj : IAdjective
     IEnumerator GravityOn(GameObject gameObject)
     {
         yield return null;
-
+        if (gameObject != null)
+        {
             //abandon 시 mesh의 위치를 되돌리는 코드
             gameObject.transform.GetChild(0).localPosition = new Vector3(0.194f, 0.817f, -0.476f);
 
@@ -127,7 +128,7 @@ public class FloatAdj : IAdjective
                 var rb = gameObject.GetComponent<Rigidbody>();
                 rb.isKinematic = false;
                 rb.useGravity = true;
-                
             }
+        }
     }
 }
