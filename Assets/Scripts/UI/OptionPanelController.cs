@@ -97,14 +97,14 @@ public class OptionPanelController : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         sGameSetting = GameDataManager.GetInstance.UserDataDic[GameManager.GetInstance.userId].gameSetting;
         sGameSetting.resolution = resolutionIndex;
-        GameDataManager.GetInstance.UpdateUserData(false, sGameSetting);
+        GameDataManager.GetInstance.SetGameSetting(sGameSetting);
     }
 
     public void SetMaxFrame(int maxFramIndex)
     {
         sGameSetting = GameDataManager.GetInstance.UserDataDic[GameManager.GetInstance.userId].gameSetting;
         sGameSetting.maxFrame = maxFramIndex;
-        GameDataManager.GetInstance.UpdateUserData(false, sGameSetting);
+        GameDataManager.GetInstance.SetGameSetting(sGameSetting);
     }
 
     public void SetFullscreen(bool isFullscreen)
@@ -112,7 +112,7 @@ public class OptionPanelController : MonoBehaviour
         Screen.fullScreen = isFullscreen;
         sGameSetting = GameDataManager.GetInstance.UserDataDic[GameManager.GetInstance.userId].gameSetting;
         sGameSetting.isfullScreen = isFullscreen;
-        GameDataManager.GetInstance.UpdateUserData(false, sGameSetting);
+        GameDataManager.GetInstance.SetGameSetting(sGameSetting);
     }
 
     public Toggle withOutBorderfullscreenToggle;
@@ -132,7 +132,7 @@ public class OptionPanelController : MonoBehaviour
 
         sGameSetting = GameDataManager.GetInstance.UserDataDic[GameManager.GetInstance.userId].gameSetting;
         sGameSetting.isborderlessFullScreen = isFullscreen;
-        GameDataManager.GetInstance.UpdateUserData(false, sGameSetting);
+        GameDataManager.GetInstance.SetGameSetting(sGameSetting);
     }
 
     public void OptionPanelClose()
