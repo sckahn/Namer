@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using Newtonsoft.Json;
 
 public class SaveLoadFile
 {
@@ -14,16 +13,18 @@ public class SaveLoadFile
     
 #region JSON File
 
-    public void CreateJsonFile<T>(T info, string filePath, string fileName)
+    public void CreateJsonFile<T>(List<T> info, string filePath, string fileName)
     {
         if (!Directory.Exists(filePath + "/JSON/"))
         {
             Directory.CreateDirectory(filePath + "/JSON/");
         }
 
-        string data = JsonConvert.SerializeObject(info, Newtonsoft.Json.Formatting.Indented);
-        Debug.Log(data);
-        File.WriteAllText(filePath + "/JSON/" + fileName, data);
+        DataList<T> dataList = new DataList<T>();
+        dataList.dataList = info;
+        
+        string data = JsonUtility.ToJson(dataList, true);
+        File.WriteAllText(filePath + "/JSON/" + fileName, data, Encoding.UTF8);
     }
     
     public Dictionary<TK, TV> ReadJsonFile<TK,TV> (string filePath, string fileName) where TV : struct
@@ -36,14 +37,14 @@ public class SaveLoadFile
             return null;
         }
         
-        string jsonFilePath = filePath.Replace("Assets/Resources/", "");
-        fileName = fileName.Replace(".json", "");
-        
-        TextAsset textAsset = Resources.Load<TextAsset>(jsonFilePath + "/JSON/" + fileName);
-        List<TV> infoList = JsonConvert.DeserializeObject<List<TV>>(textAsset.text);
+        FileStream fileStream = new FileStream(filePath + "/JSON/" + fileName, FileMode.Open);
+        StreamReader streamReader = new StreamReader(fileStream);
+        string data = streamReader.ReadToEnd();
+        DataList<TV> infoList = JsonUtility.FromJson<DataList<TV>>(data);
+        streamReader.Close();
 
         Type typeTV = typeof(TV);
-        foreach (TV info in infoList)
+        foreach (TV info in infoList.dataList)
         {
             switch (typeTV.FullName)
             {
