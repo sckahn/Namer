@@ -7,9 +7,9 @@ namespace PlayerOwnedStates
 	{
 		public void Enter(PlayerEntity entity)
         {
-            if (entity.myAnimator)
+            if (entity.pAnimator)
             {
-                entity.myAnimator.SetBool("isRun", false);
+                entity.pAnimator.SetBool("isRun", false);
             }
         }
 
@@ -43,7 +43,7 @@ namespace PlayerOwnedStates
 	{
 		public void Enter(PlayerEntity entity)
 		{
-            entity.myAnimator.SetBool("isRun", true);
+            entity.pAnimator.SetBool("isRun", true);
         }
 
         public void Execute(PlayerEntity entity)
@@ -54,7 +54,7 @@ namespace PlayerOwnedStates
 		{
             if (GameManager.GetInstance.isPlayerDoAction != true)
             {
-                entity.myAnimator.SetBool("isRun", false);
+                entity.pAnimator.SetBool("isRun", false);
             }
         }
     }
@@ -62,14 +62,14 @@ namespace PlayerOwnedStates
     {
         public void Enter(PlayerEntity entity)
         {
-            entity.myAnimator.SetBool("isObtain", true);
+            entity.pAnimator.SetBool("isObtain", true);
             //GameManager.GetInstance.isPlayerDoAction = true;
         }
 
         public void Execute(PlayerEntity entity)
         {
-            if (entity.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Obtain") &&
-                entity.myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            if (entity.pAnimator.GetCurrentAnimatorStateInfo(0).IsName("Obtain") &&
+                entity.pAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
                 entity.ChangeState(PlayerStates.Idle);
             }        
@@ -77,7 +77,7 @@ namespace PlayerOwnedStates
 
         public void Exit(PlayerEntity entity)
         {
-            entity.myAnimator.SetBool("isObtain", false);
+            entity.pAnimator.SetBool("isObtain", false);
         }
     }
     
@@ -85,14 +85,14 @@ namespace PlayerOwnedStates
     {
         public void Enter(PlayerEntity entity)
         {
-            entity.myAnimator.SetBool("isClimb", true);
+            entity.pAnimator.SetBool("isClimb", true);
             //GameManager.GetInstance.isPlayerDoAction = true;        
         }
 
         public void Execute(PlayerEntity entity)
         {
-            if (entity.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Climb") &&
-                entity.myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
+            if (entity.pAnimator.GetCurrentAnimatorStateInfo(0).IsName("Climb") &&
+                entity.pAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f)
             {
                 entity.ChangeState(PlayerStates.Idle);
             }                
@@ -100,7 +100,7 @@ namespace PlayerOwnedStates
 
         public void Exit(PlayerEntity entity)
         {
-            entity.myAnimator.SetBool("isClimb", false);
+            entity.pAnimator.SetBool("isClimb", false);
         }
     }
     
@@ -108,14 +108,14 @@ namespace PlayerOwnedStates
     {
         public void Enter(PlayerEntity entity)
         {
-            entity.myAnimator.SetBool("isPush", true);
+            entity.pAnimator.SetBool("isPush", true);
             GameManager.GetInstance.isPlayerDoAction = true;
         }
 
         public void Execute(PlayerEntity entity)
         {
-            if (entity.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Push") &&
-                entity.myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5)
+            if (entity.pAnimator.GetCurrentAnimatorStateInfo(0).IsName("Push") &&
+                entity.pAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5)
             {
                 entity.ChangeState(PlayerStates.Idle);
             }
@@ -123,7 +123,7 @@ namespace PlayerOwnedStates
 
         public void Exit(PlayerEntity entity)
         {
-            entity.myAnimator.SetBool("isPush", false);
+            entity.pAnimator.SetBool("isPush", false);
         }
     }
 
@@ -131,15 +131,16 @@ namespace PlayerOwnedStates
     {
         public void Enter(PlayerEntity entity)
         {
-            entity.myAnimator.SetBool("isAddCard", true);
+            entity.pAnimator.SetBool("isAddCard", true);
             GameManager.GetInstance.isPlayerDoAction = true;
             InteractionSequencer.GetInstance.PlayerActionQueue.Enqueue(GameManager.GetInstance.localPlayerMovement.AddcardRootmotion());
+            CardManager.GetInstance.ableCardCtr = false;
         }
 
         public void Execute(PlayerEntity entity)
         {
-            if (entity.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("AddCard") &&
-                entity.myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            if (entity.pAnimator.GetCurrentAnimatorStateInfo(0).IsName("AddCard") &&
+                entity.pAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
                 entity.ChangeState(PlayerStates.Idle);
             }
@@ -147,7 +148,8 @@ namespace PlayerOwnedStates
 
         public void Exit(PlayerEntity entity)
         {
-            entity.myAnimator.SetBool("isAddCard", false);
+            entity.pAnimator.SetBool("isAddCard", false);
+            CardManager.GetInstance.ableCardCtr = true;
         }
     }
 
@@ -155,14 +157,14 @@ namespace PlayerOwnedStates
     {
         public void Enter(PlayerEntity entity)
         {
-            entity.myAnimator.SetBool("isVictory", true);
+            entity.pAnimator.SetBool("isVictory", true);
             GameManager.GetInstance.isPlayerDoAction = true;
         }
 
         public void Execute(PlayerEntity entity)
         {
-            if (entity.myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Victory") &&
-                entity.myAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            if (entity.pAnimator.GetCurrentAnimatorStateInfo(0).IsName("Victory") &&
+                entity.pAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
                 entity.ChangeState(PlayerStates.Idle);
             }
@@ -170,7 +172,7 @@ namespace PlayerOwnedStates
 
         public void Exit(PlayerEntity entity)
         {
-            entity.myAnimator.SetBool("isVictory", false);
+            entity.pAnimator.SetBool("isVictory", false);
             GameManager.GetInstance.isPlayerDoAction = false;
         }
     }
