@@ -134,6 +134,7 @@ namespace PlayerOwnedStates
             entity.myAnimator.SetBool("isAddCard", true);
             GameManager.GetInstance.isPlayerDoAction = true;
             InteractionSequencer.GetInstance.PlayerActionQueue.Enqueue(GameManager.GetInstance.localPlayerMovement.AddcardRootmotion());
+            CardManager.GetInstance.ableCardCtr = false;
         }
 
         public void Execute(PlayerEntity entity)
@@ -148,6 +149,7 @@ namespace PlayerOwnedStates
         public void Exit(PlayerEntity entity)
         {
             entity.myAnimator.SetBool("isAddCard", false);
+            CardManager.GetInstance.ableCardCtr = true;
         }
     }
 
