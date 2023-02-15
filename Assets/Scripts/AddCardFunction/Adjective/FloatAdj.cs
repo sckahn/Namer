@@ -63,7 +63,7 @@ public class FloatAdj : IAdjective
     IEnumerator FloatObj(GameObject obj)
     {
 
-        if (DetectManager.GetInstance.GetAdjacentObjectWithDir(obj, Dir.up) == null)
+        if (DetectManager.GetInstance.GetAdjacentObjectWithDir(obj, Dir.up, (int)obj.transform.lossyScale.y) == null)
         {
             //바로 밑에 있는 타일 검사해서 있으면 전 과정 돌리기
             //바로 밑에 타일이 없으면 올라가는 코루틴 pass 둥둥 이펙트만 살리기
