@@ -109,7 +109,7 @@ namespace PlayerOwnedStates
         public void Enter(PlayerEntity entity)
         {
             entity.myAnimator.SetBool("isPush", true);
-            //GameManager.GetInstance.isPlayerDoAction = true;
+            GameManager.GetInstance.isPlayerDoAction = true;
         }
 
         public void Execute(PlayerEntity entity)
@@ -155,7 +155,7 @@ namespace PlayerOwnedStates
         public void Enter(PlayerEntity entity)
         {
             entity.myAnimator.SetBool("isVictory", true);
-            //GameManager.GetInstance.isPlayerDoAction = true;
+            GameManager.GetInstance.isPlayerDoAction = true;
         }
 
         public void Execute(PlayerEntity entity)

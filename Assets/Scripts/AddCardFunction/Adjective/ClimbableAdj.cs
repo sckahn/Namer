@@ -58,7 +58,7 @@ public class ClimbableAdj : IAdjective
         {
             yield break;
         }
-        
+
         GameManager.GetInstance.isPlayerDoAction = true;
         player.GetComponent<PlayerMovement>().playerEntity.ChangeState(PlayerStates.Climb);
         yield return null;
