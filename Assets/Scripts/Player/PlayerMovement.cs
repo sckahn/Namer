@@ -256,10 +256,6 @@ public class PlayerMovement : MonoBehaviour
 
         float moveTime = 0;
         Vector3 target1 = new Vector3(curPos.x, curPos.y + objscale * 0.5f, curPos.z);
-        Debug.Log(objscale);
-        Debug.Log(curPos.y + objscale * 0.5f);
-        Debug.Log(curPos);
-        Debug.Log(target1);
         yield return new WaitForSeconds(1f);
 
         while (moveTime < 1)
@@ -304,8 +300,6 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log(target2);
-        
         yield return new WaitForSeconds(interactionDelay);
         GameManager.GetInstance.isPlayerDoAction = false;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
