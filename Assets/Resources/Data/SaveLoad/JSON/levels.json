@@ -322,6 +322,98 @@
                 "message": "[System]장미에게 도달해서 스페이스바를 누르세요.",
                 "funcName": "",
                 "isFocus": false
+            },
+            {
+                "type": 3,
+                "requirePos": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "targetObj": {
+                    "x": 8.0,
+                    "y": 3.0,
+                    "z": 3.0
+                },
+                "nextPos": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "requiredName": "",
+                "isDialog": true,
+                "message": "장미:좋아. 이제 다른 행성으로 갈 준비가 된거 같아.",
+                "funcName": "",
+                "isFocus": true
+            },
+            {
+                "type": 2,
+                "requirePos": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "targetObj": {
+                    "x": 8.0,
+                    "y": 3.0,
+                    "z": 3.0
+                },
+                "nextPos": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "requiredName": "",
+                "isDialog": true,
+                "message": "장미:부디 어린 왕자를 찾아서 데려와줘.",
+                "funcName": "",
+                "isFocus": true
+            },
+            {
+                "type": 2,
+                "requirePos": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "targetObj": {
+                    "x": 8.0,
+                    "y": 3.0,
+                    "z": 3.0
+                },
+                "nextPos": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "requiredName": "",
+                "isDialog": true,
+                "message": "장미:난 여기서 기다리고 있을게...",
+                "funcName": "",
+                "isFocus": true
+            },
+            {
+                "type": 3,
+                "requirePos": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "targetObj": {
+                    "x": 8.0,
+                    "y": 3.0,
+                    "z": 3.0
+                },
+                "nextPos": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                },
+                "requiredName": "",
+                "isDialog": false,
+                "message": "",
+                "funcName": "",
+                "isFocus": false
             }
         ],
         "playerPosition": {
