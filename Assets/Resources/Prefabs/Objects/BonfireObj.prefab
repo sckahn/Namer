@@ -47,7 +47,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.99, y: 1, z: 0.99}
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &2429951843022243908
 MonoBehaviour:
@@ -61,9 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c399dfa194be4474091b52a796d29cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setInit: 0
   objectName: 4
-  checkAdj: 0000000000000000000000000000000000000000
   countAdj: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   popUpName: {fileID: 6304153737122996222}
 --- !u!54 &940917903818800843
