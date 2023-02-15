@@ -60,15 +60,19 @@ public class InteractiveObject : MonoBehaviour
 
     private void Start()
     {
-        objectName = objectInfo.nameType;
-        addNameText = gameData.Names[objectName].uiText;
-        
-        SetAdjectiveFromData(gameData.Names[objectName].adjectives, false);
-        SetAdjectiveFromData(objectInfo.adjectives);
+        // Delete IF After Finish Test
+        if (!FindObjectOfType<MapReader>())
+        {
+            objectName = objectInfo.nameType;
+            addNameText = gameData.Names[objectName].uiText;
 
-        // Test
-        countAdj.CopyTo(initCountAdj, 0);
-        //
+            SetAdjectiveFromData(gameData.Names[objectName].adjectives, false);
+            SetAdjectiveFromData(objectInfo.adjectives);
+
+            // Test
+            countAdj.CopyTo(initCountAdj, 0);
+            //
+        }
     }
 
     private void SetAdjectiveFromData(EAdjective[] addedAdjectives, bool isAdjective = true)
@@ -86,14 +90,7 @@ public class InteractiveObject : MonoBehaviour
                 Debug.LogError("같은 꾸밈 성질은 2개만 부여할 수 있어요");
             }
             
-            adjectives[adjIndex] = gameData.Adjectives[addedAdjectives[i]].adjective.DeepCopy();
-            adjectives[adjIndex].SetCount(1);
-            ++countAdj[adjIndex];
-
-            if (!isAdjective)
-            {
-                ++countNameAdj[adjIndex];
-            }
+            SetAdjective(addedAdjectives[i], isAdjective);
         }
     }
 
