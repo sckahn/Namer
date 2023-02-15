@@ -56,24 +56,19 @@ public class GameDataManager : Singleton<GameDataManager>
 
 #region Map(tile, object) Data 
 
-    public void CreateFile(int level, string userID = "", bool isLevelClear = false)
+    public void CreateFile()
     {
         FilePathInfo();
-        if ((userID == "" && isLevelClear) || (userID != "" && !isLevelClear))
-        {
-            Debug.LogError("인자 값을 확인해주세요. 레벨 클리어했다면 사용자 아이디가 필요합니다.");
-            return;
-        }
+
+        string sceneName = SceneManager.GetActiveScene().name;
         
-        string sceneName = isLevelClear ? levelDataDic[level].sceneName : SceneManager.GetActiveScene().name;
-        
-        MapReader mapReader = gameObject.AddComponent<MapReader>();
+        MapReader mapReader = FindObjectOfType<MapReader>();
         SMapData mapData = mapReader.GetMapData();
         
         SaveLoadFile saveFile = new SaveLoadFile();
-        saveFile.CreateCsvFile(mapData.tileMapData, filePath + sceneName, userID + tileMapFileName);
-        saveFile.CreateCsvFile(mapData.objectMapData, filePath + sceneName, userID + objectMapFileName);
-        saveFile.CreateJsonFile(mapData.objectInfoData, filePath + sceneName, userID + objectInfoFileName);
+        saveFile.CreateCsvFile(mapData.tileMapData, filePath + sceneName, tileMapFileName);
+        saveFile.CreateCsvFile(mapData.objectMapData, filePath + sceneName, objectMapFileName);
+        saveFile.CreateJsonFile(mapData.objectInfoData, filePath + sceneName, objectInfoFileName);
     }
 
     public void CreateMap(int level)

@@ -24,6 +24,7 @@ public class SaveLoadFile
         dataList.dataList = info;
         
         string data = JsonUtility.ToJson(dataList, true);
+        Debug.Log(data);
         File.WriteAllText(filePath + "/JSON/" + fileName, data, Encoding.UTF8);
     }
     

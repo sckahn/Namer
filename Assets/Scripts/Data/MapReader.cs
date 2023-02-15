@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,12 @@ public class MapReader : MonoBehaviour
     private int totalX;
     private int totalY;
     private int totalZ;
+    
+    private void Start()
+    {
+        GameDataManager.GetInstance.GetCardData();
+        GameDataManager.GetInstance.CreateFile();
+    }
 
     public SMapData GetMapData()
     {
@@ -65,8 +72,7 @@ public class MapReader : MonoBehaviour
                         if (hit.collider.CompareTag("InteractObj"))
                         {
                             objectMapData[x - minX, y - minY, z - minZ] = id.ToString();
-                            objectInfos.Add(AddObjectInfo(hit.collider, id++,
-                                GetPrefabName(objectPredabs, hit.collider.name)));
+                            objectInfos.Add(AddObjectInfo(hit.collider, id++, GetPrefabName(objectPredabs, hit.collider.name)));
                         }
                         else if (!hit.collider.CompareTag("Player"))
                         {
