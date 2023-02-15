@@ -15,7 +15,8 @@ public enum GameStates
     Pause,
     Lose,
     Victory,
-    Encyclopedia
+    Encyclopedia,
+    LevelSelect,
 }
 
 public class GameManager : Singleton<GameManager>
@@ -188,6 +189,8 @@ public class GameManager : Singleton<GameManager>
                 break;
             case GameStates.Encyclopedia:
                 HandleEncyclopedia();
+                break;
+            case GameStates.LevelSelect:
                 break;
         }
     }

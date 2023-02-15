@@ -73,7 +73,7 @@ public class CardManager : Singleton<CardManager>
             {
                 if (isCardsHide)
                 {
-                    cards[i].SetActive(false);
+                    cards[i].transform.GetChild(0).gameObject.SetActive(false);
                 }
                 AddCard(cards[i]);
                 yield return new WaitForSeconds(0.5f);
@@ -205,7 +205,7 @@ public class CardManager : Singleton<CardManager>
         isCardsHide = true;
         for (int i = 0; i< myCards.Count; i++)
         {
-            myCards[i].gameObject.SetActive(false);
+            myCards[i].gameObject.transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 
@@ -234,7 +234,7 @@ public class CardManager : Singleton<CardManager>
         isCardsHide = false;
         for (int i = 0; i < myCards.Count; i++)
         {
-            myCards[i].gameObject.SetActive(true);
+            myCards[i].gameObject.transform.GetChild(0).gameObject.SetActive(true);
         }
     }
 }

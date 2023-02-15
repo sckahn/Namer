@@ -50,11 +50,35 @@ public class MainUIController : MonoBehaviour
     {
         StartCoroutine(PressAnyKeyFloat());
         state = MainMenuState.Title;
+        if (GameManager.GetInstance.CurrentState == GameStates.LevelSelect)
+        {
+            DirectLevelSelect();
+        }
+    }
+
+    private void DirectLevelSelect()
+    {
+        isPressAnyKey = true;
+        TitleMove(0f);
+        pressAnyKeyTxt.SetActive(false);
+        StartCoroutine(MainMenuGroudsSetUp());
+        Invoke("CardholderStart", 0.1f);
+
+        Camera.main.transform.position = new Vector3(10, 7, -3.17f);
+        Camera.main.transform.rotation = Quaternion.Euler(60, 90, 0);
+
+        state = MainMenuState.Level;
+        title.transform.DOMove(new Vector3(Screen.width / 12f, Screen.height / 1.08f, 0f), levelSelectMovingTime);
+        title.transform.DOScale(new Vector3(0.2f, 0.2f, 1f), levelSelectMovingTime);
+        levelSelectCardHolder.SetActive(true);
     }
 
     void Update()
     {
-        PressAnyKey();
+        if (GameManager.GetInstance.CurrentState != GameStates.LevelSelect)
+        {
+            PressAnyKey();
+        }
         informationTxtOnOff();
 
     }
@@ -187,13 +211,13 @@ public class MainUIController : MonoBehaviour
         title.transform.DOMove(new Vector3(Screen.width / 2f, -200, 0f), 2f);
         title.transform.DOScale(new Vector3(0.3f, 0.3f, 1f), 2f);
         Invoke("CreditObjOn", 3f);
-        returnBtn.SetActive(true);
-        pauseBtn.SetActive(true);
     }
 
     void CreditObjOn()
     {
         creditObject.SetActive(true);
+        returnBtn.SetActive(true);
+        pauseBtn.SetActive(true);
     }
 
     public void EncyclopediaReturnBtn()
