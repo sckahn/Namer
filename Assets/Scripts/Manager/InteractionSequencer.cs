@@ -88,17 +88,13 @@ public class InteractionSequencer : Singleton<InteractionSequencer>
         // 플레이어가 인터렉션 하고 있는 오브젝트 --> 코루틴 정지하지 않음
         // 플레이어가 인터렉션 하고 있지 않는 오브젝트 --> 코루틴 정지 필요
         
-        if (currentInteractiveAdjectiveObject == null || !playerActionTargetObject)
+        if (currentInteractiveAdjectiveObject == null)
         {
             yield break;
         }
         
         // 플레이어가 인터렉션 하고 있는 객체이면 Break
-        if (playerActionTargetObject.Adjectives.Contains(currentInteractiveAdjectiveObject))
-        {
-            yield break;
-        }
-        
+
         yield return new WaitUntil(() => GameManager.GetInstance.isPlayerDoAction == false);
         //수정한 부분
         // DetectManager.GetInstance.StartDetector();

@@ -133,6 +133,7 @@ namespace PlayerOwnedStates
         {
             entity.myAnimator.SetBool("isAddCard", true);
             GameManager.GetInstance.isPlayerDoAction = true;
+            InteractionSequencer.GetInstance.PlayerActionQueue.Enqueue(GameManager.GetInstance.localPlayerMovement.AddcardRootmotion());
         }
 
         public void Execute(PlayerEntity entity)
