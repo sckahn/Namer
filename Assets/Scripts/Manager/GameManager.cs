@@ -17,7 +17,7 @@ public enum GameStates
     Victory,
     Encyclopedia
 }
-
+ㄴ
 public class GameManager : Singleton<GameManager>
 {
     #region GameStates
