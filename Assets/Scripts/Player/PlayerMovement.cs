@@ -320,6 +320,7 @@ public class PlayerMovement : MonoBehaviour
         yield return null;
         GameManager.GetInstance.isPlayerDoAction = false;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+        ㄴ
     }
     #endregion
 
