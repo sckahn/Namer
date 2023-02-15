@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
@@ -16,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public int rotateSpeed;
     public Vector3 inputVector;
     private Dir targetDir;
+    private int objscale;
 
     [SerializeField] [Range(0.1f, 5f)] private float rootmotionSpeed;
     [SerializeField] [Range(0.5f, 5f)] private float interactionDelay;
@@ -73,15 +75,33 @@ public class PlayerMovement : MonoBehaviour
             {
                 targetDir = DetectManager.GetInstance.objDir;
                 InteractionSequencer.GetInstance.playerActionTargetObject = interactObj.GetComponent<InteractiveObject>();
-
-                for (int i = 0; i < InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives.Length; ++i)
+                if (InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives[1] != null)
                 {
-                    if (InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives[i] != null)
-                    {
-                        InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives[i].Execute(
-                            InteractionSequencer.GetInstance.playerActionTargetObject, this.gameObject);
-                        break;
-                    }
+                    InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives[1].Execute(
+                        InteractionSequencer.GetInstance.playerActionTargetObject, this.gameObject);
+                    return;
+                }
+                
+                if (InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives[2] != null)
+                {
+                    InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives[2].Execute(
+                        InteractionSequencer.GetInstance.playerActionTargetObject, this.gameObject);
+                    return;
+                }
+                
+                if (InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives[6] != null)
+                {
+                    InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives[6].Execute(
+                        InteractionSequencer.GetInstance.playerActionTargetObject, this.gameObject);
+                    return;
+                }
+                
+                if (InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives[7] != null)
+                {
+                    objscale = (int)InteractionSequencer.GetInstance.playerActionTargetObject.transform.localScale.y - 1;
+                    InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives[7].Execute(
+                        InteractionSequencer.GetInstance.playerActionTargetObject, this.gameObject);
+                    return;
                 }
             }
         }
@@ -89,8 +109,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        
-        
         DetectManager.GetInstance.CheckCharacterCurrentTile(this.gameObject);
         DetectManager.GetInstance.CheckForwardObj(this.gameObject);
         interactObj = DetectManager.GetInstance.forwardObjectInfo;
@@ -233,7 +251,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         float moveTime = 0;
-        Vector3 target1 = curPos + Vector3.up * 0.5f;
+        Vector3 target1 = curPos + Vector3.up * 0.5f * objscale;
         yield return new WaitForSeconds(1f);
 
         while (moveTime < 1)
@@ -263,7 +281,7 @@ public class PlayerMovement : MonoBehaviour
 
         curPos = transform.position;
         moveTime = 0;
-        Vector3 target2 = curPos + Vector3.up * 0.55f;
+        Vector3 target2 = curPos + (Vector3.up * (objscale * 0.5f));
         while (moveTime < 1f)
         {
             moveTime += Time.deltaTime * rootmotionSpeed; 
@@ -279,15 +297,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //transform.position = target2;
-        
-        
+
         yield return new WaitForSeconds(interactionDelay);
         GameManager.GetInstance.isPlayerDoAction = false;
     }
 
     public IEnumerator AddcardRootmotion()
     {
-        transform.rotation = Quaternion.Euler(new Vector3(0, addCardTarget.transform.position.y, 0));
+        transform.rotation = Quaternion.LookRotation(new Vector3(addCardTarget.transform.position.x, 0f, addCardTarget.transform.position.z));
 
         yield return new WaitForSeconds(interactionDelay);
         
