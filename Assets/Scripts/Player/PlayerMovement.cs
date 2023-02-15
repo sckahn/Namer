@@ -98,7 +98,8 @@ public class PlayerMovement : MonoBehaviour
                 
                 if (InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives[7] != null)
                 {
-                    objscale = (int)InteractionSequencer.GetInstance.playerActionTargetObject.transform.localScale.y - 1;
+                    objscale = (int)transform.position.y - (int)InteractionSequencer.GetInstance.playerActionTargetObject.transform.position.y +
+                        (int)InteractionSequencer.GetInstance.playerActionTargetObject.transform.localScale.y;
                     InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives[7].Execute(
                         InteractionSequencer.GetInstance.playerActionTargetObject, this.gameObject);
                     return;
@@ -251,7 +252,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         float moveTime = 0;
-        Vector3 target1 = curPos + Vector3.up * 0.5f * objscale;
+        Vector3 target1 = curPos + Vector3.up * (0.5f * objscale);
         yield return new WaitForSeconds(1f);
 
         while (moveTime < 1)

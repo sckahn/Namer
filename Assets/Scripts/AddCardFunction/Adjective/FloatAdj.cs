@@ -33,7 +33,7 @@ public class FloatAdj : IAdjective
     {
         this.count += addCount;
     }
-    
+
     public void Execute(InteractiveObject thisObject)
     {
         //Debug.Log("this is Float");
@@ -44,7 +44,7 @@ public class FloatAdj : IAdjective
     {
         //Debug.Log("Float : this Object -> Player");
     }
-    
+
     public void Execute(InteractiveObject thisObject, InteractiveObject otherObject)
     {
         //Debug.Log("Float : this Object -> other Object");
@@ -63,7 +63,7 @@ public class FloatAdj : IAdjective
     IEnumerator FloatObj(GameObject obj)
     {
 
-        if(DetectManager.GetInstance.GetAdjacentObjectWithDir(obj, Dir.up) == null)
+        if (DetectManager.GetInstance.GetAdjacentObjectWithDir(obj, Dir.up) == null)
         {
             //바로 밑에 있는 타일 검사해서 있으면 전 과정 돌리기
             //바로 밑에 타일이 없으면 올라가는 코루틴 pass 둥둥 이펙트만 살리기
@@ -99,7 +99,7 @@ public class FloatAdj : IAdjective
             while (obj != null && obj.GetComponent<InteractiveObject>().CheckAdjective(adjectiveName))
             {
                 currentTime += Time.deltaTime * speed;
-                
+
                 obj.transform.GetChild(0).
                     localPosition = new Vector3(obj.transform.GetChild(0).localPosition.x, currentPos.y + Mathf.Sin(currentTime) * length, obj.transform.GetChild(0).localPosition.z);
                 yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd(this);
