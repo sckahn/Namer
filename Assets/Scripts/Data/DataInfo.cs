@@ -54,6 +54,7 @@ public struct SAdjectiveInfo
 
 #region Object Information Struct
 
+[Serializable]
 public struct SObjectInfo
 {
     public string prefabName;
@@ -66,6 +67,7 @@ public struct SObjectInfo
 
 #region Game Information(Map, User, Level) Struct
 
+[Serializable]
 public struct SMapData
 {
     public readonly StringBuilder tileMapData;
@@ -80,6 +82,7 @@ public struct SMapData
     }
 }
 
+[Serializable]
 public struct SUserData
 {
     public string userID;
@@ -102,6 +105,7 @@ public struct SUserData
     }
 }
 
+[Serializable]
 public struct SLevelData
 {
     public int level;
@@ -111,6 +115,7 @@ public struct SLevelData
     public SCardView cardView;
 }
 
+[Serializable]
 public struct SLevelName
 {
     public int level;
@@ -123,6 +128,7 @@ public struct SLevelName
     }
 }
 
+[Serializable]
 public struct SCardView
 {
     public List<EName> nameRead;
@@ -135,6 +141,7 @@ public struct SCardView
     }
 }
 
+[Serializable]
 public struct SGameSetting
 {
     public int resolution;
@@ -178,6 +185,12 @@ public struct SPosition
 }
 
 #endregion
+
+[Serializable]
+public class DataList<T>
+{
+    public List<T> dataList;
+}
 
 public class DataInfo
 {
