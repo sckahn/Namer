@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 public enum PlayerStates { Idle = 0, Run, Push, Victory, Obtain, Climb, Walk, AddCard, EndPoint }
 
@@ -9,13 +10,13 @@ public class PlayerEntity : BaseGameEntity
 	private	StateMachine<PlayerEntity> stateMachine;
     #region components
     private Rigidbody rb;
-    public Animator myAnimator;
+    public Animator pAnimator;
 	#endregion
 
 	public override void Start()
     {
 		base.Start();
-        myAnimator = GetComponentInChildren<Animator>();
+        pAnimator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         FindObjectOfType<StateMachineRunner>().entitys.Add(this);
         GameManager.GetInstance.localPlayerEntity = this;
