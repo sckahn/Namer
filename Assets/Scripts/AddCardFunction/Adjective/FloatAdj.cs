@@ -7,11 +7,13 @@ public class FloatAdj : IAdjective
     private EAdjective adjectiveName = EAdjective.Float;
     private EAdjectiveType adjectiveType = EAdjectiveType.Normal;
     private int count = 0;
+    #region 둥둥 멤버변수
     private float currentTime;
     private float movingSpeed = 1f;
     private float length = 0.08f;
     private float speed = 0.8f;
-
+    GameObject startObj;
+    #endregion
     public EAdjective GetAdjectiveName()
     {
         return adjectiveName;
@@ -63,35 +65,41 @@ public class FloatAdj : IAdjective
 
         if(DetectManager.GetInstance.GetAdjacentObjectWithDir(obj, Dir.up) == null)
         {
+            //바로 밑에 있는 타일 검사해서 있으면 전 과정 돌리기
+            //바로 밑에 타일이 없으면 올라가는 코루틴 pass 둥둥 이펙트만 살리기
             var rb = obj.GetComponent<Rigidbody>();
             rb.isKinematic = true;
             rb.useGravity = false;
-
             currentTime = 0;
             if (obj != null) yield return null;
             Vector3 startPos = obj.transform.position;
-            //Debug.Log(startPos);
-            DetectManager.GetInstance.SwapBlockInMap(startPos, startPos + Vector3.up);
+            startObj = DetectManager.GetInstance.GetAdjacentObjectWithDir(obj, Dir.down, 1);
 
-            while (obj != null && obj.GetComponent<InteractiveObject>().CheckAdjective(adjectiveName) && currentTime < movingSpeed)
+            if (startObj != null)
             {
-                currentTime += Time.deltaTime;
-                obj.transform.localPosition = Vector3.Lerp(startPos, startPos + Vector3.up, currentTime / movingSpeed);
-                yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd(this);
+                DetectManager.GetInstance.SwapBlockInMap(startObj.transform.position + Vector3.up, startObj.transform.position + Vector3.up + Vector3.up);
+
+                while (obj != null && obj.GetComponent<InteractiveObject>().CheckAdjective(adjectiveName) && currentTime < movingSpeed)
+                {
+                    currentTime += Time.deltaTime;
+                    obj.transform.localPosition = Vector3.Lerp(startPos, startObj.transform.position + Vector3.up + Vector3.up, currentTime / movingSpeed);
+                    yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd(this);
+                }
+
+                DetectManager.GetInstance.StartDetector();
+
+                yield return new WaitForSeconds(0.2f);
+                if (obj != null) yield return null;
             }
 
-            //---------수정한부분
-            DetectManager.GetInstance.StartDetector();
-            //------------
-            //Debug.Log(obj.transform.position);
+            obj.transform.localPosition = new Vector3(startPos.x, Mathf.CeilToInt(startPos.y), startPos.z);
 
-            yield return new WaitForSeconds(0.2f);
-            if (obj != null) yield return null;
             Vector3 currentPos = obj.transform.GetChild(0).localPosition;
 
             while (obj != null && obj.GetComponent<InteractiveObject>().CheckAdjective(adjectiveName))
             {
                 currentTime += Time.deltaTime * speed;
+                
                 obj.transform.GetChild(0).
                     localPosition = new Vector3(obj.transform.GetChild(0).localPosition.x, currentPos.y + Mathf.Sin(currentTime) * length, obj.transform.GetChild(0).localPosition.z);
                 yield return InteractionSequencer.GetInstance.WaitUntilPlayerInteractionEnd(this);
@@ -112,11 +120,15 @@ public class FloatAdj : IAdjective
         yield return null;
         if (thisObject != null)
         {
+            //abandon 시 mesh의 위치를 되돌리는 코드
+            thisObject.transform.GetChild(0).localPosition = new Vector3(0.194f, 0.817f, -0.476f);
+
             if (!thisObject.GetComponent<InteractiveObject>().CheckAdjective(EAdjective.Bouncy))
             {
                 var rb = thisObject.GetComponent<Rigidbody>();
                 rb.isKinematic = false;
                 rb.useGravity = true;
+                
             }
         }
     }
