@@ -4,60 +4,10 @@
     "nickName": "이름 없음",
     "clearLevel": -1,
     "levelNames": [],
+    "levelScore": [],
     "cardView": {
-      "nameRead": [
-        1
-      ],
-      "adjectiveRead": [
-        1
-      ]
-    },
-    "gameSetting": {
-      "resolution": 0,
-      "maxFrame": 0,
-      "volume": 0.5,
-      "backgroundVolume": 0.5,
-      "soundEffects": 0.5,
-      "isfullScreen": false,
-      "isborderlessFullScreen": false,
-      "isMute": false,
-      "isMuteInBackground": false
-    }
-  },
-  {
-    "userID": "111111",
-    "nickName": "이름 없음",
-    "clearLevel": 0,
-    "levelNames": [
-      {
-        "level": 0,
-        "levelName": "sdasd"
-      }
-    ],
-    "cardView": {
-      "nameRead": [
-        1,
-        3,
-        4,
-        5
-      ],
-      "adjectiveRead": [
-        1,
-        4,
-        5,
-        8
-      ]
-    },
-    "gameSetting": {
-      "resolution": 0,
-      "maxFrame": 0,
-      "volume": 0.5,
-      "backgroundVolume": 0.5,
-      "soundEffects": 0.5,
-      "isfullScreen": false,
-      "isborderlessFullScreen": false,
-      "isMute": false,
-      "isMuteInBackground": false
+      "nameRead": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      "adjectiveRead": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     }
   }
 ]
