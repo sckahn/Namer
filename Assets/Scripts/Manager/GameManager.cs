@@ -18,7 +18,7 @@ public enum GameStates
     Encyclopedia,
     LevelSelect,
 }
-ㄴ
+
 public class GameManager : Singleton<GameManager>
 {
     #region GameStates

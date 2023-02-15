@@ -42,7 +42,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 3852239679795107312, guid: 04307301639f31d498c473f487464529, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 58f58c46e550f4b0998c22019b375070, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 81252fa3750ad43dd8280d6009bebbd3, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -305,14 +305,16 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: 04307301639f31d498c473f487464529, type: 2}
   bgmSound: {fileID: 448975938}
   sfxSound: {fileID: 1161400631}
-  sliders:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  masterSlider: {fileID: 0}
+  BGMSlider: {fileID: 0}
+  SFXSlider: {fileID: 0}
+  muteToggle: {fileID: 0}
+  bgToggle: {fileID: 0}
   effectClips:
   - {fileID: 8300000, guid: fc014a50987fa46e093e12658b52ab98, type: 3}
   - {fileID: 8300000, guid: ed00552589f014a9287ec81b83b91e62, type: 3}
   - {fileID: 8300000, guid: 2315c56a2fafb405b9bb63f1c08c7f32, type: 3}
   - {fileID: 8300000, guid: 68751f4c568fe4551a2303fa45f8cf55, type: 3}
   bgmClips: []
-  isMuted: 0
+  isMuteToggleOn: 0
+  isBgToggleOn: 0
