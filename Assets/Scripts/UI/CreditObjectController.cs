@@ -7,7 +7,7 @@ public class CreditObjectController : MonoBehaviour
     MainUIController mainUIController;
 
     private void Start()
-    {
+    {ㄴㄴ
         mainUIController = FindObjectOfType<MainUIController>();    
     }
 
