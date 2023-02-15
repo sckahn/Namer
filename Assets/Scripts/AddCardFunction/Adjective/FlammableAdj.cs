@@ -86,11 +86,15 @@ public class FlammableAdj : IAdjective
 
     IEnumerator OnFire(GameObject thisObj, GameObject otherObject)
     {
+        if (thisObj == null || otherObject == null) yield break;
+
         int flameIdx = (int)EAdjective.Flame;
         if (otherObject.GetComponent<InteractiveObject>().Adjectives[flameIdx] == null) yield break;
         fire.Play();
         SoundManager.GetInstance.Play(SoundManager.GetInstance.effectClips[0]);
         yield return new WaitForSeconds(2.5f);
+
+        if (thisObj == null || otherObject == null) yield break;
 
         var ObjectMesh = thisObj.GetComponentInChildren<MeshRenderer>();
         ObjectMesh.enabled = false;
@@ -101,6 +105,8 @@ public class FlammableAdj : IAdjective
         DetectManager.GetInstance.ChangeValueInMap(pos,null);
 
         yield return new WaitForSeconds(1.5f);
+
+        if (thisObj == null || otherObject == null) yield break;
 
         GameObject.Destroy(thisObj);
     }
