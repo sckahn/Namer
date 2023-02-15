@@ -20,8 +20,9 @@ public class SaveLoadFile
         {
             Directory.CreateDirectory(filePath + "/JSON/");
         }
-        
+
         string data = JsonConvert.SerializeObject(info, Newtonsoft.Json.Formatting.Indented);
+        Debug.Log(data);
         File.WriteAllText(filePath + "/JSON/" + fileName, data);
     }
     

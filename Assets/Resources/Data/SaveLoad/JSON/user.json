@@ -32,22 +32,26 @@
   {
     "userID": "111111",
     "nickName": "",
-    "clearLevel": -3,
+    "clearLevel": -1,
     "levelNames": [],
     "cardView": {
-      "nameRead": [],
-      "adjectiveRead": []
+      "nameRead": [
+        1
+      ],
+      "adjectiveRead": [
+        1
+      ]
     },
     "gameSetting": {
       "resolution": 0,
       "maxFrame": 0,
-      "volume": -60.0,
-      "backgroundVolume": 0.5,
-      "soundEffects": 0.5,
+      "volume": 0.186369956,
+      "backgroundVolume": 0.41392,
+      "soundEffects": 0.8079699,
       "isfullScreen": false,
       "isborderlessFullScreen": false,
-      "isMute": false,
-      "isMuteInBackground": false
+      "isMute": true,
+      "isMuteInBackground": true
     }
   }
 ]

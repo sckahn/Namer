@@ -28,21 +28,13 @@ public class OptionPanelController : MonoBehaviour
 
     void Init()
     {
-        print(GameManager.GetInstance.userId);
-
         string userID = GameManager.GetInstance.userId;
-        foreach (var userData in GameDataManager.GetInstance.UserDataDic)
-        {
-            print(userData.Value.userID);
-            print(userData.Value.gameSetting);
-        }
-
         fullscreenToggle.isOn = Screen.fullScreen;
         withOutBorderfullscreenToggle.isOn = Screen.fullScreenMode == FullScreenMode.FullScreenWindow;
         muteToggle.isOn = GameDataManager.GetInstance.
             UserDataDic[GameManager.GetInstance.userId].
             gameSetting.isMute;
-        bgToggle.isOn = !GameDataManager.GetInstance.
+        bgToggle.isOn = GameDataManager.GetInstance.
             UserDataDic[GameManager.GetInstance.userId].
             gameSetting.isMuteInBackground;
         masterSlider.value = GameDataManager.GetInstance.
@@ -137,8 +129,7 @@ public class OptionPanelController : MonoBehaviour
 
     public void OptionPanelClose()
     {
-        print("Close");
-        GameDataManager.GetInstance.UpdateUserData(true);
+        GameDataManager.GetInstance.UpdateUserData(false);
         this.gameObject.SetActive(false);
     }
 }
