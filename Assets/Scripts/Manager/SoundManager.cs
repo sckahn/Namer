@@ -47,7 +47,7 @@ public class SoundManager : Singleton<SoundManager>
         FindSlider();
         audioMixer.SetFloat("Master", Mathf.Log10(masterSlider.value) * 20);
         sGameSetting = GameDataManager.GetInstance.UserDataDic[GameManager.GetInstance.userId].gameSetting;
-        sGameSetting.volume = Mathf.Log10(masterSlider.value) * 20f;
+        sGameSetting.volume = masterSlider.value;
         GameDataManager.GetInstance.SetGameSetting(sGameSetting);
     }
 
@@ -56,7 +56,7 @@ public class SoundManager : Singleton<SoundManager>
         FindSlider();
         audioMixer.SetFloat("BGM", Mathf.Log10(BGMSlider.value) * 20);
         sGameSetting = GameDataManager.GetInstance.UserDataDic[GameManager.GetInstance.userId].gameSetting;
-        sGameSetting.backgroundVolume = Mathf.Log10(masterSlider.value) * 20f;
+        sGameSetting.backgroundVolume = BGMSlider.value;
         GameDataManager.GetInstance.SetGameSetting(sGameSetting);
     }   
     
@@ -65,7 +65,7 @@ public class SoundManager : Singleton<SoundManager>
         FindSlider();
         audioMixer.SetFloat("SFX", Mathf.Log10(SFXSlider.value) * 20);
         sGameSetting = GameDataManager.GetInstance.UserDataDic[GameManager.GetInstance.userId].gameSetting;
-        sGameSetting.soundEffects = Mathf.Log10(masterSlider.value) * 20f;
+        sGameSetting.soundEffects = SFXSlider.value;
         GameDataManager.GetInstance.SetGameSetting(sGameSetting);
     }
 
@@ -83,7 +83,7 @@ public class SoundManager : Singleton<SoundManager>
     {
         isBgToggleOn = !isBgToggleOn;
         sGameSetting = GameDataManager.GetInstance.UserDataDic[GameManager.GetInstance.userId].gameSetting;
-        sGameSetting.isMute = isBgToggleOn;
+        sGameSetting.isMuteInBackground = isBgToggleOn;
         GameDataManager.GetInstance.SetGameSetting(sGameSetting);
     }
 
