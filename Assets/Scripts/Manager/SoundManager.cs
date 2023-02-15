@@ -22,6 +22,8 @@ public class SoundManager : Singleton<SoundManager>
     public bool isMuteToggleOn;
     public bool isBgToggleOn;
 
+    SGameSetting sGameSetting = new SGameSetting();
+
 
     private void Awake()
     {
@@ -44,18 +46,27 @@ public class SoundManager : Singleton<SoundManager>
     {
         FindSlider();
         audioMixer.SetFloat("Master", Mathf.Log10(masterSlider.value) * 20);
+        sGameSetting = GameDataManager.GetInstance.UserDataDic[GameManager.GetInstance.userId].gameSetting;
+        sGameSetting.volume = Mathf.Log10(masterSlider.value) * 20f;
+        GameDataManager.GetInstance.UpdateUserData(false, sGameSetting);
     }
 
     public void SetBgmVolume()
     {
         FindSlider();
         audioMixer.SetFloat("BGM", Mathf.Log10(BGMSlider.value) * 20);
+        sGameSetting = GameDataManager.GetInstance.UserDataDic[GameManager.GetInstance.userId].gameSetting;
+        sGameSetting.backgroundVolume = Mathf.Log10(masterSlider.value) * 20f;
+        GameDataManager.GetInstance.UpdateUserData(false, sGameSetting);
     }   
     
     public void SetSfxVolume()
     {
         FindSlider();
         audioMixer.SetFloat("SFX", Mathf.Log10(SFXSlider.value) * 20);
+        sGameSetting = GameDataManager.GetInstance.UserDataDic[GameManager.GetInstance.userId].gameSetting;
+        sGameSetting.soundEffects = Mathf.Log10(masterSlider.value) * 20f;
+        GameDataManager.GetInstance.UpdateUserData(false, sGameSetting);
     }
 
     public void SetSound()
@@ -63,12 +74,17 @@ public class SoundManager : Singleton<SoundManager>
         isMuteToggleOn = !isMuteToggleOn;
         bgmSound.mute = !bgmSound.mute;
         sfxSound.mute = !sfxSound.mute;
-        print("SetSound");
+        sGameSetting = GameDataManager.GetInstance.UserDataDic[GameManager.GetInstance.userId].gameSetting;
+        sGameSetting.isMute = isMuteToggleOn;
+        GameDataManager.GetInstance.UpdateUserData(false, sGameSetting);
     }
 
     public void SetBgMuteToggle()
     {
         isBgToggleOn = !isBgToggleOn;
+        sGameSetting = GameDataManager.GetInstance.UserDataDic[GameManager.GetInstance.userId].gameSetting;
+        sGameSetting.isMute = isBgToggleOn;
+        GameDataManager.GetInstance.UpdateUserData(false, sGameSetting);
     }
 
     public void FindToggle()
