@@ -13,6 +13,8 @@ public class FloatAdj : IAdjective
     private float length = 0.08f;
     private float speed = 0.8f;
     GameObject startObj;
+    Vector3 childStartPos;
+    GameObject groundObj;
     #endregion
     public EAdjective GetAdjectiveName()
     {
@@ -67,6 +69,14 @@ public class FloatAdj : IAdjective
         {
             //바로 밑에 있는 타일 검사해서 있으면 전 과정 돌리기
             //바로 밑에 타일이 없으면 올라가는 코루틴 pass 둥둥 이펙트만 살리기
+
+            
+            RaycastHit hit;
+            if (Physics.Raycast(obj.transform.position+new Vector3(0,0.5f,0), Vector3.down, out hit))
+            {
+                groundObj = hit.collider.gameObject;
+            }
+
             var rb = obj.GetComponent<Rigidbody>();
             rb.isKinematic = true;
             rb.useGravity = false;
@@ -74,6 +84,7 @@ public class FloatAdj : IAdjective
             if (obj != null) yield return null;
             Vector3 startPos = obj.transform.position;
             startObj = DetectManager.GetInstance.GetAdjacentObjectWithDir(obj, Dir.down, 1);
+            childStartPos = obj.transform.GetChild(0).localPosition;
 
             if (startObj != null)
             {
@@ -92,7 +103,9 @@ public class FloatAdj : IAdjective
                 if (obj != null) yield return null;
             }
 
-            obj.transform.localPosition = new Vector3(startPos.x, Mathf.CeilToInt(startPos.y), startPos.z);
+            float yPos = groundObj.transform.position.y + 2;
+            
+            obj.transform.localPosition = new Vector3(startPos.x, yPos, startPos.z);
 
             Vector3 currentPos = obj.transform.GetChild(0).localPosition;
 
@@ -121,7 +134,7 @@ public class FloatAdj : IAdjective
         if (gameObject != null)
         {
             //abandon 시 mesh의 위치를 되돌리는 코드
-            gameObject.transform.GetChild(0).localPosition = new Vector3(0.194f, 0.817f, -0.476f);
+            gameObject.transform.GetChild(0).localPosition = childStartPos;
 
             if (!gameObject.GetComponent<InteractiveObject>().CheckAdjective(EAdjective.Bouncy))
             {
