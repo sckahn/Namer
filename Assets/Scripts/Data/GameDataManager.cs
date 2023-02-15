@@ -87,7 +87,7 @@ public class GameDataManager : Singleton<GameDataManager>
             return;
         }
         
-        SetCardEncyclopedia(level, levelDataDic[level].cardView);
+        SetCardEncyclopedia(levelDataDic[level].cardView);
         
         SaveLoadFile loadFile = new SaveLoadFile();
         StreamReader tileMapData = loadFile.ReadCsvFile(filePath + sceneName, tileMapFileName);
@@ -110,11 +110,6 @@ public class GameDataManager : Singleton<GameDataManager>
         SaveLoadFile loadFile = new SaveLoadFile();
         userDataDic = loadFile.ReadJsonFile<string, SUserData>(filePath + "SaveLoad", userDataFileName);
         levelDataDic = loadFile.ReadJsonFile<int, SLevelData>(filePath + "SaveLoad", levelDataFileName);
-    }
-    
-    public string GetUserID()
-    {
-        return firstUserID;
     }
 
     public void AddUserData(string userID)
@@ -141,6 +136,11 @@ public class GameDataManager : Singleton<GameDataManager>
             firstUserID = userID;
         }
         //
+    }
+    
+    public string GetUserID()
+    {
+        return firstUserID;
     }
 
     public void SetLevelName(string levelName)
@@ -226,12 +226,11 @@ public class GameDataManager : Singleton<GameDataManager>
         
         SaveLoadFile saveFile = new SaveLoadFile();
         saveFile.UpdateDicDataToJsonFile(levelDataDic, filePath + "SaveLoad", levelDataFileName);
-
     }
 
 #endregion
 
-#region Card Data
+#region Get/Set Card Data & Create Card Prefabs
 
     public void GetCardData()
     {
@@ -242,8 +241,10 @@ public class GameDataManager : Singleton<GameDataManager>
         adjectives = loadFile.GetCardData<EAdjective, SAdjectiveInfo>(data, 1);
     }
 
-    public void SetCardEncyclopedia(int level, SCardView cardView)
+    public void SetCardEncyclopedia(SCardView cardView)
     {
+        int level = GameManager.GetInstance.Level;
+        
         if (!cardEncyclopedia.ContainsKey(level))
         {
             SCardView sCardView = new SCardView();
@@ -269,9 +270,9 @@ public class GameDataManager : Singleton<GameDataManager>
         
         if (adjectiveReads.Count > 0)
         {
-            adjectiveReads.AddRange(cardView.adjectiveRead);
-            adjectiveReads = adjectiveReads.Distinct().ToList();
-            adjectiveReads = adjectiveReads.OrderBy(item => Adjectives[item].priority).ToList();
+            adjectiveReads.AddRange(cardView.adjectiveRead); 
+            adjectiveReads.Distinct().ToList();
+            adjectiveReads.OrderBy(item => Adjectives[item].priority).ToList();
         }
         
         for (int i = 0; i < adjectiveReads.Count; i++)
