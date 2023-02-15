@@ -10,7 +10,8 @@ public enum ERequireType
     Null = -1,
     PlayerPos,
     AddCard,
-    MouseClick
+    MouseClick,
+    Victory
 }
 
 [System.Serializable]
@@ -43,48 +44,34 @@ public class ScenarioController : MonoBehaviour
     [SerializeField] Text logText;
     [SerializeField] GameObject dialogBox;
     [SerializeField] Text dialogText;
+    [SerializeField] GameObject stageClearPanel;
     GameObject popUpTouchUI;
 
     [System.NonSerialized] public bool logOpened = false;
     [System.NonSerialized] public bool dialogOpened = false;
     [System.NonSerialized] public bool isUI = false;
 
+    [Header("조정값")]
+    [SerializeField] private float delayWinUI = 2f;
+
     private void Awake()
     {
         GameManager.GetInstance.scenarioController = this;
-    }
-
-    public void LogOnOff(bool isOn)
-    {
-        switch (isOn)
-        {
-            case (true):
-                logBox.SetActive(logOpened);
-                dialogBox.SetActive(dialogOpened);
-                break;
-            case (false):
-                logOpened = logBox.activeSelf;
-                dialogOpened = dialogBox.activeSelf;
-                logBox.SetActive(false);
-                dialogBox.SetActive(false);
-                break;
-        }
     }
 
     public void Init()
     {
         curScenario = new Scenario();
         curScenario.type = ERequireType.Null;
-        //logBox = GameObject.Find("IngameCanvas").transform.Find("SystemLog").gameObject;
-        //logText = logBox.GetComponentInChildren<Text>();
         logBox.SetActive(false);
         logOpened = false;
-        //dialogBox = GameObject.Find("IngameCanvas").transform.Find("Dialog").gameObject;
-        //dialogText = dialogBox.GetComponentInChildren<Text>();
         dialogBox.SetActive(false);
         dialogOpened = false;
 
         popUpTouchUI = dialogBox.transform.Find("PopUpTouch").gameObject;
+        stageClearPanel =
+            GameObject.Find("IngameCanvas").transform.
+            Find("StageClearPanel").gameObject;
 
         isUI = false;
 
@@ -102,6 +89,24 @@ public class ScenarioController : MonoBehaviour
         player = GameObject.Find("Player").transform;
         NextScenario();
         StartScenario();
+    }
+
+#region LogMessage
+    public void LogOnOff(bool isOn)
+    {
+        switch (isOn)
+        {
+            case (true):
+                logBox.SetActive(logOpened);
+                dialogBox.SetActive(dialogOpened);
+                break;
+            case (false):
+                logOpened = logBox.activeSelf;
+                dialogOpened = dialogBox.activeSelf;
+                logBox.SetActive(false);
+                dialogBox.SetActive(false);
+                break;
+        }
     }
 
     private void SystemLog(string message)
@@ -125,6 +130,21 @@ public class ScenarioController : MonoBehaviour
         dialogText.text = dialogMessage;
         dialogBox.GetComponent<LogText>().SetTime();
     }
+#endregion
+
+#region Scenario Functions
+    [ContextMenu("SaveNewScenario")]
+    public void SaveScenario()
+    {
+        //테스트 완료 후, JSON 파일 저장하는 함수
+        if (scenarioList == null || scenarioList.Length == 0)
+        {
+            SystemLog("[에러]리스트에 추가할 시나리오를 1개 이상 추가하세요.");
+            return;
+        }
+        SaveLoadFile saveFile = new SaveLoadFile();
+        saveFile.CreateJsonFile(scenarioList.ToList(), "Assets/Resources/Data/SaveLoad", "Level0" + GameManager.GetInstance.Level + "Scenario.json");
+    }
 
     private void StartScenario()
     {
@@ -144,19 +164,6 @@ public class ScenarioController : MonoBehaviour
         scenarioTime = 20f;
     }
 
-    [ContextMenu("SaveNewScenario")]
-    public void SaveScenario()
-    {
-        //테스트 완료 후, JSON 파일 저장하는 함수
-        if (scenarioList == null || scenarioList.Length == 0)
-        {
-            SystemLog("[에러]리스트에 추가할 시나리오를 1개 이상 추가하세요.");
-            return;
-        }
-        SaveLoadFile saveFile = new SaveLoadFile();
-        saveFile.CreateJsonFile(scenarioList.ToList(), "Assets/Resources/Data/SaveLoad", "Level0" + GameManager.GetInstance.Level + "Scenario.json");
-    }
-
     private void DoScenario()
     {
         if (cameraController == null) cameraController = Camera.main.transform.parent.GetComponent<CameraController>();
@@ -171,7 +178,7 @@ public class ScenarioController : MonoBehaviour
                     Vector3 vec = Vector3Int.FloorToInt(curScenarioPos);
                     if (objDict[vec] == null)
                     {
-                        LogError("[에러]json의 targetObj x, y, z에 해당하는 \n오브젝트가 없습니다.");
+                        LogError("[에러]json의 targetObj x, y, z에 해당하는 오브젝트가 없습니다.");
                         return;
                     }
                     cameraController.FocusOn(objDict[vec].transform, false);
@@ -192,7 +199,7 @@ public class ScenarioController : MonoBehaviour
                 {
                     if (!curScenario.message.Contains(":"))
                     {
-                        LogError("[에러]json의 message에 ':'으로 이름과 메세지를 \n구분하세요.");
+                        LogError("[에러]json의 message에 ':'으로 이름과 메세지를 구분하세요.");
                         return;
                     }
                     string[] curMessage = curScenario.message.Split(":");
@@ -220,6 +227,59 @@ public class ScenarioController : MonoBehaviour
         }
     }
 
+    private bool CheckScenarioCount()
+    {
+        bool checkedValue = (curScenario.type != ERequireType.Null && scenarioCount != scenarios.Count);
+        if (scenarioCount == 0)
+        {
+            // 승리 ui 실행 
+            StartCoroutine(OpenClearPanel());
+            scenarioCount = -1;
+        }
+        return checkedValue;
+    }
+
+    private void CheckScenarioCondition()
+    {
+        switch (curScenario.type)
+        {
+            case (ERequireType.PlayerPos):
+                Vector3 playerPos = new Vector3(Mathf.Round(player.position.x), Mathf.Round(player.position.y), Mathf.Round(player.position.z));
+                Vector3 requireScenarioPos = new Vector3(curScenario.requirePos.x, curScenario.requirePos.y, curScenario.requirePos.z);
+                if (playerPos == requireScenarioPos)
+                {
+                    StartScenario();
+                }
+                break;
+            case (ERequireType.AddCard):
+                InteractiveObject tarObj = GetIObj();
+                if (tarObj == null) return;
+                string objName = tarObj.GetCurrentName();
+                if (objName == null) return;
+                if (objName.Contains(curScenario.requiredName))
+                {
+                    StartScenario();
+                }
+                break;
+            case (ERequireType.MouseClick):
+                if (Input.GetMouseButtonDown(0) && !isUI)
+                {
+                    StartScenario();
+                }
+                break;
+            case (ERequireType.Victory):
+                if (GameManager.GetInstance.CurrentState == GameStates.Victory)
+                {
+                    StartScenario();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+#endregion
+
+#region ETC Functions
     private void MoveObject()
     {
         Vector3 curScenarioPos = new Vector3(curScenario.targetObj.x, curScenario.targetObj.y, curScenario.targetObj.z);
@@ -241,9 +301,16 @@ public class ScenarioController : MonoBehaviour
         return objDict[vec].GetComponent<InteractiveObject>();
     }
 
+    IEnumerator OpenClearPanel()
+    {
+        yield return new WaitForSeconds(delayWinUI);
+        stageClearPanel.SetActive(true);
+    }
+#endregion
+
     private void Update()
     {
-        if (GameManager.GetInstance.CurrentState != GameStates.InGame) return;
+        if (!((GameManager.GetInstance.CurrentState == GameStates.InGame) || (GameManager.GetInstance.CurrentState == GameStates.Victory))) return;
         if (scenarioTime > 0) scenarioTime -= Time.deltaTime;
         else
         {
@@ -251,35 +318,9 @@ public class ScenarioController : MonoBehaviour
             scenarioTime = 10f;
         }
 
-        if (curScenario.type != ERequireType.Null && scenarioCount != scenarios.Count)
+        if (CheckScenarioCount())
         {
-            switch (curScenario.type)
-            {
-                case (ERequireType.PlayerPos):
-                    Vector3 playerPos = new Vector3(Mathf.Round(player.position.x), Mathf.Round(player.position.y), Mathf.Round(player.position.z));
-                    Vector3 requireScenarioPos = new Vector3(curScenario.requirePos.x, curScenario.requirePos.y, curScenario.requirePos.z);
-                    if (playerPos == requireScenarioPos)
-                    {
-                        StartScenario();
-                    }
-                    break;
-                case (ERequireType.AddCard):
-                    InteractiveObject tarObj = GetIObj();
-                    if (tarObj == null) return;
-                    string objName = tarObj.GetCurrentName();
-                    if (objName == null) return;
-                    if (objName.Contains(curScenario.requiredName))
-                    {
-                        StartScenario();
-                    }
-                    break;
-                case (ERequireType.MouseClick):
-                    if (Input.GetMouseButtonDown(0) && !isUI)
-                    {
-                        StartScenario();
-                    }
-                    break;
-            }
+            CheckScenarioCondition();
         }
     }
 }

@@ -28,26 +28,5 @@
       "isMute": false,
       "isMuteInBackground": false
     }
-  },
-  {
-    "userID": "111111",
-    "nickName": "",
-    "clearLevel": -3,
-    "levelNames": [],
-    "cardView": {
-      "nameRead": [],
-      "adjectiveRead": []
-    },
-    "gameSetting": {
-      "resolution": 0,
-      "maxFrame": 0,
-      "volume": -60.0,
-      "backgroundVolume": 0.5,
-      "soundEffects": 0.5,
-      "isfullScreen": false,
-      "isborderlessFullScreen": false,
-      "isMute": false,
-      "isMuteInBackground": false
-    }
   }
 ]
