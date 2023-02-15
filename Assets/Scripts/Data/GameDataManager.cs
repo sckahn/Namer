@@ -168,10 +168,9 @@ public class GameDataManager : Singleton<GameDataManager>
         }
     }
 
-    public string GetLevelName()
+    public string GetLevelName(int level)
     {
         string userID = GameManager.GetInstance.userId;
-        int level = GameManager.GetInstance.Level;
 
         if (UserDataDic[userID].levelNames != null)
         {
@@ -187,29 +186,29 @@ public class GameDataManager : Singleton<GameDataManager>
         return "";
     }
 
-    public void UpdateUserData()
+    public void UpdateUserData(bool isLevelClear)
     {
-        string userID = GameManager.GetInstance.userId;
-        int level = GameManager.GetInstance.Level;
-
-        SUserData userData = userDataDic[userID];
-        userData.clearLevel = level;
-        userDataDic[userID] = userData;
+        if (isLevelClear)
+        {
+            string userID = GameManager.GetInstance.userId;
+            int level = GameManager.GetInstance.Level;
+            
+            SUserData userData = userDataDic[userID];
+            userData.clearLevel = level;
+            userDataDic[userID] = userData;
+        }
 
         SaveLoadFile saveFile = new SaveLoadFile();
         saveFile.UpdateDicDataToJsonFile(userDataDic, filePath + "SaveLoad", userDataFileName);
     }
 
-    public void UpdateGameSetting(SGameSetting gameSetting)
+    public void SetGameSetting(SGameSetting gameSetting)
     {
         string userID = GameManager.GetInstance.userId;
         
         SUserData userData = userDataDic[userID];
         userData.gameSetting = gameSetting;
         userDataDic[userID] = userData;
-        
-        SaveLoadFile saveFile = new SaveLoadFile();
-        saveFile.UpdateDicDataToJsonFile(userDataDic, filePath + "SaveLoad", userDataFileName);
     }
     
 
