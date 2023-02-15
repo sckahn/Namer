@@ -227,7 +227,7 @@ public class PlayerMovement : MonoBehaviour
         var position = transform.position;
         position = new Vector3((float)Math.Round(position.x, 1),
             (float)Math.Round(position.y, 1), (float)Math.Round(position.z, 1));
-        transform.position = position;
+            transform.position = position;
 
         Vector3 targetPos = Vector3.zero;
         var curPos = position;
