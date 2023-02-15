@@ -991,11 +991,12 @@
             },
             "cardView": {
                 "nameRead": [
-                    8
                 ],
                 "adjectiveRead": [
+                    6,
+                    6,
                     7,
-                    5
+                    7
                 ]
             }
         },
@@ -1005,13 +1006,17 @@
             "scenario": [],
             "playerPosition": {
                 "x": 0.0,
-                "y": 3.0,
+                "y": 1.0,
                 "z": 0.0
             },
             "cardView": {
                 "nameRead": [
                 ],
                 "adjectiveRead": [
+                    14,
+                    14,
+                    9, 
+                    13
                 ]
             }
         },
