@@ -98,8 +98,9 @@ public class PlayerMovement : MonoBehaviour
                 
                 if (InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives[7] != null)
                 {
-                    objscale = (int)transform.position.y - (int)InteractionSequencer.GetInstance.playerActionTargetObject.transform.position.y +
-                        (int)InteractionSequencer.GetInstance.playerActionTargetObject.transform.localScale.y;
+                    objscale = (int)InteractionSequencer.GetInstance.playerActionTargetObject.transform.localScale.y
+                               - ((int)transform.position.y - (int)InteractionSequencer.GetInstance.playerActionTargetObject.transform.position.y);
+                        
                     InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives[7].Execute(
                         InteractionSequencer.GetInstance.playerActionTargetObject, this.gameObject);
                     return;
@@ -127,6 +128,7 @@ public class PlayerMovement : MonoBehaviour
     // 방향만 맞춰주면 되는 경우
     public IEnumerator SetRotationBeforeInteraction()
     {
+        rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
         float targetRotationY = 0;
         //float curPlayerRoationY = transform.eulerAngles.y;
         switch (targetDir)
@@ -219,6 +221,7 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(interactionDelay);
         GameManager.GetInstance.isPlayerDoAction = false;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     public IEnumerator ClimbRootmotion()
@@ -252,7 +255,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         float moveTime = 0;
-        Vector3 target1 = curPos + Vector3.up * (0.5f * objscale);
+        Vector3 target1 = new Vector3(curPos.x, curPos.y + objscale * 0.5f, curPos.z);
         yield return new WaitForSeconds(1f);
 
         while (moveTime < 1)
@@ -282,7 +285,7 @@ public class PlayerMovement : MonoBehaviour
 
         curPos = transform.position;
         moveTime = 0;
-        Vector3 target2 = curPos + (Vector3.up * (objscale * 0.5f));
+        Vector3 target2 = new Vector3(curPos.x, curPos.y + objscale * 0.5f + 0.05f, curPos.z);
         while (moveTime < 1f)
         {
             moveTime += Time.deltaTime * rootmotionSpeed; 
@@ -297,10 +300,9 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
 
-        //transform.position = target2;
-
         yield return new WaitForSeconds(interactionDelay);
         GameManager.GetInstance.isPlayerDoAction = false;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     public IEnumerator AddcardRootmotion()
@@ -311,6 +313,7 @@ public class PlayerMovement : MonoBehaviour
         
         yield return null;
         GameManager.GetInstance.isPlayerDoAction = false;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
     #endregion
 

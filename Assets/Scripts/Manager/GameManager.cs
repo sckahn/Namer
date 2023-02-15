@@ -17,7 +17,7 @@ public enum GameStates
     Victory,
     Encyclopedia
 }
-
+ㄴ
 public class GameManager : Singleton<GameManager>
 {
     #region GameStates
@@ -35,7 +35,6 @@ public class GameManager : Singleton<GameManager>
     #region Camera variable
     [Header("Camera Variable")]
     public CameraController cameraController;
-    public bool canSwitchCam;
     #endregion
 
     #region Scenario variable
@@ -43,7 +42,6 @@ public class GameManager : Singleton<GameManager>
     #endregion
 
     #region Input Delegate
-
     public Action KeyAction;
     #endregion
     
@@ -60,7 +58,7 @@ public class GameManager : Singleton<GameManager>
     [Header("Manager Prefabs")]
     [SerializeField] private List<GameObject> managerPrefabs;
 
-    public float curTimeScale { get; private set; }
+    public float CurTimeScale { get; private set; }
     
     private void Awake()
     {
@@ -134,7 +132,7 @@ public class GameManager : Singleton<GameManager>
 
     public void SetTimeScale(float timeScale)
     {
-        curTimeScale = timeScale;
+        CurTimeScale = timeScale;
         Time.timeScale = timeScale;
     }
 
@@ -147,16 +145,13 @@ public class GameManager : Singleton<GameManager>
     
     private void Update()
     {
-
-
         DetectInputkey();
         #region Exceptions
-        if ((int)(Time.timeScale * 10000) != (int)(curTimeScale * 10000))
+        if ((int)(Time.timeScale * 10000) != (int)(CurTimeScale * 10000))
         {
             Debug.LogError("GameManager의 SetTimeScale() 함수를 통해 TimeScale을 변경해주세요.");
         }
         #endregion
-        
     }
     
     public void DetectInputkey()
