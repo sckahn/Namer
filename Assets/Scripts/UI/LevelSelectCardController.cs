@@ -63,6 +63,7 @@ public class LevelSelectCardController : MonoBehaviour
         var cardObject = Instantiate(cardPrefab, cardSpawnPoint.position, Quaternion.identity);
         var card = cardObject.GetComponent<MainMeneCardController>();
         mainCards.Add(card);
+        cardObject.transform.parent = GameObject.Find("LevelSelectCards").transform;
         MainCardAlignment();
     }
 

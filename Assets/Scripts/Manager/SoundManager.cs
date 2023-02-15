@@ -30,6 +30,18 @@ public class SoundManager : Singleton<SoundManager>
         BgmPlay();
     }
 
+    private void Start()
+    {
+        if (GameDataManager.GetInstance.UserDataDic[GameManager.GetInstance.userId].gameSetting.isMute)
+        {
+            bgmSound.mute = !bgmSound.mute;
+            sfxSound.mute = !sfxSound.mute;
+
+        }
+        isMuteToggleOn = bgmSound.mute;
+        isBgToggleOn = bgmSound.mute;
+    }
+
     public void BgmPlay()
     {
         bgmSound.loop = true;
@@ -71,11 +83,12 @@ public class SoundManager : Singleton<SoundManager>
 
     public void SetSound()
     {
+        print("SetSound");
         isMuteToggleOn = !isMuteToggleOn;
         bgmSound.mute = !bgmSound.mute;
         sfxSound.mute = !sfxSound.mute;
         sGameSetting = GameDataManager.GetInstance.UserDataDic[GameManager.GetInstance.userId].gameSetting;
-        sGameSetting.isMute = isMuteToggleOn;
+        sGameSetting.isMute = bgmSound.mute;
         GameDataManager.GetInstance.SetGameSetting(sGameSetting);
     }
 

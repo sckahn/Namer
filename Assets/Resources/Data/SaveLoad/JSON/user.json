@@ -29,6 +29,42 @@
                 "isMute": false,
                 "isMuteInBackground": false
             }
+        },
+        {
+            "userID": "111111",
+            "nickName": "",
+            "clearLevel": 0,
+            "levelNames": [
+                {
+                    "level": 0,
+                    "levelName": "처음행성"
+                }
+            ],
+            "cardView": {
+                "nameRead": [
+                    1,
+                    3,
+                    4,
+                    5
+                ],
+                "adjectiveRead": [
+                    1,
+                    4,
+                    5,
+                    8
+                ]
+            },
+            "gameSetting": {
+                "resolution": 0,
+                "maxFrame": 0,
+                "volume": 0.8024198412895203,
+                "backgroundVolume": 0.4196414053440094,
+                "soundEffects": 0.030969997867941858,
+                "isfullScreen": false,
+                "isborderlessFullScreen": false,
+                "isMute": false,
+                "isMuteInBackground": false
+            }
         }
     ]
 }

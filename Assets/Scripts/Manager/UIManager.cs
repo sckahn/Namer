@@ -38,18 +38,20 @@ public class UIManager : Singleton<UIManager>
 
     public void PauseKeyCheck()
     {
-        if (GameManager.GetInstance.CurrentState != GameStates.InGame ||
-            GameManager.GetInstance.CurrentState != GameStates.Pause)
-            return;
         #region PauseKeyCheck
-        if (Input.GetKeyDown(GameManager.GetInstance.pauseKey))
+        if (GameManager.GetInstance.CurrentState == GameStates.InGame
+            || GameManager.GetInstance.CurrentState == GameStates.Pause)
         {
-            isPauseKeyPressed = true;
+            if (Input.GetKeyDown(GameManager.GetInstance.pauseKey))
+            {
+                isPauseKeyPressed = true;
+            }
+            else
+            {
+                isPauseKeyPressed = false;
+            }
         }
-        else
-        {
-            isPauseKeyPressed = false;
-        }
+          
         #endregion
     }
 

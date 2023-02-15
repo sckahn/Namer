@@ -59,7 +59,7 @@ public class RewardRigController : MonoBehaviour
                 currentRewardCards.Add(cardObject);
                 cardObject.layer = 6;
                 ChangeChildrenLayer(cardObject.transform, 6);
-                cardObject.SetActive(true);
+                cardObject.transform.GetChild(0).gameObject.SetActive(true);
 
             }
             rightArrow.SetActive(false);
@@ -76,7 +76,7 @@ public class RewardRigController : MonoBehaviour
                 currentRewardCards.Add(cardObject);
                 cardObject.layer = 6;
                 ChangeChildrenLayer(cardObject.transform, 6);
-                cardObject.SetActive(true);
+                cardObject.transform.GetChild(0).gameObject.SetActive(true);
             }
             leftArrow.SetActive(false);
             rightArrow.SetActive(true);
@@ -110,7 +110,7 @@ public class RewardRigController : MonoBehaviour
                 currentRewardCards.Add(cardObject);
                 cardObject.layer = 6;
                 ChangeChildrenLayer(cardObject.transform, 6);
-                cardObject.SetActive(true);
+                cardObject.transform.GetChild(0).gameObject.SetActive(true);
             }
             rewardPage[rightArrowCount] = true;
             leftArrow.SetActive(true);

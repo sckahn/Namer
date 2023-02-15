@@ -359,7 +359,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     [ContextMenu("ResetMap")]
-    void ResetCurrentLvl()
+    public void ResetCurrentLvl()
     {
         if (curLevel == -3)
         {

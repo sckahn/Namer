@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -90,7 +91,19 @@ public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPoin
     public void RestartBtn()
     {
         UIManager.GetInstance.UIOff();
-        GameManager.GetInstance.Reset();
+        GameManager.GetInstance.ResetCurrentLvl();
+    }
+
+    public void ReturnLobby()
+    {
+        UIManager.GetInstance.UIOff();
+        GameManager.GetInstance.ChangeGameState(GameStates.LevelSelect);
+        SceneManager.LoadScene("MainScene");
+    }
+
+    public void GameOff()
+    {
+        Application.Quit();
     }
 
     public void GameOptionPanelOn()
