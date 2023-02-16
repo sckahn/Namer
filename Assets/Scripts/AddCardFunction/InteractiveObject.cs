@@ -23,6 +23,7 @@ public class InteractiveObject : MonoBehaviour
     private string addNameText;
     private string[] addAdjectiveTexts;
     private int[] countNameAdj;
+    private int addAdjectiveCount;
     
     // Max Value of Adjective Count
     private int maxAdjCount = 2;
@@ -363,6 +364,7 @@ public class InteractiveObject : MonoBehaviour
     public string GetCurrentName()
     {
         string currentObjectName = null;
+        addAdjectiveCount = 0;
         
         for (int i = 0; i < gameData.Adjectives.Count; i++)
         {
@@ -371,12 +373,18 @@ public class InteractiveObject : MonoBehaviour
                 for (int j = 0; j < countAdj[i] - countNameAdj[i]; j++)
                 {
                     currentObjectName += addAdjectiveTexts[i] + " ";
+                    addAdjectiveCount++;
                 }
             }
         }
         currentObjectName += addNameText;
         
         return currentObjectName;
+    }
+
+    public int GetAddAdjectiveCount()
+    {
+        return addAdjectiveCount;
     }
 
     //카드를 선택한 상태에서 오브젝트를 호버링하면 카드의 타겟으로 설정

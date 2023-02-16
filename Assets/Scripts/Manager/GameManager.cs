@@ -149,7 +149,7 @@ public class GameManager : Singleton<GameManager>
         #region Exceptions
         if ((int)(Time.timeScale * 10000) != (int)(CurTimeScale * 10000))
         {
-            Debug.LogError("GameManager의 SetTimeScale() 함수를 통해 TimeScale을 변경해주세요.");
+            Debug.Log("GameManager의 SetTimeScale() 함수를 통해 TimeScale을 변경해주세요.");
         }
         #endregion
     }
