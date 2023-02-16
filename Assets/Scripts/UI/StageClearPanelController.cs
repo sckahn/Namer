@@ -16,6 +16,7 @@ public class StageClearPanelController : MonoBehaviour
     [SerializeField] GameObject nameOKBtn;
     [SerializeField] GameObject nameCancleBtn;
     [SerializeField] GameObject stageClearOKBtn;
+    [SerializeField] GameObject rewardInfoTxt;
     GameObject clearRig;
     GameObject namingRig;
     GameObject rewardRig;
@@ -88,6 +89,12 @@ public class StageClearPanelController : MonoBehaviour
         rewardBtn.SetActive(false);
         rewardPanel.SetActive(true);
         rewardRig.SetActive(true);
+        if (rewardRig.transform.GetChild(0).transform.childCount == 0)
+        {
+            rewardInfoTxt.SetActive(true);
+        };
+
+
     }
 
     public void RewardOKBtn()

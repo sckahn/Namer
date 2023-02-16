@@ -14,6 +14,7 @@ public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPoin
     [SerializeField] GameObject optionBtn;
     [SerializeField] GameObject gameOptionPanel;
     [SerializeField] GameObject topPanel;
+    [SerializeField] Text stageName;
     Canvas canvas;
 
     bool isCardVisible = true;
@@ -32,6 +33,7 @@ public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPoin
         canvas = this.gameObject.GetComponent<Canvas>();
         canvas.worldCamera =
             Camera.main.transform.Find("UICamera").gameObject.GetComponent<Camera>();
+        StageNameSetUp();
         encyclopedia = Camera.main.gameObject.transform.GetChild(2).gameObject;
     }
 
@@ -137,6 +139,21 @@ public class IngameCanvasController : MonoBehaviour, IPointerEnterHandler, IPoin
     public void TurnOnAndOffLoadingImg(bool switchTurn)
     {
         LoadingImg.SetActive(switchTurn);
+    }
+
+    void StageNameSetUp()
+    {
+        string currentName =
+            GameDataManager.GetInstance.GetLevelName(GameManager.GetInstance.Level);
+
+        if (currentName == "")
+        {
+            stageName.text = $"{(GameManager.GetInstance.Level) + 1}" + " Stage";
+        }
+        else if (currentName != "")
+        {
+            stageName.text = currentName;
+        }
     }
 
 }

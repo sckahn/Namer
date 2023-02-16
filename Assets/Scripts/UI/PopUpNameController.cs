@@ -9,7 +9,7 @@ class PopUpNameController : MonoBehaviour
     [SerializeField] Text nameText;
     Transform cardHolder;
     InteractiveObject interactiveObject;
-
+    int currentAdjCount;
 
     private void OnEnable()
     {
@@ -28,5 +28,21 @@ class PopUpNameController : MonoBehaviour
         var scene = SceneManager.GetActiveScene();
         if (scene.name == "MainScene") return;
         nameText.text = interactiveObject.GetCurrentName();
+
+        currentAdjCount = interactiveObject.GetAddAdjectiveCount();
+
+        if(currentAdjCount == 1)
+        {
+            nameText.gameObject.transform.localScale = new Vector3(0.0095f, 0.01f, 0.01f);
+        }
+
+        if(currentAdjCount == 2)
+        {
+            nameText.gameObject.transform.localScale = new Vector3(0.0065f, 0.01f, 0.01f);
+        }
+        else
+        {
+            nameText.gameObject.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+        }
     }
 }
