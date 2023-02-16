@@ -371,6 +371,7 @@ public class GameManager : Singleton<GameManager>
         GetNewCardDeck();
         cameraController.Init();
         scenarioController.Init();
+        resetLoadValue = 0f;
     }
 
     
