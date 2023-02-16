@@ -22,7 +22,6 @@ public class MoveRose : MonoBehaviour
     {
         if (highLight.activeInHierarchy)
         {
-            this.gameObject.layer = 5;
             //currentTime+=Time.deltaTime;
             if (check)
             {
@@ -34,7 +33,6 @@ public class MoveRose : MonoBehaviour
 
         else
         {
-            this.gameObject.layer = 0;
             transform.localPosition = startPos;
             check = true;
             //currentTime=0;

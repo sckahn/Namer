@@ -56,24 +56,19 @@ public class GameDataManager : Singleton<GameDataManager>
 
 #region Map(tile, object) Data 
 
-    public void CreateFile(int level, string userID = "", bool isLevelClear = false)
+    public void CreateFile()
     {
         FilePathInfo();
-        if ((userID == "" && isLevelClear) || (userID != "" && !isLevelClear))
-        {
-            Debug.LogError("인자 값을 확인해주세요. 레벨 클리어했다면 사용자 아이디가 필요합니다.");
-            return;
-        }
+
+        string sceneName = SceneManager.GetActiveScene().name;
         
-        string sceneName = isLevelClear ? levelDataDic[level].sceneName : SceneManager.GetActiveScene().name;
-        
-        MapReader mapReader = gameObject.AddComponent<MapReader>();
+        MapReader mapReader = FindObjectOfType<MapReader>();
         SMapData mapData = mapReader.GetMapData();
         
         SaveLoadFile saveFile = new SaveLoadFile();
-        saveFile.CreateCsvFile(mapData.tileMapData, filePath + sceneName, userID + tileMapFileName);
-        saveFile.CreateCsvFile(mapData.objectMapData, filePath + sceneName, userID + objectMapFileName);
-        saveFile.CreateJsonFile(mapData.objectInfoData, filePath + sceneName, userID + objectInfoFileName);
+        saveFile.CreateCsvFile(mapData.tileMapData, filePath + sceneName, tileMapFileName);
+        saveFile.CreateCsvFile(mapData.objectMapData, filePath + sceneName, objectMapFileName);
+        saveFile.CreateJsonFile(mapData.objectInfoData, filePath + sceneName, objectInfoFileName);
     }
 
     public void CreateMap(int level)
@@ -87,7 +82,7 @@ public class GameDataManager : Singleton<GameDataManager>
             return;
         }
         
-        SetCardEncyclopedia(level, levelDataDic[level].cardView);
+        SetCardEncyclopedia(levelDataDic[level].cardView);
         
         SaveLoadFile loadFile = new SaveLoadFile();
         StreamReader tileMapData = loadFile.ReadCsvFile(filePath + sceneName, tileMapFileName);
@@ -111,11 +106,6 @@ public class GameDataManager : Singleton<GameDataManager>
         userDataDic = loadFile.ReadJsonFile<string, SUserData>(filePath + "SaveLoad", userDataFileName);
         levelDataDic = loadFile.ReadJsonFile<int, SLevelData>(filePath + "SaveLoad", levelDataFileName);
     }
-    
-    public string GetUserID()
-    {
-        return firstUserID;
-    }
 
     public void AddUserData(string userID)
     {
@@ -127,8 +117,7 @@ public class GameDataManager : Singleton<GameDataManager>
         
         if (!userDataDic.ContainsKey(userID))
         {
-            SUserData userData = UserDataDic["000000"];
-            userData.userID = userID;
+            SUserData userData = new SUserData(userID);
             userDataDic.Add(userID, userData);
 
             SaveLoadFile saveFile = new SaveLoadFile();
@@ -142,6 +131,11 @@ public class GameDataManager : Singleton<GameDataManager>
             firstUserID = userID;
         }
         //
+    }
+    
+    public string GetUserID()
+    {
+        return firstUserID;
     }
 
     public void SetLevelName(string levelName)
@@ -169,10 +163,9 @@ public class GameDataManager : Singleton<GameDataManager>
         }
     }
 
-    public string GetLevelName()
+    public string GetLevelName(int level)
     {
         string userID = GameManager.GetInstance.userId;
-        int level = GameManager.GetInstance.Level;
 
         if (UserDataDic[userID].levelNames != null)
         {
@@ -188,31 +181,31 @@ public class GameDataManager : Singleton<GameDataManager>
         return "";
     }
 
-    public void UpdateUserData(bool isLevelClear, SGameSetting? gameSetting = null)
+    public void UpdateUserData(bool isLevelClear)
+    {
+        if (isLevelClear)
+        {
+            string userID = GameManager.GetInstance.userId;
+            int level = GameManager.GetInstance.Level;
+            
+            SUserData userData = userDataDic[userID];
+            userData.clearLevel = level;
+            userDataDic[userID] = userData;
+        }
+
+        SaveLoadFile saveFile = new SaveLoadFile();
+        saveFile.UpdateDicDataToJsonFile(userDataDic, filePath + "SaveLoad", userDataFileName);
+    }
+
+    public void SetGameSetting(SGameSetting gameSetting)
     {
         string userID = GameManager.GetInstance.userId;
-        int level = GameManager.GetInstance.Level;
-
+        
         SUserData userData = userDataDic[userID];
-        if (isLevelClear)
-        {
-            userData.clearLevel = level;
-        }
-        else
-        {
-            if (gameSetting != null)
-            {
-                userData.gameSetting = (SGameSetting)gameSetting;
-            }
-        }
+        userData.gameSetting = gameSetting;
         userDataDic[userID] = userData;
-
-        if (isLevelClear)
-        {
-            SaveLoadFile saveFile = new SaveLoadFile();
-            saveFile.UpdateDicDataToJsonFile(userDataDic, filePath + "SaveLoad", userDataFileName);
-        }
     }
+    
 
     public void UpdateLevelData(int level, SLevelData levelData)
     {
@@ -227,12 +220,11 @@ public class GameDataManager : Singleton<GameDataManager>
         
         SaveLoadFile saveFile = new SaveLoadFile();
         saveFile.UpdateDicDataToJsonFile(levelDataDic, filePath + "SaveLoad", levelDataFileName);
-
     }
 
 #endregion
 
-#region Card Data
+#region Get/Set Card Data & Create Card Prefabs
 
     public void GetCardData()
     {
@@ -243,8 +235,10 @@ public class GameDataManager : Singleton<GameDataManager>
         adjectives = loadFile.GetCardData<EAdjective, SAdjectiveInfo>(data, 1);
     }
 
-    public void SetCardEncyclopedia(int level, SCardView cardView)
+    public void SetCardEncyclopedia(SCardView cardView)
     {
+        int level = GameManager.GetInstance.Level;
+        
         if (!cardEncyclopedia.ContainsKey(level))
         {
             SCardView sCardView = new SCardView();
@@ -270,9 +264,9 @@ public class GameDataManager : Singleton<GameDataManager>
         
         if (adjectiveReads.Count > 0)
         {
-            adjectiveReads.AddRange(cardView.adjectiveRead);
-            adjectiveReads = adjectiveReads.Distinct().ToList();
-            adjectiveReads = adjectiveReads.OrderBy(item => Adjectives[item].priority).ToList();
+            adjectiveReads.AddRange(cardView.adjectiveRead); 
+            adjectiveReads.Distinct().ToList();
+            adjectiveReads.OrderBy(item => Adjectives[item].priority).ToList();
         }
         
         for (int i = 0; i < adjectiveReads.Count; i++)
@@ -330,8 +324,8 @@ public class GameDataManager : Singleton<GameDataManager>
             }
         }
         
-        nameReads = nameReads.OrderBy(item => Names[item].priority).ToHashSet();
-        adjectiveReads = adjectiveReads.OrderBy(item => Adjectives[item].priority).ToHashSet();
+        nameReads = Enumerable.ToHashSet(nameReads.OrderBy(item => Names[item].priority));
+        adjectiveReads = Enumerable.ToHashSet(adjectiveReads.OrderBy(item => Adjectives[item].priority));
 
         // update user data
         SUserData userData = UserDataDic[userID];

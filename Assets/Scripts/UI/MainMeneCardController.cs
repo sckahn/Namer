@@ -25,13 +25,13 @@ public class MainMeneCardController : MonoBehaviour
 
     void cardHolderPicker()
     {
-        if (levelSelectCardHolder.activeInHierarchy)
+        if (this.gameObject.transform.parent?.name == "MainMenuCards")
         {
-            cardHolder = FindObjectOfType<LevelSelectCardController>().gameObject;
+            cardHolder = FindObjectOfType<CardManager>().gameObject;
         }
         else
         {
-            cardHolder = FindObjectOfType<CardManager>().gameObject;
+            cardHolder = FindObjectOfType<LevelSelectCardController>().gameObject;
         }
 
     }
@@ -133,12 +133,30 @@ public class MainMeneCardController : MonoBehaviour
             case "1StageCard(Clone)":
                 GameManager.GetInstance.SetLevelFromCard(cardName);
                 LoadingSceneController.LoadScene("DemoPlay");
+                break;
+            case "2StageCard(Clone)":
+                GameManager.GetInstance.SetLevelFromCard(cardName);
+                LoadingSceneController.LoadScene("DemoPlay");
+                break;
+            case "3StageCard(Clone)":
+                GameManager.GetInstance.SetLevelFromCard(cardName);
+                LoadingSceneController.LoadScene("DemoPlay");
+                break;
+            case "4StageCard(Clone)":
+                GameManager.GetInstance.SetLevelFromCard(cardName);
+                LoadingSceneController.LoadScene("DemoPlay");
+                break;
+            case "5StageCard(Clone)":
+                GameManager.GetInstance.SetLevelFromCard(cardName);
+                LoadingSceneController.LoadScene("DemoPlay");
+                break;
+            case "6StageCard(Clone)":
+                GameManager.GetInstance.SetLevelFromCard(cardName);
+                LoadingSceneController.LoadScene("DemoPlay");
+                break;
                 // LoadingSceneController.LoadScene("JSTESTER");
                 //이부분 살짝 수정함
-                // GameManager.GetInstance.SetLevelFromCard(cardName);
-                break;
-                
-
+                // GameManager.GetInstance.SetLevelFromCard(cardName);              
             default:
                 break;
         }

@@ -77,8 +77,6 @@ public partial class DetectManager : Singleton<DetectManager>
         if (player != null) player.SetActive(false);
         
         gameDataManager = GameDataManager.GetInstance;
-        gameDataManager.GetCardData();
-        gameDataManager.GetUserAndLevelData();
         SPosition position = gameDataManager.LevelDataDic[level].playerPosition;
         player.transform.position = new Vector3(position.x, position.y, position.z);
         

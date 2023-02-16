@@ -15,9 +15,9 @@ public enum GameStates
     Pause,
     Lose,
     Victory,
-    Encyclopedia
+    Encyclopedia,
+    LevelSelect,
 }
-
 public class GameManager : Singleton<GameManager>
 {
     #region GameStates
@@ -184,6 +184,8 @@ public class GameManager : Singleton<GameManager>
             case GameStates.Encyclopedia:
                 HandleEncyclopedia();
                 break;
+            case GameStates.LevelSelect:
+                break;
         }
     }
     public void ChangeGameState(GameStates newState)
@@ -293,7 +295,6 @@ public class GameManager : Singleton<GameManager>
     int GetCurrentLevel()
     {
         var gameDataManager = GameDataManager.GetInstance;
-        gameDataManager.GetUserAndLevelData();
         curLevel = gameDataManager.UserDataDic[userId].clearLevel;
         return curLevel;
     }
@@ -352,7 +353,7 @@ public class GameManager : Singleton<GameManager>
     }
 
     [ContextMenu("ResetMap")]
-    void ResetCurrentLvl()
+    public void ResetCurrentLvl()
     {
         if (curLevel == -3)
         {

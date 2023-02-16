@@ -56,6 +56,7 @@ MonoBehaviour:
   Encyclopedia: {fileID: 2155044647775482130}
   UIText: {fileID: 7636341369278244097}
   NameAdjUIText: {fileID: 8594268537692688563}
+  currentLevelName: 
 --- !u!65 &453746082420174526
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -98,7 +99,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2457775549880798153, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
       propertyPath: m_Text
-      value: "\uD06C\uB9AC\uC2A4\uD0C8"
+      value: "\uC218\uC815"
       objectReference: {fileID: 0}
     - target: {fileID: 3536047638448890958, guid: fe4a27cc58c5b4998b897f6262cfeda1, type: 3}
       propertyPath: m_RootOrder

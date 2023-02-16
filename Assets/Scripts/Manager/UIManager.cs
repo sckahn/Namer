@@ -11,7 +11,9 @@ public class UIManager : Singleton<UIManager>
     void Start()
     {
         isShowNameKeyPressed = false;
-        GameManager.GetInstance.KeyAction += UIInputKeyCheck;
+        GameManager.GetInstance.KeyAction += ShowNameKeyCheck;
+        GameManager.GetInstance.KeyAction += PauseKeyCheck;
+
     }
 
     void Update()
@@ -19,7 +21,7 @@ public class UIManager : Singleton<UIManager>
         UIOnOff();
     }
 
-    private void UIInputKeyCheck()
+    private void ShowNameKeyCheck()
     {
         #region ShowNameKeyCheck
         if (Input.GetKeyDown(GameManager.GetInstance.showNameKey))
@@ -32,17 +34,24 @@ public class UIManager : Singleton<UIManager>
             isShowNameKeyPressed = false;
         }
         #endregion
+    }
 
+    public void PauseKeyCheck()
+    {
         #region PauseKeyCheck
-        if (Input.GetKeyDown(GameManager.GetInstance.pauseKey))
+        if (GameManager.GetInstance.CurrentState == GameStates.InGame
+            || GameManager.GetInstance.CurrentState == GameStates.Pause)
         {
-            isPauseKeyPressed = true;
+            if (Input.GetKeyDown(GameManager.GetInstance.pauseKey))
+            {
+                isPauseKeyPressed = true;
+            }
+            else
+            {
+                isPauseKeyPressed = false;
+            }
         }
-
-        else
-        {
-            isPauseKeyPressed = false;
-        }
+          
         #endregion
     }
 

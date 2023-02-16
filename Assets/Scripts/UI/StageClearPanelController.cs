@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class StageClearPanelController : MonoBehaviour
 {
@@ -109,7 +110,9 @@ public class StageClearPanelController : MonoBehaviour
 
     public void StageUIOKBtn()
     {
+        GameManager.GetInstance.ChangeGameState(GameStates.LevelSelect);
         GameDataManager.GetInstance.UpdateUserData(true);
         this.gameObject.SetActive(false);
+        SceneManager.LoadScene("MainScene");
     }
 }

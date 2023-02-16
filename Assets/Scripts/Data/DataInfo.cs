@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using System.Text;
 
@@ -53,6 +54,7 @@ public struct SAdjectiveInfo
 
 #region Object Information Struct
 
+[Serializable]
 public struct SObjectInfo
 {
     public string prefabName;
@@ -65,6 +67,7 @@ public struct SObjectInfo
 
 #region Game Information(Map, User, Level) Struct
 
+[Serializable]
 public struct SMapData
 {
     public readonly StringBuilder tileMapData;
@@ -79,6 +82,7 @@ public struct SMapData
     }
 }
 
+[Serializable]
 public struct SUserData
 {
     public string userID;
@@ -87,8 +91,21 @@ public struct SUserData
     public List<SLevelName> levelNames;
     public SCardView cardView;
     public SGameSetting gameSetting;
+
+    public SUserData(string userID)
+    {
+        this.userID = userID;
+        this.nickName = "";
+        this.clearLevel = -1;
+        this.levelNames = new List<SLevelName>();
+        this.cardView = new SCardView(new[] { EName.Rose }.ToList(), new[] { EAdjective.Win }.ToList());
+        this.gameSetting = new SGameSetting(0, 0, 
+            0.5f, 0.5f, 0.5f, 
+            false, false, false, false);
+    }
 }
 
+[Serializable]
 public struct SLevelData
 {
     public int level;
@@ -98,6 +115,7 @@ public struct SLevelData
     public SCardView cardView;
 }
 
+[Serializable]
 public struct SLevelName
 {
     public int level;
@@ -110,6 +128,7 @@ public struct SLevelName
     }
 }
 
+[Serializable]
 public struct SCardView
 {
     public List<EName> nameRead;
@@ -122,6 +141,7 @@ public struct SCardView
     }
 }
 
+[Serializable]
 public struct SGameSetting
 {
     public int resolution;
@@ -165,6 +185,12 @@ public struct SPosition
 }
 
 #endregion
+
+[Serializable]
+public class DataList<T>
+{
+    public List<T> dataList;
+}
 
 public class DataInfo
 {
