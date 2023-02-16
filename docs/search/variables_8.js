@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['ingamecanvas_0',['ingameCanvas',['../class_u_i_manager.html#aa48f776f1a9d44ff6d565520269c2973',1,'UIManager']]],
+  ['inputvector_1',['inputVector',['../class_player_movement.html#a52ab2d03fb3f61b818b85c4e8b7af7b6',1,'PlayerMovement']]],
+  ['interactionkey_2',['interactionKey',['../class_game_manager.html#a7ecd529eac78220689bf3df0124f0d8e',1,'GameManager']]],
+  ['interactobj_3',['interactObj',['../class_player_movement.html#aeb765555406dc4e5c526a376e3b082dc',1,'PlayerMovement']]],
+  ['isbgtoggleon_4',['isBgToggleOn',['../class_sound_manager.html#aec220165a678177958db8df776cb20fb',1,'SoundManager']]],
+  ['isborderlessfullscreen_5',['isborderlessFullScreen',['../struct_s_game_setting.html#a7c7797bad89ab9bf4aca57981519c782',1,'SGameSetting']]],
+  ['iscarddealingdone_6',['isCardDealingDone',['../class_card_manager.html#ac29daf26487e794c7cf996ca827934b4',1,'CardManager']]],
+  ['iscardshide_7',['isCardsHide',['../class_card_manager.html#a1d86c7c153d0e92b467b2fd2fd46eac8',1,'CardManager']]],
+  ['isdialog_8',['isDialog',['../struct_scenario.html#a948a351008cad1d25ffdd035504eeed7',1,'Scenario']]],
+  ['isencyclopedia_9',['isEncyclopedia',['../class_card_manager.html#a621d9509e92cf4b204e947b8ae2c1f6b',1,'CardManager']]],
+  ['isfocus_10',['isFocus',['../struct_scenario.html#a16e913232a26bbd2814540bf29647485',1,'Scenario']]],
+  ['isfocused_11',['isFocused',['../class_camera_controller.html#a93720adde5780fdeadbed77bdd127813',1,'CameraController']]],
+  ['isfullscreen_12',['isfullScreen',['../struct_s_game_setting.html#ae7b5635b5f60d5354597f382f14fd4f4',1,'SGameSetting']]],
+  ['ismute_13',['isMute',['../struct_s_game_setting.html#a9d8368e27f2f59c907a705f4e24a5d2f',1,'SGameSetting']]],
+  ['ismuteinbackground_14',['isMuteInBackground',['../struct_s_game_setting.html#afd9e007fa9ab5d37e7d2a11f292c54b8',1,'SGameSetting']]],
+  ['ismutetoggleon_15',['isMuteToggleOn',['../class_sound_manager.html#a1788fa9e9947c58f8631b6eef6cb68d1',1,'SoundManager']]],
+  ['ispausekeypressed_16',['isPauseKeyPressed',['../class_u_i_manager.html#a78e78b6fe7ae67a5d77e47819e7e7566',1,'UIManager']]],
+  ['ispickcard_17',['isPickCard',['../class_card_manager.html#a6ee37e263a78a6d0b546ec0ff5621268',1,'CardManager']]],
+  ['isplayercaninput_18',['isPlayerCanInput',['../class_game_manager.html#aa2155b3e75e20128e5447c830853bbc6',1,'GameManager']]],
+  ['isplayerdoaction_19',['isPlayerDoAction',['../class_game_manager.html#a7ec27893788a9fce8b51ebadf6b79a8d',1,'GameManager']]],
+  ['isshownamekeypressed_20',['isShowNameKeyPressed',['../class_u_i_manager.html#a59a23d1089915388aa738fd62c94871e',1,'UIManager']]],
+  ['isstretched_21',['isStretched',['../class_level_infos.html#a5a4924b9efee698baccdab758e45ce6f',1,'LevelInfos']]],
+  ['isui_22',['isUI',['../class_scenario_controller.html#a78bb99b001da0ce69726df425bff7565',1,'ScenarioController']]]
+];

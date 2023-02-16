@@ -1,0 +1,6 @@
+<map id="GameDataManager.CreateMap" name="GameDataManager.CreateMap">
+<area shape="rect" id="node1" title=" " alt="" coords="5,55,208,80"/>
+<area shape="rect" id="node2" href="$class_map_creator.html#a1d41cd82c3dddbb75dbb9d79ea097d61" title=" " alt="" coords="299,5,477,31"/>
+<area shape="rect" id="node3" href="$class_save_load_file.html#af3c421ee94ac631fce803f39777cc09c" title=" " alt="" coords="297,55,479,80"/>
+<area shape="rect" id="node4" href="$class_game_data_manager.html#a621f2f15d54341ae450559c3237575c9" title=" " alt="" coords="256,104,520,129"/>
+</map>

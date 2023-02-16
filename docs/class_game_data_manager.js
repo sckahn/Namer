@@ -1,0 +1,26 @@
+var class_game_data_manager =
+[
+    [ "AddUserData", "class_game_data_manager.html#ae879c50726759ab0d853710405621af5", null ],
+    [ "CreateFile", "class_game_data_manager.html#a7cd05111fc107e6b983f20f0cf36ac46", null ],
+    [ "CreateMap", "class_game_data_manager.html#a8607eed21d09a3387b531e6e9548b6aa", null ],
+    [ "GetCardData", "class_game_data_manager.html#a730a2c63dfac99d02b7f7f6c28babe7d", null ],
+    [ "GetCardPrefabs", "class_game_data_manager.html#a2b617687b11283fef775b971dd41a952", null ],
+    [ "GetIngameCardEncyclopedia", "class_game_data_manager.html#ad99e700fdafe49ee451a9669c6dd745d", null ],
+    [ "GetLevelName", "class_game_data_manager.html#af34eeb56c63cdbe535efd1990f035df0", null ],
+    [ "GetMainCardEncyclopedia", "class_game_data_manager.html#af9b4de00340ff830bec5b556805d733a", null ],
+    [ "GetRewardCardEncyclopedia", "class_game_data_manager.html#ad0fde4d1886da761a2bf8aa0a8629dda", null ],
+    [ "GetUserAndLevelData", "class_game_data_manager.html#a627920bad79f7758403090be6cc73db9", null ],
+    [ "GetUserID", "class_game_data_manager.html#aab5dd9441cd329feb53c197b185c1415", null ],
+    [ "SetCardEncyclopedia", "class_game_data_manager.html#a621f2f15d54341ae450559c3237575c9", null ],
+    [ "SetGameSetting", "class_game_data_manager.html#a3715490ed40ac490f495141ffb73a2bc", null ],
+    [ "SetLevelName", "class_game_data_manager.html#ad58836f18a8126594dfc0bc9fdd8cd9b", null ],
+    [ "UpdateLevelData", "class_game_data_manager.html#a9f074034ab56d6a30d547931554ca74a", null ],
+    [ "UpdateUserData", "class_game_data_manager.html#a7b2f5760c90bbb9e97290e11fbfe92c4", null ],
+    [ "Adjectives", "class_game_data_manager.html#a02902663be3e7f0c32cd4e85beafdca7", null ],
+    [ "CardEncyclopedia", "class_game_data_manager.html#af2144c0d1b72a53e8387072d2b38d040", null ],
+    [ "InitObjects", "class_game_data_manager.html#a7a00ccbb03c5ce596ab21a5258454680", null ],
+    [ "InitTiles", "class_game_data_manager.html#aa387c41744d1c1d66586f1e229f8c659", null ],
+    [ "LevelDataDic", "class_game_data_manager.html#aebd7c6d2f6ce522bb18d6df95f084ad0", null ],
+    [ "Names", "class_game_data_manager.html#a6a1d69ba99c8ba23dc1c520c2afd741c", null ],
+    [ "UserDataDic", "class_game_data_manager.html#a79d592e1e01f03723bdab34111bc274f", null ]
+];

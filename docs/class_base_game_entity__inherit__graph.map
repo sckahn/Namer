@@ -1,0 +1,5 @@
+<map id="BaseGameEntity" name="BaseGameEntity">
+<area shape="rect" id="node1" title=" " alt="" coords="33,131,155,237"/>
+<area shape="rect" id="node3" href="$class_player_entity.html" title=" " alt="" coords="5,285,183,421"/>
+<area shape="rect" id="node2" title=" " alt="" coords="38,5,150,83"/>
+</map>

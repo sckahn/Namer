@@ -1,0 +1,6 @@
+<map id="SLevelData" name="SLevelData">
+<area shape="rect" id="node1" title=" " alt="" coords="157,417,261,509"/>
+<area shape="rect" id="node2" href="$struct_scenario.html" title=" " alt="" coords="152,204,267,355"/>
+<area shape="rect" id="node3" href="$struct_s_position.html" title=" " alt="" coords="5,5,104,112"/>
+<area shape="rect" id="node4" href="$struct_s_card_view.html" title=" " alt="" coords="291,233,408,325"/>
+</map>

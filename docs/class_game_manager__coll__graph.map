@@ -1,0 +1,10 @@
+<map id="GameManager" name="GameManager">
+<area shape="rect" id="node1" title=" " alt="" coords="394,1029,557,1444"/>
+<area shape="rect" id="node2" href="$class_singleton.html" title=" " alt="" coords="5,801,191,879"/>
+<area shape="rect" id="node3" href="$class_player_entity.html" title=" " alt="" coords="335,423,512,559"/>
+<area shape="rect" id="node6" href="$class_player_movement.html" title=" " alt="" coords="374,713,585,967"/>
+<area shape="rect" id="node4" href="$class_base_game_entity.html" title=" " alt="" coords="384,132,505,239"/>
+<area shape="rect" id="node5" title=" " alt="" coords="519,5,631,83"/>
+<area shape="rect" id="node7" href="$class_camera_controller.html" title=" " alt="" coords="571,583,695,689"/>
+<area shape="rect" id="node8" href="$class_scenario_controller.html" title=" " alt="" coords="685,263,815,399"/>
+</map>

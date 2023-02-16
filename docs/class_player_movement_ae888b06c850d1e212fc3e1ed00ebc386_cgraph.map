@@ -1,0 +1,5 @@
+<map id="PlayerMovement.ClimbRootmotionEvent" name="PlayerMovement.ClimbRootmotionEvent">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,231,45"/>
+<area shape="rect" id="node2" href="$class_player_movement.html#a3d54bde517787cbe619a11836cd568cc" title=" " alt="" coords="279,13,504,38"/>
+<area shape="rect" id="node3" href="$class_player_movement.html#a1e71549f9cb37285c543fdc293217688" title=" " alt="" coords="552,5,745,45"/>
+</map>

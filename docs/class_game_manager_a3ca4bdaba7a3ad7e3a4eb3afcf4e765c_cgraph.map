@@ -1,0 +1,6 @@
+<map id="GameManager.ResetCurrentLvl" name="GameManager.ResetCurrentLvl">
+<area shape="rect" id="node1" title=" " alt="" coords="5,56,211,81"/>
+<area shape="rect" id="node2" href="$class_camera_controller.html#afa2993bed40ba71f06b790c8778383f3" title=" " alt="" coords="267,5,413,31"/>
+<area shape="rect" id="node3" href="$class_scenario_controller.html#a4ebc2cc78c72e36e280bbabe1a0a1cc0" title=" " alt="" coords="469,81,620,107"/>
+<area shape="rect" id="node4" href="$class_game_manager.html#a32fe69fb3b99a33083e698997200ea8c" title=" " alt="" coords="259,107,421,132"/>
+</map>

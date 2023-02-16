@@ -1,0 +1,7 @@
+<map id="InteractionSequencer" name="InteractionSequencer">
+<area shape="rect" id="node1" title=" " alt="" coords="45,447,231,568"/>
+<area shape="rect" id="node2" href="$class_singleton.html" title=" " alt="" coords="5,248,228,325"/>
+<area shape="rect" id="node3" href="$class_interactive_object.html" title=" " alt="" coords="252,189,427,384"/>
+<area shape="rect" id="node4" title=" " alt="" coords="217,27,329,105"/>
+<area shape="rect" id="node5" href="$struct_s_object_info.html" title=" " alt="" coords="353,5,459,127"/>
+</map>

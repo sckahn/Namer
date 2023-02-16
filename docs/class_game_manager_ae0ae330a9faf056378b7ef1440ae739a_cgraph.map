@@ -1,0 +1,6 @@
+<map id="GameManager.ForTester" name="GameManager.ForTester">
+<area shape="rect" id="node1" title=" " alt="" coords="5,31,171,56"/>
+<area shape="rect" id="node2" href="$class_game_manager.html#ab27062d3c2b24c772f61c232bccde413" title=" " alt="" coords="219,5,440,31"/>
+<area shape="rect" id="node3" href="$class_game_manager.html#a32fe69fb3b99a33083e698997200ea8c" title=" " alt="" coords="248,55,411,80"/>
+<area shape="rect" id="node4" href="$class_scenario_controller.html#a4ebc2cc78c72e36e280bbabe1a0a1cc0" title=" " alt="" coords="488,55,639,80"/>
+</map>

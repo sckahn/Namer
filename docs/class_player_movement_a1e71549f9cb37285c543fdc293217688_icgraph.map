@@ -1,0 +1,7 @@
+<map id="PlayerMovement.SetRotationBeforeInteraction" name="PlayerMovement.SetRotationBeforeInteraction">
+<area shape="rect" id="node1" title=" " alt="" coords="552,39,745,79"/>
+<area shape="rect" id="node2" href="$class_player_movement.html#a3d54bde517787cbe619a11836cd568cc" title=" " alt="" coords="279,17,504,42"/>
+<area shape="rect" id="node4" href="$class_player_movement.html#add941b0c302faab26e0d4ffcfc8fc8af" title=" " alt="" coords="281,70,502,95"/>
+<area shape="rect" id="node3" href="$class_player_movement.html#ae888b06c850d1e212fc3e1ed00ebc386" title=" " alt="" coords="5,5,231,45"/>
+<area shape="rect" id="node5" href="$class_player_movement.html#a514484a7e360e0ff52e32228bfcc53c5" title=" " alt="" coords="7,69,229,109"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="PlayerEntity.ChangeState" name="PlayerEntity.ChangeState">
+<area shape="rect" id="node1" title=" " alt="" coords="264,141,435,166"/>
+<area shape="rect" id="node2" href="$class_player_owned_states_1_1_obtain_state.html#abbd8b676e37cefc4bbfd42ea4abc9e05" title=" " alt="" coords="21,5,201,45"/>
+<area shape="rect" id="node3" href="$class_player_owned_states_1_1_climb_state.html#a6a726c8c9d9bec955dbc0df84635e584" title=" " alt="" coords="5,69,216,109"/>
+<area shape="rect" id="node4" href="$class_player_owned_states_1_1_push_state.html#a45f8e2453b18af090b38c233ca01c256" title=" " alt="" coords="7,133,214,173"/>
+<area shape="rect" id="node5" href="$class_player_owned_states_1_1_add_card_state.html#a523c9a84fb707d1e0d95111aa5832556" title=" " alt="" coords="14,197,207,237"/>
+<area shape="rect" id="node6" href="$class_player_owned_states_1_1_win_state.html#acda50a5b7e759b01c93721f6268ebb12" title=" " alt="" coords="11,261,211,301"/>
+</map>
