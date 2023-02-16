@@ -111,17 +111,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        DetectManager.GetInstance.CheckCharacterCurrentTile(this.gameObject);
-        DetectManager.GetInstance.CheckForwardObj(this.gameObject);
-        interactObj = DetectManager.GetInstance.forwardObjectInfo;
-
-        // 인터렉션 중에는 이동 또는 다른 인터렉션 불가
-        // 플레이어 인풋이 막힌 경우 동작하지 않도록 변경
-        if (GameManager.GetInstance.isPlayerCanInput && !GameManager.GetInstance.isPlayerDoAction)
+        if (rb)
         {
-            // 이동 함수 + 인터렉션
-            PlayerMove(inputVector);
-            PlayInteraction();
+            DetectManager.GetInstance.CheckCharacterCurrentTile(this.gameObject);
+            DetectManager.GetInstance.CheckForwardObj(this.gameObject);
+            interactObj = DetectManager.GetInstance.forwardObjectInfo;
+
+            // 인터렉션 중에는 이동 또는 다른 인터렉션 불가
+            // 플레이어 인풋이 막힌 경우 동작하지 않도록 변경
+            if (GameManager.GetInstance.isPlayerCanInput && !GameManager.GetInstance.isPlayerDoAction)
+            {
+                // 이동 함수 + 인터렉션
+                PlayerMove(inputVector);
+                PlayInteraction();
+            }
+        }
+
+        else
+        {
+            Start();
         }
     }
 
