@@ -75,7 +75,8 @@ public partial class DetectManager : Singleton<DetectManager>
     {
         GameObject player = GameObject.Find("Player");
         if (player != null) player.SetActive(false);
-        
+
+        scaleChangedObjects = new Dictionary<Vector3, GameObject>();
         gameDataManager = GameDataManager.GetInstance;
         SPosition position = gameDataManager.LevelDataDic[level].playerPosition;
         player.transform.position = new Vector3(position.x, position.y, position.z);
