@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 inputVector;
     private Dir targetDir;
     private int objscale;
+    private Rigidbody climbRb;
 
     [SerializeField] [Range(0.1f, 5f)] private float rootmotionSpeed;
     [SerializeField] [Range(0.5f, 5f)] private float interactionDelay;
@@ -98,6 +99,7 @@ public class PlayerMovement : MonoBehaviour
                 
                 if (InteractionSequencer.GetInstance.playerActionTargetObject.Adjectives[7] != null)
                 {
+                    climbRb = InteractionSequencer.GetInstance.playerActionTargetObject.GetComponent<Rigidbody>();
                     objscale = (int)InteractionSequencer.GetInstance.playerActionTargetObject.transform.localScale.y
                                - ((int)transform.position.y - (int)InteractionSequencer.GetInstance.playerActionTargetObject.transform.position.y);
                         
@@ -242,7 +244,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 targetPos = Vector3.zero;
         var curPos = position;
-        
+        climbRb.constraints = RigidbodyConstraints.FreezeAll;
         switch (targetDir)
         {
             case Dir.right :
@@ -265,7 +267,7 @@ public class PlayerMovement : MonoBehaviour
         float moveTime = 0;
         Vector3 target1 = new Vector3(curPos.x, curPos.y + objscale * 0.5f, curPos.z);
         yield return new WaitForSeconds(1f);
-
+        
         while (moveTime < 1)
         {
             moveTime += Time.deltaTime * rootmotionSpeed;
@@ -311,6 +313,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(interactionDelay);
         GameManager.GetInstance.isPlayerDoAction = false;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+        climbRb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
     }
 
     public IEnumerator AddcardRootmotion()
