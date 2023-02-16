@@ -1006,6 +1006,29 @@
                     "message": "",
                     "funcName": "",
                     "isFocus": false
+                },
+                {
+                    "type": 3,
+                    "requirePos": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "targetObj": {
+                        "x": 7.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "nextPos": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "requiredName": "",
+                    "isDialog": false,
+                    "message": "",
+                    "funcName": "",
+                    "isFocus": false
                 }
             ],
             "playerPosition": {
@@ -1050,11 +1073,34 @@
                     "message": "",
                     "funcName": "",
                     "isFocus": false
+                },
+                {
+                    "type": 3,
+                    "requirePos": {
+                        "x": 0.0,
+                        "y": 1.0,
+                        "z": 0.0
+                    },
+                    "targetObj": {
+                        "x": 7.0,
+                        "y": 1.0,
+                        "z": 1.0
+                    },
+                    "nextPos": {
+                        "x": 0.0,
+                        "y": 0.0,
+                        "z": 0.0
+                    },
+                    "requiredName": "",
+                    "isDialog": false,
+                    "message": "",
+                    "funcName": "",
+                    "isFocus": false
                 }
             ],
             "playerPosition": {
                 "x": 0.0,
-                "y": 1.0,
+                "y": 3.0,
                 "z": 0.0
             },
             "cardView": {
