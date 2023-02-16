@@ -62,6 +62,11 @@ public class GameManager : Singleton<GameManager>
     
     private void Awake()
     {
+        if (GameObject.FindObjectsOfType<GameManager>().Length > 1)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
         DontDestroyOnLoad(this.gameObject);
         Init();
     }
