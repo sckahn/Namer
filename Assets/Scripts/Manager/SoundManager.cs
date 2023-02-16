@@ -83,7 +83,6 @@ public class SoundManager : Singleton<SoundManager>
 
     public void SetSound()
     {
-        print("SetSound");
         isMuteToggleOn = !isMuteToggleOn;
         bgmSound.mute = !bgmSound.mute;
         sfxSound.mute = !sfxSound.mute;
